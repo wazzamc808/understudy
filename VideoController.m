@@ -16,6 +16,8 @@
 #import <BackRow/BRRenderScene.h>
 #import <BackRow/BRSentinel.h>
 
+#import <Carbon/Carbon.h>
+
 @interface BRAppManager : NSObject { }
 + (BRAppManager*)sharedApplication;
 - (id)delegate;
@@ -30,12 +32,13 @@
 - (void)orderOut;
 @end
 
-@interface VideoController (PrivateViewManipulation)
+@interface VideoController (private)
 - (void)_loadVideo;
 - (void)_maximizePlayer;
 - (void)_fullscreen;
 - (void)_reveal;
-- (void) _returnToFR;
+- (void)_returnToFR;
+- (void)_sendKeyPress: (int)keyCode;
 @end
 
 @implementation VideoController
@@ -137,6 +140,7 @@
                                                       forKeys:keys];
   [view_ enterFullScreenMode:[NSScreen mainScreen]
                  withOptions:options];
+  [self _sendKeyPress:3];
 }
 
 // order out the FR window, revealing the video display
@@ -162,6 +166,47 @@
   [renderer orderIn];  
 }
 
+// grab the web view for the flash player
+- (WebView*)_pluginView
+{
+  if( !pluginView_ )
+  {
+    NSMutableSet* views = [NSMutableSet set];
+    NSMutableSet* webviews = [NSMutableSet set];
+    [views addObjectsFromArray:[view_ subviews]];
+    while( [views count] ){
+      WebView* view = [views anyObject];
+      [views removeObject:view];
+      if( [[view className] isEqual:@"WebNetscapePluginDocumentView"] )
+        [webviews addObject:view];
+      [views addObjectsFromArray:[view subviews]];
+    }
+    if( [webviews count] > 1 ) NSLog(@"got multiple plugin views");
+    else if( [webviews count] < 1 ) NSLog(@"got no plugin views");
+    pluginView_ = [webviews anyObject];
+  }
+  return pluginView_;
+}
+
+// Send a keydown (and up) event to the web view holding the flash plugin
+// (using NSEvent doesn't work)
+- (void)_sendKeyPress:(int)keyCode
+{
+  WebView* view = [self _pluginView];
+  EventRecord event; 
+  event.what = keyDown; 
+  event.message = keyCode << 8; 
+  event.modifiers = 0;   
+  [(id)view sendEvent:(NSEvent *)&event];
+  event.what = keyUp;
+  [(id)view sendEvent:(NSEvent *)&event];
+}
+
+- (void)playPause
+{
+  [self _sendKeyPress:49]; // space-bar
+}
+
 #pragma mark BR Control
 
 - (void)controlWillActivate
@@ -179,6 +224,16 @@
 - (BOOL)isNetworkDependent
 {
   return YES;
+}
+
+- (BOOL)brEventAction:(BREvent*)event
+{
+  if( [event remoteAction] == kBRRemotePlayPauseSelectButton )
+  {
+    [self playPause];
+    return YES;
+  }
+  return [super brEventAction:event];
 }
 
 @end
