@@ -45,10 +45,10 @@
 @interface VideoController (private)
 - (void)_loadVideo;
 - (void)_maximizePlayer;
-- (void)_fullscreen;
 - (void)_reveal;
 - (void)_returnToFR;
-- (void)_sendKeyPress: (int)keyCode;
+- (void)_sendKeyCode:(int)keyCode withCharCode:(int)charCode;
+- (void)_shieldMenu;
 @end
 
 @implementation VideoController
@@ -86,71 +86,128 @@
 // <WebFrameLoadDelegate> callback once the video loads
 - (void)webView:(WebView*)view didFinishLoadForFrame:(WebFrame*)frame
 {
-  if( [view isInFullScreenMode] ) return;
+  if( frame != [view mainFrame] ) return;
   [self _maximizePlayer];
-  [self _fullscreen];
+  [window_ display];
+  [window_ orderFrontRegardless];
+  [self _shieldMenu];
   [self _reveal];
 }
 
-- (void)_maximizePlayer
+// replace in |string| the numeric value after |name|= with |newdim|
+BOOL replaceDimension (const char* name, NSMutableString* string, int newdim)
 {
-  WebScriptObject* script = [view_ windowScriptObject];
-  id p = [script evaluateWebScript:@"document.player.nodeName"];
-  NSString* player = p;
-  if( !player || [player length] == 0 ) return;
-  NSSize size = [view_ frame].size;
-  NSString* width = [NSString stringWithFormat:@"%1.0f",size.width,nil];
-  NSString* height = [NSString stringWithFormat:@"%1.0f",size.height,nil];
-  [script evaluateWebScript:@"d = document.getElementsByTagName('div'); var i = 0; for( i = 0; i < d.length; i++ ){ d[i].setAttribute('style','display: none');}"];
-  NSString* flashvars = [script evaluateWebScript:@"document.player.getAttribute('flashvars')"];
-  const char* cText = [flashvars cStringUsingEncoding:[NSString defaultCStringEncoding]];
-  int nmatch = 2;
+  int nmatch = 2, res;
   regex_t regex;
   regmatch_t pmatch[nmatch];
-  regcomp(&regex,"stage_height=([[:digit:]]+)",REG_EXTENDED);
-  int res = regexec(&regex, cText, nmatch, pmatch, 0);
-  if( res != 0 || pmatch[nmatch - 1].rm_so == -1 ){
-    NSLog(@"failed to find stage height");
-    return;
-  }
+  NSString *regstr;
+  const char *regtext, *sourcetext;
+  
+  regstr = [NSString stringWithFormat:@"%s=([[:digit:]]+)",name];
+  regtext = [regstr cStringUsingEncoding:[NSString defaultCStringEncoding]];
+  sourcetext = [string cStringUsingEncoding:[NSString defaultCStringEncoding]];
+  
+  regcomp(&regex, regtext, REG_EXTENDED);
+  res = regexec(&regex, sourcetext, nmatch, pmatch, 0);
+  
+  if( res != 0 || pmatch[nmatch - 1].rm_so == -1 ) return NO;
   NSRange range = {pmatch[1].rm_so, pmatch[1].rm_eo-pmatch[1].rm_so};
-  flashvars = [flashvars stringByReplacingCharactersInRange:range 
-                                                 withString:height];
-  regcomp(&regex,"stage_width=([[:digit:]]+)",REG_EXTENDED);
-  res = regexec(&regex, cText, nmatch, pmatch, 0);
-  if( res != 0 || pmatch[nmatch - 1].rm_so == -1 ){
-    NSLog(@"failed to find stage width");
-    return;
-  }
-  range.location = pmatch[1].rm_so;
-  range.length = pmatch[1].rm_eo-pmatch[1].rm_so;
-  flashvars = [flashvars stringByReplacingCharactersInRange:range 
-                                                 withString:width];
+  [string replaceCharactersInRange:range 
+                        withString:[NSString stringWithFormat:@"%d",newdim]];
   regfree(&regex);
-  NSString* format = [NSString stringWithString:@"var p = document.player; var horig=p.getAttribute('height'); var worig=p.getAttribute('width'); var height=%@; var width=%@; var wflash=2*width-worig; var hflash=2*height-horig; var woffset=(wflash-worig)/2; var hoffset=(hflash-horig)/2; p.setAttribute('flashvars','%@'); p.setAttribute('style','display: none'); var t = p.parentNode; while(t!=document.body.parentNode){ t.setAttribute('style',\"position:absolute; text-align: left; display: block;\"); t.setAttribute(\"height\",height); t.setAttribute(\"width\",width); t = t.parentNode }; p.setAttribute(\"height\",hflash+\"px\"); p.setAttribute(\"width\",wflash+\"px\"); p.setAttribute(\"style\",\"display: normal; z-index: 10; position: absolute; top:-\"+hoffset+\"px; left:-\"+woffset+\"px;\");"];
-  NSString* resize = [NSString stringWithFormat:format, height, width, flashvars, nil];
-  [script evaluateWebScript:resize];
+  return YES;
+}
+
+// manipulate the web page DOM so that the player fills the screen
+- (void)_maximizePlayer
+{
+  // be sure we can get ahold of the flash player
+  WebScriptObject* script = [view_ windowScriptObject];
+  NSString* player;
+  player = (NSString*) [script evaluateWebScript:@"document.player.nodeName"];
+  if( !player || [player length] == 0 ) return;
+
+  NSString* movedivs;
+  NSString* getFlashVars = @"document.player.getAttribute('flashvars')";
+  NSString* getHeight = @"document.player.getAttribute('height');";
+  NSString* getWidth = @"document.player.getAttribute('width');";
+  NSString* hidedivs=@"d = document.getElementsByTagName('div'); var i=0; for( i = 0;"\
+  " i < d.length; i++ ){ d[i].setAttribute('style','display:none'); }";
+  NSString* setflashvars=@"document.player.setAttribute('flashvars','%@');";
+  NSString* hideplayer = @"document.player.setAttribute('style','display: none');";
+  NSString* setheight = @"document.player.setAttribute('height','%dpx');";
+  NSString* setwidth = @"document.player.setAttribute('width','%dpx');";
+  NSString* setstyle = @"document.player.setAttribute('style','display:normal;"\
+  " position:absolute; top:-%dpx; left:-%dpx;'); document.body.setAttribute('s"\
+  "tyle','background:rgb(40,39,39)')";
+  movedivs = @"var t = document.player.parentNode; while( t!=document.body.parentNode )"\
+  "{ t.setAttribute('style','position:absolute; text-align:left; display:block;')"\
+  "; t.setAttribute('height',%d); t.setAttribute('width',%d); t = t.parentNode };";
+  
+  NSSize screen = [view_ frame].size;
+  int pHeight = [[script evaluateWebScript:getHeight] intValue];
+  int pWidth = [[script evaluateWebScript:getWidth] intValue];
+  int newheight = screen.height;
+  int newwidth = screen.width;
+
+  // the flash player determines how large the video should be from an attribute
+  // of the html embed object named flashvars. the stage_height and stage_width
+  // are related to, but not the same as the html entity's height and width
+  NSMutableString* flashvars;
+  flashvars = [[script evaluateWebScript:getFlashVars] mutableCopy];
+  replaceDimension("stage_height",flashvars,newheight);
+  replaceDimension("stage_width",flashvars,newheight);
+  
+  // When the stage size is increased, space is padded around the actual video.
+  // Since some of the extra space is wasted, the new size is extended and the
+  // stage is offset to remove the padding
+  int hflash = (2*newheight)-pHeight;
+  int wflash = (2*newwidth)-pWidth;
+  int hoffset = (int)((hflash - pHeight)/2);  // 2 and 
+  int woffset = (int)((wflash - pWidth)/4);   // 4 are empirical
+  // If the player isn't filling the screen then we'll recenter it
+  hoffset -= (screen.height-newheight)/2;
+  woffset -= (screen.width-newwidth);
+  
+  setflashvars = [NSString stringWithFormat:setflashvars,flashvars];
+  movedivs = [NSString stringWithFormat:movedivs,newheight,newwidth];
+  setwidth = [NSString stringWithFormat:setwidth,wflash];
+  setheight = [NSString stringWithFormat:setheight,hflash];
+  setstyle = [NSString stringWithFormat:setstyle,hoffset,woffset];
+
+  // hide all of the <div> elements - get rid of other content
+  [script evaluateWebScript:hidedivs];
+  // update the flashvars (stage width and height)
+  [script evaluateWebScript:setflashvars];
+  // move the player (and it's ancestors) top/left
+  [script evaluateWebScript:movedivs];
+  [script evaluateWebScript:hideplayer];
+  // set the width (and height) of the player object
+  [script evaluateWebScript:setwidth];
+  [script evaluateWebScript:setheight];
+  // show the player (offset)  make the body background gray
+  [script evaluateWebScript:setstyle];
+    
   [view_ setNeedsDisplay:YES];
 }
 
-// make the WebView fullscreen
-- (void)_fullscreen
+// Create a shield over the menu bar. For some reason, when we fullscreen the
+// flash player, it doesn't cover the menu bar properly.
+- (void)_shieldMenu
 {
-  BRDisplayManager* manager = [BRDisplayManager sharedInstance];
-  NSDictionary* mode = [manager displayMode];
-  NSArray* objects = [NSArray arrayWithObjects: NSFullScreenModeAllScreens,
-                      NSFullScreenModeWindowLevel,
-                      NSFullScreenModeSetting,
-                      nil ];
-  NSArray* keys = [NSArray arrayWithObjects: [NSNumber numberWithBool:YES],
-                   [NSNumber numberWithInt:14],
-                   mode,
-                   nil ];
-  NSDictionary* options = [NSDictionary dictionaryWithObjects:objects
-                                                      forKeys:keys];
-  [view_ enterFullScreenMode:[NSScreen mainScreen]
-                 withOptions:options];
-  [self _sendKeyPress:3];
+  if( menushield_ ) return;
+  NSRect screenRect = [[NSScreen mainScreen] frame];
+  screenRect.origin.y = screenRect.size.height - 25;
+  screenRect.size.height = 25;
+  menushield_ = [[NSWindow alloc] initWithContentRect:screenRect
+                                            styleMask:NSBorderlessWindowMask
+                                              backing:NSBackingStoreBuffered
+                                                defer:NO 
+                                               screen:[NSScreen mainScreen]];
+  [menushield_ setBackgroundColor:[NSColor blackColor]];
+  [menushield_ setLevel: CGShieldingWindowLevel() ];
+  [menushield_ orderFrontRegardless];
+  [menushield_ display];
 }
 
 // order out the FR window, revealing the video display
@@ -162,18 +219,19 @@
   [renderer orderOut];
 }
 
-// un-fullscreen the hulu video and bring back the FR display
+// bring back the FR display, unshield the menu, close the player
 - (void) _returnToFR
 {
-  [view_ exitFullScreenModeWithOptions:nil];
-  [window_ close];
-  [view_ close];
-  window_ = nil;
-  view_ = nil;
   BRSentinel* sentinel = [BRSentinel sharedInstance];
   id<BRRendererProvider> provider = [sentinel rendererProvider];
   BRRenderer* renderer = [provider renderer];
   [renderer orderIn];  
+  [window_ close];
+  [menushield_ close];
+  [view_ close];
+  window_ = nil;
+  view_ = nil;
+  menushield_ = nil;
 }
 
 // grab the web view for the flash player
@@ -181,40 +239,57 @@
 {
   if( !pluginView_ )
   {
-    NSMutableSet* views = [NSMutableSet set];
-    NSMutableSet* webviews = [NSMutableSet set];
+    NSMutableSet* views = [[NSMutableSet set] retain];
+    NSMutableSet* webviews = [[NSMutableSet set] retain];
     [views addObjectsFromArray:[view_ subviews]];
     while( [views count] ){
       WebView* view = [views anyObject];
-      [views removeObject:view];
       if( [[view className] isEqual:@"WebNetscapePluginDocumentView"] )
         [webviews addObject:view];
       [views addObjectsFromArray:[view subviews]];
+      [views removeObject:view];
     }
-    if( [webviews count] > 1 ) NSLog(@"got multiple plugin views");
-    else if( [webviews count] < 1 ) NSLog(@"got no plugin views");
-    pluginView_ = [webviews anyObject];
+    if( [webviews count] < 1 ) NSLog(@"got no plugin views");
+    else
+    {
+      if( [webviews count] > 1 ) NSLog(@"got multiple plugin views");
+      pluginView_ = [webviews anyObject];
+      [pluginView_ retain];
+    }
   }
+  [views release];
+  [webviews release];
   return pluginView_;
 }
 
 // Send a keydown (and up) event to the web view holding the flash plugin
 // (using NSEvent doesn't work)
-- (void)_sendKeyPress:(int)keyCode
+- (void)_sendKeyCode:(int)keyCode withCharCode:(int)charCode;
 {
   WebView* view = [self _pluginView];
   EventRecord event; 
   event.what = keyDown; 
-  event.message = keyCode << 8; 
-  event.modifiers = 0;   
+  event.message = (keyCode << 8) + charCode;
+  event.modifiers = 0;
   [(id)view sendEvent:(NSEvent *)&event];
   event.what = keyUp;
   [(id)view sendEvent:(NSEvent *)&event];
+  [view autorelease];
 }
 
 - (void)playPause
 {
-  [self _sendKeyPress:49]; // space-bar
+  [self _sendKeyCode:49 withCharCode:0]; // space-bar
+}
+
+- (void)_flashFullscreen
+{
+  [self _sendKeyCode:3 withCharCode:102]; // 'f'
+}
+
+- (void)_flashExitFullscreen
+{
+  [self _sendKeyCode:53 withCharCode:27]; // ESC
 }
 
 #pragma mark BR Control
@@ -236,6 +311,7 @@
   return YES;
 }
 
+// play/pause works as expected, anythings else will fullscren the flash player
 - (BOOL)brEventAction:(BREvent*)event
 {
   if( [event remoteAction] == kBRRemotePlayPauseSelectButton )
@@ -243,6 +319,7 @@
     [self playPause];
     return YES;
   }
+  [self _flashFullscreen];
   return [super brEventAction:event];
 }
 
