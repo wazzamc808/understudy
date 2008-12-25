@@ -23,11 +23,11 @@
 #import "BackRow/BRMediaAsset.h"
 
 
-// class VideoAsset
+// class HuluAsset
 //
 // Represents the attributes of a Hulu Video
 
-@interface VideoAsset : BRBaseMediaAsset<BRMediaAsset> {
+@interface HuluAsset : BRBaseMediaAsset<BRMediaAsset> {
  @private
   NSString* title_;
   NSString* series_;

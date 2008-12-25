@@ -18,7 +18,7 @@
 
 #include <regex.h>
 
-#import "VideoController.h"
+#import "HuluController.h"
 
 #import <BackRow/BRControllerStack.h>
 #import <BackRow/BRDisplayManager.h>
@@ -42,7 +42,7 @@
 - (void)orderOut;
 @end
 
-@interface VideoController (private)
+@interface HuluController (private)
 - (void)_loadVideo;
 - (void)_maximizePlayer;
 - (void)_reveal;
@@ -51,9 +51,9 @@
 - (void)_shieldMenu;
 @end
 
-@implementation VideoController
+@implementation HuluController
 
-- (id)initWithVideoAsset:(VideoAsset*)asset
+- (id)initWithAsset:(HuluAsset*)asset
 {
   [super init];
   asset_ = [asset retain];
@@ -239,8 +239,8 @@ BOOL replaceDimension (const char* name, NSMutableString* string, int newdim)
 {
   if( !pluginView_ )
   {
-    NSMutableSet* views = [[NSMutableSet set] retain];
-    NSMutableSet* webviews = [[NSMutableSet set] retain];
+    NSMutableSet* views = [[[NSMutableSet set] retain] autorelease];
+    NSMutableSet* webviews = [[[NSMutableSet set] retain] autorelease];
     [views addObjectsFromArray:[view_ subviews]];
     while( [views count] ){
       WebView* view = [views anyObject];
@@ -257,8 +257,6 @@ BOOL replaceDimension (const char* name, NSMutableString* string, int newdim)
       [pluginView_ retain];
     }
   }
-  [views release];
-  [webviews release];
   return pluginView_;
 }
 

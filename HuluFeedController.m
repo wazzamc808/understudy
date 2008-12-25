@@ -16,9 +16,9 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
-#import "FeedMenuController.h"
-#import "VideoAsset.h"
-#import "VideoController.h"
+#import "HuluFeedController.h"
+#import "HuluAsset.h"
+#import "HuluController.h"
 
 #import <BackRow/BRControllerStack.h>
 #import <BackRow/BRComboMenuItemLayer.h>
@@ -26,7 +26,7 @@
 
 #import <Foundation/NSXMLDocument.h>
 
-@implementation FeedMenuController
+@implementation HuluFeedController
 
 - (id)initWithUrl:(NSURL*)url
 {
@@ -87,7 +87,7 @@
   NSEnumerator* feeditems = [[channel elementsForName:@"item"] objectEnumerator];
   NSXMLElement* feeditem;
   while( (feeditem = [feeditems nextObject]) ){
-    VideoAsset* asset = [[VideoAsset alloc] initWithXMLElement:feeditem];
+    HuluAsset* asset = [[HuluAsset alloc] initWithXMLElement:feeditem];
     BRTextMenuItemLayer* menuitem = [BRTextMenuItemLayer menuItem];
     [menuitem setTitle: [asset seriesName]];
     [menuitem setRightJustifiedText:[asset episodeInfo]];
@@ -122,10 +122,10 @@
 
 - (void)itemSelected:(long)itemIndex
 {
-  VideoController* con;
+  HuluController* con;
   if( ![self rowSelectable:itemIndex] ) return;
-  VideoAsset* asset = (VideoAsset*) [_assets objectAtIndex:itemIndex];
-  con = [[VideoController alloc] initWithVideoAsset:asset];
+  HuluAsset* asset = (HuluAsset*) [_assets objectAtIndex:itemIndex];
+  con = [[HuluController alloc] initWithAsset:asset];
   [[self stack] pushController:con];
 }
 

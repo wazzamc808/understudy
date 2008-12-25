@@ -16,7 +16,8 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
-#import "FeedMenuController.h"
+#import "HuluFeedController.h"
+#import "NetflixFeedController.h"
 #import "MainMenuController.h"
 
 #import <BackRow/BRControllerStack.h>
@@ -57,6 +58,16 @@ static MainMenuController *sharedInstance_;
   return sharedInstance_;
 }
 
+void upgradePrefs(RUIPreferences* FRprefs)
+{
+  // versions up to 0.2 used "hulu" as the name for the feeds information
+  NSDictionary* prefDict = (NSDictionary*) [FRprefs objectForKey:@"hulu"];
+  if( prefDict ){
+    [FRprefs setObject:prefDict forKey:@"understudy"];
+    [FRprefs setObject:nil forKey:@"hulu"];
+  }
+}
+
 - (void)_buildMenu
 {
   items_ = [[NSMutableArray array] retain];
@@ -67,7 +78,7 @@ static MainMenuController *sharedInstance_;
   [items_ addObject:add];  
   
   RUIPreferences* FRprefs = [RUIPreferences sharedFrontRowPreferences];
-  NSDictionary* prefDict = (NSDictionary*) [FRprefs objectForKey:@"hulu"];
+  NSDictionary* prefDict = (NSDictionary*) [FRprefs objectForKey:@"understudy"];
   NSDictionary* feeds = [prefDict objectForKey:@"feeds"];
   NSArray* feedURLs = [feeds allKeys];
   for( NSString* url in feedURLs ){
@@ -92,7 +103,7 @@ static MainMenuController *sharedInstance_;
   NSDictionary* huluPrefs = [NSDictionary dictionaryWithObject:subscriptions
                                                         forKey:@"feeds"];
   RUIPreferences* FRprefs = [RUIPreferences sharedFrontRowPreferences];
-  [FRprefs setObject:huluPrefs forKey:@"hulu"];
+  [FRprefs setObject:huluPrefs forKey:@"understudy"];
 }
 
 #pragma mark Adding Feeds
@@ -219,13 +230,24 @@ static MainMenuController *sharedInstance_;
 
 #pragma mark Control Functionality
 
-// When the menu is loaded from its parent, we don't need to do anything special
-// but when we return from a submenu, we want to make sure it's spinner is off
+// When this menu loads from its parent, we don't need to do anything special
+// but when we return from a submenu, we want to make sure spinners are off
 - (void)controlWillActivate
 {
   BRTextMenuItemLayer* item;
   item = (BRTextMenuItemLayer*) [self itemForRow:[self selectedItem]];
   [item setWaitSpinnerActive:NO];
+}
+
+// return an appropriate feed controller depending on the url provided
+BRController* controllerForURL(NSURL* url)
+{
+  NSString* host = [url host];
+  if( [host hasPrefix:@"www.hulu"] )
+    return [[HuluFeedController alloc] initWithUrl:url];
+  if( [host hasPrefix:@"rss.netflix"] )
+    return [[NetflixFeedController alloc] initWithUrl:url];
+  return nil;
 }
 
 - (void)itemSelected:(long)itemIndex
@@ -243,7 +265,7 @@ static MainMenuController *sharedInstance_;
     if( con ) [[self stack] pushController:con];
     else {
       NSURL* url = [NSURL URLWithString:[feeds_ objectAtIndex:itemIndex]];
-      con = [[FeedMenuController alloc] initWithUrl:url];
+      con = controllerForURL(url);
       [controllers_ setObject:con forKey:title];
       [[self stack] pushController:con];
     }

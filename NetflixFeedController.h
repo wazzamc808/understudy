@@ -17,24 +17,19 @@
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
 #import <Cocoa/Cocoa.h>
-#import <WebKit/WebKit.h>
 
-#import "BackRow/BRController.h"
+#import <BackRow/BRMediaMenuController.h>
 
-#import "VideoAsset.h"
+@class BRTextMenuItemLayer;
 
-@interface VideoController : BRController {
- @private
-  VideoAsset* asset_;
-  NSWindow* window_;
-  NSWindow* menushield_;
-  WebView* view_;
-  WebView* pluginView_;
-  
-  BOOL flashFullscreened_;
-  BOOL attempingToFullscreen_;
+@interface NetflixFeedController : BRMediaMenuController<BRMenuListItemProvider>
+{
+  NSURL* _url;
+  NSMutableArray* _items;
+  NSMutableArray* _assets;
+  NSDate* _lastrebuild;
 }
 
-- (id)initWithVideoAsset:(VideoAsset*)asset;
+- (id)initWithUrl:(NSURL*)url;
 
 @end

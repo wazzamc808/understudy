@@ -18,18 +18,26 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import <BackRow/BRMediaMenuController.h>
+#import "BackRow/BRBaseMediaAsset.h"
+#import <BackRow/BRImageManager.h>
+#import "BackRow/BRMediaAsset.h"
 
-@class BRTextMenuItemLayer;
 
-@interface FeedMenuController : BRMediaMenuController<BRMenuListItemProvider>
-{
-  NSURL* _url;
-  NSMutableArray* _items;
-  NSMutableArray* _assets;
-  NSDate* _lastrebuild;
+// class NetflixAsset
+//
+// Represents the attributes of a Netflix Video
+
+@interface NetflixAsset : BRBaseMediaAsset<BRMediaAsset> {
+ @private
+  NSString* title_;
+  NSString* description_;
+  NSURL* url_;
+  NSString* thumbnailID_;
+  BRImageManager* imageManager_;
 }
 
-- (id)initWithUrl:(NSURL*)url;
+- (id)initWithXMLElement:(NSXMLElement*)dom;
 
+// Provides the primary url of the media.
+- (NSURL*)url;
 @end

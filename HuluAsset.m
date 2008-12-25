@@ -16,7 +16,7 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
-#import "VideoAsset.h"
+#import "HuluAsset.h"
 
 #import <BackRow/BRImage.h>
 
@@ -24,7 +24,7 @@
 
 #include <regex.h>
 
-@interface VideoAsset (Parsing)
+@interface HuluAsset (Parsing)
 - (void)parseDescriptionElementFromDom:(NSXMLElement*) dom;
 - (void)parseTitleElementFromDom:(NSXMLElement*) dom;
 - (void)setAirDateFromString:(NSString*) text;
@@ -33,7 +33,7 @@
 - (void)setTitleAndEpisodeInfoFromString:(NSString*) text;
 @end
 
-@implementation VideoAsset
+@implementation HuluAsset
 
 - (id)initWithXMLElement:(NSXMLElement*) dom
 {
