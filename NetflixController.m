@@ -28,6 +28,9 @@
 
 #import <Carbon/Carbon.h>
 
+#define AGENTSTRING @"Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_5_6; en-us)"\
+" AppleWebKit/525.27.1 (KHTML, like Gecko) Version/3.2.1 Safari/525.27.1"
+
 @interface BRAppManager : NSObject { }
 + (BRAppManager*)sharedApplication;
 - (id)delegate;
@@ -44,11 +47,10 @@
 
 @interface NetflixController (private)
 - (void)_loadVideo;
-- (void)_maximizePlayer;
 - (void)_reveal;
 - (void)_returnToFR;
 - (void)_sendKeyCode:(int)keyCode withCharCode:(int)charCode;
-- (void)_shieldMenu;
+- (WebView*)_pluginView;
 @end
 
 @implementation NetflixController
@@ -81,7 +83,7 @@
   [window_ setContentView:view_];
   NSURLRequest* pageRequest = [NSURLRequest requestWithURL:[asset_ url]];
   NSLog(@"user agent: %@",[view_ customUserAgent]);
-  [view_ setCustomUserAgent:@"Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_5_6; en-us) AppleWebKit/525.27.1 (KHTML, like Gecko) Version/3.2.1 Safari/525.27.1"];
+  [view_ setCustomUserAgent:AGENTSTRING];
   [[view_ mainFrame] loadRequest:pageRequest];
 }
 
@@ -89,6 +91,7 @@
 - (void)webView:(WebView*)view didFinishLoadForFrame:(WebFrame*)frame
 {
   if( frame != [view mainFrame] ) return;
+  [window_ display];
   BRDisplayManager* manager = [BRDisplayManager sharedInstance];
   NSDictionary* mode = [manager displayMode];
   NSArray* objects = [NSArray arrayWithObjects: NSFullScreenModeAllScreens,
@@ -101,8 +104,8 @@
                    nil ];
   NSDictionary* options = [NSDictionary dictionaryWithObjects:objects
                                                       forKeys:keys];
-  [view_ enterFullScreenMode:[NSScreen mainScreen]
-                 withOptions:options];  
+  [[self _pluginView] enterFullScreenMode:[NSScreen mainScreen]
+                              withOptions:options];  
   [self _reveal];
 }
 
