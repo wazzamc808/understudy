@@ -40,7 +40,10 @@
   NSXMLElement* titleline = [[dom elementsForName:@"title"] objectAtIndex:0];
   NSString* titlestring = [[titleline childAtIndex:0] description];
   NSRange hy = [titlestring rangeOfString:@"- "];
-  title_ = [[titlestring substringFromIndex:(hy.location+hy.length)] retain];
+  if( hy.location != NSNotFound )
+    title_ = [[titlestring substringFromIndex:(hy.location+hy.length)] retain];
+  else
+    title_ = [[titlestring copy] retain];
 
   NSXMLElement* link = [[dom elementsForName:@"link"] objectAtIndex:0];
   mediaID = [[link stringValue] lastPathComponent];
@@ -54,8 +57,9 @@
   NSString* description = [[[dom elementsForName:@"description"] 
                             objectAtIndex:0] stringValue];
   NSRange br = [description rangeOfString:@"<br>"];
-  description_ = [description substringFromIndex: (br.location+br.length)];
-  description_ = (NSString*) CFXMLCreateStringByUnescapingEntities(NULL,(CFStringRef)description_,NULL);
+  if( br.location != NSNotFound )
+    description = [description substringFromIndex: NSMaxRange(br)];
+  description_ = (NSString*) CFXMLCreateStringByUnescapingEntities(NULL,(CFStringRef)description,NULL);
   [description_ retain];
   
   return self;
