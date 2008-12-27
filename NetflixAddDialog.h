@@ -18,33 +18,13 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import <BackRow/BRMediaMenuController.h>
 #import <BackRow/BROptionDialog.h>
 
-#import "AddFeedDialog.h"
-
-// class MainMenuController
-//
-// The primary window returned by the appliance controller. Use the
-// sharedInstance method to access the menu singleton rather than init (which 
-// is the designated initializer).
-
-@interface MainMenuController : BRMediaMenuController <BRMenuListItemProvider> 
-{
- @private
-  NSMutableArray* items_;
-  NSMutableArray* feeds_;
-  NSMutableDictionary* controllers_;
-  AddFeedDialog* addController_;
-  BROptionDialog* removeDialog_;
-  NSString* newfeed_;
+@interface NetflixAddDialog : BROptionDialog {
+  // the contents of Netflix's RSS feed listing
+  NSMutableData* pageData_;
+  // the url of the users Netflix Queue (auto-discovered)
+  NSString* queue_;
 }
-
-// Singleton access
-+ (MainMenuController*)sharedInstance;
-
-// Adds a feed to the menu
-- (void)addFeed:(NSString*)feedURL withTitle:(NSString*)title;
-
 
 @end

@@ -110,22 +110,18 @@ void upgradePrefs(RUIPreferences* FRprefs)
 // Display a controller allowing the user to add a new feed.
 - (void)_presentAddDialog
 {
-  if( !addController_ )
-  {
-    addController_ = [[BRTextEntryController alloc] retain];
-    [addController_ initWithTextEntryStyle:0];
-  }
-  [addController_ reset];
-  [addController_ setTitle:@"Add Feed"];
-  [addController_ setTextEntryTextFieldLabel:@"hulu.com/feed/"];
-  [addController_ setPromptText:@"Enter the url of a Hulu feed"];
-  [addController_ setTextEntryCompleteDelegate:self];
-  newfeed_ = nil;
+  if( !addController_ ) addController_ = [[AddFeedDialog alloc] init];
   [[self stack] pushController:addController_];
 }
 
-// After calling this method, the modal will have a new feed. The display
-// update must be invoked explicitly.
+- (void)addFeed:(NSString*)feedURL withTitle:(NSString*)title
+{
+  [self _addFeed:feedURL withTitle:title];
+  [[self list] reload];
+  [self _savePreferences];
+}
+
+// adds a feed without updating the display or preferences
 - (void)_addFeed:(NSString*)feedURL withTitle:(NSString*)title
 {
   [[self list] removeDividers];
@@ -140,29 +136,6 @@ void upgradePrefs(RUIPreferences* FRprefs)
   [items_ insertObject:menuitem atIndex:0];
   [feeds_ insertObject:feedURL atIndex:0];
   [[self list] addDividerAtIndex:[items_ count]-2 withLabel:nil];
-}
-
-// <BRTextEntryDelegate> methods
-- (void)textDidChange:(id<BRTextContainer>)container
-{ }
-
-- (void)textDidEndEditing:(id<BRTextContainer>)container
-{
-  if( !newfeed_ ){
-    newfeed_ = [[container stringValue] retain];
-    [addController_ reset];
-    [addController_ setPromptText:@"Name the feed"];
-    [addController_ setTextEntryTextFieldLabel:@""];
-  }else{
-    NSString* feed = [NSString stringWithString:@"http://www.hulu.com/feed/"];
-    feed = [feed stringByAppendingString:newfeed_];
-    NSString* title = [container stringValue];
-    if( [title length] == 0 ) title = [feed lastPathComponent];
-    [self _addFeed:feed withTitle:title];
-    [self _savePreferences];
-    [[self list] reload];
-    [[self stack] popController];
-  }
 }
 
 #pragma mark Removing Feeds
@@ -242,11 +215,17 @@ void upgradePrefs(RUIPreferences* FRprefs)
 // return an appropriate feed controller depending on the url provided
 BRController* controllerForURL(NSURL* url)
 {
-  NSString* host = [url host];
-  if( [host hasPrefix:@"www.hulu"] )
+  NSString* host = [[url host] lowercaseString];
+  NSRange range;
+
+  range = [host rangeOfString:@"hulu"];
+  if( range.location != NSNotFound )
     return [[HuluFeedController alloc] initWithUrl:url];
-  if( [host hasPrefix:@"rss.netflix"] )
+  
+  range = [host rangeOfString:@"netflix"];
+  if( range.location != NSNotFound )
     return [[NetflixFeedController alloc] initWithUrl:url];
+
   return nil;
 }
 

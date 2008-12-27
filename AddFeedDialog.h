@@ -18,33 +18,18 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import <BackRow/BRMediaMenuController.h>
 #import <BackRow/BROptionDialog.h>
 
-#import "AddFeedDialog.h"
+#import "HuluAddDialog.h"
+#import "NetflixAddDialog.h"
 
-// class MainMenuController
-//
-// The primary window returned by the appliance controller. Use the
-// sharedInstance method to access the menu singleton rather than init (which 
-// is the designated initializer).
-
-@interface MainMenuController : BRMediaMenuController <BRMenuListItemProvider> 
-{
- @private
-  NSMutableArray* items_;
-  NSMutableArray* feeds_;
-  NSMutableDictionary* controllers_;
-  AddFeedDialog* addController_;
-  BROptionDialog* removeDialog_;
-  NSString* newfeed_;
+@interface AddFeedDialog : BROptionDialog {
+  NSURL* pbURL_; // url in the users pastboard
+  HuluAddDialog* hulu_;
+  NetflixAddDialog* netflix_;
 }
 
-// Singleton access
-+ (MainMenuController*)sharedInstance;
-
-// Adds a feed to the menu
-- (void)addFeed:(NSString*)feedURL withTitle:(NSString*)title;
-
+// attempts to load a fee url from the global copy/past board
+- (void)loadFeedFromPasteboard;
 
 @end
