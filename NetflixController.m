@@ -20,6 +20,7 @@
 
 #import "NetflixController.h"
 
+#import <BackRow/BRAlertController.h>
 #import <BackRow/BRControllerStack.h>
 #import <BackRow/BRDisplayManager.h>
 #import <BackRow/BREvent.h>
@@ -104,9 +105,24 @@
                    nil ];
   NSDictionary* options = [NSDictionary dictionaryWithObjects:objects
                                                       forKeys:keys];
-  [[self _pluginView] enterFullScreenMode:[NSScreen mainScreen]
-                              withOptions:options];  
-  [self _reveal];
+  // if there is a plugin, we want to fullscreen it. if not (e.g. if the user
+  // isn't logged in and the movie won't be shown) we report an error
+  if( [self _pluginView] )
+  {
+    [pluginView_ enterFullScreenMode:[NSScreen mainScreen]
+                         withOptions:options];  
+    [self _reveal];
+  } else {
+    NSString* title = @"Error";
+    NSString* primary = @"Video Could Not Be Loaded";
+    NSString* secondary = @"Please ensure that you are logged into your Netfli"\
+    "x account in Safari, and that you have not reached your viewing limit";
+    BRAlertController* alert = [BRAlertController alertOfType:kBRAlertTypeError
+                                                       titled:title
+                                                  primaryText:primary
+                                                secondaryText:secondary];
+    [[self stack] swapController:alert];
+  }
 }
 
 // order out the FR window, revealing the video display
@@ -124,6 +140,7 @@
   BRSentinel* sentinel = [BRSentinel sharedInstance];
   id<BRRendererProvider> provider = [sentinel rendererProvider];
   BRRenderer* renderer = [provider renderer];
+  [pluginView_ exitFullScreenModeWithOptions:nil];
   [renderer orderIn];  
   [window_ close];
   [view_ close];
