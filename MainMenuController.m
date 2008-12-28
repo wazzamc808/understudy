@@ -19,6 +19,7 @@
 #import "HuluFeedController.h"
 #import "NetflixFeedController.h"
 #import "MainMenuController.h"
+#import "ManageFeedsDialog.h"
 
 #import <BackRow/BRControllerStack.h>
 #import <BackRow/BRTextMenuItemLayer.h>
@@ -36,6 +37,7 @@
   [super init];
   [self setListTitle:@"Understudy"];
   [[self list] setDatasource:self];
+  items_ = [[NSMutableArray array] retain];
   controllers_ = [[NSMutableDictionary dictionary] retain];
   [self _buildMenu];
   return self;
@@ -45,7 +47,7 @@
 {
   [items_ release];
   [feeds_ release];
-  [addController_ release];
+  [titles_ release];
   [controllers_ release];
   [super dealloc];
 }
@@ -62,117 +64,85 @@ void upgradePrefs(RUIPreferences* FRprefs)
 {
   // versions up to 0.2 used "hulu" as the name for the feeds information
   NSDictionary* prefDict = (NSDictionary*) [FRprefs objectForKey:@"hulu"];
-  if( prefDict ){
-    [FRprefs setObject:prefDict forKey:@"understudy"];
+  if( prefDict )
+  {
+    prefDict = (NSDictionary*) [prefDict objectForKey:@"feeds"];
+    // we now use an array of feeds, another array of titles
+    NSMutableDictionary* newprefs = [NSMutableDictionary dictionary];
+    NSArray* feeds = [prefDict allKeys];
+    NSMutableArray* titles = [NSMutableArray array];
+    for(NSString* url in feeds) [titles addObject:[prefDict objectForKey:url]];
+    [newprefs setObject:titles forKey:@"titles"];
+    [newprefs setObject:feeds forKey:@"feeds"];
+    [FRprefs setObject:newprefs forKey:@"understudy"];
     [FRprefs setObject:nil forKey:@"hulu"];
   }
 }
 
 - (void)_buildMenu
-{
-  items_ = [[NSMutableArray array] retain];
-  feeds_ = [[NSMutableArray array] retain];
-
-  BRTextMenuItemLayer* add = [BRTextMenuItemLayer menuItem];
-  [add setTitle:@"Add Feed"];
-  [items_ addObject:add];  
-  
+{  
   RUIPreferences* FRprefs = [RUIPreferences sharedFrontRowPreferences];
+  upgradePrefs(FRprefs);
   NSDictionary* prefDict = (NSDictionary*) [FRprefs objectForKey:@"understudy"];
-  NSDictionary* feeds = [prefDict objectForKey:@"feeds"];
-  NSArray* feedURLs = [feeds allKeys];
-  for( NSString* url in feedURLs ){
-    NSString* title = [feeds objectForKey:url];
-    [self _addFeed:url withTitle:title];
+  feeds_ = [[[prefDict objectForKey:@"feeds"] mutableCopy] retain];
+  titles_ = [[[prefDict objectForKey:@"titles"] mutableCopy] retain];
+  for( NSString* title in titles_ ){
+    BRTextMenuItemLayer* menuitem = [BRTextMenuItemLayer folderMenuItem];
+    [menuitem setTitle:title];
+    [items_ addObject:menuitem];
   }
+  BRTextMenuItemLayer* manager = [BRTextMenuItemLayer menuItem];
+  [manager setTitle:@"Manage Feeds"];
+  [items_ addObject:manager];
+  [controllers_ setObject:[[ManageFeedsDialog alloc] init] 
+                   forKey:[manager title]];
+  [[self list] addDividerAtIndex:[items_ count]-1 withLabel:nil];
   [[self list] reload];
 }
 
 // Takes the current feeds and pushed them in the FR preference storage. The
 // feed's url is the key, and it's (user specified) title is the value.
-- (void)_savePreferences
+- (void)savePreferences
 {
-  NSMutableArray* titles = [NSMutableArray array];
-  int i;
-  for(i = 0; i < [feeds_ count]; i++){
-    BRTextMenuItemLayer* menuitem = [items_ objectAtIndex:i];
-    [titles addObject:[menuitem title]];
-  }
-  NSDictionary* subscriptions = [NSDictionary dictionaryWithObjects:titles
-                                                            forKeys:feeds_];
-  NSDictionary* huluPrefs = [NSDictionary dictionaryWithObject:subscriptions
-                                                        forKey:@"feeds"];
+  NSMutableDictionary* prefs = [NSMutableDictionary dictionary];
+  [prefs setObject:titles_ forKey:@"titles"];
+  [prefs setObject:feeds_ forKey:@"feeds"];
   RUIPreferences* FRprefs = [RUIPreferences sharedFrontRowPreferences];
-  [FRprefs setObject:huluPrefs forKey:@"understudy"];
-}
-
-#pragma mark Adding Feeds
-// Display a controller allowing the user to add a new feed.
-- (void)_presentAddDialog
-{
-  if( !addController_ ) addController_ = [[AddFeedDialog alloc] init];
-  [[self stack] pushController:addController_];
+  [FRprefs setObject:prefs forKey:@"understudy"];
 }
 
 - (void)addFeed:(NSString*)feedURL withTitle:(NSString*)title
 {
-  [self _addFeed:feedURL withTitle:title];
-  [[self list] reload];
-  [self _savePreferences];
-}
-
-// adds a feed without updating the display or preferences
-- (void)_addFeed:(NSString*)feedURL withTitle:(NSString*)title
-{
-  [[self list] removeDividers];
-  if( [feeds_ count] == 0)
+  // ensure no duplicate titles
+  if( [titles_ containsObject:title] )
   {
-    BRTextMenuItemLayer* del= [BRTextMenuItemLayer menuItem];
-    [del setTitle:@"Remove Feed"];
-    [items_ addObject:del];
-  }  
+    NSString* format = @"%@ %d", *newtitle;
+    int i = 0;
+    do{
+      newtitle = [NSString stringWithFormat:format,title,i++];
+    }while( [titles_ containsObject:newtitle]);
+    title = newtitle;
+  }
+  [[self list] removeDividers];
   BRTextMenuItemLayer* menuitem = [BRTextMenuItemLayer folderMenuItem];
   [menuitem setTitle:title];
-  [items_ insertObject:menuitem atIndex:0];
-  [feeds_ insertObject:feedURL atIndex:0];
-  [[self list] addDividerAtIndex:[items_ count]-2 withLabel:nil];
+  [items_ insertObject:menuitem atIndex:([items_ count]-1)];
+  [feeds_ addObject:feedURL];
+  [titles_ addObject:title];
+  [[self list] addDividerAtIndex:[items_ count]-1 withLabel:nil];
+  [[self list] reload];
+  [self savePreferences];
 }
 
-#pragma mark Removing Feeds
-// Display a controller allowing the user to remove a new feed.
-- (void)_presentRemoveDialog
+- (void)removeFeedAtIndex:(long)index
 {
-  if( [feeds_ count] == 0) return;
-  [removeDialog_ release];
-  removeDialog_ = [[BROptionDialog alloc] init];
-  [removeDialog_ setTitle:@"Remove Feed"];
-  
-  // because of the "Add" and "Remove", we'll iterate of the length of the 
-  // |feeds_| array, but the text to present to the user comes from the item.
-  int i;
-  for(i = 0; i<[feeds_ count]; i++)
-  {
-    BRTextMenuItemLayer* menuitem = (BRTextMenuItemLayer*) [self itemForRow:i];
-    [removeDialog_ addOptionText:[menuitem title]];
-  }
-  [removeDialog_ setActionSelector:@selector(_removeCallBack) target:self];
-  [[self stack] pushController:removeDialog_];
-}
-
-// call back for the remove dialog
-- (void) _removeCallBack
-{
-  long index = [removeDialog_ selectedIndex];
+  [[self list] removeDividers];
   [items_ removeObjectAtIndex:index];
   [feeds_ removeObjectAtIndex:index];
-  [controllers_ removeObjectForKey:[removeDialog_ selectedText]];
-  [[self list] removeDividers];
-  // if only the "Add" and "Remove" items remain, lose the "Remove"
-  if( [items_ count] == 2 ) [items_ removeLastObject];
-  else [[self list] addDividerAtIndex:[items_ count]-2 withLabel:nil];
+  [titles_ removeObjectAtIndex:index];
+  [[self list] addDividerAtIndex:[items_ count]-1 withLabel:nil];
   [[self list] reload];
-  [self _savePreferences];
-  [[self stack] popController];
+  [self savePreferences];
 }
 
 #pragma mark @protocol BEMenuListItemProvider
@@ -203,15 +173,6 @@ void upgradePrefs(RUIPreferences* FRprefs)
 
 #pragma mark Control Functionality
 
-// When this menu loads from its parent, we don't need to do anything special
-// but when we return from a submenu, we want to make sure spinners are off
-- (void)controlWillActivate
-{
-  BRTextMenuItemLayer* item;
-  item = (BRTextMenuItemLayer*) [self itemForRow:[self selectedItem]];
-  [item setWaitSpinnerActive:NO];
-}
-
 // return an appropriate feed controller depending on the url provided
 BRController* controllerForURL(NSURL* url)
 {
@@ -231,24 +192,14 @@ BRController* controllerForURL(NSURL* url)
 
 - (void)itemSelected:(long)itemIndex
 {
-  BRTextMenuItemLayer* item;
-  int count = [items_ count];
-  if( itemIndex > count || count == 0 ) return;
-  else if( count == 1 || itemIndex == count - 2 ) [self _presentAddDialog];
-  else if( itemIndex == count-1) [self _presentRemoveDialog];
-  else {
-    item = (BRTextMenuItemLayer*) [self itemForRow:itemIndex];
-    [item setWaitSpinnerActive:YES];
-    NSString* title = [item title];
-    id con = [controllers_ valueForKey:title];
-    if( con ) [[self stack] pushController:con];
-    else {
-      NSURL* url = [NSURL URLWithString:[feeds_ objectAtIndex:itemIndex]];
-      con = controllerForURL(url);
-      [controllers_ setObject:con forKey:title];
-      [[self stack] pushController:con];
-    }
+  NSString* title =  [self titleForRow:itemIndex];
+  id con = [controllers_ objectForKey:title];
+  if( !con ) {
+    NSURL* url = [NSURL URLWithString:[feeds_ objectAtIndex:itemIndex]];
+    con = controllerForURL(url);
+    [controllers_ setObject:con forKey:title];
   }
+  [[self stack] pushController:con];
 }
 
 @end

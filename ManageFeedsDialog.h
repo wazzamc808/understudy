@@ -18,36 +18,13 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import <BackRow/BRMediaMenuController.h>
 #import <BackRow/BROptionDialog.h>
 
 #import "AddFeedDialog.h"
 
-// class MainMenuController
-//
-// The primary window returned by the appliance controller. Use the
-// sharedInstance method to access the menu singleton rather than init (which 
-// is the designated initializer).
-
-@interface MainMenuController : BRMediaMenuController <BRMenuListItemProvider> 
-{
- @private
-  // BR menu items
-  NSMutableArray* items_;
-  // feed urls in NSString format
-  NSMutableArray* feeds_;
-  // feed titles in NSString format
-  NSMutableArray* titles_;
-  // menu item -> controller (or nil if the controller hasn't been used)
-  NSMutableDictionary* controllers_;
+@interface ManageFeedsDialog : BROptionDialog {
+  AddFeedDialog* addController_;
+  BROptionDialog* removeDialog_;
 }
-
-// Singleton access
-+ (MainMenuController*)sharedInstance;
-
-// Adds a feed to the menu
-- (void)addFeed:(NSString*)feedURL withTitle:(NSString*)title;
-- (void)removeFeedAtIndex:(long)index;
-- (void)savePreferences;
 
 @end

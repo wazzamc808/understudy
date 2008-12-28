@@ -15,6 +15,7 @@
 		DF281F2F0F0568CB001373BC /* NetflixAddDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = DF281F2E0F0568CB001373BC /* NetflixAddDialog.m */; };
 		DF281F840F05852D001373BC /* AddFeedDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = DF281F830F05852D001373BC /* AddFeedDialog.m */; };
 		DF281FF30F0599AD001373BC /* HuluAddDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = DF281FF20F0599AD001373BC /* HuluAddDialog.m */; };
+		DF2820750F06E650001373BC /* ManageFeedsDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = DF2820740F06E650001373BC /* ManageFeedsDialog.m */; };
 		DF7F84F00EE3354E0049E5C3 /* BackRow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF7F84EF0EE3354E0049E5C3 /* BackRow.framework */; };
 		DFE014950EDF681D00AFD18F /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFE014940EDF681D00AFD18F /* WebKit.framework */; };
 		DFFC64770F02DBA3008477FD /* HuluAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = DFFC646C0F02DBA3008477FD /* HuluAsset.m */; };
@@ -45,6 +46,8 @@
 		DF281F830F05852D001373BC /* AddFeedDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddFeedDialog.m; sourceTree = "<group>"; };
 		DF281FF10F0599AD001373BC /* HuluAddDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HuluAddDialog.h; sourceTree = "<group>"; };
 		DF281FF20F0599AD001373BC /* HuluAddDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HuluAddDialog.m; sourceTree = "<group>"; };
+		DF2820730F06E650001373BC /* ManageFeedsDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManageFeedsDialog.h; sourceTree = "<group>"; };
+		DF2820740F06E650001373BC /* ManageFeedsDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManageFeedsDialog.m; sourceTree = "<group>"; };
 		DF7F84EF0EE3354E0049E5C3 /* BackRow.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BackRow.framework; path = /System/Library/PrivateFrameworks/BackRow.framework; sourceTree = "<absolute>"; };
 		DFE014940EDF681D00AFD18F /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = /System/Library/Frameworks/WebKit.framework; sourceTree = "<absolute>"; };
 		DFFC646B0F02DBA2008477FD /* HuluAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HuluAsset.h; sourceTree = "<group>"; };
@@ -130,6 +133,8 @@
 				DF0C598A0EA910FA00E0D882 /* MainMenuController.m */,
 				DF281F820F05852D001373BC /* AddFeedDialog.h */,
 				DF281F830F05852D001373BC /* AddFeedDialog.m */,
+				DF2820730F06E650001373BC /* ManageFeedsDialog.h */,
+				DF2820740F06E650001373BC /* ManageFeedsDialog.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -229,6 +234,7 @@
 				DF281F2F0F0568CB001373BC /* NetflixAddDialog.m in Sources */,
 				DF281F840F05852D001373BC /* AddFeedDialog.m in Sources */,
 				DF281FF30F0599AD001373BC /* HuluAddDialog.m in Sources */,
+				DF2820750F06E650001373BC /* ManageFeedsDialog.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

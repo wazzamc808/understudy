@@ -39,6 +39,7 @@
 
 - (void)dealloc
 {
+  [hulu_ release];
   [netflix_ release];
   [super dealloc];
 }

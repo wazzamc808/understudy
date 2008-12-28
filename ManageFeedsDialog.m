@@ -1,0 +1,83 @@
+//
+//  Copyright 2008 Kirk Kelsey.
+//
+//  This file is part of Understudy.
+//
+//  Understudy is free software: you can redistribute it and/or modify it under
+//  the terms of the GNU Lesser General Public License as published by the Free
+//  Software Foundation, either version 3 of the License, or (at your option)
+//  any later version.
+//
+//  Understudy is distributed in the hope that it will be useful, but WITHOUT 
+//  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
+//  FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
+//  for more details.
+//
+//  You should have received a copy of the GNU Lesser General Public License
+//  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
+
+#import "ManageFeedsDialog.h"
+#import "MainMenuController.h"
+
+#import <BackRow/BRControllerStack.h>
+
+@implementation ManageFeedsDialog
+
+- (id)init
+{
+  [super init];
+  [self setTitle:@"Manage Feeds"];
+  [self addOptionText:@"Add"];
+  [self addOptionText:@"Remove"];
+  [self setActionSelector:@selector(itemSelected) target:self];
+  addController_ = [[AddFeedDialog alloc] init];
+  return self;
+}
+
+- (void)controlWasActivated
+{
+  [super controlWasActivated];
+  // if the main menu doesn't have any feeds, go right to the add dialog
+  if( [[MainMenuController sharedInstance] itemCount] <= 1 )
+    [[self stack] swapController:addController_];
+}
+
+- (void)_presentRemoveDialog
+{
+  [removeDialog_ release];
+  removeDialog_ = [[BROptionDialog alloc] init];
+  [removeDialog_ setTitle:@"Remove Feed"];
+
+  MainMenuController* main = [MainMenuController sharedInstance];
+  int i;
+  for(i = 0; i<([main itemCount]-1); i++)
+    [removeDialog_ addOptionText:[main titleForRow:i]];
+  [removeDialog_ setActionSelector:@selector(_remove) target:self];
+  [[self stack] pushController:removeDialog_];
+}
+
+// call back for the remove dialog
+- (void) _remove
+{
+  long index = [removeDialog_ selectedIndex];
+  [[MainMenuController sharedInstance] removeFeedAtIndex:index];
+  [[self stack] popController];
+}
+
+// call-back for an item having been selected
+- (void)itemSelected
+{
+  switch([self selectedIndex])
+  {
+    case 0: // add
+      [[self stack] pushController:addController_];
+      break;
+    case 1: // remove
+      [self _presentRemoveDialog];
+      break;
+    default:
+      NSLog(@"unexpected index in add dialog");
+  }
+}
+
+@end

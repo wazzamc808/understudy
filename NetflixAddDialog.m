@@ -43,7 +43,6 @@ NSString* NETFLIXTITLES[] = {
 
 - (id)init
 {
-  NSLog(@"NetflixAddDialog init");
   [super init];
   [self setTitle:@"Netflix Feeds"];
   int i = 0;
@@ -51,7 +50,6 @@ NSString* NETFLIXTITLES[] = {
   [self setActionSelector:@selector(itemSelected) target:self];
   // start the autodiscovery process
   [self _startAutoDiscovery];
-  NSLog(@"init done");
   return self;
 }
 
