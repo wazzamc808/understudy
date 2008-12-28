@@ -85,7 +85,9 @@ void upgradePrefs(RUIPreferences* FRprefs)
   upgradePrefs(FRprefs);
   NSDictionary* prefDict = (NSDictionary*) [FRprefs objectForKey:@"understudy"];
   feeds_ = [[[prefDict objectForKey:@"feeds"] mutableCopy] retain];
+  if(!feeds_) feeds_ = [[NSMutableArray alloc] init];
   titles_ = [[[prefDict objectForKey:@"titles"] mutableCopy] retain];
+  if(!titles_) titles_ = [[NSMutableArray alloc] init];
   for( NSString* title in titles_ ){
     BRTextMenuItemLayer* menuitem = [BRTextMenuItemLayer folderMenuItem];
     [menuitem setTitle:title];
