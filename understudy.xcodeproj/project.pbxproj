@@ -12,18 +12,18 @@
 		DF0C59430EA9030E00E0D882 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF0C59420EA9030E00E0D882 /* QuartzCore.framework */; };
 		DF0C598B0EA910FA00E0D882 /* MainMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF0C598A0EA910FA00E0D882 /* MainMenuController.m */; };
 		DF0EDFCD0EE5E187008FA08A /* English.lproj in Resources */ = {isa = PBXBuildFile; fileRef = DF0EDFCA0EE5E187008FA08A /* English.lproj */; };
-		DF281F2F0F0568CB001373BC /* NetflixAddDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = DF281F2E0F0568CB001373BC /* NetflixAddDialog.m */; };
 		DF281F840F05852D001373BC /* AddFeedDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = DF281F830F05852D001373BC /* AddFeedDialog.m */; };
-		DF281FF30F0599AD001373BC /* HuluAddDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = DF281FF20F0599AD001373BC /* HuluAddDialog.m */; };
 		DF2820750F06E650001373BC /* ManageFeedsDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = DF2820740F06E650001373BC /* ManageFeedsDialog.m */; };
+		DF7D970C0F08647400C9B7FB /* HuluAddDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = DF7D97050F08647400C9B7FB /* HuluAddDialog.m */; };
+		DF7D970D0F08647400C9B7FB /* HuluAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = DF7D97070F08647400C9B7FB /* HuluAsset.m */; };
+		DF7D970E0F08647400C9B7FB /* HuluController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF7D97090F08647400C9B7FB /* HuluController.m */; };
+		DF7D970F0F08647400C9B7FB /* HuluFeedController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF7D970B0F08647400C9B7FB /* HuluFeedController.m */; };
+		DF7D97190F08649100C9B7FB /* NetflixAddDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = DF7D97120F08649100C9B7FB /* NetflixAddDialog.m */; };
+		DF7D971A0F08649100C9B7FB /* NetflixAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = DF7D97140F08649100C9B7FB /* NetflixAsset.m */; };
+		DF7D971B0F08649100C9B7FB /* NetflixController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF7D97160F08649100C9B7FB /* NetflixController.m */; };
+		DF7D971C0F08649100C9B7FB /* NetflixFeedController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF7D97180F08649100C9B7FB /* NetflixFeedController.m */; };
 		DF7F84F00EE3354E0049E5C3 /* BackRow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF7F84EF0EE3354E0049E5C3 /* BackRow.framework */; };
 		DFE014950EDF681D00AFD18F /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFE014940EDF681D00AFD18F /* WebKit.framework */; };
-		DFFC64770F02DBA3008477FD /* HuluAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = DFFC646C0F02DBA3008477FD /* HuluAsset.m */; };
-		DFFC64780F02DBA3008477FD /* HuluController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFFC646E0F02DBA3008477FD /* HuluController.m */; };
-		DFFC64790F02DBA3008477FD /* HuluFeedController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFFC64700F02DBA3008477FD /* HuluFeedController.m */; };
-		DFFC647A0F02DBA3008477FD /* NetflixAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = DFFC64720F02DBA3008477FD /* NetflixAsset.m */; };
-		DFFC647B0F02DBA3008477FD /* NetflixController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFFC64740F02DBA3008477FD /* NetflixController.m */; };
-		DFFC647C0F02DBA3008477FD /* NetflixFeedController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFFC64760F02DBA3008477FD /* NetflixFeedController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,28 +40,28 @@
 		DF0C598A0EA910FA00E0D882 /* MainMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainMenuController.m; sourceTree = "<group>"; };
 		DF0C96B40EE5BA9F00E85372 /* understudy_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = understudy_Prefix.pch; sourceTree = "<group>"; };
 		DF0EDFCA0EE5E187008FA08A /* English.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = English.lproj; sourceTree = "<group>"; };
-		DF281F2D0F0568CB001373BC /* NetflixAddDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetflixAddDialog.h; sourceTree = "<group>"; };
-		DF281F2E0F0568CB001373BC /* NetflixAddDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetflixAddDialog.m; sourceTree = "<group>"; };
 		DF281F820F05852D001373BC /* AddFeedDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddFeedDialog.h; sourceTree = "<group>"; };
 		DF281F830F05852D001373BC /* AddFeedDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddFeedDialog.m; sourceTree = "<group>"; };
-		DF281FF10F0599AD001373BC /* HuluAddDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HuluAddDialog.h; sourceTree = "<group>"; };
-		DF281FF20F0599AD001373BC /* HuluAddDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HuluAddDialog.m; sourceTree = "<group>"; };
 		DF2820730F06E650001373BC /* ManageFeedsDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManageFeedsDialog.h; sourceTree = "<group>"; };
 		DF2820740F06E650001373BC /* ManageFeedsDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManageFeedsDialog.m; sourceTree = "<group>"; };
+		DF7D97040F08647400C9B7FB /* HuluAddDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HuluAddDialog.h; sourceTree = "<group>"; };
+		DF7D97050F08647400C9B7FB /* HuluAddDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HuluAddDialog.m; sourceTree = "<group>"; };
+		DF7D97060F08647400C9B7FB /* HuluAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HuluAsset.h; sourceTree = "<group>"; };
+		DF7D97070F08647400C9B7FB /* HuluAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HuluAsset.m; sourceTree = "<group>"; };
+		DF7D97080F08647400C9B7FB /* HuluController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HuluController.h; sourceTree = "<group>"; };
+		DF7D97090F08647400C9B7FB /* HuluController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HuluController.m; sourceTree = "<group>"; };
+		DF7D970A0F08647400C9B7FB /* HuluFeedController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HuluFeedController.h; sourceTree = "<group>"; };
+		DF7D970B0F08647400C9B7FB /* HuluFeedController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HuluFeedController.m; sourceTree = "<group>"; };
+		DF7D97110F08649100C9B7FB /* NetflixAddDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetflixAddDialog.h; sourceTree = "<group>"; };
+		DF7D97120F08649100C9B7FB /* NetflixAddDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetflixAddDialog.m; sourceTree = "<group>"; };
+		DF7D97130F08649100C9B7FB /* NetflixAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetflixAsset.h; sourceTree = "<group>"; };
+		DF7D97140F08649100C9B7FB /* NetflixAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetflixAsset.m; sourceTree = "<group>"; };
+		DF7D97150F08649100C9B7FB /* NetflixController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetflixController.h; sourceTree = "<group>"; };
+		DF7D97160F08649100C9B7FB /* NetflixController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetflixController.m; sourceTree = "<group>"; };
+		DF7D97170F08649100C9B7FB /* NetflixFeedController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetflixFeedController.h; sourceTree = "<group>"; };
+		DF7D97180F08649100C9B7FB /* NetflixFeedController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetflixFeedController.m; sourceTree = "<group>"; };
 		DF7F84EF0EE3354E0049E5C3 /* BackRow.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BackRow.framework; path = /System/Library/PrivateFrameworks/BackRow.framework; sourceTree = "<absolute>"; };
 		DFE014940EDF681D00AFD18F /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = /System/Library/Frameworks/WebKit.framework; sourceTree = "<absolute>"; };
-		DFFC646B0F02DBA2008477FD /* HuluAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HuluAsset.h; sourceTree = "<group>"; };
-		DFFC646C0F02DBA3008477FD /* HuluAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HuluAsset.m; sourceTree = "<group>"; };
-		DFFC646D0F02DBA3008477FD /* HuluController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HuluController.h; sourceTree = "<group>"; };
-		DFFC646E0F02DBA3008477FD /* HuluController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HuluController.m; sourceTree = "<group>"; };
-		DFFC646F0F02DBA3008477FD /* HuluFeedController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HuluFeedController.h; sourceTree = "<group>"; };
-		DFFC64700F02DBA3008477FD /* HuluFeedController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HuluFeedController.m; sourceTree = "<group>"; };
-		DFFC64710F02DBA3008477FD /* NetflixAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetflixAsset.h; sourceTree = "<group>"; };
-		DFFC64720F02DBA3008477FD /* NetflixAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetflixAsset.m; sourceTree = "<group>"; };
-		DFFC64730F02DBA3008477FD /* NetflixController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetflixController.h; sourceTree = "<group>"; };
-		DFFC64740F02DBA3008477FD /* NetflixController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetflixController.m; sourceTree = "<group>"; };
-		DFFC64750F02DBA3008477FD /* NetflixFeedController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetflixFeedController.h; sourceTree = "<group>"; };
-		DFFC64760F02DBA3008477FD /* NetflixFeedController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetflixFeedController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,22 +111,8 @@
 		08FB77AFFE84173DC02AAC07 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				DF281FF10F0599AD001373BC /* HuluAddDialog.h */,
-				DF281FF20F0599AD001373BC /* HuluAddDialog.m */,
-				DFFC646B0F02DBA2008477FD /* HuluAsset.h */,
-				DFFC646C0F02DBA3008477FD /* HuluAsset.m */,
-				DFFC646D0F02DBA3008477FD /* HuluController.h */,
-				DFFC646E0F02DBA3008477FD /* HuluController.m */,
-				DFFC646F0F02DBA3008477FD /* HuluFeedController.h */,
-				DFFC64700F02DBA3008477FD /* HuluFeedController.m */,
-				DF281F2D0F0568CB001373BC /* NetflixAddDialog.h */,
-				DF281F2E0F0568CB001373BC /* NetflixAddDialog.m */,
-				DFFC64710F02DBA3008477FD /* NetflixAsset.h */,
-				DFFC64720F02DBA3008477FD /* NetflixAsset.m */,
-				DFFC64730F02DBA3008477FD /* NetflixController.h */,
-				DFFC64740F02DBA3008477FD /* NetflixController.m */,
-				DFFC64750F02DBA3008477FD /* NetflixFeedController.h */,
-				DFFC64760F02DBA3008477FD /* NetflixFeedController.m */,
+				DF7D97100F08649100C9B7FB /* Netflix */,
+				DF7D97030F08647400C9B7FB /* Hulu */,
 				918B27AF0D7CFB2100D87AC2 /* UnderstudyAppliance.h */,
 				918B27B00D7CFB2100D87AC2 /* UnderstudyAppliance.m */,
 				DF0C59890EA910FA00E0D882 /* MainMenuController.h */,
@@ -167,6 +153,36 @@
 				DF0C96B40EE5BA9F00E85372 /* understudy_Prefix.pch */,
 			);
 			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		DF7D97030F08647400C9B7FB /* Hulu */ = {
+			isa = PBXGroup;
+			children = (
+				DF7D97040F08647400C9B7FB /* HuluAddDialog.h */,
+				DF7D97050F08647400C9B7FB /* HuluAddDialog.m */,
+				DF7D97060F08647400C9B7FB /* HuluAsset.h */,
+				DF7D97070F08647400C9B7FB /* HuluAsset.m */,
+				DF7D97080F08647400C9B7FB /* HuluController.h */,
+				DF7D97090F08647400C9B7FB /* HuluController.m */,
+				DF7D970A0F08647400C9B7FB /* HuluFeedController.h */,
+				DF7D970B0F08647400C9B7FB /* HuluFeedController.m */,
+			);
+			path = Hulu;
+			sourceTree = "<group>";
+		};
+		DF7D97100F08649100C9B7FB /* Netflix */ = {
+			isa = PBXGroup;
+			children = (
+				DF7D97110F08649100C9B7FB /* NetflixAddDialog.h */,
+				DF7D97120F08649100C9B7FB /* NetflixAddDialog.m */,
+				DF7D97130F08649100C9B7FB /* NetflixAsset.h */,
+				DF7D97140F08649100C9B7FB /* NetflixAsset.m */,
+				DF7D97150F08649100C9B7FB /* NetflixController.h */,
+				DF7D97160F08649100C9B7FB /* NetflixController.m */,
+				DF7D97170F08649100C9B7FB /* NetflixFeedController.h */,
+				DF7D97180F08649100C9B7FB /* NetflixFeedController.m */,
+			);
+			path = Netflix;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -225,16 +241,16 @@
 			files = (
 				918B27B10D7CFB2100D87AC2 /* UnderstudyAppliance.m in Sources */,
 				DF0C598B0EA910FA00E0D882 /* MainMenuController.m in Sources */,
-				DFFC64770F02DBA3008477FD /* HuluAsset.m in Sources */,
-				DFFC64780F02DBA3008477FD /* HuluController.m in Sources */,
-				DFFC64790F02DBA3008477FD /* HuluFeedController.m in Sources */,
-				DFFC647A0F02DBA3008477FD /* NetflixAsset.m in Sources */,
-				DFFC647B0F02DBA3008477FD /* NetflixController.m in Sources */,
-				DFFC647C0F02DBA3008477FD /* NetflixFeedController.m in Sources */,
-				DF281F2F0F0568CB001373BC /* NetflixAddDialog.m in Sources */,
 				DF281F840F05852D001373BC /* AddFeedDialog.m in Sources */,
-				DF281FF30F0599AD001373BC /* HuluAddDialog.m in Sources */,
 				DF2820750F06E650001373BC /* ManageFeedsDialog.m in Sources */,
+				DF7D970C0F08647400C9B7FB /* HuluAddDialog.m in Sources */,
+				DF7D970D0F08647400C9B7FB /* HuluAsset.m in Sources */,
+				DF7D970E0F08647400C9B7FB /* HuluController.m in Sources */,
+				DF7D970F0F08647400C9B7FB /* HuluFeedController.m in Sources */,
+				DF7D97190F08649100C9B7FB /* NetflixAddDialog.m in Sources */,
+				DF7D971A0F08649100C9B7FB /* NetflixAsset.m in Sources */,
+				DF7D971B0F08649100C9B7FB /* NetflixController.m in Sources */,
+				DF7D971C0F08649100C9B7FB /* NetflixFeedController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -257,7 +273,10 @@
 				GCC_PFE_FILE_C_DIALECTS = "c objective-c";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = understudy_Prefix.pch;
-				HEADER_SEARCH_PATHS = .;
+				HEADER_SEARCH_PATHS = (
+					Hulu,
+					Netflix,
+				);
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "/System/Library/CoreServices/Front Row.app/Contents/PlugIns/";
 				PRODUCT_NAME = frUnderstudy;
@@ -298,6 +317,10 @@
 				FRAMEWORK_SEARCH_PATHS = "/System/Library/PrivateFrameworks//**";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					Hulu,
+					Netflix,
+				);
 				PREBINDING = NO;
 				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.5.sdk";
 			};
@@ -313,6 +336,10 @@
 				FRAMEWORK_SEARCH_PATHS = "/System/Library/PrivateFrameworks//**";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					Hulu,
+					Netflix,
+				);
 				PREBINDING = NO;
 				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.5.sdk";
 			};
