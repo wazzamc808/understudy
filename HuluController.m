@@ -48,7 +48,7 @@
 - (void)_reveal;
 - (void)_returnToFR;
 - (void)_sendKeyCode:(int)keyCode withCharCode:(int)charCode;
-- (void)_shieldMenu;
+- (void)_fullscreen;
 @end
 
 @implementation HuluController
@@ -90,7 +90,7 @@
   [self _maximizePlayer];
   [window_ display];
   [window_ orderFrontRegardless];
-  [self _shieldMenu];
+  [self _fullscreen];
   [self _reveal];
 }
 
@@ -191,23 +191,23 @@ BOOL replaceDimension (const char* name, NSMutableString* string, int newdim)
   [view_ setNeedsDisplay:YES];
 }
 
-// Create a shield over the menu bar. For some reason, when we fullscreen the
-// flash player, it doesn't cover the menu bar properly.
-- (void)_shieldMenu
+// make the WebView fullscreen
+- (void)_fullscreen
 {
-  if( menushield_ ) return;
-  NSRect screenRect = [[NSScreen mainScreen] frame];
-  screenRect.origin.y = screenRect.size.height - 25;
-  screenRect.size.height = 25;
-  menushield_ = [[NSWindow alloc] initWithContentRect:screenRect
-                                            styleMask:NSBorderlessWindowMask
-                                              backing:NSBackingStoreBuffered
-                                                defer:NO 
-                                               screen:[NSScreen mainScreen]];
-  [menushield_ setBackgroundColor:[NSColor blackColor]];
-  [menushield_ setLevel: CGShieldingWindowLevel() ];
-  [menushield_ orderFrontRegardless];
-  [menushield_ display];
+  BRDisplayManager* manager = [BRDisplayManager sharedInstance];
+  NSDictionary* mode = [manager displayMode];
+  NSArray* objects = [NSArray arrayWithObjects: NSFullScreenModeAllScreens,
+                      NSFullScreenModeWindowLevel,
+                      NSFullScreenModeSetting,
+                      nil ];
+  NSArray* keys = [NSArray arrayWithObjects: [NSNumber numberWithBool:YES],
+                   [NSNumber numberWithInt:14],
+                   mode,
+                   nil ];
+  NSDictionary* options = [NSDictionary dictionaryWithObjects:objects
+                                                      forKeys:keys];
+  [view_ enterFullScreenMode:[NSScreen mainScreen]
+                 withOptions:options];
 }
 
 // order out the FR window, revealing the video display
@@ -226,12 +226,11 @@ BOOL replaceDimension (const char* name, NSMutableString* string, int newdim)
   id<BRRendererProvider> provider = [sentinel rendererProvider];
   BRRenderer* renderer = [provider renderer];
   [renderer orderIn];  
+  [view_ exitFullScreenModeWithOptions:nil];
   [window_ close];
-  [menushield_ close];
   [view_ close];
   window_ = nil;
   view_ = nil;
-  menushield_ = nil;
 }
 
 // grab the web view for the flash player
