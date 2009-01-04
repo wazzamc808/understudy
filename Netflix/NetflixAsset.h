@@ -27,7 +27,7 @@
 //
 // Represents the attributes of a Netflix Video
 
-@interface NetflixAsset : BRBaseMediaAsset<BRMediaAsset> {
+@interface NetflixAsset : BRBaseMediaAsset {
  @private
   NSString* title_;
   NSString* description_;

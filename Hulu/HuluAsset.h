@@ -27,7 +27,7 @@
 //
 // Represents the attributes of a Hulu Video
 
-@interface HuluAsset : BRBaseMediaAsset<BRMediaAsset> {
+@interface HuluAsset : BRBaseMediaAsset {
  @private
   NSString* title_;
   NSString* series_;
