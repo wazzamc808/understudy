@@ -1,5 +1,5 @@
 //
-//  Copyright 2008 Kirk Kelsey.
+//  Copyright 2008-2009 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -18,6 +18,7 @@
 
 #import "ManageFeedsDialog.h"
 #import "MainMenuController.h"
+#import "RenameDialog.h"
 
 #import <BackRow/BRControllerStack.h>
 
@@ -29,6 +30,7 @@
   [self setTitle:@"Manage Feeds"];
   [self addOptionText:@"Add"];
   [self addOptionText:@"Remove"];
+  [self addOptionText:@"Rename"];
   [self setActionSelector:@selector(itemSelected) target:self];
   addController_ = [[AddFeedDialog alloc] init];
   return self;
@@ -47,21 +49,28 @@
   [removeDialog_ release];
   removeDialog_ = [[BROptionDialog alloc] init];
   [removeDialog_ setTitle:@"Remove Feed"];
-
+  
   MainMenuController* main = [MainMenuController sharedInstance];
   int i;
   for(i = 0; i<([main itemCount]-1); i++)
-    [removeDialog_ addOptionText:[main titleForRow:i]];
+    [removeDialog_ addOptionText:[main titleForRow:i]];  
   [removeDialog_ setActionSelector:@selector(_remove) target:self];
   [[self stack] pushController:removeDialog_];
 }
 
 // call back for the remove dialog
-- (void) _remove
+- (void)_remove
 {
   long index = [removeDialog_ selectedIndex];
   [[MainMenuController sharedInstance] removeFeedAtIndex:index];
   [[self stack] popController];
+}
+
+- (void)_presentRenameDialog
+{
+  RenameDialog* rename = [[RenameDialog alloc] init];
+  [[self stack] pushController:rename];
+  [rename autorelease];
 }
 
 // call-back for an item having been selected
@@ -74,6 +83,9 @@
       break;
     case 1: // remove
       [self _presentRemoveDialog];
+      break;
+    case 2: // rename
+      [self _presentRenameDialog];
       break;
     default:
       NSLog(@"unexpected index in add dialog");
