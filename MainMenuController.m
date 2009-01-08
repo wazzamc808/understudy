@@ -1,5 +1,5 @@
 //
-//  Copyright 2008 Kirk Kelsey.
+//  Copyright 2008-2009 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -18,6 +18,7 @@
 
 #import "HuluFeedController.h"
 #import "NetflixFeedController.h"
+
 #import "MainMenuController.h"
 #import "ManageFeedsDialog.h"
 
@@ -147,7 +148,19 @@ void upgradePrefs(RUIPreferences* FRprefs)
   [self savePreferences];
 }
 
-#pragma mark @protocol BEMenuListItemProvider
+- (void)renameFeedAtIndex:(long)index withTitle:(NSString*)title
+{
+  [titles_ removeObjectAtIndex:index];
+  [titles_ insertObject:[title copy] atIndex:index];
+  BRTextMenuItemLayer* item =  [BRTextMenuItemLayer menuItem];
+  [item setTitle:title];
+  [items_ removeObjectAtIndex:index];
+  [items_ insertObject:item atIndex:index];
+  [[self list] reload];
+  [self savePreferences];
+}
+
+#pragma mark @protocol BRMenuListItemProvider
 - (long)itemCount
 {
   return [items_ count];

@@ -1,5 +1,5 @@
 //
-//  Copyright 2008 Kirk Kelsey.
+//  Copyright 2008-2009 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -29,7 +29,7 @@
 // sharedInstance method to access the menu singleton rather than init (which 
 // is the designated initializer).
 
-@interface MainMenuController : BRMediaMenuController <BRMenuListItemProvider> 
+@interface MainMenuController : BRMediaMenuController <BRMenuListItemProvider>
 {
  @private
   // BR menu items
@@ -45,9 +45,9 @@
 // Singleton access
 + (MainMenuController*)sharedInstance;
 
-// Adds a feed to the menu
 - (void)addFeed:(NSString*)feedURL withTitle:(NSString*)title;
 - (void)removeFeedAtIndex:(long)index;
+- (void)renameFeedAtIndex:(long)index withTitle:(NSString*)title;
 - (void)savePreferences;
 
 @end
