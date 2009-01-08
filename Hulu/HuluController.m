@@ -316,7 +316,6 @@ BOOL replaceDimension (const char* name, NSMutableString* string, int newdim)
     [self playPause];
     return YES;
   }
-  [self _flashFullscreen];
   return [super brEventAction:event];
 }
 
