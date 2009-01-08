@@ -44,7 +44,7 @@
   if( hy.location != NSNotFound )
     title_ = [[titlestring substringFromIndex:(hy.location+hy.length)] retain];
   else
-    title_ = [[titlestring copy] retain];
+    title_ = [titlestring copy];
 
   NSXMLElement* link = [[dom elementsForName:@"link"] objectAtIndex:0];
   mediaID = [[link stringValue] lastPathComponent];

@@ -41,7 +41,7 @@
   [_items addObject:item];
   _assets = [[NSMutableArray array] retain];
   _lastrebuild = [[NSDate distantPast] retain];
-  [self performSelectorInBackground:@selector(asyncRebuild:) withObject:nil];
+  [self performSelectorInBackground:@selector(asyncRebuild) withObject:nil];
   return self;
 }
 
@@ -101,7 +101,7 @@
   [self updatePreviewController];
 }
 
-- (void)asyncRebuild:(id)a
+- (void)asyncRebuild
 {
   NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
   [self rebuildMenu];
@@ -112,7 +112,7 @@
 
 - (void)controlWasActivated
 {
-  [self performSelectorInBackground:@selector(asyncRebuild:) withObject:nil];
+  [self performSelectorInBackground:@selector(asyncRebuild) withObject:nil];
   [super controlWasActivated];
 }
 
