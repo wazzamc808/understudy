@@ -41,9 +41,11 @@
   [super init];
   [self parseTitleElementFromDom:dom];
   [self parseDescriptionElementFromDom:dom];
-  NSXMLElement* url = [[dom elementsForName:@"link"] objectAtIndex:0];
-  url_ = [[NSURL URLWithString:[url stringValue]] retain];
-  
+  NSString* url = [[[dom elementsForName:@"link"] objectAtIndex:0] stringValue];
+  NSRange range = [url rangeOfString:@"#"];
+  if( range.location != NSNotFound ) 
+    url = [url substringToIndex:range.location];
+  url_ = [[NSURL URLWithString:url] retain];
   NSArray* tnArray = [dom elementsForName:@"media:thumbnail"];
   NSXMLElement* tnElement = [tnArray objectAtIndex:0];
   NSXMLNode* tnAttribute = [tnElement attributeForName:@"url"];
