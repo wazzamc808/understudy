@@ -25,6 +25,7 @@
 #import <BackRow/BREvent.h>
 #import <BackRow/BRRenderScene.h>
 #import <BackRow/BRSentinel.h>
+#import <BackRow/BRSettingsFacade.h>
 
 #import <Carbon/Carbon.h>
 
@@ -327,15 +328,26 @@ BOOL replaceDimension (const char* name, NSMutableString* string, int newdim)
   return YES;
 }
 
-// play/pause works as expected, anythings else will fullscren the flash player
+// play/pause works as expected
 - (BOOL)brEventAction:(BREvent*)event
 {
-  if( [event remoteAction] == kBRRemotePlayPauseSelectButton )
-  {
-    [self playPause];
-    return YES;
+  BRSettingsFacade* settings;
+  switch ([event remoteAction]) {
+    case kBRRemotePlayPauseSelectButton:
+      [self playPause];
+      return YES;
+      break;
+    case kBRRemoteUpButton:
+      settings = [BRSettingsFacade sharedInstance];
+      [settings setSystemVolume:([settings systemVolume]+0.1)];
+      return YES;
+    case kBRRemoteDownButton:
+      settings = [BRSettingsFacade sharedInstance];
+      [settings setSystemVolume:([settings systemVolume]-0.1)];
+      return YES;
+    default:
+      return [super brEventAction:event];
   }
-  return [super brEventAction:event];
 }
 
 @end
