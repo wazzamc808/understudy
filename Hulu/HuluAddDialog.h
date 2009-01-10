@@ -1,5 +1,5 @@
 //
-//  Copyright 2008 Kirk Kelsey.
+//  Copyright 2008-2009 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -18,12 +18,13 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import <BackRow/BROptionDialog.h>
+#import <BackRow/BRCenteredMenuController.h>
 
-@interface HuluAddDialog : BROptionDialog {
+@interface HuluAddDialog : BRCenteredMenuController <BRMenuListItemProvider> {
   NSString* profile_;
   NSMutableArray* titles_;
   NSMutableArray* feeds_;
+  BOOL searching_;
 }
 
 - (void)startAutoDiscovery;

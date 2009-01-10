@@ -1,5 +1,5 @@
 //
-//  Copyright 2008 Kirk Kelsey.
+//  Copyright 2008-2009 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -20,6 +20,7 @@
 #import "MainMenuController.h"
 
 #import <BackRow/BRControllerStack.h>
+#import <BackRow/BRTextMenuItemLayer.h>
 
 @implementation HuluAddDialog
 
@@ -43,9 +44,8 @@
               @"Highest Rated Videos", @"Most Popular: Today", 
               @"Most Popular: This Week", @"Most Popular: This Month", 
               @"Most Popular: All Time", nil] retain];
-  for( NSString* title in titles_ ) [self addOptionText:title];
   [self startAutoDiscovery];
-  [self setActionSelector:@selector(itemSelected) target:self];
+  [[self list] setDatasource:self];
   return self;
 }
 
@@ -58,9 +58,8 @@
 }
 
 // call-back for an item having been selected
-- (void)itemSelected
+- (void)itemSelected:(long)index
 {  
-  int index = [self selectedIndex];
   if( index < [feeds_ count] ){
     MainMenuController* main_ = [MainMenuController sharedInstance];
     [main_ addFeed:[feeds_ objectAtIndex:index] 
@@ -76,6 +75,7 @@
 
 - (void)startAutoDiscovery
 {
+  searching_ = YES;
   NSURL* url = [NSURL URLWithString:@"http://www.hulu.com/users/profile"];
   NSURLRequest* request = [NSURLRequest requestWithURL:url];
   if( ![[NSURLConnection alloc] initWithRequest:request
@@ -84,15 +84,29 @@
     NSLog(@"Failed to open connection for Hulu feed auto-discovery");
 }
 
-- (void)_autoDiscover
-{
-  [feeds_ addObject:[@"www.hulu.com/feed/queue/" stringByAppendingString:profile_]];
-  [titles_ addObject:@"Hulu Queue"];
-  [self addOptionText:@"Hulu Queue"];
-  [feeds_ addObject:[@"www.hulu.com/feed/recommendations/" stringByAppendingString:profile_]];
-  [titles_ addObject:@"Hulu Recommended Videos"];
-  [self addOptionText:@"Hulu Recommended Videos"];
+# pragma mark BRMenuListItemProvider
+
+- (long)itemCount{ return [feeds_ count] + (searching_ ? 1 : 0) ; }
+- (float)heightForRow:(long)row{ return 0; }
+- (BOOL)rowSelectable:(long)row{ return !(row == 0 && searching_); }
+- (NSString*)titleForRow:(long)row{ 
+  if( searching_ ) row -= 1;
+  return [titles_ objectAtIndex:row];
 }
+- (BRLayer<BRMenuItemLayer>*)itemForRow:(long)row
+{
+  BRTextMenuItemLayer* item;
+  if( [self rowSelectable:row] ){
+    item = [BRTextMenuItemLayer menuItem];
+    [item setTitle:[self titleForRow:row]];
+  }else{
+    item = [BRTextMenuItemLayer progressMenuItem];
+    [item setTitle:@"Looking for user profile"];
+    [item setDimmed:YES];
+  }
+  return item;
+}
+
 
 # pragma mark NSURLConnection Delegation
 
@@ -103,9 +117,17 @@ didReceiveResponse:(NSURLResponse*)response
   NSString* path = [[response URL] path];
   if( [path hasPrefix:@"/users/profile"] )
   {
+    NSString* feed;
     profile_ = [[path lastPathComponent] retain];
     [connection cancel];
-    [self _autoDiscover];
+    feed = [@"www.hulu.com/feed/recommendations/" stringByAppendingString:profile_];
+    [feeds_ insertObject:feed atIndex:0];
+    [titles_ insertObject:@"Hulu Recommended Videos" atIndex:0];
+    feed = [@"www.hulu.com/feed/queue/" stringByAppendingString:profile_];
+    [feeds_ insertObject:feed atIndex:0];
+    [titles_ insertObject:@"Hulu Queue" atIndex:0];
+    searching_ = NO;
+    [[self list] reload];
   }
 }
 
@@ -113,11 +135,15 @@ didReceiveResponse:(NSURLResponse*)response
   didFailWithError:(NSError*)error
 {
   [connection release];
+  searching_ = NO;
+  [[self list] reload];
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection*)connection
 {
   [connection release];
+  searching_ = NO;
+  [[self list] reload];
 }
 
 @end
