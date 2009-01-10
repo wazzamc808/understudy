@@ -24,12 +24,10 @@
 #import "NetflixAddDialog.h"
 
 @interface AddFeedDialog : BROptionDialog {
+ @private 
   NSURL* pbURL_; // url in the users pastboard
   HuluAddDialog* hulu_;
   NetflixAddDialog* netflix_;
 }
-
-// attempts to load a fee url from the global copy/past board
-- (void)loadFeedFromPasteboard;
 
 @end

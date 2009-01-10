@@ -19,6 +19,7 @@
 #import "AddFeedDialog.h"
 #import "MainMenuController.h"
 
+#import <BackRow/BRAlertController.h>
 #import <BackRow/BRControllerStack.h>
 #import <BackRow/RUISoundHandler.h>
 
@@ -44,6 +45,39 @@
   [super dealloc];
 }
 
+// looks for a string in the clipboard. if there isn't a string, or it isn't
+// a url, or that url doesn't refer to a known video provider, sound an error
+- (void)_loadFeedFromPasteboard
+{
+  NSPasteboard* pasteboard = [NSPasteboard generalPasteboard];
+  NSString* copied = [pasteboard stringForType:@"NSStringPboardType"];
+  NSURL* url = [NSURL URLWithString:copied];
+  NSString* host = [[url host] lowercaseString];
+  BRController* alert;
+  MainMenuController* main = [MainMenuController sharedInstance];
+  if( !host ){
+    // show an error indicating that the clipboard doesn't seem to have a url
+    alert = [BRAlertController alertOfType:kBRAlertTypeError
+                                    titled:@"Error" 
+                               primaryText:@"Not a URL"
+                             secondaryText:@"The clipboard contents do not app"\
+             "ear to be a valid URL."];
+  }else if( [host rangeOfString:@"hulu"].location != NSNotFound )
+    [main addFeed:[url absoluteString] withTitle:@"Hulu Feed"];
+  else if( [host rangeOfString:@"netflix"].location != NSNotFound )
+    [main addFeed:[url absoluteString] withTitle:@"Netflix Feed"];
+  else{
+    alert = [BRAlertController alertOfType:kBRAlertTypeError
+                                    titled:@"Error" 
+                               primaryText:@"Not a URL"
+                             secondaryText:@"The URL stored on the clipboard d"\
+             "oes not refer to a supported video provider."];
+  }
+  // if we've set an alert the show it, otherwise return to the main menu
+  if( alert ) [[self stack] swapController:alert];
+  else [[self stack] swapController:main];
+}
+
 // call-back for an item having been selected
 - (void)itemSelected
 {
@@ -58,32 +92,11 @@
       [[self stack] pushController:netflix_];
       break;
     case 2: // pasteboard
-      [self loadFeedFromPasteboard];
+      [self _loadFeedFromPasteboard];
       break;
     default:
       NSLog(@"unexpected index in add dialog");
   }
-}
-
-// looks for a string in the clipboard. if there isn't a string, or it isn't
-// a url, or that url doesn't refer to a known video provider, sound an error
-- (void)loadFeedFromPasteboard
-{
-  NSPasteboard* pasteboard = [NSPasteboard generalPasteboard];
-  NSString* copied = [pasteboard stringForType:@"NSStringPboardType"];
-  NSURL* url = [NSURL URLWithString:copied];
-  NSString* host = [[url host] lowercaseString];
-  if( host )
-  {
-    if( [host rangeOfString:@"hulu"].location != NSNotFound )
-      [[MainMenuController sharedInstance] addFeed:[url absoluteString]
-                                         withTitle:@"Hulu Feed"];
-    else if( [host rangeOfString:@"netflix"].location != NSNotFound )
-      [[MainMenuController sharedInstance] addFeed:[url absoluteString]
-                                         withTitle:@"Netflix Feed"];
-    else [RUISoundHandler playSound:kRUISoundError];
-  } else [RUISoundHandler playSound:kRUISoundError];
-  
 }
 
 @end
