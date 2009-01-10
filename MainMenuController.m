@@ -18,6 +18,7 @@
 
 #import "HuluFeedController.h"
 #import "NetflixFeedController.h"
+#import "YouTubeFeed.h"
 
 #import "MainMenuController.h"
 #import "ManageFeedsDialog.h"
@@ -202,6 +203,14 @@ BRController* controllerForURL(NSURL* url)
   if( range.location != NSNotFound )
     return [[NetflixFeedController alloc] initWithUrl:url];
 
+  range = [host rangeOfString:@"youtube"];
+  if( range.location != NSNotFound )
+  {
+    YouTubeFeed* del = [YouTubeFeed alloc];
+    del = [[del initWithTitle:@"YouTube" forUrl:url] autorelease];
+    return [del controller];
+  }
+  
   return nil;
 }
 
