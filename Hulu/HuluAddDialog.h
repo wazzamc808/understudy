@@ -21,7 +21,11 @@
 #import <BackRow/BROptionDialog.h>
 
 @interface HuluAddDialog : BROptionDialog {
-
+  NSString* profile_;
+  NSMutableArray* titles_;
+  NSMutableArray* feeds_;
 }
+
+- (void)startAutoDiscovery;
 
 @end
