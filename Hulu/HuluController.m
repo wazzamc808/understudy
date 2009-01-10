@@ -1,5 +1,5 @@
 //
-//  Copyright 2008 Kirk Kelsey.
+//  Copyright 2008-2009 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -71,13 +71,13 @@
   // invoking shared application ensures that windows can be ordered
   [NSApplication sharedApplication];
   NSRect rect = [[NSScreen mainScreen] frame];
-  view_ = [[[WebView alloc] initWithFrame:rect] retain];
+  view_ = [[WebView alloc] initWithFrame:rect];
   [[[view_ mainFrame] frameView] setAllowsScrolling:NO];
   [view_ setFrameLoadDelegate:self];
-  window_ = [[[NSWindow alloc] initWithContentRect:rect 
-                                         styleMask:0 
-                                           backing:NSBackingStoreBuffered 
-                                             defer:YES] retain];
+  window_ = [[NSWindow alloc] initWithContentRect:rect 
+                                        styleMask:0 
+                                          backing:NSBackingStoreBuffered 
+                                            defer:YES];
   [window_ setContentView:view_];
   NSURLRequest* pageRequest = [NSURLRequest requestWithURL:[asset_ url]];
   [[view_ mainFrame] loadRequest:pageRequest];
@@ -123,69 +123,89 @@ BOOL replaceDimension (const char* name, NSMutableString* string, int newdim)
 {
   // be sure we can get ahold of the flash player
   WebScriptObject* script = [view_ windowScriptObject];
-  NSString* player;
-  player = (NSString*) [script evaluateWebScript:@"document.player.nodeName"];
-  if( !player || [player length] == 0 ) return;
-
-  NSString* movedivs;
+  id player = [script evaluateWebScript:@"document.player.nodeName"];
+  if( player == [WebUndefined undefined]){
+    pluginView_ = view_;
+    return;
+  }
+  
+  // javascript statements (invoked near the end of this method)
   NSString* getFlashVars = @"document.player.getAttribute('flashvars')";
   NSString* getHeight = @"document.player.getAttribute('height');";
   NSString* getWidth = @"document.player.getAttribute('width');";
-  NSString* hidedivs=@"d = document.getElementsByTagName('div'); var i=0; for( i = 0;"\
-  " i < d.length; i++ ){ d[i].setAttribute('style','display:none'); }";
+  NSString* hidedivs=@"d = document.getElementsByTagName('div'); var i=0; for("\
+  "i = 0; i < d.length; i++ ){ d[i].setAttribute('style','display:none'); }";
   NSString* setflashvars=@"document.player.setAttribute('flashvars','%@');";
-  NSString* hideplayer = @"document.player.setAttribute('style','display: none');";
-  NSString* setheight = @"document.player.setAttribute('height','%dpx');";
-  NSString* setwidth = @"document.player.setAttribute('width','%dpx');";
+  NSString* hideplayer=@"document.player.setAttribute('style','display:none');";
   NSString* setstyle = @"document.player.setAttribute('style','display:normal;"\
-  " position:absolute; top:-%dpx; left:-%dpx;'); document.body.setAttribute('s"\
-  "tyle','background:rgb(40,39,39)')";
-  movedivs = @"var t = document.player.parentNode; while( t!=document.body.parentNode )"\
-  "{ t.setAttribute('style','position:absolute; text-align:left; display:block;')"\
-  "; t.setAttribute('height',%d); t.setAttribute('width',%d); t = t.parentNode };";
+  " position:absolute; top:%4.0fpx; left:%4.0fpx;'); document.body.setAttrib"\
+  "ute('style','background:rgb(40,39,39)')";
+  NSString* movedivs = @"var t = document.player; while( t!=document.body.pare"\
+  "ntNode ){ t.setAttribute('style','position:absolute; text-align: left; disp"\
+  "lay:block;'); t.setAttribute('height',%4.0f); t.setAttribute('width'"\
+  ",%4.0f); t = t.parentNode };";  
   
   NSSize screen = [view_ frame].size;
-  int pHeight = [[script evaluateWebScript:getHeight] intValue];
-  int pWidth = [[script evaluateWebScript:getWidth] intValue];
-  int newheight = screen.height;
-  int newwidth = screen.width;
+  NSSize oldstage; // original stage (and dom element) size
+  NSSize oldview;  // original viewable size (stage less buttons)
+  NSSize newview;  // desired new viewable size
+  NSSize newstage; // new declared stage size
+  NSSize padding;  // extra space introduced to keep player centered
+  NSSize newsize;  // newstage + padding
 
+  oldstage.height = [[script evaluateWebScript:getHeight] floatValue];
+  oldstage.width = [[script evaluateWebScript:getWidth] floatValue];
+  oldview.height = oldstage.height - 8; // taken by the progress bar
+  oldview.width = oldstage.width - 150; // taken by the stage buttons 
+  newview = screen;
+  if( oldview.height / screen.height > oldview.width  / screen.width )
+  {
+    newview.height = screen.height;
+    newview.width = (oldview.width / oldview.height) * newview.height;
+  }else{
+    newview.width = screen.width;
+    newview.height = (oldview.height / oldview.width) * newview.width;    
+  }
+  newstage.width = newview.width + 150;
+  newstage.height = newview.height + 8;
+  
   // the flash player determines how large the video should be from an attribute
   // of the html embed object named flashvars. the stage_height and stage_width
   // are related to, but not the same as the html entity's height and width
   NSMutableString* flashvars;
   flashvars = [[script evaluateWebScript:getFlashVars] mutableCopy];
-  replaceDimension("stage_height",flashvars,newheight);
-  replaceDimension("stage_width",flashvars,newheight);
+  replaceDimension("stage_height",flashvars,(int)newview.height);
+  // we let the player determine it's own width (since the aspect ratio of the
+  // player isn't the same as the video)
   
-  // When the stage size is increased, space is padded around the actual video.
-  // Since some of the extra space is wasted, the new size is extended and the
-  // stage is offset to remove the padding
-  int hflash = (2*newheight)-pHeight;
-  int wflash = (2*newwidth)-pWidth;
-  int hoffset = (int)((hflash - pHeight)/2);  // 2 and 
-  int woffset = (int)((wflash - pWidth)/4);   // 4 are empirical
-  // If the player isn't filling the screen then we'll recenter it
-  hoffset -= (screen.height-newheight)/2;
-  woffset -= (screen.width-newwidth);
+  // we size the container to fit the new viewable area and padding that is
+  // added (for every pixel we add to the stage size, a pixel is added).
+  newsize.height = 2 * newview.height - oldstage.height;
+  newsize.width = 2 * newview.width - oldstage.width;
+  
+  // the flash player adds padding to keep itself centered in it's container.
+  // we don't have to worry about the buttons as long as the newview > oldstage
+  padding.width = (newview.width - newsize.width) / 2;
+  padding.height = (oldstage.height - newsize.height) / 2;
+  // the padding below the player is this less delta(stagesize)
+  
+  // in addition to the player's own padding, we may have introduced some by
+  // maintaining the player's aspect ratio. we offset that here
+  padding.height -= (newview.height - screen.height) / 2;
+  padding.width -= (newview.width - screen.width) /2;
   
   setflashvars = [NSString stringWithFormat:setflashvars,flashvars];
-  movedivs = [NSString stringWithFormat:movedivs,newheight,newwidth];
-  setwidth = [NSString stringWithFormat:setwidth,wflash];
-  setheight = [NSString stringWithFormat:setheight,hflash];
-  setstyle = [NSString stringWithFormat:setstyle,hoffset,woffset];
+  movedivs = [NSString stringWithFormat:movedivs,newsize.height,newsize.width];
+  setstyle = [NSString stringWithFormat:setstyle,padding.height,padding.width];
 
-  // hide all of the <div> elements - get rid of other content
+  // hide all of the <div> elements (get rid of other content)
   [script evaluateWebScript:hidedivs];
   // update the flashvars (stage width and height)
   [script evaluateWebScript:setflashvars];
   // move the player (and it's ancestors) top/left
   [script evaluateWebScript:movedivs];
   [script evaluateWebScript:hideplayer];
-  // set the width (and height) of the player object
-  [script evaluateWebScript:setwidth];
-  [script evaluateWebScript:setheight];
-  // show the player (offset)  make the body background gray
+  // show the player, offset it, and make the body background gray
   [script evaluateWebScript:setstyle];
     
   [view_ setNeedsDisplay:YES];
@@ -271,7 +291,6 @@ BOOL replaceDimension (const char* name, NSMutableString* string, int newdim)
   [(id)view sendEvent:(NSEvent *)&event];
   event.what = keyUp;
   [(id)view sendEvent:(NSEvent *)&event];
-  [view autorelease];
 }
 
 - (void)playPause
