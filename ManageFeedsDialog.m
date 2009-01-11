@@ -21,6 +21,7 @@
 #import "RenameDialog.h"
 
 #import <BackRow/BRControllerStack.h>
+#import <BackRow/BRTextMenuItemLayer.h>
 
 @implementation ManageFeedsDialog
 
@@ -91,5 +92,14 @@
       NSLog(@"unexpected index in add dialog");
   }
 }
+
+- (BRLayer<BRMenuItemLayer>*)menuItem
+{
+  BRTextMenuItemLayer* manager = [BRTextMenuItemLayer menuItem];
+  [manager setTitle:@"Manage Feeds"];
+  return manager;
+}
+
+- (BRController*)controller{ return self; }
 
 @end

@@ -21,8 +21,9 @@
 #import <BackRow/BROptionDialog.h>
 
 #import "AddFeedDialog.h"
+#import "UnderstudyAsset.h"
 
-@interface ManageFeedsDialog : BROptionDialog {
+@interface ManageFeedsDialog : BROptionDialog <UnderstudyAsset>{
   AddFeedDialog* addController_;
   BROptionDialog* removeDialog_;
 }

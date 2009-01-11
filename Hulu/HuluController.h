@@ -23,7 +23,7 @@
 
 #import "HuluAsset.h"
 
-@interface HuluController : BRController {
+@interface HuluController : BaseController {
  @private
   HuluAsset* asset_;
   NSWindow* window_;

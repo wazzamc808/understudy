@@ -50,17 +50,19 @@
 
 - (BRLayer<BRMenuItemLayer>*)menuItem
 {
-  // TODO: once the main menu is changed to keep feed delegates (assets)
-  // instead of controllers. we'll provide a menu item
-  return nil;
+  BRTextMenuItemLayer*item = [BRTextMenuItemLayer menuItem];
+  [item setTitle:title_];
+  return item;
 }
 
 - (BRController*)controller
 {
-  // TODO: once the main menu is changed to keep feed delegates (assets)
-  // instead of controllers, we'll own the controller
-  BRController* con = [[FeedMenuController alloc] initWithDelegate:self];
-  return con;
+  if( !controller_ )
+  {
+    controller_ = [FeedMenuController alloc];
+    controller_ = [controller_ initWithDelegate:self];
+  }
+  return controller_;
 }
 
 - (NSArray*)currentAssets
@@ -70,13 +72,12 @@
                                                             options:0
                                                               error:&err];
   if( !doc ) return nil;
-  NSMutableArray* assets = [[NSMutableArray alloc] init];
+  NSMutableArray* assets = [NSMutableArray array];
   NSXMLElement* feed = [doc rootElement];
   NSArray* entries = [feed elementsForName:@"entry"];
   for( NSXMLElement* item in entries )
     [assets addObject:[[YouTubeAsset alloc] initWithXMLElement:item]];
   return assets;
-  // assets should be autoreleased
 }
 
 - (NSString*)title

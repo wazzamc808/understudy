@@ -70,8 +70,7 @@
 {
   if( ![self rowSelectable:itemIndex] ) return;
   id<UnderstudyAsset> asset = [assets_ objectAtIndex:itemIndex];
-  BRController<ControlDelegate>* con = [asset controller];
-  [[self stack] pushController:con];
+  [[self stack] pushController:[asset controller]];
 }
 
 - (BRControl*)previewControlForItem:(long)itemIndex

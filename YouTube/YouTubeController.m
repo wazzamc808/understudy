@@ -16,10 +16,10 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
-#import "YouTubeControlDelegate.h"
+#import "YouTubeController.h"
 #import "YouTubeAsset.h"
 
-@implementation YouTubeControlDelegate
+@implementation YouTubeController
 
 - (id)initWithAsset:(YouTubeAsset*)asset
 {

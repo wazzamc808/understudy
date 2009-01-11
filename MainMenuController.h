@@ -32,14 +32,13 @@
 @interface MainMenuController : BRMediaMenuController <BRMenuListItemProvider>
 {
  @private
-  // BR menu items
-  NSMutableArray* items_;
   // feed urls in NSString format
   NSMutableArray* feeds_;
   // feed titles in NSString format
   NSMutableArray* titles_;
   // menu item -> controller (or nil if the controller hasn't been used)
   NSMutableDictionary* controllers_;
+  NSMutableArray* assets_;
 }
 
 // Singleton access

@@ -23,13 +23,13 @@
 @class BRTextMenuItemLayer;
 @class BRImageManager;
 @class BRMediaType;
-@class YouTubeControlDelegate;
+@class YouTubeController;
 
 @interface YouTubeAsset : BRBaseMediaAsset<UnderstudyAsset> 
 {
  @private
   BRTextMenuItemLayer* menuitem_;
-  YouTubeControlDelegate* controlDelegate_;
+  YouTubeController* controller_;
   NSString* description_;
   long duration_;
   BRImageManager* imageManager_;

@@ -54,31 +54,20 @@
 
 @implementation BaseController
 
-- (id)initWithDelegate:(NSObject<ControlDelegate>*)delegate
+- (void)reveal
 {
-  [super init];
-  delegate_ = [delegate retain];
-  return self;
-}
-
-- (void)controlWillActivate
-{
-  [super controlWillActivate];
-  [delegate_ load];
   BRSentinel* sentinel = [BRSentinel sharedInstance];
   id<BRRendererProvider> provider = [sentinel rendererProvider];
   BRRenderer* renderer = [provider renderer];
   [renderer orderOut];  
 }
 
-- (void)controlWillDeactivate
+- (void)returnToFR
 {
-  [super controlWillDeactivate];
   BRSentinel* sentinel = [BRSentinel sharedInstance];
   id<BRRendererProvider> provider = [sentinel rendererProvider];
   BRRenderer* renderer = [provider renderer];
   [renderer orderIn];
-  [delegate_ close];
 }
 
 - (BOOL)isNetworkDependent
@@ -92,7 +81,7 @@
   BRSettingsFacade* settings;
   switch ([event remoteAction]) {
     case kBRRemotePlayPauseSelectButton:
-      [delegate_ playPause];
+      [self playPause];
       return YES;
       break;
     case kBRRemoteUpButton:
@@ -107,5 +96,7 @@
       return [super brEventAction:event];
   }
 }
+
+- (void)playPause{}
 
 @end

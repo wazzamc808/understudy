@@ -33,25 +33,13 @@
 #define AGENTSTRING @"Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_5_6; en-us)"\
 " AppleWebKit/525.27.1 (KHTML, like Gecko) Version/3.2.1 Safari/525.27.1"
 
-@interface BRAppManager : NSObject { }
-+ (BRAppManager*)sharedApplication;
-- (id)delegate;
-@end
-
 @protocol  BRAppManagerDelegate
 - (void)_continueDestroyScene:id;
 @end
 
-@interface BRRenderer{}
-- (void)orderIn;
-- (void)orderOut;
-@end
 
 @interface NetflixController (private)
 - (void)_loadVideo;
-- (void)_reveal;
-- (void)_returnToFR;
-- (void)_sendKeyCode:(int)keyCode withCharCode:(int)charCode;
 - (WebView*)_pluginView;
 @end
 
@@ -112,7 +100,7 @@
   {
     [pluginView_ enterFullScreenMode:[NSScreen mainScreen]
                          withOptions:options];  
-    [self _reveal];
+    [self reveal];
   } else {
     NSString* title = @"Error";
     NSString* primary = @"Video Could Not Be Loaded";
@@ -124,29 +112,6 @@
                                                 secondaryText:secondary];
     [[self stack] swapController:alert];
   }
-}
-
-// order out the FR window, revealing the video display
-- (void)_reveal
-{
-  BRSentinel* sentinel = [BRSentinel sharedInstance];
-  id<BRRendererProvider> provider = [sentinel rendererProvider];
-  BRRenderer* renderer = [provider renderer];
-  [renderer orderOut];
-}
-
-// bring back the FR display, unshield the menu, close the player
-- (void) _returnToFR
-{
-  BRSentinel* sentinel = [BRSentinel sharedInstance];
-  id<BRRendererProvider> provider = [sentinel rendererProvider];
-  BRRenderer* renderer = [provider renderer];
-  [pluginView_ exitFullScreenModeWithOptions:nil];
-  [renderer orderIn];  
-  [window_ close];
-  [view_ close];
-  window_ = nil;
-  view_ = nil;
 }
 
 // grab the web view for the flash player
@@ -172,24 +137,9 @@
   return pluginView_;
 }
 
-// Send a keydown (and up) event to the web view holding the flash plugin
-// (using NSEvent doesn't work)
-- (void)_sendKeyCode:(int)keyCode withCharCode:(int)charCode;
-{
-  WebView* view = [self _pluginView];
-  EventRecord event; 
-  event.what = keyDown; 
-  event.message = (keyCode << 8) + charCode;
-  event.modifiers = 0;
-  [(id)view sendEvent:(NSEvent *)&event];
-  event.what = keyUp;
-  [(id)view sendEvent:(NSEvent *)&event];
-  [view autorelease];
-}
-
 - (void)playPause
 {
-  [self _sendKeyCode:49 withCharCode:0]; // space-bar
+  [[self _pluginView] sendKeyCode:49 withCharCode:0]; // space-bar
 }
 
 #pragma mark BR Control
@@ -203,34 +153,7 @@
 - (void)controlWillDeactivate
 {
   [super controlWillDeactivate];
-  [self _returnToFR];
-}
-
-- (BOOL)isNetworkDependent
-{
-  return YES;
-}
-
-// play/pause works as expected, anythings else will fullscren the flash player
-- (BOOL)brEventAction:(BREvent*)event
-{
-  BRSettingsFacade* settings;
-  switch ([event remoteAction]) {
-    case kBRRemotePlayPauseSelectButton:
-      [self playPause];
-      return YES;
-      break;
-    case kBRRemoteUpButton:
-      settings = [BRSettingsFacade sharedInstance];
-      [settings setSystemVolume:([settings systemVolume]+0.1)];
-      return YES;
-    case kBRRemoteDownButton:
-      settings = [BRSettingsFacade sharedInstance];
-      [settings setSystemVolume:([settings systemVolume]-0.1)];
-      return YES;
-    default:
-      return [super brEventAction:event];
-  }
+  [self returnToFR];
 }
 
 @end

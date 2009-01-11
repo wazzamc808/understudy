@@ -18,22 +18,25 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import "BackRow/BRBaseMediaAsset.h"
+#import <BackRow/BRBaseMediaAsset.h>
 #import <BackRow/BRImageManager.h>
-#import "BackRow/BRMediaAsset.h"
+#import <BackRow/BRMediaAsset.h>
+#import <BackRow/BRTextMenuItemLayer.h>
 
+#import "UnderstudyAsset.h"
 
 // class NetflixAsset
 //
 // Represents the attributes of a Netflix Video
 
-@interface NetflixAsset : BRBaseMediaAsset {
+@interface NetflixAsset : BRBaseMediaAsset <UnderstudyAsset> {
  @private
   NSString* title_;
   NSString* description_;
   NSURL* url_;
   NSString* thumbnailID_;
   BRImageManager* imageManager_;
+  BRTextMenuItemLayer* menuitem_;
 }
 
 - (id)initWithXMLElement:(NSXMLElement*)dom;

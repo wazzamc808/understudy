@@ -21,24 +21,22 @@
 
 #import <BackRow/BRController.h>
 
-@protocol ControlDelegate
-- (void)load;
-- (void)close;
-- (void)playPause;
-- (void)skipForward;
-- (void)skipBackward;
-@end
-
 @interface WebView (KeyboardShortcuts)
 - (void)sendKeyCode:(int)keyCode withCharCode:(int)charCode;
 @end
 
 @interface BaseController : BRController {
- @private
-  NSObject<ControlDelegate>* delegate_;
 }
 
-- (id)initWithDelegate:(NSObject<ControlDelegate>*)delegate;
+
+// orders out the FR interface to reveal an understudy player
+- (void)reveal;
+
+// brings the FR interface back
+- (void)returnToFR;
+
+// subclasses should override (default does nothing):
+- (void)playPause;
 
 @end
 

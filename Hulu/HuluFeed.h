@@ -1,5 +1,5 @@
 //
-//  Copyright 2008 Kirk Kelsey.
+//  Copyright 2008-2009 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -20,16 +20,16 @@
 
 #import <BackRow/BRMediaMenuController.h>
 
+#import "FeedMenuController.h"
+
 @class BRTextMenuItemLayer;
 
-@interface NetflixFeedController : BRMediaMenuController<BRMenuListItemProvider>
+@interface HuluFeed : NSObject <FeedDelegate>
 {
-  NSURL* _url;
-  NSMutableArray* _items;
-  NSMutableArray* _assets;
-  NSDate* _lastrebuild;
+  NSURL* url_;
+  NSString* title_;
 }
 
-- (id)initWithUrl:(NSURL*)url;
+- (id)initWithTitle:(NSString*)title forUrl:(NSURL*)url;
 
 @end

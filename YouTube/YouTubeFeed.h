@@ -24,6 +24,7 @@
 {
   NSString* title_;
   NSURL* url_;
+  FeedMenuController* controller_;
 }
 
 - (id)initWithTitle:(NSString*)title forUrl:(NSURL*)url;

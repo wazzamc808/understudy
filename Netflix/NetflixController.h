@@ -23,7 +23,7 @@
 
 #import "NetflixAsset.h"
 
-@interface NetflixController : BRController {
+@interface NetflixController : BaseController {
  @private
   NetflixAsset* asset_;
   NSWindow* window_;

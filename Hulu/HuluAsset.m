@@ -1,5 +1,5 @@
 //
-//  Copyright 2008 Kirk Kelsey.
+//  Copyright 2008-2009 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -17,6 +17,7 @@
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
 #import "HuluAsset.h"
+#import "HuluController.h"
 
 #import <BackRow/BRImage.h>
 
@@ -95,7 +96,7 @@
   [series_ retain];
 }
 
-- (void) parseDescriptionElementFromDom:(NSXMLElement*)dom
+- (void)parseDescriptionElementFromDom:(NSXMLElement*)dom
 {
   NSXMLElement* description = [[dom elementsForName:@"description"] 
                                objectAtIndex:0];
@@ -111,7 +112,7 @@
   starrating_ = 1;
 }
 
-- (void) setAirDateFromString:(NSString*) text
+- (void)setAirDateFromString:(NSString*) text
 {
   regex_t SnumEnum;
   regcomp(&SnumEnum,"Air[[:space:]]]date:[[:space:]]+([^<]+)",REG_EXTENDED);
@@ -128,7 +129,7 @@
   regfree(&SnumEnum);
 }
 
-- (void) setDateAddedFromString:(NSString*)text
+- (void)setDateAddedFromString:(NSString*)text
 {
   regex_t SnumEnum;
   regcomp(&SnumEnum,"Added:[[:space:]]+([^<]+)",REG_EXTENDED);
@@ -231,22 +232,27 @@
 }
 - (unsigned)season{ return season_; }
 - (unsigned)episode{ return episode_; }
-- (BOOL)isInappropriate{ return NO; }
 
 #pragma mark BRMediaAsset (unused)
 - (NSString*)assetID{ return [url_ description]; }
-
-- (BOOL)isProtectedContent{ return NO; }
-
-- (BRResolution*)resolution{ return [BRResolution ED480p]; }
-- (BOOL)canBePlayedInShuffle{ return NO; }
-- (BOOL)isLocal{ return NO; }
 - (BRImage*)coverArtNoDefault{ return [self coverArt]; }
 
-#pragma mark BRImageProvider
-- (NSString*)imageID{return nil;}
-- (void)registerAsPendingImageProvider:(BRImageLoader*)loader
-{ NSLog(@"registerAsPendingImageProvider"); }
-- (void)loadImage:(BRImageLoader*)loader{ }
+- (BRLayer<BRMenuItemLayer>*)menuItem
+{
+  if( !menuitem_ )
+  {
+    menuitem_ = [BRTextMenuItemLayer menuItem];
+    [menuitem_ setTitle:[self seriesName]];
+    [menuitem_ setRightJustifiedText:[self episodeInfo]];
+    [menuitem_ retain];
+  }
+  return menuitem_;  
+}
+
+- (BRController*)controller
+{
+  return [[HuluController alloc] initWithAsset:self];
+}
+
 
 @end

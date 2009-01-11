@@ -23,7 +23,7 @@
 #import "FeedMenuController.h"
 #import "YouTubeAsset.h"
 #import "YouTubeFeed.h"
-#import "YouTubeControlDelegate.h"
+#import "YouTubeController.h"
 
 @interface YouTubeAsset (Parsing)
 - (void)buildFromId:(NSXMLElement*)idtag;
@@ -136,11 +136,9 @@
 
 - (BRController*)controller
 {
-  if( video_ ){
-    YouTubeControlDelegate<ControlDelegate>* del;
-    del = [[YouTubeControlDelegate alloc] initWithAsset:self];
-    return [[BaseController alloc] initWithDelegate:del];
-  }else{
+  if( video_ )
+    return [[YouTubeController alloc] initWithAsset:self];
+  else{
     YouTubeFeed* del = [[YouTubeFeed alloc] initWithTitle:title_
                                                     forUrl:url_];
     return [del controller];

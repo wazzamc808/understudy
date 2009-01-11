@@ -1,5 +1,5 @@
 //
-//  Copyright 2008 Kirk Kelsey.
+//  Copyright 2009 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -17,19 +17,17 @@
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
 #import <Cocoa/Cocoa.h>
+#import "BaseController.h"
 
-#import <BackRow/BRMediaMenuController.h>
+@class YouTubeAsset;
 
-@class BRTextMenuItemLayer;
-
-@interface HuluFeedController : BRMediaMenuController<BRMenuListItemProvider>
+@interface YouTubeController : BaseController
 {
-  NSURL* _url;
-  NSMutableArray* _items;
-  NSMutableArray* _assets;
-  NSDate* _lastrebuild;
+  YouTubeAsset* asset_;  //weak reference
+  WebView* view_;
+  NSWindow* window_;
 }
 
-- (id)initWithUrl:(NSURL*)url;
+- (id)initWithAsset:(YouTubeAsset*)asset;
 
 @end

@@ -17,6 +17,7 @@
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
 #import "NetflixAsset.h"
+#import "NetflixController.h"
 
 #import <BackRow/BRImage.h>
 
@@ -112,5 +113,22 @@
 - (void)registerAsPendingImageProvider:(BRImageLoader*)loader
 { NSLog(@"registerAsPendingImageProvider"); }
 - (void)loadImage:(BRImageLoader*)loader{ }
+
+- (BRLayer<BRMenuItemLayer>*)menuItem
+{
+  if( !menuitem_ )
+  {
+    menuitem_ = [BRTextMenuItemLayer menuItem];
+    [menuitem_ setTitle:[self title]];
+    [menuitem_ retain];
+  }
+  return menuitem_;  
+}
+
+- (BRController*)controller
+{
+  return [[NetflixController alloc] initWithAsset:self];
+}
+
 
 @end

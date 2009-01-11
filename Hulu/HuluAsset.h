@@ -1,5 +1,5 @@
 //
-//  Copyright 2008 Kirk Kelsey.
+//  Copyright 2008-2009 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -18,16 +18,18 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import "BackRow/BRBaseMediaAsset.h"
+#import <BackRow/BRBaseMediaAsset.h>
 #import <BackRow/BRImageManager.h>
-#import "BackRow/BRMediaAsset.h"
+#import <BackRow/BRMediaAsset.h>
+#import <BackRow/BRTextMenuItemLayer.h>
 
+#import "UnderstudyAsset.h"
 
 // class HuluAsset
 //
 // Represents the attributes of a Hulu Video
 
-@interface HuluAsset : BRBaseMediaAsset {
+@interface HuluAsset : BRBaseMediaAsset<UnderstudyAsset> {
  @private
   NSString* title_;
   NSString* series_;
@@ -43,6 +45,7 @@
   NSDate* added_;
   NSString* thumbnailID_;
   BRImageManager* imageManager_;
+  BRTextMenuItemLayer* menuitem_;
 }
 
 // Designated initializer. Builds the asset from the provided XML object
@@ -52,6 +55,4 @@
 
 // Provides the primary url of the media.
 - (NSURL*)url;
-// a short identifier for a single episode
-- (NSString*)episodeInfo;
 @end

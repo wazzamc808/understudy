@@ -29,29 +29,6 @@
 
 #import <Carbon/Carbon.h>
 
-@interface BRAppManager : NSObject { }
-+ (BRAppManager*)sharedApplication;
-- (id)delegate;
-@end
-
-@protocol  BRAppManagerDelegate
-- (void)_continueDestroyScene:id;
-@end
-
-@interface BRRenderer{}
-- (void)orderIn;
-- (void)orderOut;
-@end
-
-@interface HuluController (private)
-- (void)_loadVideo;
-- (void)_maximizePlayer;
-- (void)_reveal;
-- (void)_returnToFR;
-- (void)_sendKeyCode:(int)keyCode withCharCode:(int)charCode;
-- (void)_fullscreen;
-@end
-
 @implementation HuluController
 
 - (id)initWithAsset:(HuluAsset*)asset
@@ -82,17 +59,6 @@
   [window_ setContentView:view_];
   NSURLRequest* pageRequest = [NSURLRequest requestWithURL:[asset_ url]];
   [[view_ mainFrame] loadRequest:pageRequest];
-}
-
-// <WebFrameLoadDelegate> callback once the video loads
-- (void)webView:(WebView*)view didFinishLoadForFrame:(WebFrame*)frame
-{
-  if( frame != [view mainFrame] ) return;
-  [self _maximizePlayer];
-  [window_ display];
-  [window_ orderFrontRegardless];
-  [self _fullscreen];
-  [self _reveal];
 }
 
 // replace in |string| the numeric value after |name|= with |newdim|
@@ -231,29 +197,6 @@ BOOL replaceDimension (const char* name, NSMutableString* string, int newdim)
                  withOptions:options];
 }
 
-// order out the FR window, revealing the video display
-- (void)_reveal
-{
-  BRSentinel* sentinel = [BRSentinel sharedInstance];
-  id<BRRendererProvider> provider = [sentinel rendererProvider];
-  BRRenderer* renderer = [provider renderer];
-  [renderer orderOut];
-}
-
-// bring back the FR display, unshield the menu, close the player
-- (void) _returnToFR
-{
-  BRSentinel* sentinel = [BRSentinel sharedInstance];
-  id<BRRendererProvider> provider = [sentinel rendererProvider];
-  BRRenderer* renderer = [provider renderer];
-  [renderer orderIn];  
-  [view_ exitFullScreenModeWithOptions:nil];
-  [window_ close];
-  [view_ close];
-  window_ = nil;
-  view_ = nil;
-}
-
 // grab the web view for the flash player
 - (WebView*)_pluginView
 {
@@ -280,33 +223,20 @@ BOOL replaceDimension (const char* name, NSMutableString* string, int newdim)
   return pluginView_;
 }
 
-// Send a keydown (and up) event to the web view holding the flash plugin
-// (using NSEvent doesn't work)
-- (void)_sendKeyCode:(int)keyCode withCharCode:(int)charCode;
+// <WebFrameLoadDelegate> callback once the video loads
+- (void)webView:(WebView*)view didFinishLoadForFrame:(WebFrame*)frame
 {
-  WebView* view = [self _pluginView];
-  EventRecord event; 
-  event.what = keyDown; 
-  event.message = (keyCode << 8) + charCode;
-  event.modifiers = 0;
-  [(id)view sendEvent:(NSEvent *)&event];
-  event.what = keyUp;
-  [(id)view sendEvent:(NSEvent *)&event];
+  if( frame != [view mainFrame] ) return;
+  [self _maximizePlayer];
+  [window_ display];
+  [window_ orderFrontRegardless];
+  [self _fullscreen];
+  [self reveal];
 }
 
 - (void)playPause
 {
-  [self _sendKeyCode:49 withCharCode:0]; // space-bar
-}
-
-- (void)_flashFullscreen
-{
-  [self _sendKeyCode:3 withCharCode:102]; // 'f'
-}
-
-- (void)_flashExitFullscreen
-{
-  [self _sendKeyCode:53 withCharCode:27]; // ESC
+  [[self _pluginView] sendKeyCode:49 withCharCode:0]; // space-bar
 }
 
 #pragma mark BR Control
@@ -320,34 +250,12 @@ BOOL replaceDimension (const char* name, NSMutableString* string, int newdim)
 - (void)controlWillDeactivate
 {
   [super controlWillDeactivate];
-  [self _returnToFR];
-}
-
-- (BOOL)isNetworkDependent
-{
-  return YES;
-}
-
-// play/pause works as expected
-- (BOOL)brEventAction:(BREvent*)event
-{
-  BRSettingsFacade* settings;
-  switch ([event remoteAction]) {
-    case kBRRemotePlayPauseSelectButton:
-      [self playPause];
-      return YES;
-      break;
-    case kBRRemoteUpButton:
-      settings = [BRSettingsFacade sharedInstance];
-      [settings setSystemVolume:([settings systemVolume]+0.1)];
-      return YES;
-    case kBRRemoteDownButton:
-      settings = [BRSettingsFacade sharedInstance];
-      [settings setSystemVolume:([settings systemVolume]-0.1)];
-      return YES;
-    default:
-      return [super brEventAction:event];
-  }
+  [self returnToFR];
+  [view_ exitFullScreenModeWithOptions:nil];
+  [window_ close];
+  [view_ close];
+  window_ = nil;
+  view_ = nil;
 }
 
 @end
