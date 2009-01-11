@@ -16,8 +16,8 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
-#import "HuluFeedController.h"
-#import "NetflixFeedController.h"
+#import "HuluFeed.h"
+#import "NetflixFeed.h"
 #import "YouTubeFeed.h"
 
 #import "MainMenuController.h"
@@ -28,8 +28,8 @@
 #import <BackRow/RUIPreferences.h>
 
 @interface MainMenuController (PrivateMenuHandling)
-- (void)_addFeed:(NSString*)feedURL withTitle:(NSString*)title;
 - (void)_buildMenu;
+- (NSObject<UnderstudyAsset>*)assetForRow:(long)row;
 @end
 
 @implementation MainMenuController
@@ -37,20 +37,17 @@
 - (id)init
 {
   [super init];
+  [self _buildMenu];
   [self setListTitle:@"Understudy"];
   [[self list] setDatasource:self];
-  items_ = [[NSMutableArray array] retain];
-  controllers_ = [[NSMutableDictionary dictionary] retain];
-  [self _buildMenu];
   return self;
 }
 
 - (void)dealloc
 {
-  [items_ release];
   [feeds_ release];
   [titles_ release];
-  [controllers_ release];
+  [assets_ release];
   [super dealloc];
 }
 
@@ -83,24 +80,20 @@ void upgradePrefs(RUIPreferences* FRprefs)
 
 - (void)_buildMenu
 {  
+  NSLog(@"build menu");
   RUIPreferences* FRprefs = [RUIPreferences sharedFrontRowPreferences];
   upgradePrefs(FRprefs);
   NSDictionary* prefDict = (NSDictionary*) [FRprefs objectForKey:@"understudy"];
   feeds_ = [[[prefDict objectForKey:@"feeds"] mutableCopy] retain];
-  if(!feeds_) feeds_ = [[NSMutableArray alloc] init];
   titles_ = [[[prefDict objectForKey:@"titles"] mutableCopy] retain];
+
+  if(!feeds_) feeds_ = [[NSMutableArray alloc] init];
   if(!titles_) titles_ = [[NSMutableArray alloc] init];
-  for( NSString* title in titles_ ){
-    BRTextMenuItemLayer* menuitem = [BRTextMenuItemLayer folderMenuItem];
-    [menuitem setTitle:title];
-    [items_ addObject:menuitem];
-  }
-  BRTextMenuItemLayer* manager = [BRTextMenuItemLayer menuItem];
-  [manager setTitle:@"Manage Feeds"];
-  [items_ addObject:manager];
-  [controllers_ setObject:[[ManageFeedsDialog alloc] init] 
-                   forKey:[manager title]];
-  [[self list] addDividerAtIndex:[items_ count]-1 withLabel:nil];
+
+  assets_ = [[NSMutableArray arrayWithCapacity:[titles_ count]] retain];
+  for( id t in titles_ ) [assets_ addObject:[NSNull null]];
+  [assets_ addObject:[[[ManageFeedsDialog alloc] init] autorelease]];
+  [[self list] addDividerAtIndex:[titles_ count] withLabel:nil];
   [[self list] reload];
 }
 
@@ -117,6 +110,7 @@ void upgradePrefs(RUIPreferences* FRprefs)
 
 - (void)addFeed:(NSString*)feedURL withTitle:(NSString*)title
 {
+  NSLog(@"addFeed");
   // ensure no duplicate titles
   if( [titles_ containsObject:title] )
   {
@@ -128,12 +122,10 @@ void upgradePrefs(RUIPreferences* FRprefs)
     title = newtitle;
   }
   [[self list] removeDividers];
-  BRTextMenuItemLayer* menuitem = [BRTextMenuItemLayer folderMenuItem];
-  [menuitem setTitle:title];
-  [items_ insertObject:menuitem atIndex:([items_ count]-1)];
   [feeds_ addObject:feedURL];
   [titles_ addObject:title];
-  [[self list] addDividerAtIndex:[items_ count]-1 withLabel:nil];
+  [assets_ insertObject:[NSNull null] atIndex:([assets_ count]-1)];
+  [[self list] addDividerAtIndex:[titles_ count] withLabel:nil];
   [[self list] reload];
   [self savePreferences];
 }
@@ -141,30 +133,49 @@ void upgradePrefs(RUIPreferences* FRprefs)
 - (void)removeFeedAtIndex:(long)index
 {
   [[self list] removeDividers];
-  [items_ removeObjectAtIndex:index];
   [feeds_ removeObjectAtIndex:index];
   [titles_ removeObjectAtIndex:index];
-  [[self list] addDividerAtIndex:[items_ count]-1 withLabel:nil];
+  [assets_ removeObjectAtIndex:index];
+  [[self list] addDividerAtIndex:[titles_ count] withLabel:nil];
   [[self list] reload];
   [self savePreferences];
 }
 
 - (void)renameFeedAtIndex:(long)index withTitle:(NSString*)title
 {
-  [titles_ removeObjectAtIndex:index];
-  [titles_ insertObject:[title copy] atIndex:index];
-  BRTextMenuItemLayer* item =  [BRTextMenuItemLayer menuItem];
-  [item setTitle:title];
-  [items_ removeObjectAtIndex:index];
-  [items_ insertObject:item atIndex:index];
+  [titles_ replaceObjectAtIndex:index withObject:[[title copy]autorelease]];
   [[self list] reload];
   [self savePreferences];
 }
 
-#pragma mark @protocol BRMenuListItemProvider
+- (NSObject<UnderstudyAsset>*)assetForRow:(long)row
+{
+  NSObject<UnderstudyAsset>* asset = [assets_ objectAtIndex:row];
+  if( (id)asset == (id)[NSNull null] ){
+    NSString* feed = [feeds_ objectAtIndex:row];
+    NSString* title = [titles_ objectAtIndex:row];
+    NSURL* url = [NSURL URLWithString:feed];
+    NSString* host = [[url host] lowercaseString];
+    
+    if( [host rangeOfString:@"hulu"].location != NSNotFound )
+      asset = [[HuluFeed alloc] initWithTitle:title forUrl:url];
+    else if( [host rangeOfString:@"netflix"].location != NSNotFound )
+      asset = [[NetflixFeed alloc] initWithTitle:title forUrl:url];
+    else if( [host rangeOfString:@"youtube"].location != NSNotFound )
+      asset = [[YouTubeFeed alloc] initWithTitle:title forUrl:url];
+    else asset = (NSObject<UnderstudyAsset>*)[NSNull null];
+    
+    [assets_ replaceObjectAtIndex:row withObject:asset];
+    [asset autorelease];
+  }
+  return asset;
+}
+
+#pragma mark Back Row subclassing
+  
 - (long)itemCount
 {
-  return [items_ count];
+  return [assets_ count];
 }
 
 - (NSString*)titleForRow:(long)row
@@ -174,7 +185,8 @@ void upgradePrefs(RUIPreferences* FRprefs)
 
 - (BRLayer<BRMenuItemLayer>*)itemForRow:(long)row
 {
-  return [items_ objectAtIndex:row];
+  NSObject<UnderstudyAsset>* asset = [self assetForRow:row];
+  return [asset menuItem];
 }
 
 -(float)heightForRow:(long)row
@@ -187,43 +199,10 @@ void upgradePrefs(RUIPreferences* FRprefs)
   return YES;
 }
 
-#pragma mark Control Functionality
-
-// return an appropriate feed controller depending on the url provided
-BRController* controllerForURL(NSURL* url)
-{
-  NSString* host = [[url host] lowercaseString];
-  NSRange range;
-
-  range = [host rangeOfString:@"hulu"];
-  if( range.location != NSNotFound )
-    return [[HuluFeedController alloc] initWithUrl:url];
-  
-  range = [host rangeOfString:@"netflix"];
-  if( range.location != NSNotFound )
-    return [[NetflixFeedController alloc] initWithUrl:url];
-
-  range = [host rangeOfString:@"youtube"];
-  if( range.location != NSNotFound )
-  {
-    YouTubeFeed* del = [YouTubeFeed alloc];
-    del = [[del initWithTitle:@"YouTube" forUrl:url] autorelease];
-    return [del controller];
-  }
-  
-  return nil;
-}
-
 - (void)itemSelected:(long)itemIndex
 {
-  NSString* title =  [self titleForRow:itemIndex];
-  id con = [controllers_ objectForKey:title];
-  if( !con ) {
-    NSURL* url = [NSURL URLWithString:[feeds_ objectAtIndex:itemIndex]];
-    con = controllerForURL(url);
-    [controllers_ setObject:con forKey:title];
-  }
-  [[self stack] pushController:con];
+  NSObject<UnderstudyAsset>* asset = [self assetForRow:itemIndex];
+  [[self stack] pushController:[asset controller]];
 }
 
 @end
