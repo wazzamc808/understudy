@@ -45,6 +45,18 @@
   [super dealloc];
 }
 
+- (BOOL)_validateFeed:(NSURL*)feed
+{
+  NSError* err;
+  NSXMLDocument* doc;
+  
+  doc = [[[NSXMLDocument alloc] initWithContentsOfURL:feed
+                                             options:0
+                                                error:&err] autorelease];
+  if( !doc || err ) return NO;
+  return YES;
+}
+
 // looks for a string in the clipboard. if there isn't a string, or it isn't
 // a url, or that url doesn't refer to a known video provider, sound an error
 - (void)_loadFeedFromPasteboard
@@ -62,6 +74,12 @@
                                primaryText:@"Not a URL"
                              secondaryText:@"The clipboard contents do not app"\
              "ear to be a valid URL."];
+  }else if( ![self _validateFeed:url] ){
+    alert = [BRAlertController alertOfType:kBRAlertTypeError
+                                    titled:@"Error"
+                               primaryText:@"Invalid Feed"
+                             secondaryText:@"The URL does not appear to refer to"\
+             " a valid feed. "];
   }else if( [host rangeOfString:@"hulu"].location != NSNotFound )
     [main addFeed:[url absoluteString] withTitle:@"Hulu Feed"];
   else if( [host rangeOfString:@"netflix"].location != NSNotFound )
