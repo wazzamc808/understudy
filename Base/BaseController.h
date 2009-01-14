@@ -35,6 +35,8 @@
 // brings the FR interface back
 - (void)returnToFR;
 
+- (WebView*)pluginChildOfView:(WebView*)view;
+- (void)makeViewFullscreen:(WebView*)view;
 // subclasses should override (default does nothing):
 - (void)playPause;
 

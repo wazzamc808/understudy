@@ -70,6 +70,48 @@
   [renderer orderIn];
 }
 
+// grab the web view for the flash player
+- (WebView*)pluginChildOfView:(WebView*)parentview
+{
+  NSMutableSet* views = [[[NSMutableSet set] retain] autorelease];
+  NSMutableSet* webviews = [[[NSMutableSet set] retain] autorelease];
+  WebView* pluginView_;
+  [views addObjectsFromArray:[parentview subviews]];
+  while( [views count] ){
+    WebView* view = [views anyObject];
+    if( [[view className] isEqual:@"WebNetscapePluginDocumentView"] )
+        [webviews addObject:view];
+    [views addObjectsFromArray:[view subviews]];
+    [views removeObject:view];
+  }
+  if( [webviews count] < 1 ) NSLog(@"got no plugin views");
+  else
+    {
+      if( [webviews count] > 1 ) NSLog(@"got multiple plugin views");
+      pluginView_ = [webviews anyObject];
+    }
+  return pluginView_;
+}
+
+- (void)makeViewFullscreen:(WebView*)view
+{
+  BRDisplayManager* manager = [BRDisplayManager sharedInstance];
+  NSDictionary* mode = [manager displayMode];
+  NSArray* objects = [NSArray arrayWithObjects: NSFullScreenModeAllScreens,
+                      NSFullScreenModeWindowLevel,
+                      NSFullScreenModeSetting,
+                      nil ];
+  NSArray* keys = [NSArray arrayWithObjects: [NSNumber numberWithBool:YES],
+                   [NSNumber numberWithInt:14],
+                   mode,
+                   nil ];
+  NSDictionary* options = [NSDictionary dictionaryWithObjects:objects
+                                                      forKeys:keys];
+  [view enterFullScreenMode:[NSScreen mainScreen]
+                withOptions:options];
+}
+
+
 - (BOOL)isNetworkDependent
 {
   return YES;
@@ -90,7 +132,7 @@
       return YES;
     case kBRRemoteDownButton:
       settings = [BRSettingsFacade sharedInstance];
-      [settings setSystemVolume:([settings systemVolume]+0.1)];
+      [settings setSystemVolume:([settings systemVolume]-0.1)];
       return YES;
     default:
       return [super brEventAction:event];

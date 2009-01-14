@@ -40,7 +40,6 @@
 
 @interface NetflixController (private)
 - (void)_loadVideo;
-- (WebView*)_pluginView;
 @end
 
 @implementation NetflixController
@@ -96,9 +95,10 @@
                                                       forKeys:keys];
   // if there is a plugin, we want to fullscreen it. if not (e.g. if the user
   // isn't logged in and the movie won't be shown) we report an error
-  if( [self _pluginView] )
+  WebView* plugin = [self pluginChildOfView:view_];
+  if( plugin )
   {
-    [pluginView_ enterFullScreenMode:[NSScreen mainScreen]
+    [plugin enterFullScreenMode:[NSScreen mainScreen]
                          withOptions:options];  
     [self reveal];
   } else {
@@ -114,32 +114,9 @@
   }
 }
 
-// grab the web view for the flash player
-- (WebView*)_pluginView
-{
-  NSMutableSet* views = [[[NSMutableSet set] retain] autorelease];
-  NSMutableSet* webviews = [[[NSMutableSet set] retain] autorelease];
-  [views addObjectsFromArray:[view_ subviews]];
-  while( [views count] ){
-    WebView* view = [views anyObject];
-    if( [[view className] isEqual:@"WebNetscapePluginDocumentView"] )
-      [webviews addObject:view];
-    [views addObjectsFromArray:[view subviews]];
-    [views removeObject:view];
-  }
-  if( [webviews count] < 1 ) NSLog(@"got no plugin views");
-  else
-  {
-    if( [webviews count] > 1 ) NSLog(@"got multiple plugin views");
-    pluginView_ = [webviews anyObject];
-    [pluginView_ retain];
-  }
-  return pluginView_;
-}
-
 - (void)playPause
 {
-  [[self _pluginView] sendKeyCode:49 withCharCode:0]; // space-bar
+  [view_ sendKeyCode:49 withCharCode:0]; // space-bar
 }
 
 #pragma mark BR Control
@@ -154,6 +131,11 @@
 {
   [super controlWillDeactivate];
   [self returnToFR];
+  [[self pluginChildOfView:view_] exitFullScreenModeWithOptions:nil];
+  [window_ close];
+  [view_ close];
+  window_ = nil;
+  view_ = nil;
 }
 
 @end

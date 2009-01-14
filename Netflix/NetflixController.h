@@ -29,7 +29,6 @@
   NSWindow* window_;
   NSWindow* menushield_;
   WebView* view_;
-  WebView* pluginView_;
   
   BOOL flashFullscreened_;
   BOOL attempingToFullscreen_;
