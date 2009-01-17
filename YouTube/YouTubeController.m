@@ -28,23 +28,53 @@
   return self;
 }
 
+#define EMBED_URL @"http://youtube.com/apiplayer?enablejsapi=1&fs=1"
+
 - (void)load
 {
-  NSLog(@"load");
   [NSApplication sharedApplication];
   NSRect rect = [[NSScreen mainScreen] frame];
   view_ = [[WebView alloc] initWithFrame:rect];
   [[[view_ mainFrame] frameView] setAllowsScrolling:NO];
   [view_ setFrameLoadDelegate:self];
+  [view_ setResourceLoadDelegate:self];
   window_ = [[NSWindow alloc] initWithContentRect:rect 
                                         styleMask:0 
                                           backing:NSBackingStoreBuffered 
                                             defer:YES];
   [window_ setContentView:view_];
-  NSURL* url = [NSURL URLWithString:@"file:///Users/kelsey/Desktop/chromeless_example_1.html"];
+  NSURL* url = [NSURL URLWithString:EMBED_URL];
   NSURLRequest* request = [NSURLRequest requestWithURL:url];
   [[view_ mainFrame] loadRequest:request];
-  NSLog(@"load done");
+}
+
+- (void)_enqueueVideo
+{
+  WebScriptObject* script = [[view_ windowScriptObject] retain];
+  [script autorelease];
+  id player;
+  long tries = 0;
+  NSString* getPlayer = @"document.getElementsByTagName('EMBED')[0]";
+  do{
+    player = [script evaluateWebScript:getPlayer];
+    tries++;
+  }while( player == [WebUndefined undefined]);
+  NSLog(@"got player after %d tries",tries);
+  player = [script evaluateWebScript:@"document.getElementsByTagName('EMBED')[0].loadVideoById"];
+  if( player == [WebUndefined undefined] ) NSLog(@"loadVideoById undefined");
+  else NSLog([player description]);
+  NSString* loadVideo;
+  loadVideo = [getPlayer stringByAppendingString:@".loadVideoById('%@',0)"];
+  NSLog(loadVideo);
+  loadVideo = [NSString stringWithFormat:loadVideo, [asset_ videoID]];
+  [script evaluateWebScript:loadVideo];  
+}
+
+- (void)webView:(WebView *)sender 
+       resource:(id)identifier 
+didFinishLoadingFromDataSource:(WebDataSource *)dataSource
+{
+  NSLog(@"finished loading datasource: %@",dataSource);
 }
 
 // <WebFrameLoadDelegate> callback once the video loads
@@ -54,26 +84,29 @@
   if( frame != [view mainFrame] ) return;
   [window_ display];
   [window_ orderFrontRegardless];
+  [window_ setLevel:CGShieldingWindowLevel()];
+  [self _enqueueVideo];
+  [self reveal];
 }
 
-- (void)close
+- (void)webView:(WebView *)sender didFailLoadWithError:(NSError *)error 
+       forFrame:(WebFrame *)frame
 {
+  NSLog(@"failed loading frame");
+}
+
+- (void)controlWillActivate
+{
+  [self load];
+}
+
+- (void)controlWillDeactivate
+{
+  [self returnToFR];
   [view_ close];
   view_ = nil;
   [window_ close];
   window_ = nil;
-}
-
-- (void)playPause
-{
-}
-
-- (void)skipForward
-{
-}
-
-- (void)skipBackward
-{
 }
 
 @end

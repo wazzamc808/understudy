@@ -33,14 +33,17 @@
   NSString* description_;
   long duration_;
   BRImageManager* imageManager_;
+  NSString* videoID_; // the YT identifier for the video
   NSDate* published_;
   float starrating_;
   NSString* thumbnailID_;
   NSString* title_;
   NSURL* url_;
-  BOOL video_;
+  BOOL isVideo_;
 }
 
 // the init function may return nil if parsing fails
 - (id)initWithXMLElement:(NSXMLElement*) dom;
+
+- (NSString*)videoID;
 @end

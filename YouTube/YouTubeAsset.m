@@ -49,7 +49,7 @@
   NSXMLElement* category = [[dom elementsForName:@"category"] objectAtIndex:0];
   NSString* term = [[category attributeForName:@"term"] stringValue];
   if( [term hasSuffix:@"video"] ){
-    video_ = TRUE;
+    isVideo_ = TRUE;
     // depending on the feed, the video |entry| will be structured differently
     // those with a media:group are easier to work with
     NSArray* mediagroups = [dom elementsForName:@"media:group"];
@@ -58,7 +58,7 @@
     else
       [self buildFromId:[[dom elementsForName:@"id"] lastObject]];
   }else{
-    video_ = FALSE;
+    isVideo_ = FALSE;
     NSString* src = [[content attributeForName:@"src"] stringValue];
     url_ = [[NSURL URLWithString:src] retain];
     // feeds may have a thumbnail
@@ -87,14 +87,15 @@
   range = [mediaid rangeOfString:@":"];
   if( range.location != NSNotFound )
     mediaid = [mediaid substringToIndex:range.location];
-
   player = [@"http://www.youtube.com/watch?v=" stringByAppendingString:mediaid];
   url_ = [[NSURL URLWithString:player] retain];
-
+  
   thumbnail = [@"http://i.ytimg.com/vi/" stringByAppendingString:mediaid];
   thumbnail = [thumbnail stringByAppendingString:@"/1.jpg"];
   url = [NSURL URLWithString:thumbnail];
   thumbnailID_ = [[imageManager_ writeImageFromURL:url] retain];
+  
+  videoID_ = [mediaid retain];
 }
 
 - (void)parseMediaGroup:(NSXMLElement*)media
@@ -126,7 +127,7 @@
 {
   if( !menuitem_ )
   {
-    if( video_ ) menuitem_ = [BRTextMenuItemLayer menuItem];
+    if( isVideo_ ) menuitem_ = [BRTextMenuItemLayer menuItem];
     else menuitem_ = [BRTextMenuItemLayer folderMenuItem];
     [menuitem_ setTitle:[self title]];
     [menuitem_ retain];
@@ -136,7 +137,7 @@
 
 - (BRController*)controller
 {
-  if( video_ )
+  if( isVideo_ )
     return [[YouTubeController alloc] initWithAsset:self];
   else{
     YouTubeFeed* del = [[YouTubeFeed alloc] initWithTitle:title_
@@ -165,6 +166,6 @@
 - (BRMediaType*)mediaType{ return [BRMediaType ytVideo]; }
 - (NSDate*)datePublished{ return published_; }
 - (NSString*)datePublishedString{ return [published_ description]; }
-
+- (NSString*)videoID{ return videoID_; }
 
 @end
