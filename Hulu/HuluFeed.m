@@ -51,18 +51,22 @@
 
 - (NSArray*)currentAssets
 {
-  NSMutableArray* assets = [NSMutableArray array];
+  NSMutableArray* assets = [[[NSMutableArray alloc] init] autorelease];
   NSError* err;
-  NSXMLDocument* doc = [[NSXMLDocument alloc] initWithContentsOfURL:url_ 
-                                                            options:0
-                                                              error:&err];
+  NSXMLDocument* doc = [NSXMLDocument alloc];
+  doc = [[doc initWithContentsOfURL:url_ 
+                           options:0
+                             error:&err] autorelease];
   if( !doc ) return nil;
   NSXMLElement* root = [doc rootElement];
   NSXMLElement* channel = [[root elementsForName:@"channel"] objectAtIndex:0];
   NSArray* feeditems = [channel elementsForName:@"item"];
   for( NSXMLElement* feeditem in feeditems )
-    [assets insertObject:[[HuluAsset alloc] initWithXMLElement:feeditem] 
-                 atIndex:0];
+  {
+    HuluAsset* asset = [[HuluAsset alloc] initWithXMLElement:feeditem];
+    [asset autorelease];
+    [assets insertObject:asset atIndex:0];
+  }
   return assets;
 }
 

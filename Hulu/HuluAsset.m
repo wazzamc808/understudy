@@ -42,11 +42,14 @@
   [super init];
   [self parseTitleElementFromDom:dom];
   [self parseDescriptionElementFromDom:dom];
-  NSString* url = [[[dom elementsForName:@"link"] objectAtIndex:0] stringValue];
-  NSRange range = [url rangeOfString:@"#"];
-  if( range.location != NSNotFound ) 
-    url = [url substringToIndex:range.location];
+  NSString* url;
+
+  // URL's with # will break NSURL
+  url=[[[dom elementsForName:@"link"] objectAtIndex:0] stringValue];
+  url = [url stringByReplacingOccurrencesOfString:@"#in-playlist#"
+                                       withString:@"?in-playlist="];
   url_ = [[NSURL URLWithString:url] retain];
+  
   NSArray* tnArray = [dom elementsForName:@"media:thumbnail"];
   NSXMLElement* tnElement = [tnArray objectAtIndex:0];
   NSXMLNode* tnAttribute = [tnElement attributeForName:@"url"];

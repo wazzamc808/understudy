@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
 		918B27B10D7CFB2100D87AC2 /* UnderstudyAppliance.m in Sources */ = {isa = PBXBuildFile; fileRef = 918B27B00D7CFB2100D87AC2 /* UnderstudyAppliance.m */; };
+		DF0A782F0F1D77E800DBB3A3 /* PubSub.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF0A782E0F1D77E800DBB3A3 /* PubSub.framework */; };
 		DF0C59430EA9030E00E0D882 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF0C59420EA9030E00E0D882 /* QuartzCore.framework */; };
 		DF0C598B0EA910FA00E0D882 /* MainMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF0C598A0EA910FA00E0D882 /* MainMenuController.m */; };
 		DF0EDFCD0EE5E187008FA08A /* English.lproj in Resources */ = {isa = PBXBuildFile; fileRef = DF0EDFCA0EE5E187008FA08A /* English.lproj */; };
@@ -41,6 +42,7 @@
 		918B27AF0D7CFB2100D87AC2 /* UnderstudyAppliance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnderstudyAppliance.h; sourceTree = "<group>"; };
 		918B27B00D7CFB2100D87AC2 /* UnderstudyAppliance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UnderstudyAppliance.m; sourceTree = "<group>"; };
 		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
+		DF0A782E0F1D77E800DBB3A3 /* PubSub.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PubSub.framework; path = System/Library/Frameworks/PubSub.framework; sourceTree = SDKROOT; };
 		DF0C59420EA9030E00E0D882 /* QuartzCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = QuartzCore.framework; path = /System/Library/Frameworks/QuartzCore.framework; sourceTree = "<absolute>"; };
 		DF0C59890EA910FA00E0D882 /* MainMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainMenuController.h; sourceTree = "<group>"; };
 		DF0C598A0EA910FA00E0D882 /* MainMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainMenuController.m; sourceTree = "<group>"; };
@@ -92,6 +94,7 @@
 				DF0C59430EA9030E00E0D882 /* QuartzCore.framework in Frameworks */,
 				DFE014950EDF681D00AFD18F /* WebKit.framework in Frameworks */,
 				DF7F84F00EE3354E0049E5C3 /* BackRow.framework in Frameworks */,
+				DF0A782F0F1D77E800DBB3A3 /* PubSub.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -151,6 +154,7 @@
 		1058C7ACFEA557BF11CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				DF0A782E0F1D77E800DBB3A3 /* PubSub.framework */,
 				089C1672FE841209C02AAC07 /* Foundation.framework */,
 				D2F7E65807B2D6F200F64583 /* CoreData.framework */,
 				089C167FFE841241C02AAC07 /* AppKit.framework */,

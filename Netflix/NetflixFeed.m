@@ -18,7 +18,7 @@
 
 #import "NetflixFeed.h"
 #import "NetflixAsset.h"
-#import "NetflixControlDelegate.h"
+#import "NetflixController.h"
 
 #import <BackRow/BRControllerStack.h>
 #import <BackRow/BRComboMenuItemLayer.h>
