@@ -80,7 +80,6 @@ void upgradePrefs(RUIPreferences* FRprefs)
 
 - (void)_buildMenu
 {  
-  NSLog(@"build menu");
   RUIPreferences* FRprefs = [RUIPreferences sharedFrontRowPreferences];
   upgradePrefs(FRprefs);
   NSDictionary* prefDict = (NSDictionary*) [FRprefs objectForKey:@"understudy"];
@@ -110,7 +109,6 @@ void upgradePrefs(RUIPreferences* FRprefs)
 
 - (void)addFeed:(NSString*)feedURL withTitle:(NSString*)title
 {
-  NSLog(@"addFeed");
   // ensure no duplicate titles
   if( [titles_ containsObject:title] )
   {

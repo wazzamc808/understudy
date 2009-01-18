@@ -71,7 +71,6 @@
                                              defer:YES] retain];
   [window_ setContentView:view_];
   NSURLRequest* pageRequest = [NSURLRequest requestWithURL:[asset_ url]];
-  NSLog(@"user agent: %@",[view_ customUserAgent]);
   [view_ setCustomUserAgent:AGENTSTRING];
   [[view_ mainFrame] loadRequest:pageRequest];
 }
@@ -105,7 +104,8 @@
     NSString* title = @"Error";
     NSString* primary = @"Video Could Not Be Loaded";
     NSString* secondary = @"Please ensure that you are logged into your Netfli"\
-    "x account in Safari, and that you have not reached your viewing limit";
+    "x account in Safari, and that you have not reached your viewing limit.";
+    NSLog(@"about to show alert");
     BRAlertController* alert = [BRAlertController alertOfType:kBRAlertTypeError
                                                        titled:title
                                                   primaryText:primary

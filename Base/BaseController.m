@@ -75,7 +75,6 @@
 {
   NSMutableSet* views = [[[NSMutableSet set] retain] autorelease];
   NSMutableSet* webviews = [[[NSMutableSet set] retain] autorelease];
-  WebView* pluginView_;
   [views addObjectsFromArray:[parentview subviews]];
   while( [views count] ){
     WebView* view = [views anyObject];
@@ -84,13 +83,13 @@
     [views addObjectsFromArray:[view subviews]];
     [views removeObject:view];
   }
-  if( [webviews count] < 1 ) NSLog(@"got no plugin views");
-  else
-    {
-      if( [webviews count] > 1 ) NSLog(@"got multiple plugin views");
-      pluginView_ = [webviews anyObject];
-    }
-  return pluginView_;
+  if( [webviews count] < 1 ){
+    NSLog(@"got no plugin views");
+    return nil;
+  }else{
+    if( [webviews count] > 1 ) NSLog(@"got multiple plugin views");
+    return [webviews anyObject];
+  }
 }
 
 - (void)makeViewFullscreen:(WebView*)view
