@@ -62,17 +62,17 @@
   // invoking shared application ensures that windows can be ordered
   [NSApplication sharedApplication];
   NSRect rect = [[NSScreen mainScreen] frame];
-  view_ = [[[WebView alloc] initWithFrame:rect] retain];
-  [[[view_ mainFrame] frameView] setAllowsScrolling:NO];
-  [view_ setFrameLoadDelegate:self];
+  mainView_ = [[[WebView alloc] initWithFrame:rect] retain];
+  [[[mainView_ mainFrame] frameView] setAllowsScrolling:NO];
+  [mainView_ setFrameLoadDelegate:self];
   window_ = [[[NSWindow alloc] initWithContentRect:rect 
                                          styleMask:0 
                                            backing:NSBackingStoreBuffered 
                                              defer:YES] retain];
-  [window_ setContentView:view_];
+  [window_ setContentView:mainView_];
   NSURLRequest* pageRequest = [NSURLRequest requestWithURL:[asset_ url]];
-  [view_ setCustomUserAgent:AGENTSTRING];
-  [[view_ mainFrame] loadRequest:pageRequest];
+  [mainView_ setCustomUserAgent:AGENTSTRING];
+  [[mainView_ mainFrame] loadRequest:pageRequest];
 }
 
 // <WebFrameLoadDelegate> callback once the video loads
@@ -80,32 +80,16 @@
 {
   if( frame != [view mainFrame] ) return;
   [window_ display];
-  BRDisplayManager* manager = [BRDisplayManager sharedInstance];
-  NSDictionary* mode = [manager displayMode];
-  NSArray* objects = [NSArray arrayWithObjects: NSFullScreenModeAllScreens,
-                      NSFullScreenModeWindowLevel,
-                      NSFullScreenModeSetting,
-                      nil ];
-  NSArray* keys = [NSArray arrayWithObjects: [NSNumber numberWithBool:YES],
-                   [NSNumber numberWithInt:14],
-                   mode,
-                   nil ];
-  NSDictionary* options = [NSDictionary dictionaryWithObjects:objects
-                                                      forKeys:keys];
   // if there is a plugin, we want to fullscreen it. if not (e.g. if the user
   // isn't logged in and the movie won't be shown) we report an error
-  WebView* plugin = [self pluginChildOfView:view_];
-  if( plugin )
-  {
-    [plugin enterFullScreenMode:[NSScreen mainScreen]
-                         withOptions:options];  
+  if( [self hasPluginView] ) {
+    [self makePluginFullscreen];
     [self reveal];
   } else {
     NSString* title = @"Error";
     NSString* primary = @"Video Could Not Be Loaded";
     NSString* secondary = @"Please ensure that you are logged into your Netfli"\
     "x account in Safari, and that you have not reached your viewing limit.";
-    NSLog(@"about to show alert");
     BRAlertController* alert = [BRAlertController alertOfType:kBRAlertTypeError
                                                        titled:title
                                                   primaryText:primary
@@ -116,7 +100,7 @@
 
 - (void)playPause
 {
-  [view_ sendKeyCode:49 withCharCode:0]; // space-bar
+  [self sendPluginKeyCode:49 withCharCode:0]; // space-bar
 }
 
 #pragma mark BR Control
@@ -131,11 +115,8 @@
 {
   [super controlWillDeactivate];
   [self returnToFR];
-  [[self pluginChildOfView:view_] exitFullScreenModeWithOptions:nil];
   [window_ close];
-  [view_ close];
   window_ = nil;
-  view_ = nil;
 }
 
 @end

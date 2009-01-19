@@ -21,22 +21,32 @@
 
 #import <BackRow/BRController.h>
 
-@interface WebView (KeyboardShortcuts)
-- (void)sendKeyCode:(int)keyCode withCharCode:(int)charCode;
-@end
-
 @interface BaseController : BRController {
+ @protected
+  WebView* mainView_; // subclasses should set this to be the primary web view
+ @private
+  id pluginView_; // WebNetscapePluginDocumentView beneath the mainView (if any)
 }
 
 
 // orders out the FR interface to reveal an understudy player
 - (void)reveal;
 
-// brings the FR interface back
+// brings the FR interface back, and takes any views (main or plugin) out of 
+// fullscreen mode.
 - (void)returnToFR;
 
-- (WebView*)pluginChildOfView:(WebView*)view;
-- (void)makeViewFullscreen:(WebView*)view;
+// Returns true if the |mainView| contains (or is) a plugin subview.
+- (BOOL)hasPluginView;
+
+// One of these (or some other sub-class specific) methods should be invoked 
+// before using the -reveal method.
+- (void)makeMainViewFullscreen;
+- (void)makePluginFullscreen;
+
+// Sends the given key code (and character code) to a contained web plugin
+- (void)sendPluginKeyCode:(int)keyCode withCharCode:(int)charCode;
+
 // subclasses should override (default does nothing):
 - (void)playPause;
 

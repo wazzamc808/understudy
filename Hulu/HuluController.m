@@ -49,16 +49,16 @@
   // invoking shared application ensures that windows can be ordered
   [NSApplication sharedApplication];
   NSRect rect = [[NSScreen mainScreen] frame];
-  view_ = [[WebView alloc] initWithFrame:rect];
-  [[[view_ mainFrame] frameView] setAllowsScrolling:NO];
-  [view_ setFrameLoadDelegate:self];
+  mainView_ = [[WebView alloc] initWithFrame:rect];
+  [[[mainView_ mainFrame] frameView] setAllowsScrolling:NO];
+  [mainView_ setFrameLoadDelegate:self];
   window_ = [[NSWindow alloc] initWithContentRect:rect 
                                         styleMask:0 
                                           backing:NSBackingStoreBuffered 
                                             defer:YES];
-  [window_ setContentView:view_];
+  [window_ setContentView:mainView_];
   NSURLRequest* pageRequest = [NSURLRequest requestWithURL:[asset_ url]];
-  [[view_ mainFrame] loadRequest:pageRequest];
+  [[mainView_ mainFrame] loadRequest:pageRequest];
 }
 
 // replace in |string| the numeric value after |name|= with |newdim|
@@ -89,12 +89,10 @@ BOOL replaceDimension (const char* name, NSMutableString* string, int newdim)
 - (void)_maximizePlayer
 {
   // be sure we can get ahold of the flash player
-  WebScriptObject* script = [view_ windowScriptObject];
+  WebScriptObject* script = [mainView_ windowScriptObject];
   id player = [script evaluateWebScript:@"document.player.nodeName"];
-  if( player == [WebUndefined undefined]){
-    pluginView_ = view_;
+  if( player == [WebUndefined undefined])
     return;
-  }
   
   // javascript statements (invoked near the end of this method)
   NSString* getFlashVars = @"document.player.getAttribute('flashvars')";
@@ -112,7 +110,7 @@ BOOL replaceDimension (const char* name, NSMutableString* string, int newdim)
   "lay:block;'); t.setAttribute('height',%4.0f); t.setAttribute('width'"\
   ",%4.0f); t = t.parentNode };";  
   
-  NSSize screen = [view_ frame].size;
+  NSSize screen = [mainView_ frame].size;
   NSSize oldstage; // original stage (and dom element) size
   NSSize oldview;  // original viewable size (stage less buttons)
   NSSize newview;  // desired new viewable size
@@ -175,52 +173,7 @@ BOOL replaceDimension (const char* name, NSMutableString* string, int newdim)
   // show the player, offset it, and make the body background gray
   [script evaluateWebScript:setstyle];
     
-  [view_ setNeedsDisplay:YES];
-}
-
-// make the WebView fullscreen
-- (void)_fullscreen
-{
-  BRDisplayManager* manager = [BRDisplayManager sharedInstance];
-  NSDictionary* mode = [manager displayMode];
-  NSArray* objects = [NSArray arrayWithObjects: NSFullScreenModeAllScreens,
-                      NSFullScreenModeWindowLevel,
-                      NSFullScreenModeSetting,
-                      nil ];
-  NSArray* keys = [NSArray arrayWithObjects: [NSNumber numberWithBool:YES],
-                   [NSNumber numberWithInt:14],
-                   mode,
-                   nil ];
-  NSDictionary* options = [NSDictionary dictionaryWithObjects:objects
-                                                      forKeys:keys];
-  [view_ enterFullScreenMode:[NSScreen mainScreen]
-                 withOptions:options];
-}
-
-// grab the web view for the flash player
-- (WebView*)_pluginView
-{
-  if( !pluginView_ )
-  {
-    NSMutableSet* views = [[[NSMutableSet set] retain] autorelease];
-    NSMutableSet* webviews = [[[NSMutableSet set] retain] autorelease];
-    [views addObjectsFromArray:[view_ subviews]];
-    while( [views count] ){
-      WebView* view = [views anyObject];
-      if( [[view className] isEqual:@"WebNetscapePluginDocumentView"] )
-        [webviews addObject:view];
-      [views addObjectsFromArray:[view subviews]];
-      [views removeObject:view];
-    }
-    if( [webviews count] < 1 ) NSLog(@"got no plugin views");
-    else
-    {
-      if( [webviews count] > 1 ) NSLog(@"got multiple plugin views");
-      pluginView_ = [webviews anyObject];
-      [pluginView_ retain];
-    }
-  }
-  return pluginView_;
+  [mainView_ setNeedsDisplay:YES];
 }
 
 // <WebFrameLoadDelegate> callback once the video loads
@@ -230,13 +183,13 @@ BOOL replaceDimension (const char* name, NSMutableString* string, int newdim)
   [self _maximizePlayer];
   [window_ display];
   [window_ orderFrontRegardless];
-  [self _fullscreen];
+  [self makeMainViewFullscreen];
   [self reveal];
 }
 
 - (void)playPause
 {
-  [[self _pluginView] sendKeyCode:49 withCharCode:0]; // space-bar
+  [self sendPluginKeyCode:49 withCharCode:0]; // space-bar
 }
 
 #pragma mark BR Control
@@ -251,11 +204,8 @@ BOOL replaceDimension (const char* name, NSMutableString* string, int newdim)
 {
   [super controlWillDeactivate];
   [self returnToFR];
-  [view_ exitFullScreenModeWithOptions:nil];
   [window_ close];
-  [view_ close];
   window_ = nil;
-  view_ = nil;
 }
 
 @end

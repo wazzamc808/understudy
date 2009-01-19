@@ -39,19 +39,6 @@
 - (void)orderOut;
 @end
 
-@implementation WebView (KeyboardShortcuts)
-- (void)sendKeyCode:(int)keyCode withCharCode:(int)charCode
-{
-  EventRecord event; 
-  event.what = keyDown; 
-  event.message = (keyCode << 8) + charCode;
-  event.modifiers = 0;
-  [(id)self sendEvent:(NSEvent *)&event];
-  event.what = keyUp;
-  [(id)self sendEvent:(NSEvent *)&event];
-}
-@end
-
 @implementation BaseController
 
 - (void)reveal
@@ -68,14 +55,21 @@
   id<BRRendererProvider> provider = [sentinel rendererProvider];
   BRRenderer* renderer = [provider renderer];
   [renderer orderIn];
+  if( [mainView_ isInFullScreenMode] )
+    [mainView_ exitFullScreenModeWithOptions:nil];
+  if( [pluginView_ isInFullScreenMode] )
+    [pluginView_ exitFullScreenModeWithOptions:nil];
+  [mainView_ close];
 }
 
-// grab the web view for the flash player
-- (WebView*)pluginChildOfView:(WebView*)parentview
+- (BOOL)hasPluginView
 {
+  if( pluginView_ ) return YES;
+  if( !mainView_ ) return NO;
+  
   NSMutableSet* views = [[[NSMutableSet set] retain] autorelease];
   NSMutableSet* webviews = [[[NSMutableSet set] retain] autorelease];
-  [views addObjectsFromArray:[parentview subviews]];
+  [views addObjectsFromArray:[mainView_ subviews]];
   while( [views count] ){
     WebView* view = [views anyObject];
     if( [[view className] isEqual:@"WebNetscapePluginDocumentView"] )
@@ -85,14 +79,15 @@
   }
   if( [webviews count] < 1 ){
     NSLog(@"got no plugin views");
-    return nil;
+    return NO;
   }else{
     if( [webviews count] > 1 ) NSLog(@"got multiple plugin views");
-    return [webviews anyObject];
+    pluginView_ = [[webviews anyObject] retain];
+    return YES;
   }
 }
 
-- (void)makeViewFullscreen:(WebView*)view
+- (void)_makeViewFullscreen:(WebView*)view
 {
   BRDisplayManager* manager = [BRDisplayManager sharedInstance];
   NSDictionary* mode = [manager displayMode];
@@ -110,6 +105,16 @@
                 withOptions:options];
 }
 
+- (void)makeMainViewFullscreen
+{
+  [self _makeViewFullscreen:mainView_];
+}
+
+- (void)makePluginFullscreen
+{
+  if( ![self hasPluginView] ) return;
+  [self _makeViewFullscreen:pluginView_];
+}
 
 - (BOOL)isNetworkDependent
 {
@@ -136,6 +141,18 @@
     default:
       return [super brEventAction:event];
   }
+}
+
+- (void)sendPluginKeyCode:(int)keyCode withCharCode:(int)charCode
+{
+  if( ![self hasPluginView] )return;
+  EventRecord event; 
+  event.what = keyDown; 
+  event.message = (keyCode << 8) + charCode;
+  event.modifiers = 0;
+  [(id)pluginView_ sendEvent:(NSEvent *)&event];
+  event.what = keyUp;
+  [(id)pluginView_ sendEvent:(NSEvent *)&event];
 }
 
 - (void)playPause{}

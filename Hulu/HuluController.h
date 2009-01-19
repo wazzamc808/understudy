@@ -27,8 +27,6 @@
  @private
   HuluAsset* asset_;
   NSWindow* window_;
-  WebView* view_;
-  WebView* pluginView_;
 }
 
 - (id)initWithAsset:(HuluAsset*)asset;

@@ -28,10 +28,6 @@
   NetflixAsset* asset_;
   NSWindow* window_;
   NSWindow* menushield_;
-  WebView* view_;
-  
-  BOOL flashFullscreened_;
-  BOOL attempingToFullscreen_;
 }
 
 - (id)initWithAsset:(NetflixAsset*)asset;
