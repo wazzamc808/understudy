@@ -369,7 +369,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				PRODUCT_NAME = frUnderstudy;
 				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.5.sdk";
-				VALID_ARCHS = "i386 x86_64";
+				VALID_ARCHS = "ppc970 ppc7400 ppc64 ppc i386 x86_64";
 				WRAPPER_EXTENSION = frappliance;
 				ZERO_LINK = NO;
 			};
