@@ -61,6 +61,8 @@
   NSRange br = [description rangeOfString:@"<br>"];
   if( br.location != NSNotFound )
     description = [description substringFromIndex: NSMaxRange(br)];
+  description = [description stringByReplacingOccurrencesOfString:@"<br>"
+                                                       withString:@"\n"];
   description_ = (NSString*) CFXMLCreateStringByUnescapingEntities(NULL,(CFStringRef)description,NULL);
   [description_ retain];
   
@@ -96,7 +98,7 @@
   return [imageManager_ imageNamed:thumbnailID_];
 }
 - (BRImage*)coverArtForBookmarkTimeInMS:(unsigned)ms{ return [self coverArt]; }
-- (BRMediaType*)mediaType{ return [BRMediaType TVShow]; }
+- (BRMediaType*)mediaType{ return [BRMediaType ytVideo]; }
 - (BOOL)hasVideoContent{ return YES; }
 - (BOOL)isDisabled{ return NO; }
 - (BOOL)isInappropriate{ return NO; }

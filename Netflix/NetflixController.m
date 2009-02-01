@@ -75,6 +75,36 @@
   [[mainView_ mainFrame] loadRequest:pageRequest];
 }
 
+// recenters the player in the window
+// calling this breaks the play pause functinoality
+/*- (void)_maximizePlayer_broken
+{
+  NSPoint newOrigin;
+  NSSize screen,oldSize,newSize;
+
+  oldSize = [pluginView_ frame].size;
+  screen = [mainView_ frame].size;
+  newSize = screen;
+  if( oldSize.height / screen.height > oldSize.width  / screen.width )
+    newSize.width = (oldSize.width / oldSize.height) * newSize.height;
+  else
+    newSize.height = (oldSize.height / oldSize.width) * newSize.width;    
+  
+  newOrigin.x = (screen.width - newSize.width)/2;
+  newOrigin.y = (screen.height - newSize.height)/2;
+  
+  WebScriptObject* script = [mainView_ windowScriptObject];  
+  NSString* position = @"document.getElementById('SLPlayer').setAttribute('style','width: %4.0fpx; height: %4.0fpx; position:absolute; top:%4.0fpx; left:%4.0fpx;')";
+  position = [NSString stringWithFormat:position,
+              ceilf(newSize.width),
+              ceilf(newSize.height),
+              ceilf(newOrigin.y),
+              ceilf(newOrigin.x)+20,
+              nil];
+  [script evaluateWebScript:position];
+  [(NSView*)pluginView_ display];
+}*/
+
 // <WebFrameLoadDelegate> callback once the video loads
 - (void)webView:(WebView*)view didFinishLoadForFrame:(WebFrame*)frame
 {
@@ -83,7 +113,7 @@
   // if there is a plugin, we want to fullscreen it. if not (e.g. if the user
   // isn't logged in and the movie won't be shown) we report an error
   if( [self hasPluginView] ) {
-    [self makePluginFullscreen];
+    [self makeMainViewFullscreen];
     [self reveal];
   } else {
     NSString* title = @"Error";
