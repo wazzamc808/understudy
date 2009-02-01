@@ -25,6 +25,7 @@
 
 @interface ManageFeedsDialog : BROptionDialog <UnderstudyAsset>{
   AddFeedDialog* addController_;
+  BROptionDialog* moveDialog_;
   BROptionDialog* removeDialog_;
 }
 

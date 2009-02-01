@@ -128,6 +128,34 @@ void upgradePrefs(RUIPreferences* FRprefs)
   [self savePreferences];
 }
 
+- (void)moveFeedFromIndex:(long)from toIndex:(long)to
+{
+  NSObject* item;
+  // ensure the values are valid
+  if( from < 0 || ([assets_ count]-1) < from 
+     || to < 0 || ([assets_ count]-1) < to 
+     || to == from ) return;
+
+  // if the |to| position is after the from, the new index must be decremented to 
+  // acount for the item no longer being the array by the time is't added
+  if( from < to ) --to;
+  
+  // move the feed
+  item = [feeds_ objectAtIndex:from];
+  [feeds_ removeObjectAtIndex:from];
+  [feeds_ insertObject:item atIndex:to];
+  // move the title
+  item = [titles_ objectAtIndex:from];
+  [titles_ removeObjectAtIndex:from];
+  [titles_ insertObject:item atIndex:to];
+  // move the asset
+  item = [assets_ objectAtIndex:from];
+  [assets_ removeObjectAtIndex:from];
+  [assets_ insertObject:item atIndex:to];
+  [[self list] reload];
+  [self savePreferences];
+}
+
 - (void)removeFeedAtIndex:(long)index
 {
   [[self list] removeDividers];

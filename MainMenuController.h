@@ -45,6 +45,7 @@
 + (MainMenuController*)sharedInstance;
 
 - (void)addFeed:(NSString*)feedURL withTitle:(NSString*)title;
+- (void)moveFeedFromIndex:(long)from toIndex:(long)to;
 - (void)removeFeedAtIndex:(long)index;
 - (void)renameFeedAtIndex:(long)index withTitle:(NSString*)title;
 - (void)savePreferences;

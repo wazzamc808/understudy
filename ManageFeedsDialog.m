@@ -32,6 +32,7 @@
   [self addOptionText:@"Add"];
   [self addOptionText:@"Remove"];
   [self addOptionText:@"Rename"];
+  [self addOptionText:@"Move"];
   [self setActionSelector:@selector(itemSelected) target:self];
   addController_ = [[AddFeedDialog alloc] init];
   return self;
@@ -43,6 +44,36 @@
   // if the main menu doesn't have any feeds, go right to the add dialog
   if( [[MainMenuController sharedInstance] itemCount] <= 1 )
     [[self stack] swapController:addController_];
+}
+
+- (void)_presentMoveDialog
+{
+  [moveDialog_ release];
+  moveDialog_ = [[BROptionDialog alloc] init];
+  [moveDialog_ setTitle:@"Move Feed"];
+  MainMenuController* main = [MainMenuController sharedInstance];
+  int i;
+  for(i = 0; i<([main itemCount]-1); i++)
+    [moveDialog_ addOptionText:[main titleForRow:i]];  
+  [moveDialog_ setActionSelector:@selector(_moveFrom) target:self];
+  [[self stack] pushController:moveDialog_];  
+}
+
+- (void)_moveFrom
+{
+  [moveDialog_ setPrimaryInfoText:@"Select new position." 
+                   withAttributes:nil];
+  [moveDialog_ setActionSelector:@selector(_moveTo) target:self];
+  // misusing the |tag|, rather than using the user info
+  [moveDialog_ setTag:[moveDialog_ selectedIndex]];
+}
+
+- (void)_moveTo
+{
+  long from = [moveDialog_ tag];
+  long to = [moveDialog_ selectedIndex];
+  [[MainMenuController sharedInstance] moveFeedFromIndex:from toIndex:to];
+  [[self stack] popController];
 }
 
 - (void)_presentRemoveDialog
@@ -87,6 +118,9 @@
       break;
     case 2: // rename
       [self _presentRenameDialog];
+      break;
+    case 3: // move
+      [self _presentMoveDialog];
       break;
     default:
       NSLog(@"unexpected index in add dialog");
