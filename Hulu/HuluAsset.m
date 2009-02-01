@@ -17,6 +17,8 @@
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
 #import "HuluAsset.h"
+#import "HuluFeed.h"
+#import "HuluFeedDiscoverer.h"
 #import "HuluController.h"
 
 #import <BackRow/BRImage.h>
@@ -49,7 +51,6 @@
   url = [url stringByReplacingOccurrencesOfString:@"#in-playlist#"
                                        withString:@"?in-playlist="];
   url_ = [[NSURL URLWithString:url] retain];
-  
   NSArray* tnArray = [dom elementsForName:@"media:thumbnail"];
   NSXMLElement* tnElement = [tnArray objectAtIndex:0];
   NSXMLNode* tnAttribute = [tnElement attributeForName:@"url"];
@@ -58,9 +59,16 @@
   
   NSXMLElement* credit = [[dom elementsForName:@"media:credit"] objectAtIndex:0];
   credit_ = [[credit stringValue] retain];
+  
   NSXMLElement* pubDate = [[dom elementsForName:@"pubDate"] objectAtIndex:0];
   airdate_ = [NSDate dateWithNaturalLanguageString:[pubDate stringValue]];
   [airdate_ retain];
+
+  // if the url isn't for /watch/ something, start an asynchronous load of the 
+  // url and try to find a feed for the (assumed) show on that page
+  if( ![[url_ path] hasPrefix:@"/watch/"] )
+    feedDiscoverer_ = [[HuluFeedDiscoverer alloc] initWithUrl:url_];
+  
   return self;
 }
 
@@ -70,9 +78,11 @@
   [airdate_ release];
   [credit_ release];
   [description_ release];
+  [feed_ release];
   [title_ release];
   [url_ release];
   [episodeInfo_ release];
+  [feedDiscoverer_ release];
   [super dealloc];
 }
 
@@ -112,7 +122,6 @@
   NSRange descRange = NSMakeRange(start+3, end-start-3);
   description_ = [description_ substringWithRange:descRange];
   description_ = (NSString*) CFXMLCreateStringByUnescapingEntities(NULL,(CFStringRef)description_,NULL);
-  starrating_ = 1;
 }
 
 - (void)setAirDateFromString:(NSString*) text
@@ -208,8 +217,6 @@
 - (NSString*)titleForSorting{ return [self title]; }
 - (NSString*)mediaSummary{ return description_; }
 - (NSString*)mediaDescription{ return [self mediaSummary]; }
-- (float)userStarRating{ return starrating_; }
-- (float)starRating{ return starrating_; }
 - (long)duration{ return duration_; }
 - (NSString*)mediaURL{ return [url_ description]; }
 - (NSString*)thumbnailArtID{ return thumbnailID_; }
@@ -254,8 +261,30 @@
 
 - (BRController*)controller
 {
-  return [[HuluController alloc] initWithAsset:self];
-}
+  // if there is a feed discover in progress, see what it has
+  if ( feedDiscoverer_ ) {
+    if ([feedDiscoverer_ error]) 
+      NSLog(@"discovery error: %@",[feedDiscoverer_ error]);
+    if( [feedDiscoverer_ feed] ){
+      [url_ autorelease];
+      url_ = [[feedDiscoverer_ feed] retain];
+      [feedDiscoverer_ release];
+      feedDiscoverer_ = nil;
+      NSLog(@"checking reported feed (%@)",[url_ className]);
+      if ( [[url_ path] hasPrefix:@"/feed/"] )
+        feed_ = [[HuluFeed alloc] initWithTitle:title_ forUrl:url_];
+    }
+  }
 
+  // if we're wrapping a feed, return it's controller
+  if ( feed_ ) return [feed_ controller];
+
+  // if the URL is for watching a video, provide a video controller
+  if ( [[url_ path] hasPrefix:@"/watch/"] ) 
+    return [[HuluController alloc] initWithAsset:self];  
+
+  // in all other cases return nil
+  return nil;
+}
 
 @end

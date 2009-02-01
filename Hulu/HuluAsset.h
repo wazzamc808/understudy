@@ -25,6 +25,9 @@
 
 #import "UnderstudyAsset.h"
 
+@class HuluFeed;
+@class HuluFeedDiscoverer;
+
 // class HuluAsset
 //
 // Represents the attributes of a Hulu Video
@@ -36,7 +39,6 @@
   NSString* description_;
   NSString* credit_;
   NSURL* url_;
-  float starrating_;
   long duration_;
   int episode_;
   int season_;
@@ -46,6 +48,11 @@
   NSString* thumbnailID_;
   BRImageManager* imageManager_;
   BRTextMenuItemLayer* menuitem_;
+
+  // url's that aren't for a video are loaded in hopes of finding a feed url
+  // in them (e.g. a show page contains it's "episodes" feed)
+  HuluFeed* feed_;                     // the contained feed
+  HuluFeedDiscoverer* feedDiscoverer_; // document that loads the original page
 }
 
 // Designated initializer. Builds the asset from the provided XML object

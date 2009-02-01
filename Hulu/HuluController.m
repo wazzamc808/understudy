@@ -104,7 +104,7 @@ BOOL replaceDimension (const char* name, NSMutableString* string, int newdim)
   NSString* hideplayer=@"document.player.setAttribute('style','display:none');";
   NSString* setstyle = @"document.player.setAttribute('style','display:normal;"\
   " position:absolute; top:%4.0fpx; left:%4.0fpx;'); document.body.setAttrib"\
-  "ute('style','background:rgb(40,39,39)')";
+  "ute('style','background:black')";
   NSString* movedivs = @"var t = document.player; while( t!=document.body.pare"\
   "ntNode ){ t.setAttribute('style','position:absolute; text-align: left; disp"\
   "lay:block;'); t.setAttribute('height',%4.0f); t.setAttribute('width'"\

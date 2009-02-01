@@ -120,12 +120,26 @@ didReceiveResponse:(NSURLResponse*)response
     NSString* feed;
     profile_ = [[path lastPathComponent] retain];
     [connection cancel];
-    feed = [@"www.hulu.com/feed/recommendations/" stringByAppendingString:profile_];
+    
+    feed = @"www.hulu.com/feed/subscriptions/";
+    feed = [feed stringByAppendingString:profile_];
     [feeds_ insertObject:feed atIndex:0];
-    [titles_ insertObject:@"Hulu Recommended Videos" atIndex:0];
+    [titles_ insertObject:@"Subscriptions" atIndex:0];
+
+    feed = @"www.hulu.com/feed/show-recommendations/";
+    feed = [feed stringByAppendingString:profile_];
+    [feeds_ insertObject:feed atIndex:0];
+    [titles_ insertObject:@"Recommended Shows" atIndex:0];
+    
+    feed = @"www.hulu.com/feed/recommendations/";
+    feed = [feed stringByAppendingString:profile_];
+    [feeds_ insertObject:feed atIndex:0];
+    [titles_ insertObject:@"Recommended Videos" atIndex:0];
+    
     feed = [@"www.hulu.com/feed/queue/" stringByAppendingString:profile_];
     [feeds_ insertObject:feed atIndex:0];
-    [titles_ insertObject:@"Hulu Queue" atIndex:0];
+    [titles_ insertObject:@"My Queue" atIndex:0];
+    
     searching_ = NO;
     [[self list] reload];
   }
