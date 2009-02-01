@@ -132,11 +132,11 @@
       break;
     case kBRRemoteUpButton:
       settings = [BRSettingsFacade sharedInstance];
-      [settings setSystemVolume:([settings systemVolume]+0.1)];
+      [settings setSystemVolume:([settings systemVolume]+0.05)];
       return YES;
     case kBRRemoteDownButton:
       settings = [BRSettingsFacade sharedInstance];
-      [settings setSystemVolume:([settings systemVolume]-0.1)];
+      [settings setSystemVolume:([settings systemVolume]-0.05)];
       return YES;
     default:
       return [super brEventAction:event];
