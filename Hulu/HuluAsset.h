@@ -62,4 +62,8 @@
 
 // Provides the primary url of the media.
 - (NSURL*)url;
+
+// The aspect ratio of the video (width / height).  The player defaults to 16/9 
+// but may be overridden by user settings for shows that are still 4/3
+- (float)aspectRatio;
 @end

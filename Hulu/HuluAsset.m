@@ -22,6 +22,7 @@
 #import "HuluController.h"
 
 #import <BackRow/BRImage.h>
+#import <BackRow/RUIPreferences.h>
 
 #import <CoreFoundation/CFXMLNode.h>
 
@@ -285,6 +286,24 @@
 
   // in all other cases return nil
   return nil;
+}
+
+- (float)aspectRatio
+{
+  // load the global preferences
+  RUIPreferences* FRprefs = [RUIPreferences sharedFrontRowPreferences];
+  NSDictionary* prefDict = (NSDictionary*) [FRprefs objectForKey:@"understudy"];
+  // look for Hulu -> Aspect Ratio -> <series name>
+  NSDictionary* hulu = [prefDict objectForKey:@"Hulu"];
+  NSDictionary* ratios = [hulu objectForKey:@"AspectRatios"];
+  NSNumber* ratio = [ratios objectForKey:[self seriesName]];
+  if( ratio ){
+    NSLog(@"found a setting: %@",ratio);
+    return [ratio floatValue];
+  } else {
+    NSLog(@"didn't find an aspect ratio setting for %@",[self seriesName] );
+    return 16.0/9.0;
+  }
 }
 
 @end

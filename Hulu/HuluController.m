@@ -122,15 +122,25 @@ BOOL replaceDimension (const char* name, NSMutableString* string, int newdim)
   oldstage.width = [[script evaluateWebScript:getWidth] floatValue];
   oldview.height = oldstage.height - 8; // taken by the progress bar
   oldview.width = oldstage.width - 150; // taken by the stage buttons 
-  newview = screen;
-  if( oldview.height / screen.height > oldview.width  / screen.width )
+
+  float aspect = [asset_ aspectRatio];
+  NSLog(@"target aspect ratio: %.3f",aspect);
+  NSLog(@"screen aspect ratio: %.3f",(screen.width/screen.height));
+  NSLog(@"screen view: %0.3f / %0.3f",screen.width,screen.height);
+  // compare the target aspect ratio to the screen ratio and scale accordingly
+  //if( oldview.height / screen.height > oldview.width  / screen.width )
+  if( (screen.width/screen.height) > aspect )
   {
+    NSLog(@"maximizing height");
     newview.height = screen.height;
-    newview.width = (oldview.width / oldview.height) * newview.height;
+    newview.width = aspect * newview.height;
   }else{
+    NSLog(@"maximizaing width");
     newview.width = screen.width;
-    newview.height = (oldview.height / oldview.width) * newview.width;    
+    newview.height = (oldview.height / oldview.width) * newview.width;  
+    newview.height = newview.width / aspect;
   }
+  NSLog(@"new view: %0.3f / %0.3f",newview.width,newview.height);
   newstage.width = newview.width + 150;
   newstage.height = newview.height + 8;
   
