@@ -29,7 +29,7 @@
   [self setActionSelector:@selector(itemSelected) target:self];
   int i;
   MainMenuController* main = [MainMenuController sharedInstance];
-  for( i = 0; i < [main itemCount]; i++ )
+  for( i = 0; i < [main itemCount]-1; i++ )
     [self addOptionText:[main titleForRow:i]];
   [self setTitle:@"Rename Feed"];
   [self setPrimaryInfoText:@"Select a feed to rename" withAttributes:nil];

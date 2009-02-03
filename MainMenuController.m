@@ -96,14 +96,14 @@ void upgradePrefs(RUIPreferences* FRprefs)
   [[self list] reload];
 }
 
-// Takes the current feeds and pushed them in the FR preference storage. The
-// feed's url is the key, and it's (user specified) title is the value.
 - (void)savePreferences
 {
-  NSMutableDictionary* prefs = [NSMutableDictionary dictionary];
+  RUIPreferences* FRprefs = [RUIPreferences sharedFrontRowPreferences];
+  NSMutableDictionary* prefs;
+  prefs = [[FRprefs objectForKey:@"understudy"] mutableCopy];
+  if( !prefs ) prefs = [NSMutableDictionary dictionary];
   [prefs setObject:titles_ forKey:@"titles"];
   [prefs setObject:feeds_ forKey:@"feeds"];
-  RUIPreferences* FRprefs = [RUIPreferences sharedFrontRowPreferences];
   [FRprefs setObject:prefs forKey:@"understudy"];
 }
 
@@ -170,6 +170,7 @@ void upgradePrefs(RUIPreferences* FRprefs)
 - (void)renameFeedAtIndex:(long)index withTitle:(NSString*)title
 {
   [titles_ replaceObjectAtIndex:index withObject:[[title copy]autorelease]];
+  [assets_ replaceObjectAtIndex:index withObject:[NSNull null]];
   [[self list] reload];
   [self savePreferences];
 }
