@@ -1,5 +1,5 @@
 //
-//  Copyright 2008-2009 Kirk Kelsey.
+//  Copyright 2009 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -17,21 +17,16 @@
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
 #import <Cocoa/Cocoa.h>
+#import <BackRow/BRBaseMediaAsset.h>
+#import <BackRow/BRMediaPreviewControllerFactory.h>
 
-#import <BackRow/BRMediaMenuController.h>
-
-#import "FeedMenuController.h"
-#import "BaseUnderstudyAsset.h"
-
-@class BRTextMenuItemLayer;
-
-@interface HuluFeed : BaseUnderstudyAsset <FeedDelegate>
+@interface BaseUnderstudyAsset : BRBaseMediaAsset<BRMediaPreviewFactoryDelegate> 
 {
-  NSURL* url_;
-  NSString* title_;
-  NSArray* assets_;
+
 }
 
-- (id)initWithTitle:(NSString*)title forUrl:(NSURL*)url;
+// Default implementation simply calls the BRMediaPreviewControllerFactory 
+// previewControlForAsset with self.
+- (BRControl*)preview;
 
 @end

@@ -55,13 +55,17 @@
     urlRange = NSMakeRange(start.location, end.location-start.location);
     url = [contents substringWithRange:urlRange];
     feed_ = [[NSURL URLWithString:url] retain];
-    NSLog(@"found feed url");
   }
 }
 
 - (NSURL*)feed
 {
   return feed_;
+}
+
+- (NSURL*)finalURL
+{
+  return [[self URLResponse] URL];
 }
 
 @end

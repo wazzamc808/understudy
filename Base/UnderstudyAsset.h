@@ -26,4 +26,5 @@
 @protocol UnderstudyAsset
 - (BRLayer<BRMenuItemLayer>*)menuItem;
 - (BRController*)controller;
+- (NSString*)title;
 @end

@@ -67,6 +67,8 @@
     [asset autorelease];
     [assets insertObject:asset atIndex:0];
   }
+  [assets_ autorelease];
+  assets_ = [assets retain];
   return assets;
 }
 
@@ -81,6 +83,14 @@
 {
   FeedMenuController* con = [FeedMenuController alloc];
   return [con initWithDelegate:self];
+}
+
+- (BRControl*)preview
+{
+  if( assets_ )
+    return [BRMediaPreviewControllerFactory previewControlForAssets:assets_
+                                                       withDelegate:self];
+  return nil;
 }
 
 @end

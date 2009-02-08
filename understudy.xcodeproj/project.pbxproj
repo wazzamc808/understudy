@@ -32,6 +32,8 @@
 		DFCDFB120F3E2E9300D979F0 /* MainMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFCDFB0C0F3E2E9300D979F0 /* MainMenuController.m */; };
 		DFCDFB130F3E2E9300D979F0 /* ManageFeedsDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = DFCDFB0E0F3E2E9300D979F0 /* ManageFeedsDialog.m */; };
 		DFCDFB140F3E2E9300D979F0 /* RenameDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = DFCDFB100F3E2E9300D979F0 /* RenameDialog.m */; };
+		DFCDFB1B0F3E2F7800D979F0 /* ApplianceIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = DFCDFB1A0F3E2F7800D979F0 /* ApplianceIcon.png */; };
+		DFCDFC530F3E72A400D979F0 /* BaseUnderstudyAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = DFCDFC520F3E72A400D979F0 /* BaseUnderstudyAsset.m */; };
 		DFE014950EDF681D00AFD18F /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFE014940EDF681D00AFD18F /* WebKit.framework */; };
 /* End PBXBuildFile section */
 
@@ -87,6 +89,9 @@
 		DFCDFB0E0F3E2E9300D979F0 /* ManageFeedsDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManageFeedsDialog.m; sourceTree = "<group>"; };
 		DFCDFB0F0F3E2E9300D979F0 /* RenameDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenameDialog.h; sourceTree = "<group>"; };
 		DFCDFB100F3E2E9300D979F0 /* RenameDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RenameDialog.m; sourceTree = "<group>"; };
+		DFCDFB1A0F3E2F7800D979F0 /* ApplianceIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ApplianceIcon.png; path = Resources/ApplianceIcon.png; sourceTree = "<group>"; };
+		DFCDFC510F3E72A400D979F0 /* BaseUnderstudyAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseUnderstudyAsset.h; sourceTree = "<group>"; };
+		DFCDFC520F3E72A400D979F0 /* BaseUnderstudyAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseUnderstudyAsset.m; sourceTree = "<group>"; };
 		DFE014940EDF681D00AFD18F /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = /System/Library/Frameworks/WebKit.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
@@ -110,7 +115,6 @@
 		089C166AFE841209C02AAC07 /* HelloWorld */ = {
 			isa = PBXGroup;
 			children = (
-				DF0EDFCA0EE5E187008FA08A /* English.lproj */,
 				08FB77AFFE84173DC02AAC07 /* Classes */,
 				32C88E010371C26100C91783 /* Other Sources */,
 				089C167CFE841241C02AAC07 /* Resources */,
@@ -132,6 +136,8 @@
 		089C167CFE841241C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				DF0EDFCA0EE5E187008FA08A /* English.lproj */,
+				DFCDFB1A0F3E2F7800D979F0 /* ApplianceIcon.png */,
 				8D5B49B7048680CD000E48DA /* Info.plist */,
 			);
 			name = Resources;
@@ -214,6 +220,8 @@
 			isa = PBXGroup;
 			children = (
 				DF5A244E0F11366F00F5F19F /* UnderstudyAsset.h */,
+				DFCDFC510F3E72A400D979F0 /* BaseUnderstudyAsset.h */,
+				DFCDFC520F3E72A400D979F0 /* BaseUnderstudyAsset.m */,
 				DF5A23920F11240400F5F19F /* BaseController.h */,
 				DF5A23930F11240400F5F19F /* BaseController.m */,
 				DF5A22380F100E4300F5F19F /* FeedMenuController.h */,
@@ -298,6 +306,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DF0EDFCD0EE5E187008FA08A /* English.lproj in Resources */,
+				DFCDFB1B0F3E2F7800D979F0 /* ApplianceIcon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -327,6 +336,7 @@
 				DFCDFB120F3E2E9300D979F0 /* MainMenuController.m in Sources */,
 				DFCDFB130F3E2E9300D979F0 /* ManageFeedsDialog.m in Sources */,
 				DFCDFB140F3E2E9300D979F0 /* RenameDialog.m in Sources */,
+				DFCDFC530F3E72A400D979F0 /* BaseUnderstudyAsset.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

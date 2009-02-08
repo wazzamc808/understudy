@@ -22,7 +22,9 @@
 #import <BackRow/BRImageManager.h>
 #import <BackRow/BRMediaAsset.h>
 #import <BackRow/BRTextMenuItemLayer.h>
+#import <BackRow/BRMediaPreviewControllerFactory.h>
 
+#import "BaseUnderstudyAsset.h"
 #import "UnderstudyAsset.h"
 
 @class HuluFeed;
@@ -32,7 +34,8 @@
 //
 // Represents the attributes of a Hulu Video
 
-@interface HuluAsset : BRBaseMediaAsset<UnderstudyAsset> {
+@interface HuluAsset : BaseUnderstudyAsset<UnderstudyAsset> 
+{
  @private
   NSString* title_;
   NSString* series_;

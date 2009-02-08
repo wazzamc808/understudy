@@ -31,4 +31,7 @@
 // report the discovered feed
 - (NSURL*)feed;
 
+// report the URL after any redirections occur. This is important in cases where
+// the initial URL doesn't appear to be for a specific video, but ultimately is.
+- (NSURL*)finalURL;
 @end

@@ -28,7 +28,7 @@
 - (id)init
 {
   [super init];
-  [self setTitle:@"Manage Feeds"];
+  [self setTitle:[self title]];
   [self addOptionText:@"Add"];
   [self addOptionText:@"Remove"];
   [self addOptionText:@"Rename"];
@@ -130,10 +130,25 @@
 - (BRLayer<BRMenuItemLayer>*)menuItem
 {
   BRTextMenuItemLayer* manager = [BRTextMenuItemLayer menuItem];
-  [manager setTitle:@"Manage Feeds"];
+  [manager setTitle:[self title]];
   return manager;
 }
 
 - (BRController*)controller{ return self; }
+
+- (NSString*)title
+{
+  return @"Manage Feeds";
+}
+
+- (NSArray*)containedAssets
+{
+  return nil;
+}
+
+- (BRControl*)preview
+{
+  return nil;
+}
 
 @end

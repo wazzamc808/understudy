@@ -232,4 +232,13 @@ void upgradePrefs(RUIPreferences* FRprefs)
   [[self stack] pushController:[asset controller]];
 }
 
+- (BRControl*)previewControlForItem:(long)itemIndex
+{
+  NSLog(@"preview for index %d",itemIndex);
+  BaseUnderstudyAsset<UnderstudyAsset>* asset;
+  asset = [assets_ objectAtIndex:itemIndex];
+  if( (id)asset != [NSNull null] ) NSLog(@"asset isn't nil");
+  return [asset preview];
+}
+
 @end

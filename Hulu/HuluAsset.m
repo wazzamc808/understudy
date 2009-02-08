@@ -207,11 +207,6 @@
 - (NSURL*)url{ return url_; }
 - (NSString*)episodeInfo{ return episodeInfo_; }
 
-#pragma mark BRMediaPreviewFactoryDelegate
-- (BRMediaType*)mediaPreviewMissingMediaType{ return nil; }
-- (BOOL)mediaPreviewShouldShowMetadata{ return YES; }
-- (BOOL)mediaPreviewShouldShowMetadataImmediately{ return YES; }
-
 
 #pragma mark BRMediaAsset
 - (NSString*)title{ return title_; }
@@ -266,24 +261,25 @@
   if ( feedDiscoverer_ ) {
     if ([feedDiscoverer_ error]) 
       NSLog(@"discovery error: %@",[feedDiscoverer_ error]);
+    
+    [url_ autorelease];
+    url_ = [feedDiscoverer_ finalURL];
+    
     if( [feedDiscoverer_ feed] ){
-      [url_ autorelease];
-      url_ = [[feedDiscoverer_ feed] retain];
+      if ( [[[feedDiscoverer_ feed] path] hasPrefix:@"/feed/"] )
+        feed_ = [[HuluFeed alloc] initWithTitle:title_ forUrl:url_];
       [feedDiscoverer_ release];
       feedDiscoverer_ = nil;
-      NSLog(@"checking reported feed (%@)",[url_ className]);
-      if ( [[url_ path] hasPrefix:@"/feed/"] )
-        feed_ = [[HuluFeed alloc] initWithTitle:title_ forUrl:url_];
     }
   }
-
-  // if we're wrapping a feed, return it's controller
-  if ( feed_ ) return [feed_ controller];
 
   // if the URL is for watching a video, provide a video controller
   if ( [[url_ path] hasPrefix:@"/watch/"] ) 
     return [[HuluController alloc] initWithAsset:self];  
 
+  // if we're wrapping a feed, return it's controller
+  if ( feed_ ) return [feed_ controller];
+  
   // in all other cases return nil
   return nil;
 }
@@ -304,6 +300,15 @@
     NSLog(@"didn't find an aspect ratio setting for %@",[self seriesName] );
     return 16.0/9.0;
   }
+}
+
+- (BRControl*)preview
+{
+  if( feed_ )
+    return [feed_ preview];
+  else
+    return [BRMediaPreviewControllerFactory previewControlForAsset:self
+                                                      withDelegate:self];
 }
 
 @end

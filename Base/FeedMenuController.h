@@ -25,9 +25,8 @@
 @protocol FeedDelegate <UnderstudyAsset>
 // return an autoreleased array of UnderStudyAsset objects. Feed delegates 
 // should not load their assests until specifically asked.
-- (NSArray*)currentAssets;
-- (NSString*)title;
-// feeds that are managed by the FR menu system should be named there as well
+- (NSArray*) currentAssets;
+// feeds that are managed by the FR menu system should be named there
 // (as opposed to determining the name from web content or provider)
 - (id)initWithTitle:(NSString*)title forUrl:(NSURL*)url;
 @end

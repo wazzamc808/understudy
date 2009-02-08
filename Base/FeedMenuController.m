@@ -19,6 +19,7 @@
 #import "FeedMenuController.h"
 #import "BaseController.h"
 #import "UnderstudyAsset.h"
+#import "BaseUnderstudyAsset.h"
 
 #import <BackRow/BRControllerStack.h>
 #import <BackRow/BRComboMenuItemLayer.h>
@@ -78,9 +79,8 @@
 - (BRControl*)previewControlForItem:(long)itemIndex
 {
   if( ![self rowSelectable:itemIndex] ) return nil;
-  id asset = [assets_ objectAtIndex:itemIndex];
-  return [BRMediaPreviewControllerFactory previewControlForAsset:asset
-                                                    withDelegate:self];
+  BaseUnderstudyAsset* asset = [assets_ objectAtIndex:itemIndex];
+  return [asset preview];
 }
 
 #pragma mark BRMenuListItemProvider
