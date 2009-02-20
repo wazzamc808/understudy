@@ -24,6 +24,7 @@
 @interface BaseController : BRController {
  @protected
   WebView* mainView_; // subclasses should set this to be the primary web view
+  NSWindow* menushield_; // window used to cover the menu bar
  @private
   id pluginView_; // WebNetscapePluginDocumentView beneath the mainView (if any)
 }
@@ -44,11 +45,16 @@
 - (void)makeMainViewFullscreen;
 - (void)makePluginFullscreen;
 
+// Create a shield over the menu bar. For some reason, when we fullscreen a
+// flash player, it doesn't cover the menu bar properly.
+- (void)shieldMenu;
+
 // Sends the given key code (and character code) to a contained web plugin
 - (void)sendPluginKeyCode:(int)keyCode withCharCode:(int)charCode;
 
 // subclasses should override (default does nothing):
 - (void)playPause;
-
+- (void)fastForward;
+- (void)rewind;
 @end
 

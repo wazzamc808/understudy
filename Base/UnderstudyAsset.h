@@ -26,5 +26,12 @@
 @protocol UnderstudyAsset
 - (BRLayer<BRMenuItemLayer>*)menuItem;
 - (BRController*)controller;
+- (BRControl*)preview;
 - (NSString*)title;
+
+@optional
+// In some cases it may be benefitial to customize the menu item to the menu.
+// For example, the feed to a show shouldn't have items with the same name
+- (BRLayer<BRMenuItemLayer>*)menuItemForMenu:(NSString*)menu;
+
 @end

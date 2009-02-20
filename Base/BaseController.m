@@ -60,6 +60,7 @@
   if( [pluginView_ isInFullScreenMode] )
     [pluginView_ exitFullScreenModeWithOptions:nil];
   [mainView_ close];
+  [menushield_ close];
 }
 
 - (BOOL)hasPluginView
@@ -69,19 +70,35 @@
   
   NSMutableSet* views = [[[NSMutableSet set] retain] autorelease];
   NSMutableSet* webviews = [[[NSMutableSet set] retain] autorelease];
+  WebView* view;
   [views addObjectsFromArray:[mainView_ subviews]];
   while( [views count] ){
-    WebView* view = [views anyObject];
+    view = [views anyObject];
     if( [[view className] isEqual:@"WebNetscapePluginDocumentView"] )
         [webviews addObject:view];
     [views addObjectsFromArray:[view subviews]];
     [views removeObject:view];
   }
   if( [webviews count] < 1 ){
-    NSLog(@"got no plugin views");
+    NSLog(@"could not a find a plugin");
     return NO;
+  }else if( [webviews count] > 1 ){
+#warning lame heuristic
+    pluginView_ = [[webviews anyObject] retain];
+    float pluginsize = ([pluginView_ frame].size.height * [pluginView_ frame].size.width);
+    // pick the largest plugin view available
+    for( view in webviews )
+    {
+      float viewsize = ([view frame].size.height * [view frame].size.width);
+      if( viewsize > pluginsize )
+      {
+        [pluginView_ autorelease];
+        pluginView_ = [view retain];
+        pluginsize = ([pluginView_ frame].size.height * [pluginView_ frame].size.width);
+      }
+    }
+    return YES;
   }else{
-    if( [webviews count] > 1 ) NSLog(@"got multiple plugin views");
     pluginView_ = [[webviews anyObject] retain];
     return YES;
   }
@@ -116,6 +133,23 @@
   [self _makeViewFullscreen:pluginView_];
 }
 
+- (void)shieldMenu
+{
+  if( menushield_ ) return;
+  NSRect screenRect = [[NSScreen mainScreen] frame];
+  screenRect.origin.y = screenRect.size.height - 25;
+  screenRect.size.height = 25;
+  menushield_ = [[NSWindow alloc] initWithContentRect:screenRect
+                                            styleMask:NSBorderlessWindowMask
+                                              backing:NSBackingStoreBuffered
+                                                defer:NO
+                                               screen:[NSScreen mainScreen]];
+  [menushield_ setBackgroundColor:[NSColor blackColor]];
+  [menushield_ setLevel: CGShieldingWindowLevel() ];
+  [menushield_ orderFrontRegardless];
+  [menushield_ display];
+}
+
 - (BOOL)isNetworkDependent
 {
   return YES;
@@ -138,6 +172,12 @@
       settings = [BRSettingsFacade sharedInstance];
       [settings setSystemVolume:([settings systemVolume]-0.05)];
       return YES;
+    case kBRRemoteRightButton:
+      [self fastForward];
+      return YES;
+    case kBRRemoteLeftButton:
+      [self rewind];
+      return YES;
     default:
       return [super brEventAction:event];
   }
@@ -156,5 +196,6 @@
 }
 
 - (void)playPause{}
-
+- (void)fastForward{}
+- (void)rewind{}
 @end

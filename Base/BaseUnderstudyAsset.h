@@ -22,7 +22,7 @@
 
 @interface BaseUnderstudyAsset : BRBaseMediaAsset<BRMediaPreviewFactoryDelegate> 
 {
-
+  BRControl* preview_;
 }
 
 // Default implementation simply calls the BRMediaPreviewControllerFactory 

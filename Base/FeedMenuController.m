@@ -81,6 +81,8 @@
   if( ![self rowSelectable:itemIndex] ) return nil;
   BaseUnderstudyAsset* asset = [assets_ objectAtIndex:itemIndex];
   return [asset preview];
+//  return [BRMediaPreviewControllerFactory previewControlForAsset:asset
+//                                                    withDelegate:self];
 }
 
 #pragma mark BRMenuListItemProvider
@@ -98,8 +100,11 @@
 
 - (BRLayer<BRMenuItemLayer>*)itemForRow:(long)row
 {
-  id<UnderstudyAsset> asset = [assets_ objectAtIndex:row];
-  return [asset menuItem];
+  NSObject<UnderstudyAsset>* asset = [assets_ objectAtIndex:row];
+  if( [asset respondsToSelector:@selector(menuItemForMenu:)] )
+    return [asset menuItemForMenu:[delegate_ title]];
+  else
+    return [asset menuItem];
 }
 
 -(float)heightForRow:(long)row
@@ -112,9 +117,9 @@
   return (row >= 0 && row < [assets_ count]);
 }
 
-#pragma mark BRMediaPreviewFactoryDelegate
 - (BRMediaType*)mediaPreviewMissingMediaType{ return nil; }
 - (BOOL)mediaPreviewShouldShowMetadata{ return YES; }
-- (BOOL)mediaPreviewShouldShowMetadataImmediately{ return YES; }
+- (BOOL)mediaPreviewShouldShowMetadataImmediately{ return NO; }
+
 
 @end

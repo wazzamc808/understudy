@@ -20,10 +20,23 @@
 #import <BackRow/BRMediaPreviewControllerFactory.h>
 
 @implementation BaseUnderstudyAsset
+
+- (void)dealloc
+{
+  [preview_ release];
+  NSLog(@"deallocating base asset");
+  [super dealloc];
+}
+
 - (BRControl*)preview
 {
-  return [BRMediaPreviewControllerFactory previewControlForAsset:self
-                                                    withDelegate:self];
+  if( !preview_ )
+  {
+    preview_ = [BRMediaPreviewControllerFactory previewControlForAsset:self
+                                                          withDelegate:self];
+    [preview_ retain];
+  }
+  return preview_;
 }
 
 #pragma mark BRMediaPreviewFactoryDelegate
