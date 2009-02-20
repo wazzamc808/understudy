@@ -64,7 +64,7 @@
 - (NSString*)title{ return title_; }
 - (BRLayer<BRMenuItemLayer>*)menuItem
 {
-  BRTextMenuItemLayer*item = [BRTextMenuItemLayer menuItem];
+  BRTextMenuItemLayer*item = [BRTextMenuItemLayer folderMenuItem];
   [item setTitle:[self title]];
   return item;
 }

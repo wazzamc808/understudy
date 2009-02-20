@@ -23,13 +23,14 @@
 #import <BackRow/BRMediaAsset.h>
 #import <BackRow/BRTextMenuItemLayer.h>
 
+#import "BaseUnderstudyAsset.h"
 #import "UnderstudyAsset.h"
 
 // class NetflixAsset
 //
 // Represents the attributes of a Netflix Video
 
-@interface NetflixAsset : BRBaseMediaAsset <UnderstudyAsset> {
+@interface NetflixAsset : BaseUnderstudyAsset <UnderstudyAsset> {
  @private
   NSString* title_;
   NSString* description_;

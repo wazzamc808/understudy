@@ -27,7 +27,6 @@
  @private
   NetflixAsset* asset_;
   NSWindow* window_;
-  NSWindow* menushield_;
 }
 
 - (id)initWithAsset:(NetflixAsset*)asset;

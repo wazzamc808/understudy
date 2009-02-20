@@ -20,11 +20,12 @@
 
 #import <BackRow/BRMediaMenuController.h>
 
+#import "BaseUnderstudyAsset.h"
 #import "FeedMenuController.h"
 
 @class BRTextMenuItemLayer;
 
-@interface NetflixFeed : NSObject <FeedDelegate>
+@interface NetflixFeed : BaseUnderstudyAsset <FeedDelegate>
 {
  @private 
   NSURL* url_;
