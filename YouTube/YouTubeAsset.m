@@ -73,6 +73,18 @@
   return self;
 }
 
+- (void)dealoc
+{
+  [feedDelegate_ release];
+  [description_ release];
+  [menuitem_ release];
+  [published_ release];
+  [thumbnailID_ release];
+  [title_ release];
+  [url_ release];
+  [videoID_ release];
+}
+
 // in feeds that don't use the media:group, we try to parse information from
 // the content element of each feed entry. much less information is provided
 - (void)buildFromId:(NSXMLElement*)idtag;
@@ -137,12 +149,12 @@
 
 - (BRController*)controller
 {
-  if( isVideo_ )
+  if( isVideo_ ){
     return [[YouTubeController alloc] initWithAsset:self];
-  else{
-    YouTubeFeed* del = [[YouTubeFeed alloc] initWithTitle:title_
-                                                    forUrl:url_];
-    return [del controller];
+  } else {
+    if( !feedDelegate_ )
+      feedDelegate_ = [[YouTubeFeed alloc] initWithTitle:title_ forUrl:url_];
+    return [feedDelegate_ controller];
   }
 }
 

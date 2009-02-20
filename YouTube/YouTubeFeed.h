@@ -18,9 +18,10 @@
 
 #import <Cocoa/Cocoa.h>
 
+#import "BaseUnderstudyAsset.h"
 #import "FeedMenuController.h"
 
-@interface YouTubeFeed : NSObject<FeedDelegate>
+@interface YouTubeFeed : BaseUnderstudyAsset<FeedDelegate>
 {
   NSString* title_;
   NSURL* url_;

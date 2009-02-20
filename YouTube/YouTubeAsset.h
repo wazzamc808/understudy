@@ -19,17 +19,17 @@
 #import <Cocoa/Cocoa.h>
 #import <BackRow/BRBaseMediaAsset.h>
 #import "UnderstudyAsset.h"
+#import "BaseUnderstudyAsset.h"
 
 @class BRTextMenuItemLayer;
 @class BRImageManager;
 @class BRMediaType;
-@class YouTubeController;
+@class YouTubeFeed;
 
-@interface YouTubeAsset : BRBaseMediaAsset<UnderstudyAsset> 
+@interface YouTubeAsset : BaseUnderstudyAsset<UnderstudyAsset> 
 {
  @private
   BRTextMenuItemLayer* menuitem_;
-  YouTubeController* controller_;
   NSString* description_;
   long duration_;
   BRImageManager* imageManager_;
@@ -40,6 +40,7 @@
   NSString* title_;
   NSURL* url_;
   BOOL isVideo_;
+  YouTubeFeed* feedDelegate_;
 }
 
 // the init function may return nil if parsing fails

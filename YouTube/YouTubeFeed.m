@@ -29,28 +29,26 @@
 // gdata.youtube.com/feeds/base/users/<username>/playlists
 //contains references to playlists the user created
 
-//  when adding, should auto discover the username, and make both the 
-//  subscriptions and playlists.
-
 @implementation YouTubeFeed
 
 - (id)initWithTitle:(NSString*)title forUrl:(NSURL*)url
 {
-  url_ = [url retain];
+  url_ = [url copy];
   title_ = [title copy];
   return self;
 }
 
 - (void)dealloc
 {
-  [url_ release];
+  [controller_ release];
   [title_ release];
+  [url_ release];
   [super dealloc];
 }
 
 - (BRLayer<BRMenuItemLayer>*)menuItem
 {
-  BRTextMenuItemLayer*item = [BRTextMenuItemLayer menuItem];
+  BRTextMenuItemLayer*item = [BRTextMenuItemLayer folderMenuItem];
   [item setTitle:title_];
   return item;
 }
@@ -58,10 +56,7 @@
 - (BRController*)controller
 {
   if( !controller_ )
-  {
-    controller_ = [FeedMenuController alloc];
-    controller_ = [controller_ initWithDelegate:self];
-  }
+    controller_ = [[FeedMenuController alloc] initWithDelegate:self];
   return controller_;
 }
 
