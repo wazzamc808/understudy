@@ -121,22 +121,23 @@ didReceiveResponse:(NSURLResponse*)response
     profile_ = [[path lastPathComponent] retain];
     [connection cancel];
     
-    feed = @"www.hulu.com/feed/subscriptions/";
+    feed = @"http://www.hulu.com/feed/subscriptions/";
     feed = [feed stringByAppendingString:profile_];
     [feeds_ insertObject:feed atIndex:0];
     [titles_ insertObject:@"Subscriptions" atIndex:0];
 
-    feed = @"www.hulu.com/feed/show-recommendations/";
+    feed = @"http://www.hulu.com/feed/show-recommendations/";
     feed = [feed stringByAppendingString:profile_];
     [feeds_ insertObject:feed atIndex:0];
     [titles_ insertObject:@"Recommended Shows" atIndex:0];
     
-    feed = @"www.hulu.com/feed/recommendations/";
+    feed = @"http://www.hulu.com/feed/recommendations/";
     feed = [feed stringByAppendingString:profile_];
     [feeds_ insertObject:feed atIndex:0];
     [titles_ insertObject:@"Recommended Videos" atIndex:0];
     
-    feed = [@"www.hulu.com/feed/queue/" stringByAppendingString:profile_];
+    feed = @"http://www.hulu.com/feed/queue/";
+    feed = [feed stringByAppendingString:profile_];
     [feeds_ insertObject:feed atIndex:0];
     [titles_ insertObject:@"My Queue" atIndex:0];
     
