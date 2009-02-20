@@ -57,6 +57,40 @@
   return YES;
 }
 
+// show an error indicating that the clipboard doesn't seem to have a url
+- (void)_presentInvalidURLAlert
+{
+  BRController* alert;
+  alert = [[BRAlertController alertOfType:kBRAlertTypeError
+                                   titled:@"Error" 
+                              primaryText:@"Not a URL"
+                            secondaryText:@"The clipboard contents do not app"\
+            "ear to be a valid URL."] retain];
+  [[self stack] swapController:[alert autorelease]];
+}
+
+- (void)_presentInvalidHostAlert
+{
+  BRController* alert;
+  alert = [[BRAlertController alertOfType:kBRAlertTypeError
+                                   titled:@"Error" 
+                              primaryText:@"Invalid Host"
+                            secondaryText:@"The URL stored on the clipboard d"\
+            "oes not refer to a supported video provider."] retain];
+  [[self stack] swapController:[alert autorelease]];
+}
+
+- (void)_presentInvalidFeedAlert
+{
+  BRController* alert;
+  alert = [[BRAlertController alertOfType:kBRAlertTypeError
+                                   titled:@"Error"
+                              primaryText:@"Invalid Feed"
+                            secondaryText:@"The URL does not appear to refer to"\
+            " a valid feed."] retain];
+  [[self stack] swapController:[alert autorelease]];
+}
+
 // looks for a string in the clipboard. if there isn't a string, or it isn't
 // a url, or that url doesn't refer to a known video provider, sound an error
 - (void)_loadFeedFromPasteboard
@@ -65,35 +99,27 @@
   NSString* copied = [pasteboard stringForType:@"NSStringPboardType"];
   NSURL* url = [NSURL URLWithString:copied];
   NSString* host = [[url host] lowercaseString];
-  BRController* alert;
   MainMenuController* main = [MainMenuController sharedInstance];
-  if( !host ){
-    // show an error indicating that the clipboard doesn't seem to have a url
-    alert = [BRAlertController alertOfType:kBRAlertTypeError
-                                    titled:@"Error" 
-                               primaryText:@"Not a URL"
-                             secondaryText:@"The clipboard contents do not app"\
-             "ear to be a valid URL."];
-  }else if( ![self _validateFeed:url] ){
-    alert = [BRAlertController alertOfType:kBRAlertTypeError
-                                    titled:@"Error"
-                               primaryText:@"Invalid Feed"
-                             secondaryText:@"The URL does not appear to refer to"\
-             " a valid feed. "];
-  }else if( [host rangeOfString:@"hulu"].location != NSNotFound )
+  if( !host )
+    [self _presentInvalidURLAlert];
+  
+  else if( ![self _validateFeed:url] )
+    [self _presentInvalidHostAlert];
+  
+  else if( [host rangeOfString:@"hulu"].location != NSNotFound )
+  {
     [main addFeed:[url absoluteString] withTitle:@"Hulu Feed"];
-  else if( [host rangeOfString:@"netflix"].location != NSNotFound )
-    [main addFeed:[url absoluteString] withTitle:@"Netflix Feed"];
-  else{
-    alert = [BRAlertController alertOfType:kBRAlertTypeError
-                                    titled:@"Error" 
-                               primaryText:@"Not a URL"
-                             secondaryText:@"The URL stored on the clipboard d"\
-             "oes not refer to a supported video provider."];
+    [[self stack] popToController:main];
   }
-  // if we've set an alert the show it, otherwise return to the main menu
-  if( alert ) [[self stack] swapController:alert];
-  else [[self stack] swapController:main];
+  
+  else if( [host rangeOfString:@"netflix"].location != NSNotFound )
+  {
+    [main addFeed:[url absoluteString] withTitle:@"Netflix Feed"];
+    [[self stack] popToController:main];
+  }
+  
+  else
+    [self _presentInvalidHostAlert];
 }
 
 // call-back for an item having been selected
