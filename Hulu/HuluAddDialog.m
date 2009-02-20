@@ -126,7 +126,7 @@ didReceiveResponse:(NSURLResponse*)response
     [feeds_ insertObject:feed atIndex:0];
     [titles_ insertObject:@"Subscriptions" atIndex:0];
 
-    feed = @"http://www.hulu.com/feed/show-recommendations/";
+    feed = @"http://www.hulu.com/feed/show_recommendations/";
     feed = [feed stringByAppendingString:profile_];
     [feeds_ insertObject:feed atIndex:0];
     [titles_ insertObject:@"Recommended Shows" atIndex:0];
