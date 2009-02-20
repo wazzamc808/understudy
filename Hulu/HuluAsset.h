@@ -51,7 +51,8 @@
   NSString* thumbnailID_;
   BRImageManager* imageManager_;
   BRTextMenuItemLayer* menuitem_;
-
+  BRTextMenuItemLayer* specificMenuItem_;
+  
   // url's that aren't for a video are loaded in hopes of finding a feed url
   // in them (e.g. a show page contains it's "episodes" feed)
   HuluFeed* feed_;                     // the contained feed

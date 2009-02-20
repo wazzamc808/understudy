@@ -210,14 +210,11 @@
 
 #pragma mark BRMediaAsset
 - (NSString*)title{ return title_; }
-- (NSString*)titleForSorting{ return [self title]; }
 - (NSString*)mediaSummary{ return description_; }
 - (NSString*)mediaDescription{ return [self mediaSummary]; }
 - (long)duration{ return duration_; }
 - (NSString*)mediaURL{ return [url_ description]; }
 - (NSString*)thumbnailArtID{ return thumbnailID_; }
-- (NSDate*)dateAcquired{ return added_; }
-- (NSString*)dateAcquiredString{ return [added_ description]; }
 - (NSDate*)datePublished{ return airdate_; }
 - (NSString*)datePublishedString{ return [airdate_ description]; }
 - (BRImage*)coverArt{ return [self thumbnailArt]; }
@@ -225,7 +222,6 @@
 { 
   return [imageManager_ imageNamed:thumbnailID_];
 }
-- (BRImage*)coverArtForBookmarkTimeInMS:(unsigned)ms{ return [self coverArt]; }
 - (BRMediaType*)mediaType{ return [BRMediaType TVShow]; }
 - (BOOL)hasVideoContent{ return YES; }
 - (BOOL)isDisabled{ return NO; }
@@ -255,6 +251,24 @@
   return menuitem_;  
 }
 
+// If the menu is titled by the series name of this asset, then the menu items
+// should use something else for their titles (like the episode title).
+- (BRLayer<BRMenuItemLayer>*)menuItemForMenu:(NSString*)menu
+{
+  if( [menu compare:[self seriesName]] != NSOrderedSame ){
+    return [self menuItem];
+  } else {
+    if( !specificMenuItem_ )
+    {
+      specificMenuItem_ = [BRTextMenuItemLayer menuItem];
+      [specificMenuItem_ setTitle:title_];
+      [specificMenuItem_ setRightJustifiedText:[self episodeInfo]];
+      [specificMenuItem_ retain];
+    }
+    return specificMenuItem_;
+  }
+}
+
 - (BRController*)controller
 {
   // if there is a feed discover in progress, see what it has
@@ -263,11 +277,13 @@
       NSLog(@"discovery error: %@",[feedDiscoverer_ error]);
     
     [url_ autorelease];
-    url_ = [feedDiscoverer_ finalURL];
+    url_ = [[feedDiscoverer_ finalURL] retain];
     
     if( [feedDiscoverer_ feed] ){
-      if ( [[[feedDiscoverer_ feed] path] hasPrefix:@"/feed/"] )
-        feed_ = [[HuluFeed alloc] initWithTitle:title_ forUrl:url_];
+      if ( [[[feedDiscoverer_ feed] path] hasPrefix:@"/feed/"] ){
+        feed_ = [[HuluFeed alloc] initWithTitle:title_ 
+                                         forUrl:[feedDiscoverer_ feed]];
+      }
       [feedDiscoverer_ release];
       feedDiscoverer_ = nil;
     }
@@ -293,22 +309,16 @@
   NSDictionary* hulu = [prefDict objectForKey:@"Hulu"];
   NSDictionary* ratios = [hulu objectForKey:@"AspectRatios"];
   NSNumber* ratio = [ratios objectForKey:[self seriesName]];
-  if( ratio ){
-    NSLog(@"found a setting: %@",ratio);
+  if( ratio )
     return [ratio floatValue];
-  } else {
-    NSLog(@"didn't find an aspect ratio setting for %@",[self seriesName] );
+  else
     return 16.0/9.0;
-  }
 }
 
 - (BRControl*)preview
 {
-  if( feed_ )
-    return [feed_ preview];
-  else
-    return [BRMediaPreviewControllerFactory previewControlForAsset:self
-                                                      withDelegate:self];
+  if( feed_ ) return [feed_ preview];
+  else return [super preview];
 }
 
 @end

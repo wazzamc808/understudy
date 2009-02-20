@@ -74,7 +74,7 @@
 
 - (BRLayer<BRMenuItemLayer>*)menuItem
 {
-  BRTextMenuItemLayer*item = [BRTextMenuItemLayer menuItem];
+  BRTextMenuItemLayer*item = [BRTextMenuItemLayer folderMenuItem];
   [item setTitle:title_];
   return item;
 }
@@ -87,9 +87,9 @@
 
 - (BRControl*)preview
 {
-  if( assets_ )
-    return [BRMediaPreviewControllerFactory previewControlForAssets:assets_
-                                                       withDelegate:self];
+//  if( assets_ )
+//    return [BRMediaPreviewControllerFactory previewControlForAssets:assets_
+//                                                       withDelegate:self];
   return nil;
 }
 

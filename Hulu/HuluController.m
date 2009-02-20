@@ -19,6 +19,7 @@
 #include <regex.h>
 
 #import "HuluController.h"
+#import "MainMenuController.h"
 
 #import <BackRow/BRControllerStack.h>
 #import <BackRow/BRDisplayManager.h>
@@ -26,7 +27,7 @@
 #import <BackRow/BRRenderScene.h>
 #import <BackRow/BRSentinel.h>
 #import <BackRow/BRSettingsFacade.h>
-
+#import <BackRow/BRAlertController.h>
 #import <Carbon/Carbon.h>
 
 @implementation HuluController
@@ -40,7 +41,9 @@
 
 - (void)dealloc
 {
+  NSLog(@"deallocating hulu controller");
   [asset_ release];
+//  [fsWindow_ release];
   [super dealloc];
 }
 
@@ -53,147 +56,78 @@
   [[[mainView_ mainFrame] frameView] setAllowsScrolling:NO];
   [mainView_ setFrameLoadDelegate:self];
   window_ = [[NSWindow alloc] initWithContentRect:rect 
-                                        styleMask:0 
-                                          backing:NSBackingStoreBuffered 
+                                        styleMask:0
+                                          backing:NSBackingStoreBuffered
                                             defer:YES];
   [window_ setContentView:mainView_];
   NSURLRequest* pageRequest = [NSURLRequest requestWithURL:[asset_ url]];
   [[mainView_ mainFrame] loadRequest:pageRequest];
 }
 
-// replace in |string| the numeric value after |name|= with |newdim|
-BOOL replaceDimension (const char* name, NSMutableString* string, int newdim)
+// tell the flash player to go fullscreen. we only try once, so if some other
+// mechanism must check for success (i.e. |fsWindow| != nil)
+- (BOOL)fullscreenFlash
 {
-  int nmatch = 2, res;
-  regex_t regex;
-  regmatch_t pmatch[nmatch];
-  NSString *regstr;
-  const char *regtext, *sourcetext;
+  // abort if we already have a fullscreen window
+  if( fsWindow_ ){
+    NSLog(@"already full screen");
+    return YES;
+  }
   
-  regstr = [NSString stringWithFormat:@"%s=([[:digit:]]+)",name];
-  regtext = [regstr cStringUsingEncoding:[NSString defaultCStringEncoding]];
-  sourcetext = [string cStringUsingEncoding:[NSString defaultCStringEncoding]];
+  // send an F keystroke to the player
+  [self sendPluginKeyCode:3  withCharCode:102];
   
-  regcomp(&regex, regtext, REG_EXTENDED);
-  res = regexec(&regex, sourcetext, nmatch, pmatch, 0);
+  // check the set of windows belonging to the application. we created one
+  // explicitly. anything else is the flash player creating it's own
+  NSArray* windows = [[NSApplication sharedApplication] windows];
+  [[windows retain] autorelease];
+  if( [windows count] < 2 ){
+    NSLog(@"flash didn't fullscreen");
+    return NO;
+  }
   
-  if( res != 0 || pmatch[nmatch - 1].rm_so == -1 ) return NO;
-  NSRange range = {pmatch[1].rm_so, pmatch[1].rm_eo-pmatch[1].rm_so};
-  [string replaceCharactersInRange:range 
-                        withString:[NSString stringWithFormat:@"%d",newdim]];
-  regfree(&regex);
+  // loop over all of the windows (with luck there will just be two)
+  for ( NSWindow* window in windows )
+  {
+    // when we find something other than the original window, force disply
+    // (the flash fullscreen window tends to initially be blank)
+    if( window != window_ && window != menushield_ )
+    {
+      fsWindow_ = [window retain];
+      [fsWindow_ display];
+    }
+  }  
   return YES;
 }
 
-// manipulate the web page DOM so that the player fills the screen
-- (void)_maximizePlayer
+- (void)exitFullScreen
 {
-  // be sure we can get ahold of the flash player
-  WebScriptObject* script = [mainView_ windowScriptObject];
-  id player = [script evaluateWebScript:@"document.player.nodeName"];
-  if( player == [WebUndefined undefined])
-    return;
+  [self sendPluginKeyCode:53 withCharCode:27];
   
-  // javascript statements (invoked near the end of this method)
-  NSString* getFlashVars = @"document.player.getAttribute('flashvars')";
-  NSString* getHeight = @"document.player.getAttribute('height');";
-  NSString* getWidth = @"document.player.getAttribute('width');";
-  NSString* hidedivs=@"d = document.getElementsByTagName('div'); var i=0; for("\
-  "i = 0; i < d.length; i++ ){ d[i].setAttribute('style','display:none'); }";
-  NSString* setflashvars=@"document.player.setAttribute('flashvars','%@');";
-  NSString* hideplayer=@"document.player.setAttribute('style','display:none');";
-  NSString* setstyle = @"document.player.setAttribute('style','display:normal;"\
-  " position:absolute; top:%4.0fpx; left:%4.0fpx;'); document.body.setAttrib"\
-  "ute('style','background:black')";
-  NSString* movedivs = @"var t = document.player; while( t!=document.body.pare"\
-  "ntNode ){ t.setAttribute('style','position:absolute; text-align: left; disp"\
-  "lay:block;'); t.setAttribute('height',%4.0f); t.setAttribute('width'"\
-  ",%4.0f); t = t.parentNode };";  
-  
-  NSSize screen = [mainView_ frame].size;
-  NSSize oldstage; // original stage (and dom element) size
-  NSSize oldview;  // original viewable size (stage less buttons)
-  NSSize newview;  // desired new viewable size
-  NSSize newstage; // new declared stage size
-  NSSize padding;  // extra space introduced to keep player centered
-  NSSize newsize;  // newstage + padding
+}
 
-  oldstage.height = [[script evaluateWebScript:getHeight] floatValue];
-  oldstage.width = [[script evaluateWebScript:getWidth] floatValue];
-  oldview.height = oldstage.height - 8; // taken by the progress bar
-  oldview.width = oldstage.width - 150; // taken by the stage buttons 
-
-  float aspect = [asset_ aspectRatio];
-  NSLog(@"target aspect ratio: %.3f",aspect);
-  NSLog(@"screen aspect ratio: %.3f",(screen.width/screen.height));
-  NSLog(@"screen view: %0.3f / %0.3f",screen.width,screen.height);
-  // compare the target aspect ratio to the screen ratio and scale accordingly
-  //if( oldview.height / screen.height > oldview.width  / screen.width )
-  if( (screen.width/screen.height) > aspect )
-  {
-    NSLog(@"maximizing height");
-    newview.height = screen.height;
-    newview.width = aspect * newview.height;
-  }else{
-    NSLog(@"maximizaing width");
-    newview.width = screen.width;
-    newview.height = (oldview.height / oldview.width) * newview.width;  
-    newview.height = newview.width / aspect;
-  }
-  NSLog(@"new view: %0.3f / %0.3f",newview.width,newview.height);
-  newstage.width = newview.width + 150;
-  newstage.height = newview.height + 8;
-  
-  // the flash player determines how large the video should be from an attribute
-  // of the html embed object named flashvars. the stage_height and stage_width
-  // are related to, but not the same as the html entity's height and width
-  NSMutableString* flashvars;
-  flashvars = [[script evaluateWebScript:getFlashVars] mutableCopy];
-  replaceDimension("stage_height",flashvars,(int)newview.height);
-  // we let the player determine it's own width (since the aspect ratio of the
-  // player isn't the same as the video)
-  
-  // we size the container to fit the new viewable area and padding that is
-  // added (for every pixel we add to the stage size, a pixel is added).
-  newsize.height = 2 * newview.height - oldstage.height;
-  newsize.width = 2 * newview.width - oldstage.width;
-  
-  // the flash player adds padding to keep itself centered in it's container.
-  // we don't have to worry about the buttons as long as the newview > oldstage
-  padding.width = (newview.width - newsize.width) / 2;
-  padding.height = (oldstage.height - newsize.height) / 2;
-  // the padding below the player is this less delta(stagesize)
-  
-  // in addition to the player's own padding, we may have introduced some by
-  // maintaining the player's aspect ratio. we offset that here
-  padding.height -= (newview.height - screen.height) / 2;
-  padding.width -= (newview.width - screen.width) /2;
-  
-  setflashvars = [NSString stringWithFormat:setflashvars,flashvars];
-  movedivs = [NSString stringWithFormat:movedivs,newsize.height,newsize.width];
-  setstyle = [NSString stringWithFormat:setstyle,padding.height,padding.width];
-
-  // hide all of the <div> elements (get rid of other content)
-  [script evaluateWebScript:hidedivs];
-  // update the flashvars (stage width and height)
-  [script evaluateWebScript:setflashvars];
-  // move the player (and it's ancestors) top/left
-  [script evaluateWebScript:movedivs];
-  [script evaluateWebScript:hideplayer];
-  // show the player, offset it, and make the body background gray
-  [script evaluateWebScript:setstyle];
-    
-  [mainView_ setNeedsDisplay:YES];
+- (void)attemptFullscreen
+{
+  NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
+  int i = 0;
+  do{
+    sleep(5);
+    NSLog(@"attempting full screen");
+  }while( i < 10 && ![self fullscreenFlash]);
+  [pool release];
 }
 
 // <WebFrameLoadDelegate> callback once the video loads
 - (void)webView:(WebView*)view didFinishLoadForFrame:(WebFrame*)frame
 {
   if( frame != [view mainFrame] ) return;
-  [self _maximizePlayer];
+
   [window_ display];
   [window_ orderFrontRegardless];
-  [self makeMainViewFullscreen];
+//  [self performSelectorInBackground:@selector(attemptFullscreen) 
+//                         withObject:nil];
+  
+  [self shieldMenu];
   [self reveal];
 }
 
@@ -202,20 +136,51 @@ BOOL replaceDimension (const char* name, NSMutableString* string, int newdim)
   [self sendPluginKeyCode:49 withCharCode:0]; // space-bar
 }
 
+// currently kludging FF to be a fullscreen
+- (void)fastForward
+{
+  [self fullscreenFlash];
+}
+
 #pragma mark BR Control
 
 - (void)controlWillActivate
 {
   [super controlWillActivate];
-  [self _loadVideo];
+  // see if this is the first time a hulu video has been played. if so, show
+  // an alert to mention how full screen is activated
+  if( ![MainMenuController sharedInstance]->huluFSAlerted )
+  {
+    alert_ = [BRAlertController alertOfType:kBRAlertTypeInfo
+                                     titled:@"Full Screen Support"
+                                primaryText:@"Press >>| to enter fullscreen"
+                              secondaryText:@"Once the video has loaded, press"\
+              " the right menu button or right arrow key to enter fullscreen m"\
+              "ode. A future version of Understudy will do this automatically"];
+    [[self stack] pushController:alert_];
+    [MainMenuController sharedInstance]->huluFSAlerted = YES;
+  } else {
+    alert_ = nil;
+    [self _loadVideo];
+  }
 }
 
 - (void)controlWillDeactivate
 {
+  if( !alert_ )
+  {
+    // enlarge the shield to hide the transition
+    [menushield_ setFrame:[[NSScreen mainScreen] frame] display:NO];
+    
+    [self exitFullScreen];
+    [fsWindow_ close];
+    fsWindow_ = nil;
+    [window_ close];
+    window_ = nil;
+    [self returnToFR];
+  }
   [super controlWillDeactivate];
-  [self returnToFR];
-  [window_ close];
-  window_ = nil;
+
 }
 
 @end

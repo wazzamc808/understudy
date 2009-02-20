@@ -26,7 +26,9 @@
 @interface HuluController : BaseController {
  @private
   HuluAsset* asset_;
-  NSWindow* window_;
+  NSWindow* window_;     // original window created to load content
+  NSWindow* fsWindow_;   // window created when the player goes full screen
+  BRController* alert_;
 }
 
 - (id)initWithAsset:(HuluAsset*)asset;
