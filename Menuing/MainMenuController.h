@@ -39,6 +39,9 @@
   // menu item -> controller (or nil if the controller hasn't been used)
   NSMutableDictionary* controllers_;
   NSMutableArray* assets_;
+ 
+ @public
+  BOOL huluFSAlerted;
 }
 
 // Singleton access

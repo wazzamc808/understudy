@@ -40,6 +40,7 @@
   [self _buildMenu];
   [self setListTitle:@"Understudy"];
   [[self list] setDatasource:self];
+  huluFSAlerted = false;
   return self;
 }
 
@@ -136,20 +137,20 @@ void upgradePrefs(RUIPreferences* FRprefs)
      || to < 0 || ([assets_ count]-1) < to 
      || to == from ) return;
 
-  // if the |to| position is after the from, the new index must be decremented to 
-  // acount for the item no longer being the array by the time is't added
+  // if the |to| position is after the |from|, the new index must be decremented
+  // to acount for the item no longer being in the array by the time is't added
   if( from < to ) --to;
   
   // move the feed
-  item = [feeds_ objectAtIndex:from];
+  item = [[[feeds_ objectAtIndex:from] retain] autorelease];
   [feeds_ removeObjectAtIndex:from];
   [feeds_ insertObject:item atIndex:to];
   // move the title
-  item = [titles_ objectAtIndex:from];
+  item = [[[titles_ objectAtIndex:from] retain] autorelease];
   [titles_ removeObjectAtIndex:from];
   [titles_ insertObject:item atIndex:to];
   // move the asset
-  item = [assets_ objectAtIndex:from];
+  item = [[[assets_ objectAtIndex:from] retain] autorelease];
   [assets_ removeObjectAtIndex:from];
   [assets_ insertObject:item atIndex:to];
   [[self list] reload];
@@ -190,7 +191,7 @@ void upgradePrefs(RUIPreferences* FRprefs)
       asset = [[NetflixFeed alloc] initWithTitle:title forUrl:url];
     else if( [host rangeOfString:@"youtube"].location != NSNotFound )
       asset = [[YouTubeFeed alloc] initWithTitle:title forUrl:url];
-    else asset = (NSObject<UnderstudyAsset>*)[NSNull null];
+    else asset = (BaseUnderstudyAsset<UnderstudyAsset>*)[NSNull null];
     
     [assets_ replaceObjectAtIndex:row withObject:asset];
     [asset autorelease];
@@ -234,11 +235,12 @@ void upgradePrefs(RUIPreferences* FRprefs)
 
 - (BRControl*)previewControlForItem:(long)itemIndex
 {
-  NSLog(@"preview for index %d",itemIndex);
   BaseUnderstudyAsset<UnderstudyAsset>* asset;
   asset = [assets_ objectAtIndex:itemIndex];
-  if( (id)asset != [NSNull null] ) NSLog(@"asset isn't nil");
-  return [asset preview];
+  if( [asset respondsToSelector:@selector(preview)] )
+    return [asset preview];
+  else
+    return nil;
 }
 
 @end
