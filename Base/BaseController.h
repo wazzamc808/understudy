@@ -25,7 +25,6 @@
  @protected
   WebView* mainView_; // subclasses should set this to be the primary web view
   NSWindow* menushield_; // window used to cover the menu bar
- @private
   id pluginView_; // WebNetscapePluginDocumentView beneath the mainView (if any)
 }
 
@@ -51,6 +50,10 @@
 
 // Sends the given key code (and character code) to a contained web plugin
 - (void)sendPluginKeyCode:(int)keyCode withCharCode:(int)charCode;
+
+// Simulates a mouse press at the given point relative to the top left corner
+// of the plugin's view
+- (void)sendPluginMouseClickAtPoint:(NSPoint)point;
 
 // subclasses should override (default does nothing):
 - (void)playPause;

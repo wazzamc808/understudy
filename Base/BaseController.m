@@ -195,6 +195,22 @@
   [(id)pluginView_ sendEvent:(NSEvent *)&event];
 }
 
+- (void)sendPluginMouseClickAtPoint:(NSPoint)point
+{
+  EventRecord record;
+  NSPoint orig = [pluginView_ frame].origin;
+  record.modifiers = btnState;
+  record.message = 0;
+  record.what = mouseDown;
+  record.when = TickCount();
+  record.where.h = orig.x + point.x;
+  record.where.v = orig.y + point.y;
+  [pluginView_ sendEvent:(NSEvent *)&record];
+  record.what = mouseUp;
+  record.when = TickCount();
+  [pluginView_ sendEvent:(NSEvent *)&record];  
+}
+
 - (void)playPause{}
 - (void)fastForward{}
 - (void)rewind{}
