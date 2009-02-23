@@ -64,8 +64,8 @@
   [[mainView_ mainFrame] loadRequest:pageRequest];
 }
 
-// tell the flash player to go fullscreen. we only try once, so if some other
-// mechanism must check for success (i.e. |fsWindow| != nil)
+// tell the flash player to go fullscreen. we only try once, so the caller 
+// should check for success (i.e. |fsWindow| != nil) if necessary
 - (BOOL)fullscreenFlash
 {
   // abort if we already have a fullscreen window
@@ -97,6 +97,10 @@
       [fsWindow_ display];
     }
   }  
+  
+  NSPoint fsPoint = {752,31};
+  [self sendPluginMouseClickAtPoint:fsPoint];
+  
   return YES;
 }
 
@@ -149,7 +153,7 @@
   [super controlWillActivate];
   // see if this is the first time a hulu video has been played. if so, show
   // an alert to mention how full screen is activated
-  if( ![MainMenuController sharedInstance]->huluFSAlerted )
+  if( ![[UNDPreferenceManager sharedInstance] huluFSAlerted] )
   {
     alert_ = [BRAlertController alertOfType:kBRAlertTypeInfo
                                      titled:@"Full Screen Support"
@@ -158,7 +162,7 @@
               " the right menu button or right arrow key to enter fullscreen m"\
               "ode. A future version of Understudy will do this automatically"];
     [[self stack] pushController:alert_];
-    [MainMenuController sharedInstance]->huluFSAlerted = YES;
+    [[UNDPreferenceManager sharedInstance] setHuluFSAlerted:YES];
   } else {
     alert_ = nil;
     [self _loadVideo];

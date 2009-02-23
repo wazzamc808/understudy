@@ -61,9 +61,9 @@
 - (void)itemSelected:(long)index
 {  
   if( index < [feeds_ count] ){
-    MainMenuController* main_ = [MainMenuController sharedInstance];
-    [main_ addFeed:[feeds_ objectAtIndex:index] 
-         withTitle:[titles_ objectAtIndex:index]];
+    UNDPreferenceManager* pref = [UNDPreferenceManager sharedInstance];
+    [pref addFeed:[feeds_ objectAtIndex:index] 
+        withTitle:[titles_ objectAtIndex:index]];
   }
   [[self stack] popController];
 }

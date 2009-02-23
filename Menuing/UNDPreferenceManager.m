@@ -1,0 +1,151 @@
+//
+//  Copyright 2009 Kirk Kelsey.
+//
+//  This file is part of Understudy.
+//
+//  Understudy is free software: you can redistribute it and/or modify it under
+//  the terms of the GNU Lesser General Public License as published by the Free
+//  Software Foundation, either version 3 of the License, or (at your option)
+//  any later version.
+//
+//  Understudy is distributed in the hope that it will be useful, but WITHOUT 
+//  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
+//  FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
+//  for more details.
+//
+//  You should have received a copy of the GNU Lesser General Public License
+//  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
+
+#import "HuluFeed.h"
+#import "NetflixFeed.h"
+#import "YouTubeFeed.h"
+
+#import "UNDPreferenceManager.h"
+
+#import <BackRow/RUIPreferences.h>
+
+@implementation UNDPreferenceManager
+@synthesize huluFSAlerted = huluFSAlerted_;
+
+- (id)init
+{
+  [super init];
+  self.huluFSAlerted = false;
+  return self;
+}
+
+- (void)dealloc
+{
+  [feeds_ release];
+  [titles_ release];
+  [super dealloc];
+}
+
+- (long)feedCount
+{
+  return [titles_ count];
+}
+
+- (NSString*)titleAtIndex:(long)index
+{
+  if( index >= 0 && index < [titles_ count] )
+    return [titles_ objectAtIndex:index];
+  else
+    return nil;
+}
+
+- (NSURL*)URLAtIndex:(long)index
+{
+  if( index >= 0 && index < [feeds_ count] )
+  {
+    NSString* feed = [feeds_ objectAtIndex:index];
+    return [NSURL URLWithString:feed];
+  } else {
+    return nil;  
+  }
+}
+
+void upgradePrefs(RUIPreferences* FRprefs)
+{
+  // versions up to 0.2 used "hulu" as the name for the feeds information
+  NSDictionary* prefDict = (NSDictionary*) [FRprefs objectForKey:@"hulu"];
+  if( prefDict )
+  {
+    prefDict = (NSDictionary*) [prefDict objectForKey:@"feeds"];
+    // we now use an array of feeds, another array of titles
+    NSMutableDictionary* newprefs = [NSMutableDictionary dictionary];
+    NSArray* feeds = [prefDict allKeys];
+    NSMutableArray* titles = [NSMutableArray array];
+    for(NSString* url in feeds) [titles addObject:[prefDict objectForKey:url]];
+    [newprefs setObject:titles forKey:@"titles"];
+    [newprefs setObject:feeds forKey:@"feeds"];
+    [FRprefs setObject:newprefs forKey:@"understudy"];
+    [FRprefs setObject:nil forKey:@"hulu"];
+  }
+}
+
+- (void)save
+{
+  RUIPreferences* FRprefs = [RUIPreferences sharedFrontRowPreferences];
+  NSMutableDictionary* prefs;
+  prefs = [[FRprefs objectForKey:@"understudy"] mutableCopy];
+  if( !prefs ) prefs = [NSMutableDictionary dictionary];
+  [prefs setObject:titles_ forKey:@"titles"];
+  [prefs setObject:feeds_ forKey:@"feeds"];
+  [FRprefs setObject:prefs forKey:@"understudy"];
+}
+
+- (void)addFeed:(NSString*)feedURL withTitle:(NSString*)title
+{
+  // ensure no duplicate titles
+  if( [titles_ containsObject:title] )
+  {
+    NSString* format = @"%@ %d", *newtitle;
+    int i = 0;
+    do{
+      newtitle = [NSString stringWithFormat:format,title,i++];
+    }while( [titles_ containsObject:newtitle]);
+    title = newtitle;
+  }
+  [feeds_ addObject:feedURL];
+  [titles_ addObject:title];
+  [self save];
+}
+
+- (void)moveFeedFromIndex:(long)from toIndex:(long)to
+{
+  NSObject* item;
+  // ensure the values are valid
+  if( from < 0 || ([titles_ count]-1) < from 
+     || to < 0 || ([titles_ count]-1) < to 
+     || to == from ) return;
+
+  // if the |to| position is after the |from|, the new index must be decremented
+  // to acount for the item no longer being in the array by the time is't added
+  if( from < to ) --to;
+  
+  // move the feed
+  item = [[[feeds_ objectAtIndex:from] retain] autorelease];
+  [feeds_ removeObjectAtIndex:from];
+  [feeds_ insertObject:item atIndex:to];
+  // move the title
+  item = [[[titles_ objectAtIndex:from] retain] autorelease];
+  [titles_ removeObjectAtIndex:from];
+  [titles_ insertObject:item atIndex:to];
+  [self save];
+}
+
+- (void)removeFeedAtIndex:(long)index
+{
+  [feeds_ removeObjectAtIndex:index];
+  [titles_ removeObjectAtIndex:index];
+  [self save];
+}
+
+- (void)renameFeedAtIndex:(long)index withTitle:(NSString*)title
+{
+  [titles_ replaceObjectAtIndex:index withObject:[[title copy]autorelease]];
+  [self save];
+}
+
+@end

@@ -1,5 +1,5 @@
 //
-//  Copyright 2008-2009 Kirk Kelsey.
+//  Copyright 2009 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -18,29 +18,34 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import <BackRow/BRMediaMenuController.h>
-#import <BackRow/BROptionDialog.h>
+#import <BackRow/BRSingleton.h>
 
-#import "AddFeedDialog.h"
-#import "UNDPreferenceManager.h"
+@protocol UNDPreferenceSubscriber
+- (void)preferencesDidChange;
+@end
 
-// class MainMenuController
-//
-// The primary window returned by the appliance controller. Use the
-// sharedInstance method to access the menu singleton rather than init (which 
-// is the designated initializer).
-
-@interface MainMenuController : BRMediaMenuController 
-<BRMenuListItemProvider,UNDPreferenceSubscriber>
+@interface UNDPreferenceManager : BRSingleton
 {
  @private
-  // menu item -> controller (or nil if the controller hasn't been used)
-  NSMutableDictionary* controllers_;
-  NSMutableArray* assets_;
-  UNDPreferenceManager* preferences_;
+  // feed urls in NSString format
+  NSMutableArray* feeds_;
+  // feed titles in NSString format
+  NSMutableArray* titles_;
+
+  BOOL huluFSAlerted_;
 }
 
-// Singleton access
-+ (MainMenuController*)sharedInstance;
+@property(nonatomic) BOOL huluFSAlerted;
+
+
+- (long) feedCount;
+- (NSString*) titleAtIndex:(long)index;
+- (NSURL*) URLAtIndex:(long)index;
+
+- (void)addFeed:(NSString*)feedURL withTitle:(NSString*)title;
+- (void)moveFeedFromIndex:(long)from toIndex:(long)to;
+- (void)removeFeedAtIndex:(long)index;
+- (void)renameFeedAtIndex:(long)index withTitle:(NSString*)title;
+- (void)save;
 
 @end

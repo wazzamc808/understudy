@@ -63,12 +63,12 @@ NSString* NETFLIXTITLES[] = {
 // call-back for an item having been selected
 - (void)itemSelected
 {
-  MainMenuController* main_ = [MainMenuController sharedInstance];
+  UNDPreferenceManager* pref = [UNDPreferenceManager sharedInstance];
   int index = [self selectedIndex];
   if( index < FEED_OPTION_COUNT ){
-    [main_ addFeed:NETFLIXURLS[index] withTitle:NETFLIXTITLES[index]];
+    [pref addFeed:NETFLIXURLS[index] withTitle:NETFLIXTITLES[index]];
   }else if( index == FEED_OPTION_COUNT ){
-    [main_ addFeed:queue_ withTitle:@"Netflix Queue"];
+    [pref addFeed:queue_ withTitle:@"Netflix Queue"];
   }else NSLog(@"unexpected option selected for Netflix");
   // we might want to pop back to the main menu
   [[self stack] popController];

@@ -16,8 +16,9 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
-#import "RenameDialog.h"
 #import "MainMenuController.h"
+#import "RenameDialog.h"
+#import "UNDPreferenceManager.h"
 
 #import <BackRow/BRControllerStack.h>
 
@@ -50,9 +51,9 @@
 - (void)textDidEndEditing:(id<BRTextContainer>)container
 {
   NSString* newname = [container stringValue];
-  MainMenuController* main =  [MainMenuController sharedInstance];
-  [main renameFeedAtIndex:[self selectedIndex] withTitle:newname];
-  [[self stack] popToController:main];
+  UNDPreferenceManager* pref = [UNDPreferenceManager sharedInstance];
+  [pref renameFeedAtIndex:[self selectedIndex] withTitle:newname];
+  [[self stack] popToController:[MainMenuController sharedInstance]];
 }
 
 @end

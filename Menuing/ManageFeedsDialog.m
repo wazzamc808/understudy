@@ -72,7 +72,7 @@
 {
   long from = [moveDialog_ tag];
   long to = [moveDialog_ selectedIndex];
-  [[MainMenuController sharedInstance] moveFeedFromIndex:from toIndex:to];
+  [[UNDPreferenceManager sharedInstance] moveFeedFromIndex:from toIndex:to];
   [[self stack] popController];
 }
 
@@ -94,7 +94,7 @@
 - (void)_remove
 {
   long index = [removeDialog_ selectedIndex];
-  [[MainMenuController sharedInstance] removeFeedAtIndex:index];
+  [[UNDPreferenceManager sharedInstance] removeFeedAtIndex:index];
   [[self stack] popController];
 }
 

@@ -28,7 +28,7 @@
 #import <BackRow/RUIPreferences.h>
 
 @interface MainMenuController (PrivateMenuHandling)
-- (void)_buildMenu;
+- (void)loadAssets;
 - (NSObject<UnderstudyAsset>*)assetForRow:(long)row;
 @end
 
@@ -37,17 +37,16 @@
 - (id)init
 {
   [super init];
-  [self _buildMenu];
+  preferences_ = [UNDPreferenceManager sharedInstance];
+  if( !preferences_ ) NSLog(@"no preferences");
+  [self loadAssets];
   [self setListTitle:@"Understudy"];
   [[self list] setDatasource:self];
-  huluFSAlerted = false;
   return self;
 }
 
 - (void)dealloc
 {
-  [feeds_ release];
-  [titles_ release];
   [assets_ release];
   [super dealloc];
 }
@@ -60,129 +59,23 @@ static MainMenuController *sharedInstance_;
   return sharedInstance_;
 }
 
-void upgradePrefs(RUIPreferences* FRprefs)
-{
-  // versions up to 0.2 used "hulu" as the name for the feeds information
-  NSDictionary* prefDict = (NSDictionary*) [FRprefs objectForKey:@"hulu"];
-  if( prefDict )
-  {
-    prefDict = (NSDictionary*) [prefDict objectForKey:@"feeds"];
-    // we now use an array of feeds, another array of titles
-    NSMutableDictionary* newprefs = [NSMutableDictionary dictionary];
-    NSArray* feeds = [prefDict allKeys];
-    NSMutableArray* titles = [NSMutableArray array];
-    for(NSString* url in feeds) [titles addObject:[prefDict objectForKey:url]];
-    [newprefs setObject:titles forKey:@"titles"];
-    [newprefs setObject:feeds forKey:@"feeds"];
-    [FRprefs setObject:newprefs forKey:@"understudy"];
-    [FRprefs setObject:nil forKey:@"hulu"];
-  }
-}
-
-- (void)_buildMenu
+- (void)loadAssets
 {  
-  RUIPreferences* FRprefs = [RUIPreferences sharedFrontRowPreferences];
-  upgradePrefs(FRprefs);
-  NSDictionary* prefDict = (NSDictionary*) [FRprefs objectForKey:@"understudy"];
-  feeds_ = [[[prefDict objectForKey:@"feeds"] mutableCopy] retain];
-  titles_ = [[[prefDict objectForKey:@"titles"] mutableCopy] retain];
-
-  if(!feeds_) feeds_ = [[NSMutableArray alloc] init];
-  if(!titles_) titles_ = [[NSMutableArray alloc] init];
-
-  assets_ = [[NSMutableArray arrayWithCapacity:[titles_ count]] retain];
-  for( id t in titles_ ) [assets_ addObject:[NSNull null]];
+  int i = 0, count = [preferences_ feedCount];
+  [assets_ autorelease];
+  assets_ = [[NSMutableArray arrayWithCapacity:count] retain];
+  for( i=0; i<count; i++ ) [assets_ addObject:[NSNull null]];
   [assets_ addObject:[[[ManageFeedsDialog alloc] init] autorelease]];
-  [[self list] addDividerAtIndex:[titles_ count] withLabel:nil];
+  [[self list] addDividerAtIndex:count withLabel:nil];
   [[self list] reload];
-}
-
-- (void)savePreferences
-{
-  RUIPreferences* FRprefs = [RUIPreferences sharedFrontRowPreferences];
-  NSMutableDictionary* prefs;
-  prefs = [[FRprefs objectForKey:@"understudy"] mutableCopy];
-  if( !prefs ) prefs = [NSMutableDictionary dictionary];
-  [prefs setObject:titles_ forKey:@"titles"];
-  [prefs setObject:feeds_ forKey:@"feeds"];
-  [FRprefs setObject:prefs forKey:@"understudy"];
-}
-
-- (void)addFeed:(NSString*)feedURL withTitle:(NSString*)title
-{
-  // ensure no duplicate titles
-  if( [titles_ containsObject:title] )
-  {
-    NSString* format = @"%@ %d", *newtitle;
-    int i = 0;
-    do{
-      newtitle = [NSString stringWithFormat:format,title,i++];
-    }while( [titles_ containsObject:newtitle]);
-    title = newtitle;
-  }
-  [[self list] removeDividers];
-  [feeds_ addObject:feedURL];
-  [titles_ addObject:title];
-  [assets_ insertObject:[NSNull null] atIndex:([assets_ count]-1)];
-  [[self list] addDividerAtIndex:[titles_ count] withLabel:nil];
-  [[self list] reload];
-  [self savePreferences];
-}
-
-- (void)moveFeedFromIndex:(long)from toIndex:(long)to
-{
-  NSObject* item;
-  // ensure the values are valid
-  if( from < 0 || ([assets_ count]-1) < from 
-     || to < 0 || ([assets_ count]-1) < to 
-     || to == from ) return;
-
-  // if the |to| position is after the |from|, the new index must be decremented
-  // to acount for the item no longer being in the array by the time is't added
-  if( from < to ) --to;
-  
-  // move the feed
-  item = [[[feeds_ objectAtIndex:from] retain] autorelease];
-  [feeds_ removeObjectAtIndex:from];
-  [feeds_ insertObject:item atIndex:to];
-  // move the title
-  item = [[[titles_ objectAtIndex:from] retain] autorelease];
-  [titles_ removeObjectAtIndex:from];
-  [titles_ insertObject:item atIndex:to];
-  // move the asset
-  item = [[[assets_ objectAtIndex:from] retain] autorelease];
-  [assets_ removeObjectAtIndex:from];
-  [assets_ insertObject:item atIndex:to];
-  [[self list] reload];
-  [self savePreferences];
-}
-
-- (void)removeFeedAtIndex:(long)index
-{
-  [[self list] removeDividers];
-  [feeds_ removeObjectAtIndex:index];
-  [titles_ removeObjectAtIndex:index];
-  [assets_ removeObjectAtIndex:index];
-  [[self list] addDividerAtIndex:[titles_ count] withLabel:nil];
-  [[self list] reload];
-  [self savePreferences];
-}
-
-- (void)renameFeedAtIndex:(long)index withTitle:(NSString*)title
-{
-  [titles_ replaceObjectAtIndex:index withObject:[[title copy]autorelease]];
-  [assets_ replaceObjectAtIndex:index withObject:[NSNull null]];
-  [[self list] reload];
-  [self savePreferences];
 }
 
 - (NSObject<UnderstudyAsset>*)assetForRow:(long)row
 {
   NSObject<UnderstudyAsset>* asset = [assets_ objectAtIndex:row];
   if( (id)asset == (id)[NSNull null] ){
-    NSString* feed = [feeds_ objectAtIndex:row];
-    NSString* title = [titles_ objectAtIndex:row];
-    NSURL* url = [NSURL URLWithString:feed];
+    NSURL* url = [preferences_ URLAtIndex:row];
+    NSString* title = [preferences_ titleAtIndex:row];
     NSString* host = [[url host] lowercaseString];
     
     if( [host rangeOfString:@"hulu"].location != NSNotFound )
@@ -199,11 +92,16 @@ void upgradePrefs(RUIPreferences* FRprefs)
   return asset;
 }
 
+- (void)preferencesDidChange
+{
+  
+}
+
 #pragma mark Back Row subclassing
   
 - (long)itemCount
 {
-  return [assets_ count];
+  return 1+[preferences_ feedCount];
 }
 
 - (NSString*)titleForRow:(long)row

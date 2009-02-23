@@ -20,6 +20,7 @@
 #import "BaseController.h"
 #import "UnderstudyAsset.h"
 #import "BaseUnderstudyAsset.h"
+#import "LoadingAsset.h"
 
 #import <BackRow/BRControllerStack.h>
 #import <BackRow/BRComboMenuItemLayer.h>
@@ -37,6 +38,8 @@
   [[self list] setDatasource:self];
   lastrebuild_ = [[NSDate distantPast] retain];
   [self performSelectorInBackground:@selector(reload) withObject:nil];
+  LoadingAsset* loading = [[[LoadingAsset alloc] init] autorelease];
+  assets_ = [NSArray arrayWithObject:loading];
   return self;
 }
 
@@ -81,21 +84,22 @@
   if( ![self rowSelectable:itemIndex] ) return nil;
   BaseUnderstudyAsset* asset = [assets_ objectAtIndex:itemIndex];
   return [asset preview];
-//  return [BRMediaPreviewControllerFactory previewControlForAsset:asset
-//                                                    withDelegate:self];
 }
 
 #pragma mark BRMenuListItemProvider
 - (long)itemCount
 {
-  return [assets_ count];
+  if( assets_ )
+    return [assets_ count];
+  else // if the assets haven't been loaded yet, we'll have a spinner
+    return 1;
 }
 
 - (NSString*)titleForRow:(long)row
 {
   if( [self rowSelectable:row] )
     return [[assets_ objectAtIndex:row] title];
-  else return nil;
+  else return @"Loading";//nil;
 }
 
 - (BRLayer<BRMenuItemLayer>*)itemForRow:(long)row

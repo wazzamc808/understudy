@@ -26,6 +26,7 @@
 #import <BackRow/BRRenderScene.h>
 #import <BackRow/BRSentinel.h>
 #import <BackRow/BRSettingsFacade.h>
+#import <BackRow/BRWaitSpinnerControl.h>
 
 #import <Carbon/Carbon.h>
 
@@ -40,6 +41,17 @@
 @end
 
 @implementation BaseController
+
+- (id)init
+{
+  BRWaitSpinnerControl* spinner = [[BRWaitSpinnerControl alloc] init];
+  [spinner controlWasActivated];
+  
+  [spinner setFrame:[self frame]];
+  
+  [self addControl:spinner];
+  return self;
+}
 
 - (void)reveal
 {

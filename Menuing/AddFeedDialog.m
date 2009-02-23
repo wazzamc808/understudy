@@ -99,7 +99,6 @@
   NSString* copied = [pasteboard stringForType:@"NSStringPboardType"];
   NSURL* url = [NSURL URLWithString:copied];
   NSString* host = [[url host] lowercaseString];
-  MainMenuController* main = [MainMenuController sharedInstance];
   if( !host )
     [self _presentInvalidURLAlert];
   
@@ -108,14 +107,16 @@
   
   else if( [host rangeOfString:@"hulu"].location != NSNotFound )
   {
-    [main addFeed:[url absoluteString] withTitle:@"Hulu Feed"];
-    [[self stack] popToController:main];
+    [[UNDPreferenceManager sharedInstance] addFeed:[url absoluteString] 
+                                         withTitle:@"Hulu Feed"];
+    [[self stack] popToController:[MainMenuController sharedInstance]];
   }
   
   else if( [host rangeOfString:@"netflix"].location != NSNotFound )
   {
-    [main addFeed:[url absoluteString] withTitle:@"Netflix Feed"];
-    [[self stack] popToController:main];
+    [[UNDPreferenceManager sharedInstance] addFeed:[url absoluteString] 
+                                         withTitle:@"Netflix Feed"];
+    [[self stack] popToController:[MainMenuController sharedInstance]];
   }
   
   else
