@@ -24,7 +24,7 @@
 - (void)preferencesDidChange;
 @end
 
-@interface UNDPreferenceManager : BRSingleton
+@interface UNDPreferenceManager : NSObject
 {
  @private
   // feed urls in NSString format
@@ -37,6 +37,7 @@
 
 @property(nonatomic) BOOL huluFSAlerted;
 
++ (UNDPreferenceManager*)sharedInstance;
 
 - (long) feedCount;
 - (NSString*) titleAtIndex:(long)index;
@@ -46,6 +47,8 @@
 - (void)moveFeedFromIndex:(long)from toIndex:(long)to;
 - (void)removeFeedAtIndex:(long)index;
 - (void)renameFeedAtIndex:(long)index withTitle:(NSString*)title;
+
+- (void)load;
 - (void)save;
 
 @end

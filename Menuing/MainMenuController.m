@@ -39,6 +39,7 @@
   [super init];
   preferences_ = [UNDPreferenceManager sharedInstance];
   if( !preferences_ ) NSLog(@"no preferences");
+  else NSLog(@"preferences");
   [self loadAssets];
   [self setListTitle:@"Understudy"];
   [[self list] setDatasource:self];

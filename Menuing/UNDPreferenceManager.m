@@ -21,8 +21,11 @@
 #import "YouTubeFeed.h"
 
 #import "UNDPreferenceManager.h"
+#import "UnderstudyAppliance.h"
 
 #import <BackRow/RUIPreferences.h>
+
+#define DEFAULTS_DOMAIN @"com.apple.frontrow.appliance.understudy"
 
 @implementation UNDPreferenceManager
 @synthesize huluFSAlerted = huluFSAlerted_;
@@ -31,6 +34,7 @@
 {
   [super init];
   self.huluFSAlerted = false;
+  [self load];
   return self;
 }
 
@@ -39,6 +43,14 @@
   [feeds_ release];
   [titles_ release];
   [super dealloc];
+}
+
+static UNDPreferenceManager *sharedInstance_;
++ (UNDPreferenceManager*)sharedInstance
+{
+  if(!sharedInstance_)
+    sharedInstance_ = [[UNDPreferenceManager alloc] init];
+  return sharedInstance_;
 }
 
 - (long)feedCount
@@ -65,8 +77,11 @@
   }
 }
 
-void upgradePrefs(RUIPreferences* FRprefs)
+- (void)load
 {
+  RUIPreferences* FRprefs = [RUIPreferences sharedFrontRowPreferences];
+  NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+
   // versions up to 0.2 used "hulu" as the name for the feeds information
   NSDictionary* prefDict = (NSDictionary*) [FRprefs objectForKey:@"hulu"];
   if( prefDict )
@@ -82,17 +97,27 @@ void upgradePrefs(RUIPreferences* FRprefs)
     [FRprefs setObject:newprefs forKey:@"understudy"];
     [FRprefs setObject:nil forKey:@"hulu"];
   }
+
+  // preferences moved from the FR plist into our own
+  prefDict = (NSDictionary*) [FRprefs objectForKey:@"understudy"];
+  if( prefDict ){
+    [defaults setPersistentDomain:prefDict forName:DEFAULTS_DOMAIN];
+    [FRprefs setObject:nil forKey:@"understudy"];
+  }
+  
+  prefDict = [defaults persistentDomainForName:DEFAULTS_DOMAIN];
+
+  feeds_ = [[[prefDict objectForKey:@"feeds"] mutableCopy] retain];
+  titles_ = [[[prefDict objectForKey:@"titles"] mutableCopy] retain];  
 }
 
 - (void)save
 {
-  RUIPreferences* FRprefs = [RUIPreferences sharedFrontRowPreferences];
-  NSMutableDictionary* prefs;
-  prefs = [[FRprefs objectForKey:@"understudy"] mutableCopy];
-  if( !prefs ) prefs = [NSMutableDictionary dictionary];
+  NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+  NSMutableDictionary* prefs = [NSMutableDictionary dictionary];
   [prefs setObject:titles_ forKey:@"titles"];
   [prefs setObject:feeds_ forKey:@"feeds"];
-  [FRprefs setObject:prefs forKey:@"understudy"];
+  [defaults setPersistentDomain:prefs forName:DEFAULTS_DOMAIN];
 }
 
 - (void)addFeed:(NSString*)feedURL withTitle:(NSString*)title
