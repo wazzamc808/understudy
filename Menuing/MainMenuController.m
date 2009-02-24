@@ -95,7 +95,7 @@ static MainMenuController *sharedInstance_;
 
 - (void)preferencesDidChange
 {
-  
+  [self loadAssets];
 }
 
 #pragma mark Back Row subclassing

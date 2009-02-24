@@ -33,6 +33,7 @@
 - (id)init
 {
   [super init];
+  subscribers_ = [[NSMutableSet alloc] init];
   self.huluFSAlerted = false;
   [self load];
   return self;
@@ -120,6 +121,20 @@ static UNDPreferenceManager *sharedInstance_;
   [defaults setPersistentDomain:prefs forName:DEFAULTS_DOMAIN];
 }
 
+#pragma mark Subscription
+- (void)addSubscriber:(id<UNDPreferenceSubscriber>)subscriber
+{
+  [subscribers_ addObject:subscriber];
+}
+
+- (void)notifySubscribers
+{
+  id<UNDPreferenceSubscriber>subscriber;
+  for( subscriber in subscribers_ )
+    [subscriber preferencesDidChange];
+}
+
+#pragma mark Feed Arrangement
 - (void)addFeed:(NSString*)feedURL withTitle:(NSString*)title
 {
   // ensure no duplicate titles

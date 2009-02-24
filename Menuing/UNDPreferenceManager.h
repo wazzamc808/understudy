@@ -33,6 +33,7 @@
   NSMutableArray* titles_;
 
   BOOL huluFSAlerted_;
+  NSMutableSet* subscribers_;
 }
 
 @property(nonatomic) BOOL huluFSAlerted;
@@ -51,4 +52,5 @@
 - (void)load;
 - (void)save;
 
+- (void)addSubscriber:(id<UNDPreferenceSubscriber>)subscriber;
 @end
