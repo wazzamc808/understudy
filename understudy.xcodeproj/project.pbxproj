@@ -35,7 +35,6 @@
 		DFCDFB1B0F3E2F7800D979F0 /* ApplianceIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = DFCDFB1A0F3E2F7800D979F0 /* ApplianceIcon.png */; };
 		DFCDFC530F3E72A400D979F0 /* BaseUnderstudyAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = DFCDFC520F3E72A400D979F0 /* BaseUnderstudyAsset.m */; };
 		DFE014950EDF681D00AFD18F /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFE014940EDF681D00AFD18F /* WebKit.framework */; };
-		DFE8E7780F51C31800A5E120 /* LoadingAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = DFE8E7770F51C31800A5E120 /* LoadingAsset.m */; };
 		DFE8E7B60F52130200A5E120 /* UNDPreferenceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DFE8E7B50F52130200A5E120 /* UNDPreferenceManager.m */; };
 /* End PBXBuildFile section */
 
@@ -95,8 +94,6 @@
 		DFCDFC510F3E72A400D979F0 /* BaseUnderstudyAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseUnderstudyAsset.h; sourceTree = "<group>"; };
 		DFCDFC520F3E72A400D979F0 /* BaseUnderstudyAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseUnderstudyAsset.m; sourceTree = "<group>"; };
 		DFE014940EDF681D00AFD18F /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = /System/Library/Frameworks/WebKit.framework; sourceTree = "<absolute>"; };
-		DFE8E7760F51C31800A5E120 /* LoadingAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingAsset.h; sourceTree = "<group>"; };
-		DFE8E7770F51C31800A5E120 /* LoadingAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadingAsset.m; sourceTree = "<group>"; };
 		DFE8E7B40F52130200A5E120 /* UNDPreferenceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UNDPreferenceManager.h; sourceTree = "<group>"; };
 		DFE8E7B50F52130200A5E120 /* UNDPreferenceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UNDPreferenceManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -232,8 +229,6 @@
 				DF5A23930F11240400F5F19F /* BaseController.m */,
 				DF5A22380F100E4300F5F19F /* FeedMenuController.h */,
 				DF5A22390F100E4300F5F19F /* FeedMenuController.m */,
-				DFE8E7760F51C31800A5E120 /* LoadingAsset.h */,
-				DFE8E7770F51C31800A5E120 /* LoadingAsset.m */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -347,7 +342,6 @@
 				DFCDFB130F3E2E9300D979F0 /* ManageFeedsDialog.m in Sources */,
 				DFCDFB140F3E2E9300D979F0 /* RenameDialog.m in Sources */,
 				DFCDFC530F3E72A400D979F0 /* BaseUnderstudyAsset.m in Sources */,
-				DFE8E7780F51C31800A5E120 /* LoadingAsset.m in Sources */,
 				DFE8E7B60F52130200A5E120 /* UNDPreferenceManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
