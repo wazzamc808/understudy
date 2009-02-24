@@ -38,8 +38,7 @@
 {
   [super init];
   preferences_ = [UNDPreferenceManager sharedInstance];
-  if( !preferences_ ) NSLog(@"no preferences");
-  else NSLog(@"preferences");
+  [preferences_ addSubscriber:self];
   [self loadAssets];
   [self setListTitle:@"Understudy"];
   [[self list] setDatasource:self];
@@ -67,6 +66,7 @@ static MainMenuController *sharedInstance_;
   assets_ = [[NSMutableArray arrayWithCapacity:count] retain];
   for( i=0; i<count; i++ ) [assets_ addObject:[NSNull null]];
   [assets_ addObject:[[[ManageFeedsDialog alloc] init] autorelease]];
+  [[self list] removeDividers];
   [[self list] addDividerAtIndex:count withLabel:nil];
   [[self list] reload];
 }

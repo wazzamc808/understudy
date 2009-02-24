@@ -150,6 +150,7 @@ static UNDPreferenceManager *sharedInstance_;
   [feeds_ addObject:feedURL];
   [titles_ addObject:title];
   [self save];
+  [self notifySubscribers];
 }
 
 - (void)moveFeedFromIndex:(long)from toIndex:(long)to
@@ -173,6 +174,7 @@ static UNDPreferenceManager *sharedInstance_;
   [titles_ removeObjectAtIndex:from];
   [titles_ insertObject:item atIndex:to];
   [self save];
+  [self notifySubscribers];
 }
 
 - (void)removeFeedAtIndex:(long)index
@@ -180,12 +182,14 @@ static UNDPreferenceManager *sharedInstance_;
   [feeds_ removeObjectAtIndex:index];
   [titles_ removeObjectAtIndex:index];
   [self save];
+  [self notifySubscribers];
 }
 
 - (void)renameFeedAtIndex:(long)index withTitle:(NSString*)title
 {
   [titles_ replaceObjectAtIndex:index withObject:[[title copy]autorelease]];
   [self save];
+  [self notifySubscribers];
 }
 
 @end
