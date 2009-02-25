@@ -18,6 +18,7 @@
 		DF375CC40F35300700DA7719 /* NetflixController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF375CBF0F35300700DA7719 /* NetflixController.m */; };
 		DF375CC50F35300700DA7719 /* NetflixFeed.m in Sources */ = {isa = PBXBuildFile; fileRef = DF375CC10F35300700DA7719 /* NetflixFeed.m */; };
 		DF375D600F36049A00DA7719 /* HuluFeedDiscoverer.m in Sources */ = {isa = PBXBuildFile; fileRef = DF375D5F0F36049A00DA7719 /* HuluFeedDiscoverer.m */; };
+		DF3D0F640F54CA3E0089CF2B /* LoadingAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = DF3D0F630F54CA3E0089CF2B /* LoadingAsset.m */; };
 		DF5A22210F0FC18200F5F19F /* YouTubeAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = DF5A22200F0FC18200F5F19F /* YouTubeAsset.m */; };
 		DF5A22250F0FD6B400F5F19F /* YouTubeFeed.m in Sources */ = {isa = PBXBuildFile; fileRef = DF5A22240F0FD6B400F5F19F /* YouTubeFeed.m */; };
 		DF5A223C0F100E4300F5F19F /* FeedMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF5A22390F100E4300F5F19F /* FeedMenuController.m */; };
@@ -62,6 +63,8 @@
 		DF375CC10F35300700DA7719 /* NetflixFeed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NetflixFeed.m; path = Netflix/NetflixFeed.m; sourceTree = "<group>"; };
 		DF375D5E0F36049A00DA7719 /* HuluFeedDiscoverer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HuluFeedDiscoverer.h; sourceTree = "<group>"; };
 		DF375D5F0F36049A00DA7719 /* HuluFeedDiscoverer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HuluFeedDiscoverer.m; sourceTree = "<group>"; };
+		DF3D0F620F54CA3E0089CF2B /* LoadingAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingAsset.h; sourceTree = "<group>"; };
+		DF3D0F630F54CA3E0089CF2B /* LoadingAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadingAsset.m; sourceTree = "<group>"; };
 		DF5A221F0F0FC18200F5F19F /* YouTubeAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YouTubeAsset.h; sourceTree = "<group>"; };
 		DF5A22200F0FC18200F5F19F /* YouTubeAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YouTubeAsset.m; sourceTree = "<group>"; };
 		DF5A22230F0FD6B400F5F19F /* YouTubeFeed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YouTubeFeed.h; sourceTree = "<group>"; };
@@ -229,6 +232,8 @@
 				DF5A23930F11240400F5F19F /* BaseController.m */,
 				DF5A22380F100E4300F5F19F /* FeedMenuController.h */,
 				DF5A22390F100E4300F5F19F /* FeedMenuController.m */,
+				DF3D0F620F54CA3E0089CF2B /* LoadingAsset.h */,
+				DF3D0F630F54CA3E0089CF2B /* LoadingAsset.m */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -343,6 +348,7 @@
 				DFCDFB140F3E2E9300D979F0 /* RenameDialog.m in Sources */,
 				DFCDFC530F3E72A400D979F0 /* BaseUnderstudyAsset.m in Sources */,
 				DFE8E7B60F52130200A5E120 /* UNDPreferenceManager.m in Sources */,
+				DF3D0F640F54CA3E0089CF2B /* LoadingAsset.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

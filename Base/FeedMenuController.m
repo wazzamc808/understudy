@@ -39,7 +39,7 @@
   lastrebuild_ = [[NSDate distantPast] retain];
   [self performSelectorInBackground:@selector(reload) withObject:nil];
   LoadingAsset* loading = [[[LoadingAsset alloc] init] autorelease];
-  assets_ = [NSArray arrayWithObject:loading];
+  assets_ = [[NSArray arrayWithObject:loading] retain];
   return self;
 }
 
@@ -56,6 +56,7 @@
   if( [lastrebuild_ timeIntervalSinceNow] > (- 60 * 5)) return;
   [lastrebuild_ release];
   lastrebuild_ = [[NSDate date] retain];
+  [assets_ autorelease];
   assets_ = [[delegate_ currentAssets] retain];
   [[self list] reload];
   [self updatePreviewController];
