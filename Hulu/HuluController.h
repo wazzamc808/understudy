@@ -1,5 +1,5 @@
 //
-//  Copyright 2008 Kirk Kelsey.
+//  Copyright 2008-2009 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //

@@ -20,6 +20,7 @@
 
 #import "HuluController.h"
 #import "MainMenuController.h"
+#import "UNDPreferenceManager.h"
 
 #import <BackRow/BRControllerStack.h>
 #import <BackRow/BRDisplayManager.h>
@@ -41,9 +42,7 @@
 
 - (void)dealloc
 {
-  NSLog(@"deallocating hulu controller");
   [asset_ release];
-//  [fsWindow_ release];
   [super dealloc];
 }
 
@@ -51,7 +50,7 @@
 {
   // invoking shared application ensures that windows can be ordered
   [NSApplication sharedApplication];
-  NSRect rect = [[NSScreen mainScreen] frame];
+  NSRect rect = [[UNDPreferenceManager screen] frame];
   mainView_ = [[WebView alloc] initWithFrame:rect];
   [[[mainView_ mainFrame] frameView] setAllowsScrolling:NO];
   [mainView_ setFrameLoadDelegate:self];
@@ -69,10 +68,7 @@
 - (BOOL)fullscreenFlash
 {
   // abort if we already have a fullscreen window
-  if( fsWindow_ ){
-    NSLog(@"already full screen");
-    return YES;
-  }
+  if( fsWindow_ ) return YES;
   
   // send an F keystroke to the player
   [self sendPluginKeyCode:3  withCharCode:102];
@@ -81,7 +77,7 @@
   // explicitly. anything else is the flash player creating it's own
   NSArray* windows = [[NSApplication sharedApplication] windows];
   [[windows retain] autorelease];
-  if( [windows count] < 2 ){
+  if( [windows count] < 3 ){
     NSLog(@"flash didn't fullscreen");
     return NO;
   }
@@ -97,7 +93,7 @@
       [fsWindow_ display];
     }
   }  
-  
+
   NSPoint fsPoint = {752,31};
   [self sendPluginMouseClickAtPoint:fsPoint];
   
@@ -107,18 +103,6 @@
 - (void)exitFullScreen
 {
   [self sendPluginKeyCode:53 withCharCode:27];
-  
-}
-
-- (void)attemptFullscreen
-{
-  NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
-  int i = 0;
-  do{
-    sleep(5);
-    NSLog(@"attempting full screen");
-  }while( i < 10 && ![self fullscreenFlash]);
-  [pool release];
 }
 
 // <WebFrameLoadDelegate> callback once the video loads
@@ -128,8 +112,6 @@
 
   [window_ display];
   [window_ orderFrontRegardless];
-//  [self performSelectorInBackground:@selector(attemptFullscreen) 
-//                         withObject:nil];
   
   [self shieldMenu];
   [self reveal];
@@ -151,40 +133,26 @@
 - (void)controlWillActivate
 {
   [super controlWillActivate];
-  // see if this is the first time a hulu video has been played. if so, show
-  // an alert to mention how full screen is activated
-  if( ![[UNDPreferenceManager sharedInstance] huluFSAlerted] )
-  {
-    alert_ = [BRAlertController alertOfType:kBRAlertTypeInfo
-                                     titled:@"Full Screen Support"
-                                primaryText:@"Press >>| to enter fullscreen"
-                              secondaryText:@"Once the video has loaded, press"\
-              " the right menu button or right arrow key to enter fullscreen m"\
-              "ode. A future version of Understudy will do this automatically"];
-    [[self stack] pushController:alert_];
-    [[UNDPreferenceManager sharedInstance] setHuluFSAlerted:YES];
-  } else {
-    alert_ = nil;
-    [self _loadVideo];
-  }
+  alert_ = nil;
+  [self _loadVideo];
 }
 
 - (void)controlWillDeactivate
 {
-  if( !alert_ )
-  {
-    // enlarge the shield to hide the transition
-    [menushield_ setFrame:[[NSScreen mainScreen] frame] display:NO];
-    
+  // enlarge the shield to hide the transition
+  [menushield_ setFrame:[[UNDPreferenceManager screen] frame] display:NO];
+  
+  if( fsWindow_ ){
     [self exitFullScreen];
     [fsWindow_ close];
     fsWindow_ = nil;
-    [window_ close];
-    window_ = nil;
-    [self returnToFR];
   }
+  [window_ close];
+  window_ = nil;
+  [self returnToFR];
+  
+  [menushield_ close];
   [super controlWillDeactivate];
-
 }
 
 @end

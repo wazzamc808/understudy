@@ -16,6 +16,7 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
+#import "UNDPreferenceManager.h"
 #import "YouTubeController.h"
 #import "YouTubeAsset.h"
 
@@ -33,7 +34,7 @@
 - (void)load
 {
   [NSApplication sharedApplication];
-  NSRect rect = [[NSScreen mainScreen] frame];
+  NSRect rect = [[UNDPreferenceManager screen] frame];
   view_ = [[WebView alloc] initWithFrame:rect];
   [[[view_ mainFrame] frameView] setAllowsScrolling:NO];
   [view_ setFrameLoadDelegate:self];

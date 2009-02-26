@@ -78,6 +78,23 @@ static UNDPreferenceManager *sharedInstance_;
   }
 }
 
+// preferred display for front row (if any) or main screen
++ (NSScreen*)screen
+{
+  RUIPreferences* prefs = [RUIPreferences sharedFrontRowPreferences];
+  int prefdisplay  = [prefs integerForKey:@"FrontRowUsePreferredDisplayID"];
+  if( prefdisplay ){
+    for( NSScreen* screen in [NSScreen screens] ){
+      NSDictionary* desc = [[[screen deviceDescription] retain] autorelease];
+      if( [desc objectForKey:NSDeviceIsScreen] ){
+        NSNumber* screenNum = [desc objectForKey:@"NSScreenNumber"];
+        if( [screenNum intValue] == prefdisplay ) return screen;
+      }
+    }
+  }
+  return [NSScreen mainScreen];
+}
+
 - (void)load
 {
   RUIPreferences* FRprefs = [RUIPreferences sharedFrontRowPreferences];

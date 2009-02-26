@@ -39,10 +39,11 @@
 @property(nonatomic) BOOL huluFSAlerted;
 
 + (UNDPreferenceManager*)sharedInstance;
++ (NSScreen*)screen;
 
-- (long) feedCount;
-- (NSString*) titleAtIndex:(long)index;
-- (NSURL*) URLAtIndex:(long)index;
+- (long)feedCount;
+- (NSString*)titleAtIndex:(long)index;
+- (NSURL*)URLAtIndex:(long)index;
 
 - (void)addFeed:(NSString*)feedURL withTitle:(NSString*)title;
 - (void)moveFeedFromIndex:(long)from toIndex:(long)to;

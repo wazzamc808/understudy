@@ -19,6 +19,7 @@
 #include <regex.h>
 
 #import "NetflixController.h"
+#import "UNDPreferenceManager.h"
 
 #import <BackRow/BRAlertController.h>
 #import <BackRow/BRControllerStack.h>
@@ -35,11 +36,6 @@
 
 @protocol  BRAppManagerDelegate
 - (void)_continueDestroyScene:id;
-@end
-
-
-@interface NetflixController (private)
-- (void)_loadVideo;
 @end
 
 @implementation NetflixController
@@ -61,7 +57,7 @@
 {
   // invoking shared application ensures that windows can be ordered
   [NSApplication sharedApplication];
-  NSRect rect = [[NSScreen mainScreen] frame];
+  NSRect rect = [[UNDPreferenceManager screen] frame];
   mainView_ = [[[WebView alloc] initWithFrame:rect] retain];
   [[[mainView_ mainFrame] frameView] setAllowsScrolling:NO];
   [mainView_ setFrameLoadDelegate:self];
@@ -75,36 +71,6 @@
   [[mainView_ mainFrame] loadRequest:pageRequest];
 }
 
-// recenters the player in the window
-// calling this breaks the play pause functinoality
-/*- (void)_maximizePlayer_broken
-{
-  NSPoint newOrigin;
-  NSSize screen,oldSize,newSize;
-
-  oldSize = [pluginView_ frame].size;
-  screen = [mainView_ frame].size;
-  newSize = screen;
-  if( oldSize.height / screen.height > oldSize.width  / screen.width )
-    newSize.width = (oldSize.width / oldSize.height) * newSize.height;
-  else
-    newSize.height = (oldSize.height / oldSize.width) * newSize.width;    
-  
-  newOrigin.x = (screen.width - newSize.width)/2;
-  newOrigin.y = (screen.height - newSize.height)/2;
-  
-  WebScriptObject* script = [mainView_ windowScriptObject];  
-  NSString* position = @"document.getElementById('SLPlayer').setAttribute('style','width: %4.0fpx; height: %4.0fpx; position:absolute; top:%4.0fpx; left:%4.0fpx;')";
-  position = [NSString stringWithFormat:position,
-              ceilf(newSize.width),
-              ceilf(newSize.height),
-              ceilf(newOrigin.y),
-              ceilf(newOrigin.x)+20,
-              nil];
-  [script evaluateWebScript:position];
-  [(NSView*)pluginView_ display];
-}*/
-
 // <WebFrameLoadDelegate> callback once the video loads
 - (void)webView:(WebView*)view didFinishLoadForFrame:(WebFrame*)frame
 {
@@ -113,7 +79,9 @@
   // if there is a plugin, we want to fullscreen it. if not (e.g. if the user
   // isn't logged in and the movie won't be shown) we report an error
   if( [self hasPluginView] ) {
-    [self makeMainViewFullscreen];
+    [window_ display];
+    [window_ orderFrontRegardless];
+//    [self makeMainViewFullscreen];
     [self reveal];
   } else {
     NSString* title = @"Error";
@@ -128,9 +96,36 @@
   }
 }
 
+- (void)fullscreen
+{
+  if( ![self hasPluginView] ){
+    NSLog(@"cannot fullscreen netflix player (no plugin available)");
+    return;
+  }
+  
+  NSSize size = [pluginView_ frame].size;
+  
+  NSPoint fsPoint;
+  // the fullscreen button is 30px high, and 30px up from the bottom edge
+  fsPoint.y = -45;
+  // the fullscreen button is 15px in from the right edge (and 70px wide)
+  fsPoint.x = -(15 + 35);
+  // if the player is more than 1000px wide, padding is added
+  if( size.width > 1000 ) fsPoint.x -= (size.width-1000)/2;
+
+  [self sendPluginMouseClickAtPoint:fsPoint];
+}
+
+# pragma mark Player Controls
+
 - (void)playPause
 {
   [self sendPluginKeyCode:49 withCharCode:0]; // space-bar
+}
+
+- (void)fastForward
+{
+  [self fullscreen];
 }
 
 #pragma mark BR Control
