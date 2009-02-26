@@ -1,5 +1,5 @@
 //
-//  Copyright 2008 Kirk Kelsey.
+//  Copyright 2008-2009 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -16,9 +16,8 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <regex.h>
-
 #import "BaseController.h"
+#import "UNDPreferenceManager.h"
 
 #import <BackRow/BRControllerStack.h>
 #import <BackRow/BRDisplayManager.h>
@@ -42,22 +41,25 @@
 
 @implementation BaseController
 
-//- (id)init
-//{
-//  [super init];
-////  BRWaitSpinnerControl* spinner = [[BRWaitSpinnerControl alloc] init];
-////  [spinner controlWasActivated];
-////  [spinner setFrame:[self frame]];
-////  [self addControl:spinner];
-//  return self;
-//}
+- (id)init
+{
+  [super initWithTitle:@"loading" text:@""];
+  return self;
+}
 
+#pragma mark Transitioning Into/Out of FR
 - (void)reveal
 {
   BRSentinel* sentinel = [BRSentinel sharedInstance];
   id<BRRendererProvider> provider = [sentinel rendererProvider];
   BRRenderer* renderer = [provider renderer];
-  [renderer orderOut];  
+  [renderer orderOut];
+  // indicate that we don't want the display to go to sleep
+  IOReturn err = IOPMAssertionCreate (
+                                      kIOPMAssertionTypeNoDisplaySleep,
+                                      kIOPMAssertionLevelOn,
+                                      &pmAssertion_);
+  if( err ) NSLog(@"Error deactivating display sleep: 0x%02X",err);
 }
 
 - (void)returnToFR
@@ -72,7 +74,11 @@
     [pluginView_ exitFullScreenModeWithOptions:nil];
   [mainView_ close];
   [menushield_ close];
+  IOReturn err = IOPMAssertionRelease(pmAssertion_);
+  if( err ) NSLog(@"Error removing display sleep restriction: 0x%02X",err);
 }
+
+#pragma mark Subviews
 
 - (BOOL)hasPluginView
 {
@@ -129,7 +135,7 @@
                    nil ];
   NSDictionary* options = [NSDictionary dictionaryWithObjects:objects
                                                       forKeys:keys];
-  [view enterFullScreenMode:[NSScreen mainScreen]
+  [view enterFullScreenMode:[UNDPreferenceManager screen]
                 withOptions:options];
 }
 
@@ -147,7 +153,7 @@
 - (void)shieldMenu
 {
   if( menushield_ ) return;
-  NSRect screenRect = [[NSScreen mainScreen] frame];
+  NSRect screenRect = [[UNDPreferenceManager screen] frame];
   screenRect.origin.y = screenRect.size.height - 25;
   screenRect.size.height = 25;
   menushield_ = [[NSWindow alloc] initWithContentRect:screenRect
@@ -206,22 +212,36 @@
   [(id)pluginView_ sendEvent:(NSEvent *)&event];
 }
 
+// click on the plugin view at a given point in it's own coordinate space
+// (0,0) is top left, but negative values are measured from the bottom/right
 - (void)sendPluginMouseClickAtPoint:(NSPoint)point
 {
   EventRecord record;
   NSPoint orig = [pluginView_ frame].origin;
+  NSSize  size = [pluginView_ frame].size;
   record.modifiers = btnState;
   record.message = 0;
   record.what = mouseDown;
   record.when = TickCount();
   record.where.h = orig.x + point.x;
   record.where.v = orig.y + point.y;
-  [pluginView_ sendEvent:(NSEvent *)&record];
+  
+  // if a dimension of the point is negative, offset if from the bottom/right
+  if( point.x < 0 ) record.where.h += size.width;
+  if( point.y < 0 ) record.where.v += size.height;
+  
+//  NSLog(@"clicking at %d/%d",record.where.h,record.where.v);
+//  Point p;
+//  GetGlobalMouse(&p);
+//  NSLog(@"mouse at %d/%d",p.h,p.v);
+  
+  [pluginView_ sendEvent:(NSEvent *)&record];  
   record.what = mouseUp;
   record.when = TickCount();
   [pluginView_ sendEvent:(NSEvent *)&record];  
 }
 
+#pragma mark Subclasses Should Override
 - (void)playPause{}
 - (void)fastForward{}
 - (void)rewind{}

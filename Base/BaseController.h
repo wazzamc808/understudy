@@ -1,5 +1,5 @@
 //
-//  Copyright 2008 Kirk Kelsey.
+//  Copyright 2008-2009 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -18,10 +18,14 @@
 
 #import <Cocoa/Cocoa.h>
 #import <WebKit/WebKit.h>
+#import <IOKit/pwr_mgt/IOPMLib.h>
 
-#import <BackRow/BRController.h>
+#import <BackRow/BRTextWithSpinnerController.h>
 
-@interface BaseController : BRController {
+@interface BaseController : BRTextWithSpinnerController {
+ @private
+  IOPMAssertionID pmAssertion_;
+
  @protected
   WebView* mainView_; // subclasses should set this to be the primary web view
   NSWindow* menushield_; // window used to cover the menu bar
