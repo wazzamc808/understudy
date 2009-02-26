@@ -42,16 +42,15 @@
 
 @implementation BaseController
 
-- (id)init
-{
-  BRWaitSpinnerControl* spinner = [[BRWaitSpinnerControl alloc] init];
-  [spinner controlWasActivated];
-  
-  [spinner setFrame:[self frame]];
-  
-  [self addControl:spinner];
-  return self;
-}
+//- (id)init
+//{
+//  [super init];
+////  BRWaitSpinnerControl* spinner = [[BRWaitSpinnerControl alloc] init];
+////  [spinner controlWasActivated];
+////  [spinner setFrame:[self frame]];
+////  [self addControl:spinner];
+//  return self;
+//}
 
 - (void)reveal
 {
