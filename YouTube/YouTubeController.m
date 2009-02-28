@@ -135,16 +135,29 @@
     case 5:  // video cued
       break;
   }
-  
 }
 
+
+// skip 10% of the way through the video
 - (void)fastForward
 {
+  if( !loaded_ ) return;
+  NSNumber* time = [self _playerFunction:@"getCurrentTime()"];
+  NSNumber* duration = [self _playerFunction:@"getDuration()"];
+  int target = [time intValue] + ([duration intValue])/10;
+  NSString* seek = [NSString stringWithFormat:@"seekTo(%d,true)",target];
+  [self _playerFunction:seek];
 }
 
+// jump back 5% of the way to the beginning of the video
 - (void)rewind
 {
-
+  if( !loaded_ ) return;
+  NSNumber* time = [self _playerFunction:@"getCurrentTime()"];
+  NSNumber* duration = [self _playerFunction:@"getDuration()"];
+  int target = [time intValue] + ([duration intValue])/20;
+  NSString* seek = [NSString stringWithFormat:@"seekTo(%d,true)",target];
+  [self _playerFunction:seek];  
 }
 
 @end
