@@ -16,6 +16,8 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
+#import <stdint.h>
+
 #import "UNDPreferenceManager.h"
 #import "YouTubeController.h"
 #import "YouTubeAsset.h"
@@ -25,7 +27,7 @@
 - (id)initWithAsset:(YouTubeAsset*)asset
 {
   [super init];
-  asset_ = asset;
+  asset_ = [asset retain];
   return self;
 }
 
@@ -49,51 +51,52 @@
   [[view_ mainFrame] loadRequest:request];
 }
 
-- (void)_enqueueVideo
-{
-  WebScriptObject* script = [[view_ windowScriptObject] retain];
-  [script autorelease];
-  id player;
-  long tries = 0;
-  NSString* getPlayer = @"document.getElementsByTagName('EMBED')[0]";
-  do{
-    player = [script evaluateWebScript:getPlayer];
-    tries++;
-  }while( player == [WebUndefined undefined]);
-  NSLog(@"got player after %d tries",tries);
-  player = [script evaluateWebScript:@"document.getElementsByTagName('EMBED')[0].loadVideoById"];
-  if( player == [WebUndefined undefined] ) NSLog(@"loadVideoById undefined");
-  else NSLog([player description]);
-  NSString* loadVideo;
-  loadVideo = [getPlayer stringByAppendingString:@".loadVideoById('%@',0)"];
-  NSLog(loadVideo);
-  loadVideo = [NSString stringWithFormat:loadVideo, [asset_ videoID]];
-  [script evaluateWebScript:loadVideo];  
+
+- (id)_playerFunction:(NSString*)func{
+  NSString* call;
+  WebScriptObject* script = [[[view_ windowScriptObject] retain] autorelease];
+  
+  call = @"document.getElementsByTagName('EMBED')[0].";
+  call = [call stringByAppendingString:func];
+  return [script evaluateWebScript:call];
 }
 
-- (void)webView:(WebView *)sender 
-       resource:(id)identifier 
-didFinishLoadingFromDataSource:(WebDataSource *)dataSource
+// Instruct the page to actually load the video. This will fail if the flash
+// player has had a chance to fully load, so cannot be invoked from the webview
+// notification routines (but does work based on later user input).
+- (BOOL)enqueueVideo
+{ 
+  id result;
+  
+  NSString* load = @"loadVideoById('%@',0)";
+  load = [NSString stringWithFormat:load, [asset_ videoID]];
+  [self _playerFunction:load];
+  
+  // if there is a video URL, then the video is loading (or loaded)
+  result = [self _playerFunction:@"getVideoUrl()"];
+  loaded_ = ( result != nil );
+  return loaded_;
+}
+
+- (void)attemptEnqueue
 {
-  NSLog(@"finished loading datasource: %@",dataSource);
+  while( !loaded_ ){
+    sleep(1);
+    [self performSelectorOnMainThread:@selector(enqueueVideo)
+                           withObject:nil
+                        waitUntilDone:YES];
+  }
 }
 
 // <WebFrameLoadDelegate> callback once the video loads
 - (void)webView:(WebView*)view didFinishLoadForFrame:(WebFrame*)frame
 {
-  NSLog(@"did finish loading");
   if( frame != [view mainFrame] ) return;
   [window_ display];
   [window_ orderFrontRegardless];
   [window_ setLevel:CGShieldingWindowLevel()];
-  [self _enqueueVideo];
   [self reveal];
-}
-
-- (void)webView:(WebView *)sender didFailLoadWithError:(NSError *)error 
-       forFrame:(WebFrame *)frame
-{
-  NSLog(@"failed loading frame");
+  [self performSelectorInBackground:@selector(attemptEnqueue) withObject:nil];
 }
 
 - (void)controlWillActivate
@@ -108,6 +111,53 @@ didFinishLoadingFromDataSource:(WebDataSource *)dataSource
   view_ = nil;
   [window_ close];
   window_ = nil;
+}
+
+
+- (void)playPause
+{
+  if( !loaded_ ) return;
+  NSNumber* result = [self _playerFunction:@"getPlayerState()"];
+  if( (id)result == [WebUndefined undefined] ) return;
+  switch( [result intValue] ){
+    case -1: // unstarted
+      break;
+    case 0:  // ended
+      break;
+    case 1:  // playing
+      [self _playerFunction:@"pauseVideo()"];
+      break;
+    case 2:  // paused
+      [self _playerFunction:@"playVideo()"];
+      break;
+    case 3:  // buffering
+      break;
+    case 5:  // video cued
+      break;
+  }
+}
+
+
+// skip 10% of the way through the video
+- (void)fastForward
+{
+  if( !loaded_ ) return;
+  NSNumber* time = [self _playerFunction:@"getCurrentTime()"];
+  NSNumber* duration = [self _playerFunction:@"getDuration()"];
+  int target = [time intValue] + ([duration intValue])/10;
+  NSString* seek = [NSString stringWithFormat:@"seekTo(%d,true)",target];
+  [self _playerFunction:seek];
+}
+
+// jump back 5% of the way to the beginning of the video
+- (void)rewind
+{
+  if( !loaded_ ) return;
+  NSNumber* time = [self _playerFunction:@"getCurrentTime()"];
+  NSNumber* duration = [self _playerFunction:@"getDuration()"];
+  int target = [time intValue] + ([duration intValue])/20;
+  NSString* seek = [NSString stringWithFormat:@"seekTo(%d,true)",target];
+  [self _playerFunction:seek];  
 }
 
 @end

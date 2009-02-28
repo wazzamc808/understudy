@@ -119,6 +119,13 @@
     [[self stack] popToController:[MainMenuController sharedInstance]];
   }
   
+  else if( [host rangeOfString:@"youtube"].location != NSNotFound )
+  {
+    [[UNDPreferenceManager sharedInstance] addFeed:[url absoluteString]
+                                         withTitle:@"YouTube Feed"];
+    [[self stack] popToController:[MainMenuController sharedInstance]];    
+  }
+  
   else
     [self _presentInvalidHostAlert];
 }

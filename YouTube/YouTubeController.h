@@ -26,6 +26,7 @@
   YouTubeAsset* asset_;  //weak reference
   WebView* view_;
   NSWindow* window_;
+  BOOL loaded_;          // to indicate whether the video has been loaded
 }
 
 - (id)initWithAsset:(YouTubeAsset*)asset;
