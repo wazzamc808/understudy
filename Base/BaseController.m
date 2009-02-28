@@ -86,37 +86,43 @@
   if( !mainView_ ) return NO;
   
   NSMutableSet* views = [[[NSMutableSet set] retain] autorelease];
-  NSMutableSet* webviews = [[[NSMutableSet set] retain] autorelease];
+  NSMutableSet* plugins = [[[NSMutableSet set] retain] autorelease];
   WebView* view;
   [views addObjectsFromArray:[mainView_ subviews]];
   while( [views count] ){
     view = [views anyObject];
     if( [[view className] isEqual:@"WebNetscapePluginDocumentView"] )
-        [webviews addObject:view];
+        [plugins addObject:view];
     [views addObjectsFromArray:[view subviews]];
     [views removeObject:view];
   }
-  if( [webviews count] < 1 ){
+  if( [plugins count] < 1 ){
     NSLog(@"could not a find a plugin");
     return NO;
-  }else if( [webviews count] > 1 ){
-#warning lame heuristic
-    pluginView_ = [[webviews anyObject] retain];
+  }else if( [plugins count] > 1 ){
+    pluginView_ = [[plugins anyObject] retain];
     float pluginsize = ([pluginView_ frame].size.height * [pluginView_ frame].size.width);
     // pick the largest plugin view available
-    for( view in webviews )
+    for( view in plugins )
     {
-      float viewsize = ([view frame].size.height * [view frame].size.width);
-      if( viewsize > pluginsize )
+      NSSize size = [view frame].size;
+      NSPoint orig = [view frame].origin;
+//      NSLog(@"size: %6.0f origin:%5.0f/%-5.0f",size.height*size.width,orig.x,orig.y);
+      if( orig.x+size.width < 0 
+         || orig.y+size.height < 0
+         || orig.x > [mainView_ frame].size.width
+         || orig.y > [mainView_ frame].size.height )
+        continue;
+      if( size.height*size.width > pluginsize )
       {
         [pluginView_ autorelease];
         pluginView_ = [view retain];
-        pluginsize = ([pluginView_ frame].size.height * [pluginView_ frame].size.width);
+        pluginsize = size.height*size.width;
       }
     }
     return YES;
   }else{
-    pluginView_ = [[webviews anyObject] retain];
+    pluginView_ = [[plugins anyObject] retain];
     return YES;
   }
 }
@@ -203,6 +209,7 @@
 - (void)sendPluginKeyCode:(int)keyCode withCharCode:(int)charCode
 {
   if( ![self hasPluginView] )return;
+  if( ![pluginView_ respondsToSelector:@selector(sendEvent:)] ) return;
   EventRecord event; 
   event.what = keyDown; 
   event.message = (keyCode << 8) + charCode;
@@ -229,11 +236,6 @@
   // if a dimension of the point is negative, offset if from the bottom/right
   if( point.x < 0 ) record.where.h += size.width;
   if( point.y < 0 ) record.where.v += size.height;
-  
-//  NSLog(@"clicking at %d/%d",record.where.h,record.where.v);
-//  Point p;
-//  GetGlobalMouse(&p);
-//  NSLog(@"mouse at %d/%d",p.h,p.v);
   
   [pluginView_ sendEvent:(NSEvent *)&record];  
   record.what = mouseUp;
