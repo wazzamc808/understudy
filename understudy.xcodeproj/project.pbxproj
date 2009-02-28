@@ -13,6 +13,7 @@
 		DF0C59430EA9030E00E0D882 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF0C59420EA9030E00E0D882 /* QuartzCore.framework */; };
 		DF0EDFCD0EE5E187008FA08A /* English.lproj in Resources */ = {isa = PBXBuildFile; fileRef = DF0EDFCA0EE5E187008FA08A /* English.lproj */; };
 		DF2EB1960F574D5200D650B7 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF2EB1950F574D5200D650B7 /* IOKit.framework */; };
+		DF2EB2110F577F0C00D650B7 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF2EB2100F577F0C00D650B7 /* Carbon.framework */; };
 		DF375CC20F35300700DA7719 /* NetflixAddDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = DF375CBB0F35300700DA7719 /* NetflixAddDialog.m */; };
 		DF375CC30F35300700DA7719 /* NetflixAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = DF375CBD0F35300700DA7719 /* NetflixAsset.m */; };
 		DF375CC40F35300700DA7719 /* NetflixController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF375CBF0F35300700DA7719 /* NetflixController.m */; };
@@ -53,6 +54,7 @@
 		DF0C96B40EE5BA9F00E85372 /* understudy_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = understudy_Prefix.pch; sourceTree = "<group>"; };
 		DF0EDFCA0EE5E187008FA08A /* English.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = English.lproj; sourceTree = "<group>"; };
 		DF2EB1950F574D5200D650B7 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		DF2EB2100F577F0C00D650B7 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
 		DF375CBA0F35300700DA7719 /* NetflixAddDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetflixAddDialog.h; path = Netflix/NetflixAddDialog.h; sourceTree = "<group>"; };
 		DF375CBB0F35300700DA7719 /* NetflixAddDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NetflixAddDialog.m; path = Netflix/NetflixAddDialog.m; sourceTree = "<group>"; };
 		DF375CBC0F35300700DA7719 /* NetflixAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetflixAsset.h; path = Netflix/NetflixAsset.h; sourceTree = "<group>"; };
@@ -112,6 +114,7 @@
 				DF7F84F00EE3354E0049E5C3 /* BackRow.framework in Frameworks */,
 				DF00C4620F22CF8F003A5122 /* ExceptionHandling.framework in Frameworks */,
 				DF2EB1960F574D5200D650B7 /* IOKit.framework in Frameworks */,
+				DF2EB2110F577F0C00D650B7 /* Carbon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -166,6 +169,7 @@
 		1058C7ACFEA557BF11CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				DF2EB2100F577F0C00D650B7 /* Carbon.framework */,
 				DF2EB1950F574D5200D650B7 /* IOKit.framework */,
 				089C1672FE841209C02AAC07 /* Foundation.framework */,
 				D2F7E65807B2D6F200F64583 /* CoreData.framework */,

@@ -223,6 +223,7 @@
 // (0,0) is top left, but negative values are measured from the bottom/right
 - (void)sendPluginMouseClickAtPoint:(NSPoint)point
 {
+  if( ![pluginView_ respondsToSelector:@selector(sendEvent:)] ) return;
   EventRecord record;
   NSPoint orig = [pluginView_ frame].origin;
   NSSize  size = [pluginView_ frame].size;
