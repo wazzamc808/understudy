@@ -68,22 +68,24 @@
 { 
   id result;
   
-  
   NSString* load = @"loadVideoById('%@',0)";
   load = [NSString stringWithFormat:load, [asset_ videoID]];
   [self _playerFunction:load];
   
   // if there is a video URL, then the video is loading (or loaded)
   result = [self _playerFunction:@"getVideoUrl()"];
-  return ( result != nil );
+  loaded_ = ( result != nil );
+  return loaded_;
 }
 
 - (void)attemptEnqueue
 {
-  sleep(1);
-  [self performSelectorOnMainThread:@selector(enqueueVideo)
-                         withObject:nil
-                      waitUntilDone:YES];
+  while( !loaded_ ){
+    sleep(1);
+    [self performSelectorOnMainThread:@selector(enqueueVideo)
+                           withObject:nil
+                        waitUntilDone:YES];
+  }
 }
 
 // <WebFrameLoadDelegate> callback once the video loads
