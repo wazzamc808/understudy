@@ -91,7 +91,6 @@
 // <WebFrameLoadDelegate> callback once the video loads
 - (void)webView:(WebView*)view didFinishLoadForFrame:(WebFrame*)frame
 {
-  NSLog(@"did finish loading");
   if( frame != [view mainFrame] ) return;
   [window_ display];
   [window_ orderFrontRegardless];
@@ -114,9 +113,38 @@
   window_ = nil;
 }
 
+
+- (void)playPause
+{
+  if( !loaded_ ) return;
+  NSNumber* result = [self _playerFunction:@"getPlayerState()"];
+  if( (id)result == [WebUndefined undefined] ) return;
+  switch( [result intValue] ){
+    case -1: // unstarted
+      break;
+    case 0:  // ended
+      break;
+    case 1:  // playing
+      [self _playerFunction:@"pauseVideo()"];
+      break;
+    case 2:  // paused
+      [self _playerFunction:@"playVideo()"];
+      break;
+    case 3:  // buffering
+      break;
+    case 5:  // video cued
+      break;
+  }
+  
+}
+
 - (void)fastForward
 {
-  [self enqueueVideo];
+}
+
+- (void)rewind
+{
+
 }
 
 @end
