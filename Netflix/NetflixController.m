@@ -81,7 +81,7 @@
   if( [self hasPluginView] ) {
     [window_ display];
     [window_ orderFrontRegardless];
-//    [self makeMainViewFullscreen];
+    [window_ setLevel:NSScreenSaverWindowLevel];
     [self reveal];
   } else {
     NSString* title = @"Error";
