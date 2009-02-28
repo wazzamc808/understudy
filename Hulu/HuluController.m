@@ -112,8 +112,7 @@
 
   [window_ display];
   [window_ orderFrontRegardless];
-  
-  [self shieldMenu];
+  [window_ setLevel:NSScreenSaverWindowLevel];
   [self reveal];
 }
 
@@ -139,9 +138,6 @@
 
 - (void)controlWillDeactivate
 {
-  // enlarge the shield to hide the transition
-  [menushield_ setFrame:[[UNDPreferenceManager screen] frame] display:NO];
-  
   if( fsWindow_ ){
     [self exitFullScreen];
     [fsWindow_ close];
@@ -151,7 +147,6 @@
   window_ = nil;
   [self returnToFR];
   
-  [menushield_ close];
   [super controlWillDeactivate];
 }
 
