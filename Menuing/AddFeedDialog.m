@@ -126,6 +126,13 @@
     [[self stack] popToController:[MainMenuController sharedInstance]];    
   }
   
+  else if( [host rangeOfString:@"bbc"].location != NSNotFound )
+  {
+    [[UNDPreferenceManager sharedInstance] addFeed:[url absoluteString]
+                                         withTitle:@"BBC Feed"];
+    [[self stack] popToController:[MainMenuController sharedInstance]];    
+  }
+    
   else
     [self _presentInvalidHostAlert];
 }
