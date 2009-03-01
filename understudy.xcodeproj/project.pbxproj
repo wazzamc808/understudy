@@ -19,6 +19,10 @@
 		DF375CC40F35300700DA7719 /* NetflixController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF375CBF0F35300700DA7719 /* NetflixController.m */; };
 		DF375CC50F35300700DA7719 /* NetflixFeed.m in Sources */ = {isa = PBXBuildFile; fileRef = DF375CC10F35300700DA7719 /* NetflixFeed.m */; };
 		DF375D600F36049A00DA7719 /* HuluFeedDiscoverer.m in Sources */ = {isa = PBXBuildFile; fileRef = DF375D5F0F36049A00DA7719 /* HuluFeedDiscoverer.m */; };
+		DF37B8AD0F59ED5E0017766F /* UNDiPlayerFeed.m in Sources */ = {isa = PBXBuildFile; fileRef = DF37B8AC0F59ED5E0017766F /* UNDiPlayerFeed.m */; };
+		DF37B8B00F59EFFE0017766F /* UNDiPlayerAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = DF37B8AF0F59EFFE0017766F /* UNDiPlayerAsset.m */; };
+		DF37B8CF0F5AE0940017766F /* UNDNSXMLElement+Parsing.m in Sources */ = {isa = PBXBuildFile; fileRef = DF37B8CE0F5AE0940017766F /* UNDNSXMLElement+Parsing.m */; };
+		DF37B9120F5AF1F70017766F /* UNDiPlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF37B9110F5AF1F70017766F /* UNDiPlayerController.m */; };
 		DF3D0F640F54CA3E0089CF2B /* LoadingAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = DF3D0F630F54CA3E0089CF2B /* LoadingAsset.m */; };
 		DF5A22210F0FC18200F5F19F /* YouTubeAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = DF5A22200F0FC18200F5F19F /* YouTubeAsset.m */; };
 		DF5A22250F0FD6B400F5F19F /* YouTubeFeed.m in Sources */ = {isa = PBXBuildFile; fileRef = DF5A22240F0FD6B400F5F19F /* YouTubeFeed.m */; };
@@ -65,6 +69,14 @@
 		DF375CC10F35300700DA7719 /* NetflixFeed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NetflixFeed.m; path = Netflix/NetflixFeed.m; sourceTree = "<group>"; };
 		DF375D5E0F36049A00DA7719 /* HuluFeedDiscoverer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HuluFeedDiscoverer.h; sourceTree = "<group>"; };
 		DF375D5F0F36049A00DA7719 /* HuluFeedDiscoverer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HuluFeedDiscoverer.m; sourceTree = "<group>"; };
+		DF37B8AB0F59ED5E0017766F /* UNDiPlayerFeed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UNDiPlayerFeed.h; sourceTree = "<group>"; };
+		DF37B8AC0F59ED5E0017766F /* UNDiPlayerFeed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UNDiPlayerFeed.m; sourceTree = "<group>"; };
+		DF37B8AE0F59EFFE0017766F /* UNDiPlayerAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UNDiPlayerAsset.h; sourceTree = "<group>"; };
+		DF37B8AF0F59EFFE0017766F /* UNDiPlayerAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UNDiPlayerAsset.m; sourceTree = "<group>"; };
+		DF37B8CD0F5AE0940017766F /* UNDNSXMLElement+Parsing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UNDNSXMLElement+Parsing.h"; path = "../BBCiPlayer/UNDNSXMLElement+Parsing.h"; sourceTree = "<group>"; };
+		DF37B8CE0F5AE0940017766F /* UNDNSXMLElement+Parsing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UNDNSXMLElement+Parsing.m"; path = "../BBCiPlayer/UNDNSXMLElement+Parsing.m"; sourceTree = "<group>"; };
+		DF37B9100F5AF1F70017766F /* UNDiPlayerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UNDiPlayerController.h; sourceTree = "<group>"; };
+		DF37B9110F5AF1F70017766F /* UNDiPlayerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UNDiPlayerController.m; sourceTree = "<group>"; };
 		DF3D0F620F54CA3E0089CF2B /* LoadingAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingAsset.h; sourceTree = "<group>"; };
 		DF3D0F630F54CA3E0089CF2B /* LoadingAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadingAsset.m; sourceTree = "<group>"; };
 		DF5A221F0F0FC18200F5F19F /* YouTubeAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YouTubeAsset.h; sourceTree = "<group>"; };
@@ -155,8 +167,10 @@
 		08FB77AFFE84173DC02AAC07 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				DF37B8E40F5AE9400017766F /* Utilities */,
 				DFCDFB080F3E2E9300D979F0 /* Menuing */,
 				DF5A22370F100E4300F5F19F /* Base */,
+				DF37B8AA0F59ED1F0017766F /* BBCiPlayer */,
 				DF7D97030F08647400C9B7FB /* Hulu */,
 				DF375CC60F35302600DA7719 /* Netflix */,
 				DF5A221E0F0FC14B00F5F19F /* YouTube */,
@@ -211,6 +225,28 @@
 				DF375CC10F35300700DA7719 /* NetflixFeed.m */,
 			);
 			name = Netflix;
+			sourceTree = "<group>";
+		};
+		DF37B8AA0F59ED1F0017766F /* BBCiPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				DF37B8AB0F59ED5E0017766F /* UNDiPlayerFeed.h */,
+				DF37B8AC0F59ED5E0017766F /* UNDiPlayerFeed.m */,
+				DF37B8AE0F59EFFE0017766F /* UNDiPlayerAsset.h */,
+				DF37B8AF0F59EFFE0017766F /* UNDiPlayerAsset.m */,
+				DF37B9100F5AF1F70017766F /* UNDiPlayerController.h */,
+				DF37B9110F5AF1F70017766F /* UNDiPlayerController.m */,
+			);
+			path = BBCiPlayer;
+			sourceTree = "<group>";
+		};
+		DF37B8E40F5AE9400017766F /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				DF37B8CD0F5AE0940017766F /* UNDNSXMLElement+Parsing.h */,
+				DF37B8CE0F5AE0940017766F /* UNDNSXMLElement+Parsing.m */,
+			);
+			path = Utilities;
 			sourceTree = "<group>";
 		};
 		DF5A221E0F0FC14B00F5F19F /* YouTube */ = {
@@ -353,6 +389,10 @@
 				DFCDFC530F3E72A400D979F0 /* BaseUnderstudyAsset.m in Sources */,
 				DFE8E7B60F52130200A5E120 /* UNDPreferenceManager.m in Sources */,
 				DF3D0F640F54CA3E0089CF2B /* LoadingAsset.m in Sources */,
+				DF37B8AD0F59ED5E0017766F /* UNDiPlayerFeed.m in Sources */,
+				DF37B8B00F59EFFE0017766F /* UNDiPlayerAsset.m in Sources */,
+				DF37B8CF0F5AE0940017766F /* UNDNSXMLElement+Parsing.m in Sources */,
+				DF37B9120F5AF1F70017766F /* UNDiPlayerController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -17,6 +17,7 @@
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
 #import "HuluFeed.h"
+#import "UNDiPlayerFeed.h"
 #import "NetflixFeed.h"
 #import "YouTubeFeed.h"
 
@@ -85,6 +86,8 @@ static MainMenuController *sharedInstance_;
       asset = [[NetflixFeed alloc] initWithTitle:title forUrl:url];
     else if( [host rangeOfString:@"youtube"].location != NSNotFound )
       asset = [[YouTubeFeed alloc] initWithTitle:title forUrl:url];
+    else if( [host rangeOfString:@"bbc.co.uk"].location != NSNotFound )
+      asset = [[UNDiPlayerFeed alloc] initWithTitle:title forUrl:url];
     else asset = (BaseUnderstudyAsset<UnderstudyAsset>*)[NSNull null];
     
     [assets_ replaceObjectAtIndex:row withObject:asset];
