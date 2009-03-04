@@ -126,10 +126,10 @@ static UNDPreferenceManager *sharedInstance_;
   prefDict = [defaults persistentDomainForName:DEFAULTS_DOMAIN];
 
   feeds_ = [[[prefDict objectForKey:@"feeds"] mutableCopy] retain];
-  if( !feeds_ ) feeds_ = [[NSMutableDictionary alloc] init];
+  if( !feeds_ ) feeds_ = [[NSMutableArray alloc] init];
 
   titles_ = [[[prefDict objectForKey:@"titles"] mutableCopy] retain];  
-  if( !titles_ ) titles_ = [[NSMutableDictionary alloc] init];
+  if( !titles_ ) titles_ = [[NSMutableArray alloc] init];
 }
 
 - (void)save
