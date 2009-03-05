@@ -22,8 +22,10 @@
 
 #import "AddFeedDialog.h"
 #import "UnderstudyAsset.h"
-
-@interface ManageFeedsDialog : BROptionDialog <UnderstudyAsset>{
+  
+@interface ManageFeedsDialog : BRCenteredMenuController 
+<BRMenuListItemProvider,UnderstudyAsset>
+{
   AddFeedDialog* addController_;
   BROptionDialog* moveDialog_;
   BROptionDialog* removeDialog_;

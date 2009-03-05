@@ -17,33 +17,31 @@
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
 #import "ManageFeedsDialog.h"
-#import "MainMenuController.h"
 #import "RenameDialog.h"
+#import "UNDPreferenceManager.h"
 
 #import <BackRow/BRControllerStack.h>
 #import <BackRow/BRTextMenuItemLayer.h>
 
 @implementation ManageFeedsDialog
 
+enum ManageOptionEnum
+{
+  AddOption = 0,
+  RemoveOption,
+  RenameOption,
+  MoveOption,
+  OptionCount // this must be immediately after the last valid option
+};
+typedef enum ManageOptionEnum ManageOption;
+
 - (id)init
 {
   [super init];
   [self setTitle:[self title]];
-  [self addOptionText:@"Add"];
-  [self addOptionText:@"Remove"];
-  [self addOptionText:@"Rename"];
-  [self addOptionText:@"Move"];
-  [self setActionSelector:@selector(itemSelected) target:self];
   addController_ = [[AddFeedDialog alloc] init];
+  [[self list] setDatasource:self];
   return self;
-}
-
-- (void)controlWasActivated
-{
-  [super controlWasActivated];
-  // if the main menu doesn't have any feeds, go right to the add dialog
-  if( [[MainMenuController sharedInstance] itemCount] <= 1 )
-    [[self stack] swapController:addController_];
 }
 
 - (void)_presentMoveDialog
@@ -51,10 +49,10 @@
   [moveDialog_ release];
   moveDialog_ = [[BROptionDialog alloc] init];
   [moveDialog_ setTitle:@"Move Feed"];
-  MainMenuController* main = [MainMenuController sharedInstance];
+  UNDPreferenceManager* prefs = [UNDPreferenceManager sharedInstance];
   int i;
-  for(i = 0; i<([main itemCount]-1); i++)
-    [moveDialog_ addOptionText:[main titleForRow:i]];  
+  for(i = 0; i<[prefs feedCount]; i++)
+    [moveDialog_ addOptionText:[prefs titleAtIndex:i]];  
   [moveDialog_ setActionSelector:@selector(_moveFrom) target:self];
   [[self stack] pushController:moveDialog_];  
 }
@@ -82,10 +80,10 @@
   removeDialog_ = [[BROptionDialog alloc] init];
   [removeDialog_ setTitle:@"Remove Feed"];
   
-  MainMenuController* main = [MainMenuController sharedInstance];
+  UNDPreferenceManager* prefs = [UNDPreferenceManager sharedInstance];
   int i;
-  for(i = 0; i<([main itemCount]-1); i++)
-    [removeDialog_ addOptionText:[main titleForRow:i]];  
+  for(i = 0; i<[prefs feedCount]; i++)
+    [removeDialog_ addOptionText:[prefs titleAtIndex:i]];  
   [removeDialog_ setActionSelector:@selector(_remove) target:self];
   [[self stack] pushController:removeDialog_];
 }
@@ -105,28 +103,69 @@
   [rename autorelease];
 }
 
-// call-back for an item having been selected
-- (void)itemSelected
+#pragma mark Controller
+
+- (void)itemSelected:(long)index
 {
-  switch([self selectedIndex])
+  ManageOption option = (ManageOption)index;
+  switch( option )
   {
-    case 0: // add
+    case AddOption:
       [[self stack] pushController:addController_];
       break;
-    case 1: // remove
+    case RemoveOption:
       [self _presentRemoveDialog];
       break;
-    case 2: // rename
+    case RenameOption:
       [self _presentRenameDialog];
       break;
-    case 3: // move
+    case MoveOption:
       [self _presentMoveDialog];
       break;
-    default:
-      NSLog(@"unexpected index in add dialog");
+    case OptionCount:
+      break;
   }
 }
 
+- (void)controlWillActivate
+{
+  [super controlWillActivate];
+  [[self list] reload];
+  if( ![self rowSelectable:[self selectedItem]] )
+    [self setSelectedItem:0];
+}
+
+#pragma mark MenuListItemProvider
+
+- (long)itemCount{ return OptionCount; }
+- (float)heightForRow:(long)row{ return 0; }
+- (BOOL)rowSelectable:(long)row
+{
+  return (row == 0 || [[UNDPreferenceManager sharedInstance] feedCount] > 0); 
+}
+
+- (NSString*)titleForRow:(long)row
+{ 
+  ManageOption option = (ManageOption)row;
+  switch (option) {
+    case AddOption: return @"Add Feed";
+    case RemoveOption: return @"Remove";
+    case RenameOption: return @"Rename";
+    case MoveOption: return @"Move";
+    case OptionCount: break;
+  }
+  return @"";
+}
+
+- (BRLayer<BRMenuItemLayer>*)itemForRow:(long)row
+{
+  BRTextMenuItemLayer* item = [BRTextMenuItemLayer menuItem];
+  [item setTitle:[self titleForRow:row]];
+  if( ![self rowSelectable:row] ) [item setDimmed:YES];
+  return item;
+}
+
+#pragma mark Understudy Asset
 - (BRLayer<BRMenuItemLayer>*)menuItem
 {
   BRTextMenuItemLayer* manager = [BRTextMenuItemLayer menuItem];
