@@ -29,9 +29,9 @@
   [super init];
   [self setActionSelector:@selector(itemSelected) target:self];
   int i;
-  MainMenuController* main = [MainMenuController sharedInstance];
-  for( i = 0; i < [main itemCount]-1; i++ )
-    [self addOptionText:[main titleForRow:i]];
+  UNDPreferenceManager* prefs = [UNDPreferenceManager sharedInstance];
+  for( i = 0; i < [prefs feedCount]; i++ )
+    [self addOptionText:[prefs titleAtIndex:i]];
   [self setTitle:@"Rename Feed"];
   [self setPrimaryInfoText:@"Select a feed to rename" withAttributes:nil];
   return self;
