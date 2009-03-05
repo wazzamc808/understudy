@@ -78,7 +78,7 @@
   [window_ display];
   // if there is a plugin, we want to fullscreen it. if not (e.g. if the user
   // isn't logged in and the movie won't be shown) we report an error
-  if( [self hasPluginView] ) {
+  if( [self hasPluginView] || [UNDPreferenceManager alertsAreDisabled]) {
     [window_ display];
     [window_ orderFrontRegardless];
     [window_ setLevel:NSScreenSaverWindowLevel];
@@ -113,6 +113,20 @@
   // if the player is more than 1000px wide, padding is added
   if( size.width > 1000 ) fsPoint.x -= (size.width-1000)/2;
 
+  NSRect rect;
+  rect.origin = fsPoint;
+  rect.size.height = 10;
+  rect.size.width = 10;
+  NSWindow* window= [[NSWindow alloc] initWithContentRect:rect
+                                                styleMask:0
+                                                  backing:NSBackingStoreBuffered
+                                                    defer:YES];
+  [window setBackgroundColor:[NSColor greenColor]];
+  [window display];
+  [window setLevel:NSScreenSaverWindowLevel];
+  [window orderFrontRegardless];
+  
+  [self sendPluginMouseClickAtPoint:fsPoint];
   [self sendPluginMouseClickAtPoint:fsPoint];
 }
 

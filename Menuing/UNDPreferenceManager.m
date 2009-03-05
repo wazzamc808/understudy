@@ -29,6 +29,7 @@
 
 @implementation UNDPreferenceManager
 @synthesize huluFSAlerted = huluFSAlerted_;
+@synthesize alertsDisabled = alertsDisabled_;
 
 - (id)init
 {
@@ -95,6 +96,11 @@ static UNDPreferenceManager *sharedInstance_;
   return [NSScreen mainScreen];
 }
 
++ (BOOL)alertsAreDisabled
+{
+  return  [[UNDPreferenceManager sharedInstance] alertsDisabled];
+}
+
 - (void)load
 {
   RUIPreferences* FRprefs = [RUIPreferences sharedFrontRowPreferences];
@@ -126,7 +132,12 @@ static UNDPreferenceManager *sharedInstance_;
   prefDict = [defaults persistentDomainForName:DEFAULTS_DOMAIN];
 
   feeds_ = [[[prefDict objectForKey:@"feeds"] mutableCopy] retain];
+  if( !feeds_ ) feeds_ = [[NSMutableArray alloc] init];
+
   titles_ = [[[prefDict objectForKey:@"titles"] mutableCopy] retain];  
+  if( !titles_ ) titles_ = [[NSMutableArray alloc] init];
+  
+  alertsDisabled_ = ( [prefDict objectForKey:@"disableAlerts"] != nil);
 }
 
 - (void)save
@@ -135,6 +146,8 @@ static UNDPreferenceManager *sharedInstance_;
   NSMutableDictionary* prefs = [NSMutableDictionary dictionary];
   [prefs setObject:titles_ forKey:@"titles"];
   [prefs setObject:feeds_ forKey:@"feeds"];
+  if( alertsDisabled_ ) 
+    [prefs setObject:[NSNumber numberWithBool:YES] forKey:@"disableAlerts"];
   [defaults setPersistentDomain:prefs forName:DEFAULTS_DOMAIN];
 }
 

@@ -1,5 +1,5 @@
 //
-//  Copyright 2008 Kirk Kelsey.
+//  Copyright 2009 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -16,19 +16,12 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
+
 #import <Cocoa/Cocoa.h>
 
-#import <BackRow/BROptionDialog.h>
 
-#import "AddFeedDialog.h"
-#import "UnderstudyAsset.h"
-  
-@interface ManageFeedsDialog : BRCenteredMenuController 
-<BRMenuListItemProvider,UnderstudyAsset>
-{
-  AddFeedDialog* addController_;
-  BROptionDialog* moveDialog_;
-  BROptionDialog* removeDialog_;
-}
+@interface NSXMLElement (UNDXMLParsingAddition)
 
+- (NSXMLElement*)linkWithRelationship:(NSString*)rel;
+- (NSXMLElement*)firstElementNamed:(NSString*)name;
 @end

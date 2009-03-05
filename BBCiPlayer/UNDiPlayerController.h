@@ -1,5 +1,5 @@
 //
-//  Copyright 2008 Kirk Kelsey.
+//  Copyright 2009 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -18,17 +18,13 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import <BackRow/BROptionDialog.h>
+#import "UNDiPlayerAsset.h"
 
-#import "AddFeedDialog.h"
-#import "UnderstudyAsset.h"
-  
-@interface ManageFeedsDialog : BRCenteredMenuController 
-<BRMenuListItemProvider,UnderstudyAsset>
-{
-  AddFeedDialog* addController_;
-  BROptionDialog* moveDialog_;
-  BROptionDialog* removeDialog_;
+@interface UNDiPlayerController : BaseController{
+  UNDiPlayerAsset* asset_;
+  NSWindow* window_;
 }
+
+- (id)initWithAsset:(UNDiPlayerAsset*)asset;
 
 @end

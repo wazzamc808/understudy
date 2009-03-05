@@ -24,7 +24,6 @@
 - (void)dealloc
 {
   [preview_ release];
-  NSLog(@"deallocating base asset");
   [super dealloc];
 }
 
