@@ -118,10 +118,12 @@
   [self setAirDateFromString: description_];
   [self setDateAddedFromString: description_];
   [self setDurationFromString: description_];
-  int start = [description_ rangeOfString:@"<p>"].location;
+  int start = [description_ rangeOfString:@"<p>"].location; 
   int end = [description_ rangeOfString:@"</p>"].location;
-  NSRange descRange = NSMakeRange(start+3, end-start-3);
-  description_ = [description_ substringWithRange:descRange];
+  if( start != NSNotFound && end != NSNotFound ){
+    NSRange descRange = NSMakeRange(start+3, end-start-3);
+    description_ = [description_ substringWithRange:descRange];
+  }
   description_ = (NSString*) CFXMLCreateStringByUnescapingEntities(NULL,(CFStringRef)description_,NULL);
 }
 
