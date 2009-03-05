@@ -33,13 +33,16 @@
   NSMutableArray* titles_;
 
   BOOL huluFSAlerted_;
+  BOOL alertsDisabled_;
   NSMutableSet* subscribers_;
 }
 
 @property(nonatomic) BOOL huluFSAlerted;
+@property(nonatomic) BOOL alertsDisabled;
 
 + (UNDPreferenceManager*)sharedInstance;
 + (NSScreen*)screen;
++ (BOOL)alertsAreDisabled;
 
 - (long)feedCount;
 - (NSString*)titleAtIndex:(long)index;
