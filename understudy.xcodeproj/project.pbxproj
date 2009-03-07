@@ -23,6 +23,7 @@
 		DF37B8B00F59EFFE0017766F /* UNDiPlayerAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = DF37B8AF0F59EFFE0017766F /* UNDiPlayerAsset.m */; };
 		DF37B8CF0F5AE0940017766F /* UNDNSXMLElement+Parsing.m in Sources */ = {isa = PBXBuildFile; fileRef = DF37B8CE0F5AE0940017766F /* UNDNSXMLElement+Parsing.m */; };
 		DF37B9120F5AF1F70017766F /* UNDiPlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF37B9110F5AF1F70017766F /* UNDiPlayerController.m */; };
+		DF37BA350F5B5DA70017766F /* UNDHuluSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = DF37BA340F5B5DA70017766F /* UNDHuluSelector.m */; };
 		DF3D0F640F54CA3E0089CF2B /* LoadingAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = DF3D0F630F54CA3E0089CF2B /* LoadingAsset.m */; };
 		DF5A22210F0FC18200F5F19F /* YouTubeAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = DF5A22200F0FC18200F5F19F /* YouTubeAsset.m */; };
 		DF5A22250F0FD6B400F5F19F /* YouTubeFeed.m in Sources */ = {isa = PBXBuildFile; fileRef = DF5A22240F0FD6B400F5F19F /* YouTubeFeed.m */; };
@@ -77,6 +78,8 @@
 		DF37B8CE0F5AE0940017766F /* UNDNSXMLElement+Parsing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UNDNSXMLElement+Parsing.m"; path = "../BBCiPlayer/UNDNSXMLElement+Parsing.m"; sourceTree = "<group>"; };
 		DF37B9100F5AF1F70017766F /* UNDiPlayerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UNDiPlayerController.h; sourceTree = "<group>"; };
 		DF37B9110F5AF1F70017766F /* UNDiPlayerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UNDiPlayerController.m; sourceTree = "<group>"; };
+		DF37BA330F5B5DA70017766F /* UNDHuluSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UNDHuluSelector.h; sourceTree = "<group>"; };
+		DF37BA340F5B5DA70017766F /* UNDHuluSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UNDHuluSelector.m; sourceTree = "<group>"; };
 		DF3D0F620F54CA3E0089CF2B /* LoadingAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingAsset.h; sourceTree = "<group>"; };
 		DF3D0F630F54CA3E0089CF2B /* LoadingAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadingAsset.m; sourceTree = "<group>"; };
 		DF5A221F0F0FC18200F5F19F /* YouTubeAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YouTubeAsset.h; sourceTree = "<group>"; };
@@ -291,6 +294,8 @@
 				DF7D970B0F08647400C9B7FB /* HuluFeed.m */,
 				DF375D5E0F36049A00DA7719 /* HuluFeedDiscoverer.h */,
 				DF375D5F0F36049A00DA7719 /* HuluFeedDiscoverer.m */,
+				DF37BA330F5B5DA70017766F /* UNDHuluSelector.h */,
+				DF37BA340F5B5DA70017766F /* UNDHuluSelector.m */,
 			);
 			path = Hulu;
 			sourceTree = "<group>";
@@ -393,6 +398,7 @@
 				DF37B8B00F59EFFE0017766F /* UNDiPlayerAsset.m in Sources */,
 				DF37B8CF0F5AE0940017766F /* UNDNSXMLElement+Parsing.m in Sources */,
 				DF37B9120F5AF1F70017766F /* UNDiPlayerController.m in Sources */,
+				DF37BA350F5B5DA70017766F /* UNDHuluSelector.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -421,6 +427,8 @@
 				);
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "/System/Library/CoreServices/Front Row.app/Contents/PlugIns/";
+				LD_OPENMP_FLAGS = "";
+				OTHER_CFLAGS = "-Wall";
 				PRODUCT_NAME = frUnderstudy;
 				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.5.sdk";
 				VALID_ARCHS = "i386 x86_64";
@@ -446,6 +454,7 @@
 				GCC_PREFIX_HEADER = understudy_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "/System/Library/CoreServices/Front Row.app/Contents/PlugIns/";
+				LD_OPENMP_FLAGS = "";
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				PRODUCT_NAME = frUnderstudy;
 				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.5.sdk";

@@ -17,22 +17,25 @@
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
 #import <Cocoa/Cocoa.h>
-#import <WebKit/WebKit.h>
 
-#import "BackRow/BRController.h"
 
-#import "HuluAsset.h"
-#import "UNDHuluSelector.h"
-
-@interface HuluController : BaseController {
- @private
-  HuluAsset* asset_;
-  NSWindow* window_;     // original window created to load content
-  NSWindow* fsWindow_;   // window created when the player goes full screen
-  UNDHuluSelector* selector_;  // to indicate which button to select
-  BRController* alert_;
+@interface UNDHuluSelector : NSObject {
+  NSWindow* window_;
+  NSPoint* positions_;
+  int currentPos_;
+  int posCount_;
 }
 
-- (id)initWithAsset:(HuluAsset*)asset;
+- (id)initWithOrigin:(NSPoint)origin;
+
+- (void)show;
+- (void)hide;
+
+- (void)nextPosition;
+- (void)prevPosition;
+
+- (NSPoint)location;
+- (BOOL)locationIsValid;
+- (NSWindow*)window;
 
 @end
