@@ -22,12 +22,14 @@
 #import "BackRow/BRController.h"
 
 #import "HuluAsset.h"
+#import "UNDHuluSelector.h"
 
 @interface HuluController : BaseController {
  @private
   HuluAsset* asset_;
   NSWindow* window_;     // original window created to load content
   NSWindow* fsWindow_;   // window created when the player goes full screen
+  UNDHuluSelector* selector_;  // to indicate which button to select
   BRController* alert_;
 }
 
