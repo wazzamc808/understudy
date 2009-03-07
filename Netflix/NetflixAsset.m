@@ -20,6 +20,7 @@
 #import "NetflixController.h"
 
 #import <BackRow/BRImage.h>
+#import <BackRow/BRAlertController.h>
 
 #import <CoreFoundation/CFXMLNode.h>
 
@@ -129,7 +130,20 @@
 
 - (BRController*)controller
 {
-  return [[NetflixController alloc] initWithAsset:self];
+  NSString* path = @"/Library/Internet Plug-Ins/Silverlight.plugin";
+  if( ![[NSFileManager defaultManager] fileExistsAtPath:path] ){
+    NSString* title = @"Error";
+    NSString* primary = @"Silverlight Not Installed";
+    NSString* secondary = @"The Silverlight plugin must be installed in order "\
+    "to watch Netflix videos. It can be downloaded from http://silverlight.net";
+    BRAlertController* alert = [BRAlertController alertOfType:kBRAlertTypeError
+                                                       titled:title
+                                                  primaryText:primary
+                                                secondaryText:secondary];
+    return alert;
+  } else {
+    return [[NetflixController alloc] initWithAsset:self];
+  }
 }
 
 
