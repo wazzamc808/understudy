@@ -22,22 +22,16 @@
 #import <BackRow/BRControllerStack.h>
 #import <BackRow/BRDisplayManager.h>
 #import <BackRow/BREvent.h>
-#import <BackRow/BRRenderScene.h>
 #import <BackRow/BRSentinel.h>
 #import <BackRow/BRSettingsFacade.h>
-#import <BackRow/BRWaitSpinnerControl.h>
 
 #import <Carbon/Carbon.h>
-
-@interface BRAppManager : NSObject { }
-+ (BRAppManager*)sharedApplication;
-- (id)delegate;
-@end
 
 @interface BRRenderer{}
 - (void)orderIn;
 - (void)orderOut;
 @end
+
 
 @implementation BaseController
 
@@ -48,11 +42,24 @@
 }
 
 #pragma mark Transitioning Into/Out of FR
+- (void)captureDisplays
+{
+  NSNumber *displayID, *mainID;
+  NSScreen* mainScreen = [UNDPreferenceManager screen];
+  mainID = [[mainScreen deviceDescription] objectForKey:@"NSScreenNumber"];
+  for( NSScreen* screen in [NSScreen screens] ){
+    displayID = [[screen deviceDescription] objectForKey:@"NSScreenNumber"];
+    if( [displayID compare:mainID] != NSOrderedSame )
+      CGDisplayCapture( [displayID intValue]);
+  }
+}
+
 - (void)reveal
 {
   BRSentinel* sentinel = [BRSentinel sharedInstance];
   id<BRRendererProvider> provider = [sentinel rendererProvider];
   BRRenderer* renderer = [provider renderer];
+  [self captureDisplays];
   [renderer orderOut];
   // indicate that we don't want the display to go to sleep
   IOReturn err = IOPMAssertionCreate (
@@ -64,6 +71,7 @@
 
 - (void)returnToFR
 {
+  CGReleaseAllDisplays();
   BRSentinel* sentinel = [BRSentinel sharedInstance];
   id<BRRendererProvider> provider = [sentinel rendererProvider];
   BRRenderer* renderer = [provider renderer];
