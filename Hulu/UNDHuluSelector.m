@@ -76,7 +76,8 @@
 
 - (void)hide
 {
-  [window_ orderOut:self];
+  currentPos_ = 0;
+  [self show];
 }
 
 - (void)nextPosition

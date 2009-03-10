@@ -132,6 +132,7 @@
   }
   
   [self reveal];
+
 }
 
 - (void)playPause
@@ -167,7 +168,8 @@
     [fsWindow_ close];
     fsWindow_ = nil;
   }
-  [selector_ hide];
+  [selector_ release];
+  selector_ = nil;
   [window_ close];
   window_ = nil;
   [self returnToFR];
