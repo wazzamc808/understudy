@@ -21,7 +21,6 @@
 
 #import <BackRow/BRAlertController.h>
 #import <BackRow/BRControllerStack.h>
-#import <BackRow/RUISoundHandler.h>
 
 #import <AppKit/NSPasteboard.h>
 
