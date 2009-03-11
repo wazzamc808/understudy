@@ -170,9 +170,9 @@
 		08FB77AFFE84173DC02AAC07 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				DF37B8E40F5AE9400017766F /* Utilities */,
-				DFCDFB080F3E2E9300D979F0 /* Menuing */,
 				DF5A22370F100E4300F5F19F /* Base */,
+				DFCDFB080F3E2E9300D979F0 /* Menuing */,
+				DF37B8E40F5AE9400017766F /* Utilities */,
 				DF37B8AA0F59ED1F0017766F /* BBCiPlayer */,
 				DF7D97030F08647400C9B7FB /* Hulu */,
 				DF375CC60F35302600DA7719 /* Netflix */,
@@ -411,7 +411,6 @@
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/\"",
 					"\"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks\"",
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -421,10 +420,7 @@
 				GCC_PFE_FILE_C_DIALECTS = "c objective-c";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = understudy_Prefix.pch;
-				HEADER_SEARCH_PATHS = (
-					Hulu,
-					Netflix,
-				);
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/BRHeaders/";
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "/System/Library/CoreServices/Front Row.app/Contents/PlugIns/";
 				LD_OPENMP_FLAGS = "";
@@ -433,7 +429,6 @@
 				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.5.sdk";
 				VALID_ARCHS = "i386 x86_64";
 				WRAPPER_EXTENSION = frappliance;
-				ZERO_LINK = NO;
 			};
 			name = Debug;
 		};
@@ -452,6 +447,7 @@
 				GCC_PFE_FILE_C_DIALECTS = "c objective-c";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = understudy_Prefix.pch;
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/BRHeaders/";
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "/System/Library/CoreServices/Front Row.app/Contents/PlugIns/";
 				LD_OPENMP_FLAGS = "";

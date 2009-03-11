@@ -17,8 +17,12 @@
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
 #import <Cocoa/Cocoa.h>
-#import <BackRow/BRBaseMediaAsset.h>
-#import <BackRow/BRMediaPreviewControllerFactory.h>
+#import "BRBaseMediaAsset.h"
+#import "BRControl.h"
+#import "BRImage.h"
+#import "BRMediaPreviewControllerFactory.h"
+#import "BRMediaPreviewFactoryDelegate-Protocol.h"
+#import "BRMediaType.h"
 
 @interface BaseUnderstudyAsset : BRBaseMediaAsset<BRMediaPreviewFactoryDelegate> 
 {

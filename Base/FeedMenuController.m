@@ -22,9 +22,11 @@
 #import "BaseUnderstudyAsset.h"
 #import "LoadingAsset.h"
 
-#import <BackRow/BRControllerStack.h>
-#import <BackRow/BRComboMenuItemLayer.h>
-#import <BackRow/BRTextMenuItemLayer.h>
+#import <BRControllerStack.h>
+#import <BRComboMenuItemLayer.h>
+#import <BRListControl.h>
+#import <BRMenuController-HeaderConvienceMethods.h>
+#import <BRTextMenuItemLayer.h>
 
 #import <Foundation/NSXMLDocument.h>
 
@@ -96,14 +98,14 @@
     return 1;
 }
 
-- (NSString*)titleForRow:(long)row
+- (id)titleForRow:(long)row
 {
   if( [self rowSelectable:row] )
     return [[assets_ objectAtIndex:row] title];
   else return @"Loading";//nil;
 }
 
-- (BRLayer<BRMenuItemLayer>*)itemForRow:(long)row
+- (id)itemForRow:(long)row
 {
   NSObject<UnderstudyAsset>* asset = [assets_ objectAtIndex:row];
   if( [asset respondsToSelector:@selector(menuItemForMenu:)] )

@@ -19,8 +19,8 @@
 #import "NetflixAsset.h"
 #import "NetflixController.h"
 
-#import <BackRow/BRImage.h>
-#import <BackRow/BRAlertController.h>
+#import <BRImage.h>
+#import <BRAlertController.h>
 
 #import <CoreFoundation/CFXMLNode.h>
 
@@ -101,21 +101,12 @@
 - (BRImage*)coverArtForBookmarkTimeInMS:(unsigned)ms{ return [self coverArt]; }
 - (BRMediaType*)mediaType{ return [BRMediaType ytVideo]; }
 - (BOOL)hasVideoContent{ return YES; }
-- (BOOL)isDisabled{ return NO; }
-- (BOOL)isInappropriate{ return NO; }
 
 - (NSString*)assetID{ return [url_ description]; }
-- (BOOL)isProtectedContent{ return NO; }
-- (BRResolution*)resolution{ return [BRResolution ED480p]; }
-- (BOOL)canBePlayedInShuffle{ return NO; }
-- (BOOL)isLocal{ return NO; }
 - (BRImage*)coverArtNoDefault{ return [self coverArt]; }
 
 #pragma mark BRImageProvider
 - (NSString*)imageID{return nil;}
-- (void)registerAsPendingImageProvider:(BRImageLoader*)loader
-{ NSLog(@"registerAsPendingImageProvider"); }
-- (void)loadImage:(BRImageLoader*)loader{ }
 
 - (BRLayer<BRMenuItemLayer>*)menuItem
 {
@@ -136,7 +127,7 @@
     NSString* primary = @"Silverlight Not Installed";
     NSString* secondary = @"The Silverlight plugin must be installed in order "\
     "to watch Netflix videos. It can be downloaded from http://silverlight.net";
-    BRAlertController* alert = [BRAlertController alertOfType:kBRAlertTypeError
+    BRAlertController* alert = [BRAlertController alertOfType:3
                                                        titled:title
                                                   primaryText:primary
                                                 secondaryText:secondary];

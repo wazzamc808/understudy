@@ -17,8 +17,9 @@
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
 #import <Cocoa/Cocoa.h>
-#import <BackRow/BROptionDialog.h>
-#import <BackRow/BRTextEntryController.h>
+#import "BROptionDialog.h"
+#import "BRTextEntryController.h"
+#import "BRTextEntryDelegate-Protocol.h"
 
 @interface RenameDialog : BROptionDialog <BRTextEntryDelegate> {
 

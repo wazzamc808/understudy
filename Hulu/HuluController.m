@@ -22,13 +22,13 @@
 #import "MainMenuController.h"
 #import "UNDPreferenceManager.h"
 
-#import <BackRow/BRControllerStack.h>
-#import <BackRow/BRDisplayManager.h>
-#import <BackRow/BREvent.h>
-#import <BackRow/BRRenderScene.h>
-#import <BackRow/BRSentinel.h>
-#import <BackRow/BRSettingsFacade.h>
-#import <BackRow/BRAlertController.h>
+#import <BRControllerStack.h>
+#import <BRDisplayManager.h>
+#import <BREvent.h>
+#import <BRRenderScene.h>
+#import <BRSentinel.h>
+#import <BRSettingsFacade.h>
+#import <BRAlertController.h>
 #import <Carbon/Carbon.h>
 
 @implementation HuluController

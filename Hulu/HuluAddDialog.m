@@ -16,11 +16,12 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
-#import "HuluAddDialog.h"
-#import "MainMenuController.h"
+#import <HuluAddDialog.h>
+#import <MainMenuController.h>
 
-#import <BackRow/BRControllerStack.h>
-#import <BackRow/BRTextMenuItemLayer.h>
+#import <BRControllerStack.h>
+#import <BRListControl.h>
+#import <BRTextMenuItemLayer.h>
 
 @implementation HuluAddDialog
 
@@ -89,11 +90,11 @@
 - (long)itemCount{ return [feeds_ count] + (searching_ ? 1 : 0) ; }
 - (float)heightForRow:(long)row{ return 0; }
 - (BOOL)rowSelectable:(long)row{ return !(row == 0 && searching_); }
-- (NSString*)titleForRow:(long)row{ 
+- (id)titleForRow:(long)row{ 
   if( searching_ ) row -= 1;
   return [titles_ objectAtIndex:row];
 }
-- (BRLayer<BRMenuItemLayer>*)itemForRow:(long)row
+- (id)itemForRow:(long)row
 {
   BRTextMenuItemLayer* item;
   if( [self rowSelectable:row] ){

@@ -17,8 +17,8 @@
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
 #import <Cocoa/Cocoa.h>
-
-#import <BackRow/BRCenteredMenuController.h>
+#import <BRMenuListItemProvider-Protocol.h>
+#import <BRCenteredMenuController.h>
 
 @interface HuluAddDialog : BRCenteredMenuController <BRMenuListItemProvider> {
   NSString* profile_;

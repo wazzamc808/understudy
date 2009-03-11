@@ -24,9 +24,10 @@
 #import "MainMenuController.h"
 #import "ManageFeedsDialog.h"
 
-#import <BackRow/BRControllerStack.h>
-#import <BackRow/BRTextMenuItemLayer.h>
-#import <BackRow/RUIPreferences.h>
+#import <BRControllerStack.h>
+#import <BRListControl.h>
+#import <BRTextMenuItemLayer.h>
+#import <RUIPreferences.h>
 
 @interface MainMenuController (PrivateMenuHandling)
 - (void)loadAssets;
@@ -108,12 +109,12 @@ static MainMenuController *sharedInstance_;
   return 1+[preferences_ feedCount];
 }
 
-- (NSString*)titleForRow:(long)row
+- (id)titleForRow:(long)row
 {
   return [(BRTextMenuItemLayer*)[self itemForRow:row] title];
 }
 
-- (BRLayer<BRMenuItemLayer>*)itemForRow:(long)row
+- (id)itemForRow:(long)row
 {
   NSObject<UnderstudyAsset>* asset = [self assetForRow:row];
   return [asset menuItem];

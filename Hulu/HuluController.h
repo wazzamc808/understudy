@@ -19,7 +19,7 @@
 #import <Cocoa/Cocoa.h>
 #import <WebKit/WebKit.h>
 
-#import "BackRow/BRController.h"
+#import "BRController.h"
 
 #import "HuluAsset.h"
 #import "UNDHuluSelector.h"

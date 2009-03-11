@@ -21,13 +21,13 @@
 #import "NetflixController.h"
 #import "UNDPreferenceManager.h"
 
-#import <BackRow/BRAlertController.h>
-#import <BackRow/BRControllerStack.h>
-#import <BackRow/BRDisplayManager.h>
-#import <BackRow/BREvent.h>
-#import <BackRow/BRRenderScene.h>
-#import <BackRow/BRSentinel.h>
-#import <BackRow/BRSettingsFacade.h>
+#import <BRAlertController.h>
+#import <BRControllerStack.h>
+#import <BRDisplayManager.h>
+#import <BREvent.h>
+#import <BRRenderScene.h>
+#import <BRSentinel.h>
+#import <BRSettingsFacade.h>
 
 #import <Carbon/Carbon.h>
 
@@ -88,7 +88,7 @@
     NSString* primary = @"Video Could Not Be Loaded";
     NSString* secondary = @"Please ensure that you are logged into your Netfli"\
     "x account in Safari, and that you have not reached your viewing limit.";
-    BRAlertController* alert = [BRAlertController alertOfType:kBRAlertTypeError
+    BRAlertController* alert = [BRAlertController alertOfType:3
                                                        titled:title
                                                   primaryText:primary
                                                 secondaryText:secondary];

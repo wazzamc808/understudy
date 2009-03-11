@@ -20,8 +20,9 @@
 #import "RenameDialog.h"
 #import "UNDPreferenceManager.h"
 
-#import <BackRow/BRControllerStack.h>
-#import <BackRow/BRTextMenuItemLayer.h>
+#import <BRControllerStack.h>
+#import <BRListControl.h>
+#import <BRTextMenuItemLayer.h>
 
 @implementation ManageFeedsDialog
 
@@ -144,7 +145,7 @@ typedef enum ManageOptionEnum ManageOption;
   return (row == 0 || [[UNDPreferenceManager sharedInstance] feedCount] > 0); 
 }
 
-- (NSString*)titleForRow:(long)row
+- (id)titleForRow:(long)row
 { 
   ManageOption option = (ManageOption)row;
   switch (option) {
@@ -157,7 +158,7 @@ typedef enum ManageOptionEnum ManageOption;
   return @"";
 }
 
-- (BRLayer<BRMenuItemLayer>*)itemForRow:(long)row
+- (id)itemForRow:(long)row
 {
   BRTextMenuItemLayer* item = [BRTextMenuItemLayer menuItem];
   [item setTitle:[self titleForRow:row]];

@@ -18,7 +18,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import <BackRow/BROptionDialog.h>
+#import <BROptionDialog.h>
 
 #import "HuluAddDialog.h"
 #import "NetflixAddDialog.h"

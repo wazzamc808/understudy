@@ -16,11 +16,12 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
+#import "BRControllerStack.h"
+#import "BRTextContainer-Protocol.h"
 #import "MainMenuController.h"
 #import "RenameDialog.h"
 #import "UNDPreferenceManager.h"
 
-#import <BackRow/BRControllerStack.h>
 
 @implementation RenameDialog
 
@@ -40,15 +41,15 @@
 - (void)itemSelected
 {
   BRTextEntryController* entry = [BRTextEntryController alloc];
-  [entry initWithTextEntryStyle:kFullKeyboardTextEntryStyle];
+  [entry initWithTextEntryStyle:0];
   [entry setTextEntryCompleteDelegate:self];
   [entry setTitle:@"New Name"];
   [[self stack] pushController:entry];
 }
 
-- (void)textDidChange:(id<BRTextContainer>)container{ }
+- (void)textDidChange:(id)container{ }
 
-- (void)textDidEndEditing:(id<BRTextContainer>)container
+- (void)textDidEndEditing:(id)container
 {
   NSString* newname = [container stringValue];
   UNDPreferenceManager* pref = [UNDPreferenceManager sharedInstance];
