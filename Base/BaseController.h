@@ -20,7 +20,7 @@
 #import <WebKit/WebKit.h>
 #import <IOKit/pwr_mgt/IOPMLib.h>
 
-#import <BackRow/BRTextWithSpinnerController.h>
+#import "BRTextWithSpinnerController.h"
 
 @interface BaseController : BRTextWithSpinnerController {
  @private

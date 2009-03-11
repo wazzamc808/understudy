@@ -18,7 +18,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import <BackRow/BRSingleton.h>
+#import <BRSingleton.h>
 
 @protocol UNDPreferenceSubscriber
 - (void)preferencesDidChange;

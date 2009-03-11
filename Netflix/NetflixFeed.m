@@ -20,9 +20,9 @@
 #import "NetflixAsset.h"
 #import "NetflixController.h"
 
-#import <BackRow/BRControllerStack.h>
-#import <BackRow/BRComboMenuItemLayer.h>
-#import <BackRow/BRTextMenuItemLayer.h>
+#import <BRControllerStack.h>
+#import <BRComboMenuItemLayer.h>
+#import <BRTextMenuItemLayer.h>
 
 #import <Foundation/NSXMLDocument.h>
 

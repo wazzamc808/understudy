@@ -18,7 +18,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import <BackRow/BROptionDialog.h>
+#import <BROptionDialog.h>
 
 @interface NetflixAddDialog : BROptionDialog {
   // the contents of Netflix's RSS feed listing

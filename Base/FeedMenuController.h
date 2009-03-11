@@ -17,8 +17,9 @@
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
 #import <Cocoa/Cocoa.h>
-#import <BackRow/BRMediaMenuController.h>
-#import <UnderstudyAsset.h>
+#import "BRMediaMenuController.h"
+#import "BRMenuListItemProvider-Protocol.h"
+#import "UnderstudyAsset.h"
 
 @class BRTextMenuItemLayer;
 

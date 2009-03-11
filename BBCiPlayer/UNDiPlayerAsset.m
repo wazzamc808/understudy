@@ -20,8 +20,9 @@
 #import "UNDiPlayerController.h"
 #import "UNDNSXMLElement+Parsing.h"
 
-#import <BackRow/BRImageManager.h>
-#import <BackRow/BRTextMenuItemLayer.h>
+#import <BRImage.h>
+#import <BRImageManager.h>
+#import <BRTextMenuItemLayer.h>
 
 @implementation UNDiPlayerAsset
 

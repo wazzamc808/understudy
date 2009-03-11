@@ -17,7 +17,7 @@
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
 #import "BaseUnderstudyAsset.h"
-#import <BackRow/BRMediaPreviewControllerFactory.h>
+#import <BRMediaPreviewControllerFactory.h>
 
 @implementation BaseUnderstudyAsset
 
@@ -39,7 +39,7 @@
 }
 
 #pragma mark BRMediaPreviewFactoryDelegate
-- (BRMediaType*)mediaPreviewMissingMediaType{ return nil; }
+- (id)mediaPreviewMissingMediaType{ return nil; }
 - (BOOL)mediaPreviewShouldShowMetadata{ return YES; }
 - (BOOL)mediaPreviewShouldShowMetadataImmediately{ return YES; }
 

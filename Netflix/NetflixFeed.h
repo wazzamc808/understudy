@@ -18,7 +18,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import <BackRow/BRMediaMenuController.h>
+#import <BRMediaMenuController.h>
 
 #import "BaseUnderstudyAsset.h"
 #import "FeedMenuController.h"

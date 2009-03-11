@@ -32,7 +32,7 @@
 
 - (NSString*)version
 {
-  return kFrontRowCurrentApplianceProtocolVersion;
+  return @"1.0"; // kFrontRowCurrentApplianceProtocolVersion
 }
 
 @end

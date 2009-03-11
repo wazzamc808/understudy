@@ -17,7 +17,7 @@
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
 #import <Cocoa/Cocoa.h>
-#import <BackRow/BRBaseMediaAsset.h>
+#import <BRBaseMediaAsset.h>
 #import "UnderstudyAsset.h"
 #import "BaseUnderstudyAsset.h"
 

@@ -19,19 +19,27 @@
 #import "BaseController.h"
 #import "UNDPreferenceManager.h"
 
-#import <BackRow/BRControllerStack.h>
-#import <BackRow/BRDisplayManager.h>
-#import <BackRow/BREvent.h>
-#import <BackRow/BRSentinel.h>
-#import <BackRow/BRSettingsFacade.h>
+#import <BRControllerStack.h>
+#import <BRDisplayManager.h>
+#import <BREvent.h>
+#import <BRRenderer.h>
+#import <BRSentinel.h>
+#import <BRSettingsFacade.h>
 
 #import <Carbon/Carbon.h>
+typedef enum
+  {
+    MenuButton = 1,
+    UpButton,
+    DownButton,
+    PlayPauseButton,
+    LeftButton,
+    RightButton
+  } ButtonValues;
 
-@interface BRRenderer{}
-- (void)orderIn;
-- (void)orderOut;
+@protocol BRRendererProvider
+- (BRRenderer*)renderer;
 @end
-
 
 @implementation BaseController
 
@@ -191,22 +199,22 @@
 {
   BRSettingsFacade* settings;
   switch ([event remoteAction]) {
-    case kBRRemotePlayPauseSelectButton:
+    case PlayPauseButton:
       [self playPause];
       return YES;
       break;
-    case kBRRemoteUpButton:
+    case UpButton:
       settings = [BRSettingsFacade sharedInstance];
       [settings setSystemVolume:([settings systemVolume]+0.05)];
       return YES;
-    case kBRRemoteDownButton:
+    case DownButton:
       settings = [BRSettingsFacade sharedInstance];
       [settings setSystemVolume:([settings systemVolume]-0.05)];
       return YES;
-    case kBRRemoteRightButton:
+    case RightButton:
       [self fastForward];
       return YES;
-    case kBRRemoteLeftButton:
+    case LeftButton:
       [self rewind];
       return YES;
     default:

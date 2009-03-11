@@ -18,8 +18,8 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import <BackRow/BRController.h>
-#import <BackRow/BRMenuItemLayer.h>
+#import "BRController.h"
+#import "BRMenuItemLayer-Protocol.h"
 
 #import "BaseController.h"
 

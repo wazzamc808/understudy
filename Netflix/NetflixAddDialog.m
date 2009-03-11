@@ -19,7 +19,7 @@
 #import "MainMenuController.h"
 #import "NetflixAddDialog.h"
 
-#import <BackRow/BRControllerStack.h>
+#import <BRControllerStack.h>
 
 @interface NetflixAddDialog (PrivateMethods)
 - (void)_startAutoDiscovery;

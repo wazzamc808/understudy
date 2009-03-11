@@ -18,7 +18,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import <BackRow/BRURLDocumentManager.h>
+#import "BRURLDocument.h"
 
 @interface HuluFeedDiscoverer : BRURLDocument {
  @private

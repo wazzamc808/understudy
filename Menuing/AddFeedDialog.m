@@ -19,8 +19,8 @@
 #import "AddFeedDialog.h"
 #import "MainMenuController.h"
 
-#import <BackRow/BRAlertController.h>
-#import <BackRow/BRControllerStack.h>
+#import <BRAlertController.h>
+#import <BRControllerStack.h>
 
 #import <AppKit/NSPasteboard.h>
 
@@ -60,7 +60,7 @@
 - (void)_presentInvalidURLAlert
 {
   BRController* alert;
-  alert = [[BRAlertController alertOfType:kBRAlertTypeError
+  alert = [[BRAlertController alertOfType:3
                                    titled:@"Error" 
                               primaryText:@"Not a URL"
                             secondaryText:@"The clipboard contents do not app"\
@@ -71,7 +71,7 @@
 - (void)_presentInvalidHostAlert
 {
   BRController* alert;
-  alert = [[BRAlertController alertOfType:kBRAlertTypeError
+  alert = [[BRAlertController alertOfType:3 //kBRAlertTypeError
                                    titled:@"Error" 
                               primaryText:@"Invalid Host"
                             secondaryText:@"The URL stored on the clipboard d"\
@@ -82,7 +82,7 @@
 - (void)_presentInvalidFeedAlert
 {
   BRController* alert;
-  alert = [[BRAlertController alertOfType:kBRAlertTypeError
+  alert = [[BRAlertController alertOfType:3
                                    titled:@"Error"
                               primaryText:@"Invalid Feed"
                             secondaryText:@"The URL does not appear to refer to"\

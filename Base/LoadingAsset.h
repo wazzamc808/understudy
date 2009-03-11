@@ -18,7 +18,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import <BackRow/BRTextMenuItemLayer.h>
+#import <BRTextMenuItemLayer.h>
 
 #import "UnderstudyAsset.h"
 

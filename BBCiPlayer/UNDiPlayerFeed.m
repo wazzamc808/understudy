@@ -19,7 +19,7 @@
 #import "UNDiPlayerFeed.h"
 #import "UNDiPlayerAsset.h"
 
-#import <BackRow/BRTextMenuItemLayer.h>
+#import <BRTextMenuItemLayer.h>
 
 @implementation UNDiPlayerFeed
 - (id)initWithTitle:(NSString*)title forUrl:(NSURL*)url

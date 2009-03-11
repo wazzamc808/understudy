@@ -19,7 +19,7 @@
 #import "YouTubeFeed.h"
 #import "YouTubeAsset.h"
 
-#import <BackRow/BRTextMenuItemLayer.h>
+#import <BRTextMenuItemLayer.h>
 
 // YT feeds for a user (all should include ?client=ytapi-youtube-user&v=2)
 // gdata.youtube.com/feeds/base/users/<username>

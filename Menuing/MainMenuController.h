@@ -18,8 +18,10 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import <BackRow/BRMediaMenuController.h>
-#import <BackRow/BROptionDialog.h>
+#import <BRMenuListItemProvider-Protocol.h>
+#import <BRMediaMenuController.h>
+#import <BRMenuController-HeaderConvienceMethods.h>
+#import <BROptionDialog.h>
 
 #import "AddFeedDialog.h"
 #import "UNDPreferenceManager.h"

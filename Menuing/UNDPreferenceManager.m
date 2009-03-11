@@ -23,7 +23,7 @@
 #import "UNDPreferenceManager.h"
 #import "UnderstudyAppliance.h"
 
-#import <BackRow/RUIPreferences.h>
+#import <RUIPreferences.h>
 
 #define DEFAULTS_DOMAIN @"com.apple.frontrow.appliance.understudy"
 

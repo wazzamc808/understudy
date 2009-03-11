@@ -21,8 +21,8 @@
 #import "HuluFeedDiscoverer.h"
 #import "HuluController.h"
 
-#import <BackRow/BRImage.h>
-#import <BackRow/RUIPreferences.h>
+#import <BRImage.h>
+#import <RUIPreferences.h>
 
 #import <CoreFoundation/CFXMLNode.h>
 
