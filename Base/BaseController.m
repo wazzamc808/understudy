@@ -67,8 +67,9 @@ typedef enum
   BRSentinel* sentinel = [BRSentinel sharedInstance];
   id<BRRendererProvider> provider = [sentinel rendererProvider];
   BRRenderer* renderer = [provider renderer];
-  [self captureDisplays];
   [renderer orderOut];
+  if( ![[UNDPreferenceManager sharedInstance] debugMode] )
+    [self captureDisplays];
   // indicate that we don't want the display to go to sleep
   IOReturn err = IOPMAssertionCreate (
                                       kIOPMAssertionTypeNoDisplaySleep,
