@@ -30,6 +30,7 @@
 @implementation UNDPreferenceManager
 @synthesize huluFSAlerted = huluFSAlerted_;
 @synthesize alertsDisabled = alertsDisabled_;
+@synthesize debugMode = debugMode_;
 
 - (id)init
 {
@@ -138,6 +139,7 @@ static UNDPreferenceManager *sharedInstance_;
   if( !titles_ ) titles_ = [[NSMutableArray alloc] init];
   
   alertsDisabled_ = ( [prefDict objectForKey:@"disableAlerts"] != nil);
+  debugMode_ = ( [prefDict objectForKey:@"debugMode"] != nil);
 }
 
 - (void)save
@@ -148,6 +150,8 @@ static UNDPreferenceManager *sharedInstance_;
   [prefs setObject:feeds_ forKey:@"feeds"];
   if( alertsDisabled_ ) 
     [prefs setObject:[NSNumber numberWithBool:YES] forKey:@"disableAlerts"];
+  if( debugMode_ ) 
+    [prefs setObject:[NSNumber numberWithBool:YES] forKey:@"debugMode"];
   [defaults setPersistentDomain:prefs forName:DEFAULTS_DOMAIN];
 }
 

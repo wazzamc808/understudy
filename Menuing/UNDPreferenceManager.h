@@ -34,11 +34,13 @@
 
   BOOL huluFSAlerted_;
   BOOL alertsDisabled_;
+  BOOL debugMode_;
   NSMutableSet* subscribers_;
 }
 
 @property(nonatomic) BOOL huluFSAlerted;
 @property(nonatomic) BOOL alertsDisabled;
+@property(nonatomic) BOOL debugMode;
 
 + (UNDPreferenceManager*)sharedInstance;
 + (NSScreen*)screen;

@@ -22,10 +22,9 @@
 #import <BRControllerStack.h>
 #import <BRDisplayManager.h>
 #import <BREvent.h>
-#import <BRRenderScene.h>
+#import <BRRenderer.h>
 #import <BRSentinel.h>
 #import <BRSettingsFacade.h>
-#import <BRWaitSpinnerControl.h>
 
 #import <Carbon/Carbon.h>
 typedef enum
@@ -37,16 +36,6 @@ typedef enum
     LeftButton,
     RightButton
   } ButtonValues;
-
-@interface BRAppManager : NSObject { }
-+ (BRAppManager*)sharedApplication;
-- (id)delegate;
-@end
-
-@interface BRRenderer{}
-- (void)orderIn;
-- (void)orderOut;
-@end
 
 @protocol BRRendererProvider
 - (BRRenderer*)renderer;
@@ -61,12 +50,26 @@ typedef enum
 }
 
 #pragma mark Transitioning Into/Out of FR
+- (void)captureDisplays
+{
+  NSNumber *displayID, *mainID;
+  NSScreen* mainScreen = [UNDPreferenceManager screen];
+  mainID = [[mainScreen deviceDescription] objectForKey:@"NSScreenNumber"];
+  for( NSScreen* screen in [NSScreen screens] ){
+    displayID = [[screen deviceDescription] objectForKey:@"NSScreenNumber"];
+    if( [displayID compare:mainID] != NSOrderedSame )
+      CGDisplayCapture( [displayID intValue]);
+  }
+}
+
 - (void)reveal
 {
   BRSentinel* sentinel = [BRSentinel sharedInstance];
   id<BRRendererProvider> provider = [sentinel rendererProvider];
   BRRenderer* renderer = [provider renderer];
   [renderer orderOut];
+  if( ![[UNDPreferenceManager sharedInstance] debugMode] )
+    [self captureDisplays];
   // indicate that we don't want the display to go to sleep
   IOReturn err = IOPMAssertionCreate (
                                       kIOPMAssertionTypeNoDisplaySleep,
@@ -77,6 +80,7 @@ typedef enum
 
 - (void)returnToFR
 {
+  CGReleaseAllDisplays();
   BRSentinel* sentinel = [BRSentinel sharedInstance];
   id<BRRendererProvider> provider = [sentinel rendererProvider];
   BRRenderer* renderer = [provider renderer];
