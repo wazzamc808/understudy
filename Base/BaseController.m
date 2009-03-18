@@ -49,6 +49,13 @@ typedef enum
   return self;
 }
 
+// indicate that there has been user activity in order to preven display sleep
+- (void)preventSleep
+{
+  UpdateSystemActivity(UsrActivity);
+  [self performSelector:@selector(preventSleep) withObject:nil afterDelay:30];
+}
+
 #pragma mark Transitioning Into/Out of FR
 - (void)captureDisplays
 {
@@ -70,17 +77,14 @@ typedef enum
   [renderer orderOut];
   if( ![[UNDPreferenceManager sharedInstance] debugMode] )
     [self captureDisplays];
-  // indicate that we don't want the display to go to sleep
-  IOReturn err = IOPMAssertionCreate (
-                                      kIOPMAssertionTypeNoDisplaySleep,
-                                      kIOPMAssertionLevelOn,
-                                      &pmAssertion_);
-  if( err ) NSLog(@"Error deactivating display sleep: 0x%02X",err);
+  [self preventSleep];
 }
 
 - (void)returnToFR
 {
   CGReleaseAllDisplays();
+  // cancel any outstanding calls to [self preventSleep]
+  [NSObject cancelPreviousPerformRequestsWithTarget:self];
   BRSentinel* sentinel = [BRSentinel sharedInstance];
   id<BRRendererProvider> provider = [sentinel rendererProvider];
   BRRenderer* renderer = [provider renderer];
@@ -91,8 +95,6 @@ typedef enum
     [pluginView_ exitFullScreenModeWithOptions:nil];
   [mainView_ close];
   [menushield_ close];
-  IOReturn err = IOPMAssertionRelease(pmAssertion_);
-  if( err ) NSLog(@"Error removing display sleep restriction: 0x%02X",err);
 }
 
 #pragma mark Subviews
