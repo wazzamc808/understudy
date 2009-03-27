@@ -85,11 +85,8 @@
   [[windows retain] autorelease];
   if( [windows count] <= expectedWindows ) return NO;
   
-  // loop over all of the windows (with luck there will just be two)
   for ( NSWindow* window in windows )
   {
-    // when we find something other than the original window, force disply
-    // (the flash fullscreen window tends to initially be blank)
     if( window != window_ && window != [selector_ window])
     {
       fsWindow_ = [window retain];
@@ -110,7 +107,6 @@
   [self sendPluginKeyCode:53 withCharCode:27];
 }
 
-
 // <WebFrameLoadDelegate> callback once the video loads
 - (void)webView:(WebView*)view didFinishLoadForFrame:(WebFrame*)frame
 {
@@ -124,9 +120,15 @@
   // down from the top. we get the plugin's location and flip it relative to
   // the main view, then take out the height of the plugin
   if( [self hasPluginView] ){
-    NSPoint origin = [pluginView_ frame].origin;
+    NSPoint origin;
+    origin = [pluginView_ frame].origin;
     origin.y = [mainView_ frame].size.height - origin.y;
     origin.y -= [pluginView_ frame].size.height;
+
+    NSPoint screenOrigin = [[UNDPreferenceManager screen] frame].origin;
+    origin.x += screenOrigin.x;
+    origin.y += screenOrigin.y;    
+    
     selector_ = [[UNDHuluSelector alloc] initWithOrigin:origin];
     [selector_ show];
   }
