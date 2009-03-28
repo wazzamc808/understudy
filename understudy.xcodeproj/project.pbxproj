@@ -25,6 +25,7 @@
 		DF37B9120F5AF1F70017766F /* UNDiPlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF37B9110F5AF1F70017766F /* UNDiPlayerController.m */; };
 		DF37BA350F5B5DA70017766F /* UNDHuluSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = DF37BA340F5B5DA70017766F /* UNDHuluSelector.m */; };
 		DF3D0F640F54CA3E0089CF2B /* LoadingAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = DF3D0F630F54CA3E0089CF2B /* LoadingAsset.m */; };
+		DF50285E0F7D86A200B04C78 /* UNDYouTubeAddDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = DF50285D0F7D86A200B04C78 /* UNDYouTubeAddDialog.m */; };
 		DF5A22210F0FC18200F5F19F /* YouTubeAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = DF5A22200F0FC18200F5F19F /* YouTubeAsset.m */; };
 		DF5A22250F0FD6B400F5F19F /* YouTubeFeed.m in Sources */ = {isa = PBXBuildFile; fileRef = DF5A22240F0FD6B400F5F19F /* YouTubeFeed.m */; };
 		DF5A223C0F100E4300F5F19F /* FeedMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF5A22390F100E4300F5F19F /* FeedMenuController.m */; };
@@ -82,6 +83,8 @@
 		DF37BA340F5B5DA70017766F /* UNDHuluSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UNDHuluSelector.m; sourceTree = "<group>"; };
 		DF3D0F620F54CA3E0089CF2B /* LoadingAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingAsset.h; sourceTree = "<group>"; };
 		DF3D0F630F54CA3E0089CF2B /* LoadingAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadingAsset.m; sourceTree = "<group>"; };
+		DF50285C0F7D86A200B04C78 /* UNDYouTubeAddDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UNDYouTubeAddDialog.h; sourceTree = "<group>"; };
+		DF50285D0F7D86A200B04C78 /* UNDYouTubeAddDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UNDYouTubeAddDialog.m; sourceTree = "<group>"; };
 		DF5A221F0F0FC18200F5F19F /* YouTubeAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YouTubeAsset.h; sourceTree = "<group>"; };
 		DF5A22200F0FC18200F5F19F /* YouTubeAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YouTubeAsset.m; sourceTree = "<group>"; };
 		DF5A22230F0FD6B400F5F19F /* YouTubeFeed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YouTubeFeed.h; sourceTree = "<group>"; };
@@ -261,6 +264,8 @@
 				DFA512350F1A92F300FC903B /* YouTubeController.m */,
 				DF5A22230F0FD6B400F5F19F /* YouTubeFeed.h */,
 				DF5A22240F0FD6B400F5F19F /* YouTubeFeed.m */,
+				DF50285C0F7D86A200B04C78 /* UNDYouTubeAddDialog.h */,
+				DF50285D0F7D86A200B04C78 /* UNDYouTubeAddDialog.m */,
 			);
 			path = YouTube;
 			sourceTree = "<group>";
@@ -399,6 +404,7 @@
 				DF37B8CF0F5AE0940017766F /* UNDNSXMLElement+Parsing.m in Sources */,
 				DF37B9120F5AF1F70017766F /* UNDiPlayerController.m in Sources */,
 				DF37BA350F5B5DA70017766F /* UNDHuluSelector.m in Sources */,
+				DF50285E0F7D86A200B04C78 /* UNDYouTubeAddDialog.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

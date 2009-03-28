@@ -32,6 +32,7 @@
   [self setTitle:@"Add Feed"];
   [self addOptionText:@"Hulu"];
   [self addOptionText:@"Netflix"];
+  [self addOptionText:@"YouTube"];
   [self addOptionText:@"URL in Clipboard"];
   [self setActionSelector:@selector(itemSelected) target:self];  
   return self;
@@ -155,7 +156,11 @@
       if( !netflix_ ) netflix_ = [[NetflixAddDialog alloc] init];
       [[self stack] pushController:netflix_];
       break;
-    case 2: // pasteboard
+    case 2: // YouTube
+      if( !youtube_ ) youtube_ = [[UNDYouTubeAddDialog alloc] init];
+      [[self stack] pushController:youtube_];
+      break;
+    case 3: // pasteboard
       [self _loadFeedFromPasteboard];
       break;
     default:
