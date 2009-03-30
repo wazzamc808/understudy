@@ -1,5 +1,5 @@
 //
-//  Copyright 2008 Kirk Kelsey.
+//  Copyright 2009 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -17,19 +17,15 @@
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
 #import <Cocoa/Cocoa.h>
+#import <BRMenuListItemProvider-Protocol.h>
+#import <BRCenteredMenuController.h>
 
-#import <BROptionDialog.h>
-
-#import "HuluAddDialog.h"
-#import "NetflixAddDialog.h"
-#import "UNDYouTubeAddDialog.h"
-
-@interface AddFeedDialog : BROptionDialog {
- @private 
-  NSURL* pbURL_; // url in the users pastboard
-  HuluAddDialog* hulu_;
-  NetflixAddDialog* netflix_;
-  UNDYouTubeAddDialog* youtube_;
+@interface UNDYouTubeAddDialog : BRCenteredMenuController 
+<BRMenuListItemProvider> {
+  NSString* profile_;
+  NSMutableArray* titles_;
+  NSMutableArray* feeds_;
+  BOOL searching_;
 }
 
 @end

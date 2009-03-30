@@ -32,6 +32,7 @@
   [self setTitle:@"Add Feed"];
   [self addOptionText:@"Hulu"];
   [self addOptionText:@"Netflix"];
+  [self addOptionText:@"YouTube"];
   [self addOptionText:@"URL in Clipboard"];
   [self setActionSelector:@selector(itemSelected) target:self];  
   return self;
@@ -85,8 +86,8 @@
   alert = [[BRAlertController alertOfType:3
                                    titled:@"Error"
                               primaryText:@"Invalid Feed"
-                            secondaryText:@"The URL does not appear to refer to"\
-            " a valid feed."] retain];
+                            secondaryText:@"The URL does not appear to refer t"\
+            "o a valid feed."] retain];
   [[self stack] swapController:[alert autorelease]];
 }
 
@@ -96,11 +97,17 @@
 {
   NSPasteboard* pasteboard = [NSPasteboard generalPasteboard];
   NSString* copied = [pasteboard stringForType:@"NSStringPboardType"];
+  // NSURL expects a full feed including protocol, but doesn't accept some of
+  // the protocols (like feed:// which safari likes)
+  if( [copied hasPrefix:@"feed://"] )
+    copied = [copied stringByReplacingOccurrencesOfString:@"feed://"
+                                               withString:@"http://"];
+
   NSURL* url = [NSURL URLWithString:copied];
   NSString* host = [[url host] lowercaseString];
   if( !host )
     [self _presentInvalidURLAlert];
-  
+
   else if( ![self _validateFeed:url] )
     [self _presentInvalidHostAlert];
   
@@ -149,7 +156,11 @@
       if( !netflix_ ) netflix_ = [[NetflixAddDialog alloc] init];
       [[self stack] pushController:netflix_];
       break;
-    case 2: // pasteboard
+    case 2: // YouTube
+      if( !youtube_ ) youtube_ = [[UNDYouTubeAddDialog alloc] init];
+      [[self stack] pushController:youtube_];
+      break;
+    case 3: // pasteboard
       [self _loadFeedFromPasteboard];
       break;
     default:

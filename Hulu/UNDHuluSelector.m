@@ -35,6 +35,7 @@
     return nil;
   }
   
+  // the 0 position always represents a hidden state
   positions_[0] = NSMakePoint(-MARK_WIDTH,-MARK_HEIGHT);
   positions_[1] = NSMakePoint(origin.x + 750,origin.y + 325);
   positions_[2] = NSMakePoint(origin.x + 750,origin.y + 250);
@@ -69,9 +70,14 @@
   point.x = positions_[currentPos_].x - MARK_WIDTH/2;
   point.y = positions_[currentPos_].y - MARK_HEIGHT/2;
   [window_ setFrameOrigin:point];
-  [window_ display];
-  [window_ setLevel:NSScreenSaverWindowLevel];
-  [window_ orderFrontRegardless];
+  if( [self locationIsValid] ){
+    [window_ display];
+    [window_ setLevel:NSScreenSaverWindowLevel];
+    [window_ orderFrontRegardless];
+  }else{
+    [window_ setLevel:kCGMinimumWindowLevel];
+    [window_ orderBack:self];
+  }
 }
 
 - (void)hide
