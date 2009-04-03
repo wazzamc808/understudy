@@ -97,6 +97,14 @@ static UNDPreferenceManager *sharedInstance_;
   return [NSScreen mainScreen];
 }
 
++ (NSString*)accountForService:(NSString*)service
+{
+  NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+  NSDictionary* prefDict = [defaults persistentDomainForName:DEFAULTS_DOMAIN];
+  NSDictionary* accounts = [prefDict objectForKey:@"accounts"];
+  return [accounts objectForKey:service];
+}
+
 + (BOOL)alertsAreDisabled
 {
   return  [[UNDPreferenceManager sharedInstance] alertsDisabled];
@@ -145,13 +153,18 @@ static UNDPreferenceManager *sharedInstance_;
 - (void)save
 {
   NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
-  NSMutableDictionary* prefs = [NSMutableDictionary dictionary];
+  NSDictionary* prefDict = [defaults persistentDomainForName:DEFAULTS_DOMAIN];
+  NSMutableDictionary* prefs;
+  if( prefDict )
+    prefs = [prefDict mutableCopy];
+  else
+    prefs = [NSMutableDictionary dictionary];
+  [[prefs retain] autorelease];
+
+  // the only preferences that are modifiable through the user interface are the
+  // feeds and their titles, so only those need to be updated
   [prefs setObject:titles_ forKey:@"titles"];
   [prefs setObject:feeds_ forKey:@"feeds"];
-  if( alertsDisabled_ ) 
-    [prefs setObject:[NSNumber numberWithBool:YES] forKey:@"disableAlerts"];
-  if( debugMode_ ) 
-    [prefs setObject:[NSNumber numberWithBool:YES] forKey:@"debugMode"];
   [defaults setPersistentDomain:prefs forName:DEFAULTS_DOMAIN];
 }
 
