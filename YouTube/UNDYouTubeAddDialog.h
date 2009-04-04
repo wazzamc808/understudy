@@ -22,10 +22,8 @@
 
 @interface UNDYouTubeAddDialog : BRCenteredMenuController 
 <BRMenuListItemProvider> {
-  NSString* profile_;
   NSMutableArray* titles_;
   NSMutableArray* feeds_;
-  BOOL searching_;
 }
 
 @end

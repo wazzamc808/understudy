@@ -58,7 +58,6 @@
 {
   [titles_ release];
   [feeds_ release];
-  [profile_ release];
   [super dealloc];
 }
 
@@ -75,9 +74,9 @@
 
 # pragma mark BRMenuListItemProvider
 
-- (long)itemCount{ return [feeds_ count] + (searching_ ? 1 : 0) ; }
+- (long)itemCount{ return [feeds_ count]; }
 - (float)heightForRow:(long)row{ return 0; }
-- (BOOL)rowSelectable:(long)row{ return !(row == 0 && searching_); }
+- (BOOL)rowSelectable:(long)row{ return YES; }
 - (id)titleForRow:(long)row{ return [titles_ objectAtIndex:row]; }
 
 - (id)itemForRow:(long)row
