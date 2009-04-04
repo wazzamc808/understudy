@@ -74,19 +74,27 @@
 
 - (BOOL)signIn
 {
+  static int tried = false;
+  if( tried ) return NO;
+  tried = true;
+  
   WebScriptObject* script = [mainView_ windowScriptObject];
   NSString *setUser, *setPass, *submit;
   NSString* user = [UNDPreferenceManager accountForService:@"www.netflix.com"];
+  [[user retain] autorelease];
   NSString* pass = [UNDPasswordProvider passwordForService:@"www.netflix.com"
                                                    account:user];
+  [[pass retain] autorelease];
+
   if( !user || !pass ) return NO;
+  
   setUser = @"document.getElementsByName('email').item(0).value = '%@'";
   setPass = @"document.getElementsByName('password1').item(0).value = '%@'";
   submit = @"document.getElementsByName('login_form').item(0).submit()";
   setUser = [NSString stringWithFormat:setUser,user];
   setPass = [NSString stringWithFormat:setPass,pass];
   [script evaluateWebScript:setUser];
-  [script evaluateWebScript:setPass];
+  [script evaluateWebScript:setPass]; 
   [script evaluateWebScript:submit];
   return YES;
 }
@@ -97,7 +105,7 @@
   if( frame != [view mainFrame] ) return;
   
   [window_ display];
-
+  
   // if there isn't a plugin, perhaps we need to signin
   if( ![self hasPluginView] )
   {
@@ -116,10 +124,11 @@
       return;
     }
   }
+
   [window_ display];
   [window_ orderFrontRegardless];
   [window_ setLevel:NSScreenSaverWindowLevel];
-  [self reveal];    
+  [self reveal];      
 }
 
 - (void)fullscreen

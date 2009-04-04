@@ -35,8 +35,7 @@
   OSStatus res;
   UInt32 pwdLen;
   void *pwd;
-  
-  NSLog(@"looking up password for %@ (%@)",service,account);
+  NSString* password;
   
   const char* acnt;
   if( !account ) acnt = nil;
@@ -63,7 +62,6 @@
   // if we fail to get the information, try again but allow user interaction
   if( res )
   {
-    NSLog(@"failed on initial try");
     res = SecKeychainSetUserInteractionAllowed(YES);
     // order out the scene (i.e. stop showing Front Row)
     BRSentinel* sentinel = [BRSentinel sharedInstance];
@@ -81,12 +79,11 @@
                                              kSecAuthenticationTypeHTMLForm,
                                              &pwdLen,&pwd,NULL);
     [renderer orderIn];
-  }else{
-    NSLog(@"got it on the first try");
   }
-  NSLog(@"result: %d",res);
-  if( res ) return nil;
-  else return [NSString stringWithCString:pwd];
+  password = [NSString stringWithCharacters:pwd length:pwdLen];
+  SecKeychainItemFreeContent (NULL,pwd);
+  
+  return [password substringToIndex:pwdLen];
 }
 
 @end

@@ -114,11 +114,8 @@
   WebScriptObject* script = [mainView_ windowScriptObject];
   // check for the presence of a $("login") element
   id result = [script evaluateWebScript:@"document.getElementById('login')"];
-  if( result == [WebUndefined undefined] ){
-    NSLog(@"no login element");
-    return;
-  }
-  
+  if( result == [WebUndefined undefined] ) return;
+
   // if it is there, try to login
   NSString* user = [UNDPreferenceManager accountForService:@"www.hulu.com"];
   NSString* pass = [UNDPasswordProvider passwordForService:@"www.hulu.com"
@@ -126,8 +123,6 @@
   NSString* setPass = @"document.getElementById('password').value='%@'";
   NSString* setUser = @"document.getElementById('login').value='%@'";
   NSString* submit = @"document.getElementById('login').parentNode.onsubmit()";
-  if( !user ) NSLog(@"no account");
-  if( !pass ) NSLog(@"no password");
   if( !pass || !user ) return;
   setPass = [NSString stringWithFormat:setPass,pass];
   setUser = [NSString stringWithFormat:setUser,user];
