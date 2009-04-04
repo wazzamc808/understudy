@@ -24,6 +24,6 @@
 
 }
 
-+ (NSString*)passwordForService:(NSString*)service;
++ (NSString*)passwordForService:(NSString*)service account:(NSString*)account;
 
 @end
