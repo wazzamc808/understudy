@@ -16,14 +16,14 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
-#import <Cocoa/Cocoa.h>
-#import <BRMenuListItemProvider-Protocol.h>
-#import <BRCenteredMenuController.h>
 
-@interface UNDYouTubeAddDialog : BRCenteredMenuController 
-<BRMenuListItemProvider> {
-  NSMutableArray* titles_;
-  NSMutableArray* feeds_;
+#import <Cocoa/Cocoa.h>
+
+
+@interface UNDPasswordProvider : NSObject {
+
 }
+
++ (NSString*)passwordForService:(NSString*)service account:(NSString*)account;
 
 @end

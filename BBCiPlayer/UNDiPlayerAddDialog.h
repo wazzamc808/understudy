@@ -20,8 +20,9 @@
 #import <BRMenuListItemProvider-Protocol.h>
 #import <BRCenteredMenuController.h>
 
-@interface UNDYouTubeAddDialog : BRCenteredMenuController 
-<BRMenuListItemProvider> {
+@interface UNDiPlayerAddDialog : BRCenteredMenuController 
+<BRMenuListItemProvider> 
+{
   NSMutableArray* titles_;
   NSMutableArray* feeds_;
 }

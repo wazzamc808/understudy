@@ -11,6 +11,7 @@
 		918B27B10D7CFB2100D87AC2 /* UnderstudyAppliance.m in Sources */ = {isa = PBXBuildFile; fileRef = 918B27B00D7CFB2100D87AC2 /* UnderstudyAppliance.m */; };
 		DF00C4620F22CF8F003A5122 /* ExceptionHandling.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF00C4610F22CF8F003A5122 /* ExceptionHandling.framework */; };
 		DF0C59430EA9030E00E0D882 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF0C59420EA9030E00E0D882 /* QuartzCore.framework */; };
+		DF0DA2000F817BCE004AF3C3 /* UNDiPlayerAddDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = DF0DA1FF0F817BCE004AF3C3 /* UNDiPlayerAddDialog.m */; };
 		DF0EDFCD0EE5E187008FA08A /* English.lproj in Resources */ = {isa = PBXBuildFile; fileRef = DF0EDFCA0EE5E187008FA08A /* English.lproj */; };
 		DF2EB1960F574D5200D650B7 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF2EB1950F574D5200D650B7 /* IOKit.framework */; };
 		DF2EB2110F577F0C00D650B7 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF2EB2100F577F0C00D650B7 /* Carbon.framework */; };
@@ -30,6 +31,8 @@
 		DF5A22250F0FD6B400F5F19F /* YouTubeFeed.m in Sources */ = {isa = PBXBuildFile; fileRef = DF5A22240F0FD6B400F5F19F /* YouTubeFeed.m */; };
 		DF5A223C0F100E4300F5F19F /* FeedMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF5A22390F100E4300F5F19F /* FeedMenuController.m */; };
 		DF5A23940F11240400F5F19F /* BaseController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF5A23930F11240400F5F19F /* BaseController.m */; };
+		DF7D07680F86A0BE0014A0FB /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF7D07670F86A0BD0014A0FB /* Security.framework */; };
+		DF7D07740F86A67B0014A0FB /* UNDPasswordProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = DF7D07730F86A67B0014A0FB /* UNDPasswordProvider.m */; };
 		DF7D970C0F08647400C9B7FB /* HuluAddDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = DF7D97050F08647400C9B7FB /* HuluAddDialog.m */; };
 		DF7D970D0F08647400C9B7FB /* HuluAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = DF7D97070F08647400C9B7FB /* HuluAsset.m */; };
 		DF7D970F0F08647400C9B7FB /* HuluFeed.m in Sources */ = {isa = PBXBuildFile; fileRef = DF7D970B0F08647400C9B7FB /* HuluFeed.m */; };
@@ -58,6 +61,8 @@
 		DF00C4610F22CF8F003A5122 /* ExceptionHandling.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExceptionHandling.framework; path = System/Library/Frameworks/ExceptionHandling.framework; sourceTree = SDKROOT; };
 		DF0C59420EA9030E00E0D882 /* QuartzCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = QuartzCore.framework; path = /System/Library/Frameworks/QuartzCore.framework; sourceTree = "<absolute>"; };
 		DF0C96B40EE5BA9F00E85372 /* understudy_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = understudy_Prefix.pch; sourceTree = "<group>"; };
+		DF0DA1FE0F817BCE004AF3C3 /* UNDiPlayerAddDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UNDiPlayerAddDialog.h; sourceTree = "<group>"; };
+		DF0DA1FF0F817BCE004AF3C3 /* UNDiPlayerAddDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UNDiPlayerAddDialog.m; sourceTree = "<group>"; };
 		DF0EDFCA0EE5E187008FA08A /* English.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = English.lproj; sourceTree = "<group>"; };
 		DF2EB1950F574D5200D650B7 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		DF2EB2100F577F0C00D650B7 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
@@ -94,6 +99,9 @@
 		DF5A23920F11240400F5F19F /* BaseController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseController.h; sourceTree = "<group>"; };
 		DF5A23930F11240400F5F19F /* BaseController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseController.m; sourceTree = "<group>"; };
 		DF5A244E0F11366F00F5F19F /* UnderstudyAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnderstudyAsset.h; sourceTree = "<group>"; };
+		DF7D07670F86A0BD0014A0FB /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		DF7D07720F86A67B0014A0FB /* UNDPasswordProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UNDPasswordProvider.h; sourceTree = "<group>"; };
+		DF7D07730F86A67B0014A0FB /* UNDPasswordProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UNDPasswordProvider.m; sourceTree = "<group>"; };
 		DF7D97040F08647400C9B7FB /* HuluAddDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HuluAddDialog.h; sourceTree = "<group>"; };
 		DF7D97050F08647400C9B7FB /* HuluAddDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HuluAddDialog.m; sourceTree = "<group>"; };
 		DF7D97060F08647400C9B7FB /* HuluAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HuluAsset.h; sourceTree = "<group>"; };
@@ -133,6 +141,7 @@
 				DF00C4620F22CF8F003A5122 /* ExceptionHandling.framework in Frameworks */,
 				DF2EB1960F574D5200D650B7 /* IOKit.framework in Frameworks */,
 				DF2EB2110F577F0C00D650B7 /* Carbon.framework in Frameworks */,
+				DF7D07680F86A0BE0014A0FB /* Security.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -154,6 +163,7 @@
 		089C1671FE841209C02AAC07 /* Frameworks and Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				DF7D07670F86A0BD0014A0FB /* Security.framework */,
 				DF00C4610F22CF8F003A5122 /* ExceptionHandling.framework */,
 				1058C7ACFEA557BF11CA2CBB /* Linked Frameworks */,
 			);
@@ -242,6 +252,8 @@
 				DF37B8AF0F59EFFE0017766F /* UNDiPlayerAsset.m */,
 				DF37B9100F5AF1F70017766F /* UNDiPlayerController.h */,
 				DF37B9110F5AF1F70017766F /* UNDiPlayerController.m */,
+				DF0DA1FE0F817BCE004AF3C3 /* UNDiPlayerAddDialog.h */,
+				DF0DA1FF0F817BCE004AF3C3 /* UNDiPlayerAddDialog.m */,
 			);
 			path = BBCiPlayer;
 			sourceTree = "<group>";
@@ -251,6 +263,8 @@
 			children = (
 				DF37B8CD0F5AE0940017766F /* UNDNSXMLElement+Parsing.h */,
 				DF37B8CE0F5AE0940017766F /* UNDNSXMLElement+Parsing.m */,
+				DF7D07720F86A67B0014A0FB /* UNDPasswordProvider.h */,
+				DF7D07730F86A67B0014A0FB /* UNDPasswordProvider.m */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -405,6 +419,8 @@
 				DF37B9120F5AF1F70017766F /* UNDiPlayerController.m in Sources */,
 				DF37BA350F5B5DA70017766F /* UNDHuluSelector.m in Sources */,
 				DF50285E0F7D86A200B04C78 /* UNDYouTubeAddDialog.m in Sources */,
+				DF0DA2000F817BCE004AF3C3 /* UNDiPlayerAddDialog.m in Sources */,
+				DF7D07740F86A67B0014A0FB /* UNDPasswordProvider.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -44,6 +44,7 @@
 
 + (UNDPreferenceManager*)sharedInstance;
 + (NSScreen*)screen;
++ (NSString*)accountForService:(NSString*)service;
 + (BOOL)alertsAreDisabled;
 
 - (long)feedCount;

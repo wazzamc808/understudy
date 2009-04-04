@@ -20,6 +20,7 @@
 
 #import "NetflixController.h"
 #import "UNDPreferenceManager.h"
+#import "UNDPasswordProvider.h"
 
 #import <BRAlertController.h>
 #import <BRControllerStack.h>
@@ -71,29 +72,63 @@
   [[mainView_ mainFrame] loadRequest:pageRequest];
 }
 
+- (BOOL)signIn
+{
+  static int tried = false;
+  if( tried ) return NO;
+  tried = true;
+  
+  WebScriptObject* script = [mainView_ windowScriptObject];
+  NSString *setUser, *setPass, *submit;
+  NSString* user = [UNDPreferenceManager accountForService:@"www.netflix.com"];
+  [[user retain] autorelease];
+  NSString* pass = [UNDPasswordProvider passwordForService:@"www.netflix.com"
+                                                   account:user];
+  [[pass retain] autorelease];
+
+  if( !user || !pass ) return NO;
+  
+  setUser = @"document.getElementsByName('email').item(0).value = '%@'";
+  setPass = @"document.getElementsByName('password1').item(0).value = '%@'";
+  submit = @"document.getElementsByName('login_form').item(0).submit()";
+  setUser = [NSString stringWithFormat:setUser,user];
+  setPass = [NSString stringWithFormat:setPass,pass];
+  [script evaluateWebScript:setUser];
+  [script evaluateWebScript:setPass]; 
+  [script evaluateWebScript:submit];
+  return YES;
+}
+
 // <WebFrameLoadDelegate> callback once the video loads
 - (void)webView:(WebView*)view didFinishLoadForFrame:(WebFrame*)frame
 {
   if( frame != [view mainFrame] ) return;
+  
   [window_ display];
-  // if there is a plugin, we want to fullscreen it. if not (e.g. if the user
-  // isn't logged in and the movie won't be shown) we report an error
-  if( [self hasPluginView] || [UNDPreferenceManager alertsAreDisabled]) {
-    [window_ display];
-    [window_ orderFrontRegardless];
-    [window_ setLevel:NSScreenSaverWindowLevel];
-    [self reveal];
-  } else {
-    NSString* title = @"Error";
-    NSString* primary = @"Video Could Not Be Loaded";
-    NSString* secondary = @"Please ensure that you are logged into your Netfli"\
-    "x account in Safari, and that you have not reached your viewing limit.";
-    BRAlertController* alert = [BRAlertController alertOfType:3
-                                                       titled:title
-                                                  primaryText:primary
-                                                secondaryText:secondary];
-    [[self stack] swapController:alert];
+  
+  // if there isn't a plugin, perhaps we need to signin
+  if( ![self hasPluginView] )
+  {
+    if( [self signIn] ) return;
+    if( ![UNDPreferenceManager alertsAreDisabled] )
+    {
+      NSString* title = @"Error";
+      NSString* primary = @"Video Could Not Be Loaded";
+      NSString* secondary = @"Please ensure that you are logged into your Netfli"\
+      "x account in Safari, and that you have not reached your viewing limit.";
+      BRAlertController* alert = [BRAlertController alertOfType:3
+                                                         titled:title
+                                                    primaryText:primary
+                                                  secondaryText:secondary];
+      [[self stack] swapController:alert];      
+      return;
+    }
   }
+
+  [window_ display];
+  [window_ orderFrontRegardless];
+  [window_ setLevel:NSScreenSaverWindowLevel];
+  [self reveal];      
 }
 
 - (void)fullscreen
@@ -107,27 +142,17 @@
   
   NSPoint fsPoint;
   // the fullscreen button is 30px high, and 30px up from the bottom edge
-  fsPoint.y = -45;
+  fsPoint.y = size.height -  (30 + 30/2);
   // the fullscreen button is 15px in from the right edge (and 70px wide)
-  fsPoint.x = -(15 + 35);
+  fsPoint.x = size.width - (15 + 75/2);
   // if the player is more than 1000px wide, padding is added
   if( size.width > 1000 ) fsPoint.x -= (size.width-1000)/2;
 
-  NSRect rect;
-  rect.origin = fsPoint;
-  rect.size.height = 10;
-  rect.size.width = 10;
-  NSWindow* window= [[NSWindow alloc] initWithContentRect:rect
-                                                styleMask:0
-                                                  backing:NSBackingStoreBuffered
-                                                    defer:YES];
-  [window setBackgroundColor:[NSColor greenColor]];
-  [window display];
-  [window setLevel:NSScreenSaverWindowLevel];
-  [window orderFrontRegardless];
+  
   
   [self sendPluginMouseClickAtPoint:fsPoint];
   [self sendPluginMouseClickAtPoint:fsPoint];
+  
 }
 
 # pragma mark Player Controls
