@@ -21,6 +21,7 @@
 #import "HuluController.h"
 #import "MainMenuController.h"
 #import "UNDPreferenceManager.h"
+#import "UNDPasswordProvider.h"
 
 #import <BRControllerStack.h>
 #import <BRDisplayManager.h>
@@ -94,6 +95,7 @@
       [fsWindow_ orderFrontRegardless];
       [fsWindow_ setLevel:NSScreenSaverWindowLevel];
       [window_ orderBack:self];
+      [selector_ hide];
       [selector_ release];
       selector_ = nil;
     }
@@ -107,6 +109,34 @@
   [self sendPluginKeyCode:53 withCharCode:27];
 }
 
+- (void)ensureLogin
+{
+  WebScriptObject* script = [mainView_ windowScriptObject];
+  // check for the presence of a $("login") element
+  id result = [script evaluateWebScript:@"document.getElementById('login')"];
+  if( result == [WebUndefined undefined] ){
+    NSLog(@"no login element");
+    return;
+  }
+  
+  // if it is there, try to login
+  NSString* user = [UNDPreferenceManager accountForService:@"www.hulu.com"];
+  NSString* pass = [UNDPasswordProvider passwordForService:@"www.hulu.com"
+                                                   account:user];
+  NSString* setPass = @"document.getElementById('password').value='%@'";
+  NSString* setUser = @"document.getElementById('login').value='%@'";
+  NSString* submit = @"document.getElementById('login').parentNode.onsubmit()";
+  if( !user ) NSLog(@"no account");
+  if( !pass ) NSLog(@"no password");
+  if( !pass || !user ) return;
+  setPass = [NSString stringWithFormat:setPass,pass];
+  setUser = [NSString stringWithFormat:setUser,user];
+
+  result = [script evaluateWebScript:setPass];
+  result = [script evaluateWebScript:setUser];
+  result = [script evaluateWebScript:submit];
+}
+
 // <WebFrameLoadDelegate> callback once the video loads
 - (void)webView:(WebView*)view didFinishLoadForFrame:(WebFrame*)frame
 {
@@ -115,11 +145,13 @@
   [window_ display];
   [window_ orderFrontRegardless];
   [window_ setLevel:NSScreenSaverWindowLevel];
-  
+    
   // the selector's origin is measured from the bottom up, while the view is 
   // down from the top. we get the plugin's location and flip it relative to
   // the main view, then take out the height of the plugin
   if( [self hasPluginView] ){
+    [self ensureLogin];
+
     NSPoint origin;
     origin = [pluginView_ frame].origin;
     origin.y = [mainView_ frame].size.height - origin.y;
@@ -134,7 +166,7 @@
   }
   
   [self reveal];
-
+  
 }
 
 - (void)playPause
