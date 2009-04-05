@@ -58,9 +58,9 @@
                                            kSecAuthenticationTypeHTMLForm,
                                            &pwdLen,&pwd,NULL);
   
-  
-  // if we fail to get the information, try again but allow user interaction
-  if( res )
+  // if we fail to get the information because authorization failed or
+  // interaction is required, try again with user interaction
+  if( res == errSecAuthFailed || res == errSecInteractionRequired )
   {
     res = SecKeychainSetUserInteractionAllowed(YES);
     // order out the scene (i.e. stop showing Front Row)
@@ -80,8 +80,11 @@
                                              &pwdLen,&pwd,NULL);
     [renderer orderIn];
   }
-  password = [NSString stringWithCharacters:pwd length:pwdLen];
-  SecKeychainItemFreeContent (NULL,pwd);
+  if( res == 0 && pwd != NULL && pwdLen > 0 )
+  {
+    password = [NSString stringWithCharacters:pwd length:pwdLen];
+    SecKeychainItemFreeContent (NULL,pwd);
+  }
   
   return [password substringToIndex:pwdLen];
 }

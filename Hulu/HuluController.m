@@ -118,12 +118,18 @@
 
   // if it is there, try to login
   NSString* user = [UNDPreferenceManager accountForService:@"www.hulu.com"];
+  [[user retain] autorelease];
+  if( !user ) return;
+  
   NSString* pass = [UNDPasswordProvider passwordForService:@"www.hulu.com"
                                                    account:user];
+  [[pass retain] autorelease];
+  if( !pass ) return;
+  
   NSString* setPass = @"document.getElementById('password').value='%@'";
   NSString* setUser = @"document.getElementById('login').value='%@'";
   NSString* submit = @"document.getElementById('login').parentNode.onsubmit()";
-  if( !pass || !user ) return;
+
   setPass = [NSString stringWithFormat:setPass,pass];
   setUser = [NSString stringWithFormat:setUser,user];
 
@@ -140,12 +146,12 @@
   [window_ display];
   [window_ orderFrontRegardless];
   [window_ setLevel:NSScreenSaverWindowLevel];
-    
+  [self ensureLogin];
+  
   // the selector's origin is measured from the bottom up, while the view is 
   // down from the top. we get the plugin's location and flip it relative to
   // the main view, then take out the height of the plugin
   if( [self hasPluginView] ){
-    [self ensureLogin];
 
     NSPoint origin;
     origin = [pluginView_ frame].origin;
