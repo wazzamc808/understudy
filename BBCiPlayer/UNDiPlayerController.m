@@ -65,4 +65,14 @@
   window_ = nil;
 }
 
+- (void)playPause
+{
+  [self sendPluginKeyCode:49 withCharCode:0]; // space-bar
+}
+
+- (void)fastForward
+{
+  [self sendPluginKeyCode:48  withCharCode:9]; // tab
+}
+
 @end
