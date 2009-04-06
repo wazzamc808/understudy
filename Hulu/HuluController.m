@@ -132,7 +132,6 @@
 
   setPass = [NSString stringWithFormat:setPass,pass];
   setUser = [NSString stringWithFormat:setUser,user];
-
   result = [script evaluateWebScript:setPass];
   result = [script evaluateWebScript:setUser];
   result = [script evaluateWebScript:submit];
@@ -143,11 +142,12 @@
 {
   if( frame != [view mainFrame] ) return;
 
+  // the login process may show a dialog, so do it before displaying the video
+  [self ensureLogin];
   [window_ display];
   [window_ orderFrontRegardless];
   [window_ setLevel:NSScreenSaverWindowLevel];
-  [self ensureLogin];
-  
+
   // the selector's origin is measured from the bottom up, while the view is 
   // down from the top. we get the plugin's location and flip it relative to
   // the main view, then take out the height of the plugin
