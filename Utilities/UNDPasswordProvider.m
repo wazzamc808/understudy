@@ -35,8 +35,8 @@
   OSStatus res;
   UInt32 pwdLen;
   void *pwd;
-  NSString* password;
-  
+  NSString* password = nil;
+
   const char* acnt;
   if( !account ) acnt = nil;
   else acnt = [account cStringUsingEncoding:NSUTF8StringEncoding];
@@ -51,16 +51,19 @@
                                          0,NULL,0,kSecProtocolTypeHTTP,
                                          kSecAuthenticationTypeDefault,
                                          &pwdLen,&pwd,NULL);
-  // if we don't find a default type passwork, look for a webform one
-  if( res )
+  
+  // if we don't find a default type password, look for a webform one
+  if( res == errSecItemNotFound )
+  {
     res = SecKeychainFindInternetPassword (NULL,servLen,serv,0,NULL,acntLen,acnt,
                                            0,NULL,0,kSecProtocolTypeHTTP,
                                            kSecAuthenticationTypeHTMLForm,
                                            &pwdLen,&pwd,NULL);
+  }
   
-  
-  // if we fail to get the information, try again but allow user interaction
-  if( res )
+  // if we fail to get the information because authorization failed or
+  // interaction is required, try again with user interaction
+  if( res == errSecAuthFailed || res == errSecInteractionRequired )
   {
     res = SecKeychainSetUserInteractionAllowed(YES);
     // order out the scene (i.e. stop showing Front Row)
@@ -73,17 +76,27 @@
                                            acnt,0,NULL,0,kSecProtocolTypeHTTP,
                                            kSecAuthenticationTypeDefault,
                                            &pwdLen,&pwd,NULL);
-    if( res )
+    // if the item isn't found as a, look for a form item too
+    if( res == errSecItemNotFound )
+    {
       res = SecKeychainFindInternetPassword (NULL,servLen,serv,0,NULL,acntLen,
                                              acnt,0,NULL,0,kSecProtocolTypeHTTP,
                                              kSecAuthenticationTypeHTMLForm,
                                              &pwdLen,&pwd,NULL);
+    }
     [renderer orderIn];
   }
-  password = [NSString stringWithCharacters:pwd length:pwdLen];
-  SecKeychainItemFreeContent (NULL,pwd);
+
+  if( res == 0 && pwd != NULL && pwdLen > 0 )
+  {
+    password = [NSString stringWithCharacters:pwd length:pwdLen];
+    password = [NSString stringWithCString:pwd 
+                                  encoding:NSASCIIStringEncoding];
+    SecKeychainItemFreeContent (NULL,pwd);
+    password = [password substringToIndex:pwdLen];
+  }
   
-  return [password substringToIndex:pwdLen];
+  return password;
 }
 
 @end

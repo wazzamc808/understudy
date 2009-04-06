@@ -82,11 +82,13 @@
   NSString *setUser, *setPass, *submit;
   NSString* user = [UNDPreferenceManager accountForService:@"www.netflix.com"];
   [[user retain] autorelease];
+  if( !user ) return NO;
+  
   NSString* pass = [UNDPasswordProvider passwordForService:@"www.netflix.com"
                                                    account:user];
   [[pass retain] autorelease];
 
-  if( !user || !pass ) return NO;
+  if( !user ) return NO;
   
   setUser = @"document.getElementsByName('email').item(0).value = '%@'";
   setPass = @"document.getElementsByName('password1').item(0).value = '%@'";
