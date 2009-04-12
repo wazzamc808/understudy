@@ -70,28 +70,24 @@
   for (j=0; j < icount; j++) {
     NSXMLElement* node = [items objectAtIndex:j];
     
-    // get the title
     NSArray* myid = [node nodesForXPath:@"span[@class='title']" error:nil];
     NSString* _title = [[myid objectAtIndex: 0 ] stringValue];
-    
-    //NSLog(_title);
     
     NSArray* mylink = [node nodesForXPath:@"span/span/span/span/a/@href" error:nil];
     NSString* _href = [[mylink objectAtIndex: 0 ] stringValue];  
     
-    //NSLog(_href);
-    
     NSArray* myDes = [node nodesForXPath:@"div[@class='episodeDetails']" error:nil];
     NSString* _des = [[myDes objectAtIndex: 0 ] stringValue];  
     
-    //NSLog(_des);
-    
-    NetflixAsset* asset = [[NetflixAsset alloc] initWithUrl:_href
-                                                      title:_title 
-                                                    mediaID:mediaID
-                                                description:_des];
-
-    [assets addObject:asset];
+    // skip the items that are only available on the DVD
+    if( [_href rangeOfString:@"WiPlayer"].location != NSNotFound )
+    {
+      NetflixAsset* asset = [[NetflixAsset alloc] initWithUrl:_href
+                                                        title:_title 
+                                                      mediaID:mediaID
+                                                  description:_des];
+      [assets addObject:asset];
+    }
   }
   assets_ = [assets retain];
   return assets_;

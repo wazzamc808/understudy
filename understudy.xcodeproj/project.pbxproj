@@ -242,8 +242,8 @@
 				DF375CBF0F35300700DA7719 /* NetflixController.m */,
 				DF375CC00F35300700DA7719 /* NetflixFeed.h */,
 				DF375CC10F35300700DA7719 /* NetflixFeed.m */,
-				DF6F9F860F9263AA00AB41CF /* UNDNetflixCollection.m */,
 				DF6F9F870F9263AA00AB41CF /* UNDNetflixCollection.h */,
+				DF6F9F860F9263AA00AB41CF /* UNDNetflixCollection.m */,
 			);
 			name = Netflix;
 			sourceTree = "<group>";
