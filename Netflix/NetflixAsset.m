@@ -1,5 +1,5 @@
 //
-//  Copyright 2008 Kirk Kelsey.
+//  Copyright 2008-2009 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -26,36 +26,60 @@
 
 #include <regex.h>
 
+@interface NetflixAsset (CollectionDiscovery)
+- (void)buildCollectionForMedia:(NSString*)mediaID;
+@end
+
 @implementation NetflixAsset
 
 #define WATCHURL @"http://www.netflix.com/WiPlayer?movieid=%@"
 #define BOXSHOTS @"http://cdn-0.nflximg.com/us/boxshots/large/%@.jpg"
 
+- (id)initWithUrl:(NSString*)url 
+            title:(NSString*)title 
+          mediaID:(NSString*)mediaID 
+      description:(NSString*)description 
+{
+  imageManager_ = [BRImageManager sharedInstance];
+  [super init];
+  url_ = [[NSURL URLWithString:url] retain];
+  description_ = (NSString*) CFXMLCreateStringByUnescapingEntities(NULL,(CFStringRef)description,NULL);    
+  [description_ retain];
+  title_ = [title copy];
+  NSURL* thumburl;
+  thumburl = [NSURL URLWithString:[NSString stringWithFormat:BOXSHOTS,mediaID]];
+  thumbnailID_ = [[imageManager_ writeImageFromURL:thumburl] retain];  
+  return self;
+}
+
 - (id)initWithXMLElement:(NSXMLElement*) dom
 {
-  NSString *mediaID, *url;
-  NSURL* thumburl;
+  NSString *mediaID, *url, *title;
 
   imageManager_ = [BRImageManager sharedInstance];
   [super init];
   
   NSXMLElement* titleline = [[dom elementsForName:@"title"] objectAtIndex:0];
-  NSString* titlestring = [[titleline childAtIndex:0] description];
-  titlestring = (NSString*) CFXMLCreateStringByUnescapingEntities(NULL,(CFStringRef)titlestring,NULL);
-  NSRange hy = [titlestring rangeOfString:@"- "];
+  title = [[titleline childAtIndex:0] description];
+  title = (NSString*) CFXMLCreateStringByUnescapingEntities(NULL,
+                                                            (CFStringRef)title,
+                                                            NULL);
+  NSRange hy = [title rangeOfString:@"- "];
   if( hy.location != NSNotFound )
-    title_ = [[titlestring substringFromIndex:(hy.location+hy.length)] retain];
-  else
-    title_ = [titlestring copy];
+    title = [[title substringFromIndex:(hy.location+hy.length)] retain];
 
   NSXMLElement* link = [[dom elementsForName:@"link"] objectAtIndex:0];
   mediaID = [[link stringValue] lastPathComponent];
 
+  // our heuristice for collections of videos is a bit weak, but if the title
+  // looks like a season of a television show try to get the episodes
+  if( [title rangeOfString:@"Season"].location != NSNotFound )
+  {
+    [self performSelectorInBackground:@selector(buildCollectionForMedia:)
+                           withObject:mediaID];
+  }
+  
   url = [NSString stringWithFormat:WATCHURL,mediaID];
-  url_ = [[NSURL URLWithString:url] retain];
-
-  thumburl = [NSURL URLWithString:[NSString stringWithFormat:BOXSHOTS,mediaID]];
-  thumbnailID_ = [[imageManager_ writeImageFromURL:thumburl] retain];
 
   NSString* description = [[[dom elementsForName:@"description"] 
                             objectAtIndex:0] stringValue];
@@ -64,14 +88,15 @@
     description = [description substringFromIndex: NSMaxRange(br)];
   description = [description stringByReplacingOccurrencesOfString:@"<br>"
                                                        withString:@"\n"];
-  description_ = (NSString*) CFXMLCreateStringByUnescapingEntities(NULL,(CFStringRef)description,NULL);
-  [description_ retain];
+
+  [self initWithUrl:url title:title mediaID:mediaID description:description];
   
   return self;
 }
 
 - (void)dealloc
 {
+  [collection_ release];
   [description_ release];
   [title_ release];
   [url_ release];
@@ -112,7 +137,8 @@
 {
   if( !menuitem_ )
   {
-    menuitem_ = [BRTextMenuItemLayer menuItem];
+    if( collection_ ) menuitem_ = [BRTextMenuItemLayer folderMenuItem];
+    else menuitem_ = [BRTextMenuItemLayer menuItem];
     [menuitem_ setTitle:[self title]];
     [menuitem_ retain];
   }
@@ -122,7 +148,10 @@
 - (BRController*)controller
 {
   NSString* path = @"/Library/Internet Plug-Ins/Silverlight.plugin";
-  if( ![[NSFileManager defaultManager] fileExistsAtPath:path] ){
+  // if we have a collection (of episodes) return the collection's controller
+  if( collection_ ){
+    return [collection_ controller];
+  }else if( ![[NSFileManager defaultManager] fileExistsAtPath:path] ){
     NSString* title = @"Error";
     NSString* primary = @"Silverlight Not Installed";
     NSString* secondary = @"The Silverlight plugin must be installed in order "\
@@ -137,5 +166,17 @@
   }
 }
 
-
+#pragma mark Episode Discovery
+// this method is intended to be invoked on a background thread to fetch a 
+// (potentially nil) collection of videos
+- (void)buildCollectionForMedia:(NSString*)mediaID
+{
+  NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
+  NSString* urlString = @"http://www.netflix.com/WiMovie/";
+  urlString = [urlString stringByAppendingFormat:mediaID];
+  NSURL* url = [NSURL URLWithString:urlString];
+  collection_ = [[UNDNetflixCollection alloc] initWithTitle:title_ forUrl:url];
+  [pool release];
+}
+  
 @end

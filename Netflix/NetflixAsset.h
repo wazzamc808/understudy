@@ -1,5 +1,5 @@
 //
-//  Copyright 2008 Kirk Kelsey.
+//  Copyright 2008-2009 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -25,6 +25,7 @@
 
 #import "BaseUnderstudyAsset.h"
 #import "UnderstudyAsset.h"
+#import "UNDNetflixCollection.h"
 
 // class NetflixAsset
 //
@@ -38,7 +39,14 @@
   NSString* thumbnailID_;
   BRImageManager* imageManager_;
   BRTextMenuItemLayer* menuitem_;
+  UNDNetflixCollection* collection_;
 }
+
+// designated initializer
+- (id)initWithUrl:(NSString*)url 
+            title:(NSString*)title 
+          mediaID:(NSString*)mediaID 
+      description:(NSString*)description;
 
 - (id)initWithXMLElement:(NSXMLElement*)dom;
 
