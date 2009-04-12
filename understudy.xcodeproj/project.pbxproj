@@ -31,6 +31,7 @@
 		DF5A22250F0FD6B400F5F19F /* YouTubeFeed.m in Sources */ = {isa = PBXBuildFile; fileRef = DF5A22240F0FD6B400F5F19F /* YouTubeFeed.m */; };
 		DF5A223C0F100E4300F5F19F /* FeedMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF5A22390F100E4300F5F19F /* FeedMenuController.m */; };
 		DF5A23940F11240400F5F19F /* BaseController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF5A23930F11240400F5F19F /* BaseController.m */; };
+		DF6F9F880F9263AA00AB41CF /* UNDNetflixCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = DF6F9F860F9263AA00AB41CF /* UNDNetflixCollection.m */; };
 		DF7D07680F86A0BE0014A0FB /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF7D07670F86A0BD0014A0FB /* Security.framework */; };
 		DF7D07740F86A67B0014A0FB /* UNDPasswordProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = DF7D07730F86A67B0014A0FB /* UNDPasswordProvider.m */; };
 		DF7D970C0F08647400C9B7FB /* HuluAddDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = DF7D97050F08647400C9B7FB /* HuluAddDialog.m */; };
@@ -99,6 +100,8 @@
 		DF5A23920F11240400F5F19F /* BaseController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseController.h; sourceTree = "<group>"; };
 		DF5A23930F11240400F5F19F /* BaseController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseController.m; sourceTree = "<group>"; };
 		DF5A244E0F11366F00F5F19F /* UnderstudyAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnderstudyAsset.h; sourceTree = "<group>"; };
+		DF6F9F860F9263AA00AB41CF /* UNDNetflixCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UNDNetflixCollection.m; path = Netflix/UNDNetflixCollection.m; sourceTree = "<group>"; };
+		DF6F9F870F9263AA00AB41CF /* UNDNetflixCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UNDNetflixCollection.h; path = Netflix/UNDNetflixCollection.h; sourceTree = "<group>"; };
 		DF7D07670F86A0BD0014A0FB /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		DF7D07720F86A67B0014A0FB /* UNDPasswordProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UNDPasswordProvider.h; sourceTree = "<group>"; };
 		DF7D07730F86A67B0014A0FB /* UNDPasswordProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UNDPasswordProvider.m; sourceTree = "<group>"; };
@@ -239,6 +242,8 @@
 				DF375CBF0F35300700DA7719 /* NetflixController.m */,
 				DF375CC00F35300700DA7719 /* NetflixFeed.h */,
 				DF375CC10F35300700DA7719 /* NetflixFeed.m */,
+				DF6F9F860F9263AA00AB41CF /* UNDNetflixCollection.m */,
+				DF6F9F870F9263AA00AB41CF /* UNDNetflixCollection.h */,
 			);
 			name = Netflix;
 			sourceTree = "<group>";
@@ -421,6 +426,7 @@
 				DF50285E0F7D86A200B04C78 /* UNDYouTubeAddDialog.m in Sources */,
 				DF0DA2000F817BCE004AF3C3 /* UNDiPlayerAddDialog.m in Sources */,
 				DF7D07740F86A67B0014A0FB /* UNDPasswordProvider.m in Sources */,
+				DF6F9F880F9263AA00AB41CF /* UNDNetflixCollection.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
