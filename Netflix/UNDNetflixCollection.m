@@ -71,22 +71,31 @@
     NSXMLElement* node = [items objectAtIndex:j];
     
     NSArray* myid = [node nodesForXPath:@"span[@class='title']" error:nil];
-    NSString* _title = [[myid objectAtIndex: 0 ] stringValue];
+    NSString* _title = [[[[myid lastObject] stringValue] retain] autorelease];
     
-    NSArray* mylink = [node nodesForXPath:@"span/span/span/span/a/@href" error:nil];
-    NSString* _href = [[mylink objectAtIndex: 0 ] stringValue];  
+    NSArray* mylink = [node nodesForXPath:@"span/span/span/span/a/@href" 
+                                    error:nil];
+    NSString* _href = [[[[mylink lastObject] stringValue] retain] autorelease];  
     
-    NSArray* myDes = [node nodesForXPath:@"div[@class='episodeDetails']" error:nil];
-    NSString* _des = [[myDes objectAtIndex: 0 ] stringValue];  
+    NSArray* myDes = [node nodesForXPath:@"div[@class='episodeDetails']" 
+                                   error:nil];
+    NSString* _des = [[[[myDes lastObject] stringValue] retain] autorelease];  
     
     // skip the items that are only available on the DVD
-    if( [_href rangeOfString:@"WiPlayer"].location != NSNotFound )
+    if( [_href rangeOfString:@"WiPlayer"].location != NSNotFound 
+       && _href && _title && _des)
     {
-      NetflixAsset* asset = [[NetflixAsset alloc] initWithUrl:_href
-                                                        title:_title 
-                                                      mediaID:mediaID
-                                                  description:_des];
-      [assets addObject:asset];
+      @try {
+        NetflixAsset* asset = [[NetflixAsset alloc] initWithUrl:_href
+                                                          title:_title 
+                                                        mediaID:mediaID
+                                                    description:_des];
+        [assets addObject:asset];
+      }
+      @catch (NSException *exception) {
+        NSLog(@"exception: %@",exception);
+        NSLog(@"href = %@",_href);
+      }
     }
   }
   assets_ = [assets retain];
