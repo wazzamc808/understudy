@@ -30,4 +30,6 @@
 
 - (id)initWithTitle:(NSString*)title forUrl:(NSURL*)url;
 
+// attempts to convert a URL into one we can parse
++ (NSString*)canonicalFormOfURL:(NSString*)url;
 @end

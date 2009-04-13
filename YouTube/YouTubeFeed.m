@@ -21,19 +21,14 @@
 
 #import <BRTextMenuItemLayer.h>
 
-// YT feeds for a user (all should include ?client=ytapi-youtube-user&v=2)
-// gdata.youtube.com/feeds/base/users/<username>
-// contains references to other feeds to which the user is subscribed
-
-// gdata.youtube.com/feeds/api/users/username/uploads
-// gdata.youtube.com/feeds/base/users/<username>/playlists
-//contains references to playlists the user created
-
 @implementation YouTubeFeed
 
 - (id)initWithTitle:(NSString*)title forUrl:(NSURL*)url
 {
-  url_ = [url copy];
+  NSString* temp = [url absoluteString];
+  temp = [YouTubeFeed canonicalFormOfURL:temp];
+  url_ = [[NSURL URLWithString:temp] retain];
+
   title_ = [title copy];
   return self;
 }
@@ -80,4 +75,31 @@
   return title_;
 }
 
++ (NSString*)canonicalFormOfURL:(NSString*)url
+{
+  // remove alt properties
+  url = [url stringByReplacingOccurrencesOfString:@"&alt=rss" withString:@""];
+
+  // make sure the client property is ytapi-youtube-user
+  NSRange client = [url rangeOfString:@"client="];
+  if( client.location == NSNotFound ){
+    if( [url rangeOfString:@"?"].location == NSNotFound )
+      url = [url stringByAppendingString:@"?client=ytapi-youtube-user"];
+    else
+      url = [url stringByAppendingString:@"&client=ytapi-youtube-user"];
+  }else{
+    // look for value after the client=
+    NSString* value = [url substringFromIndex:client.location+client.length];
+    int valPos = [value rangeOfString:@"&"].location;
+    if( valPos == NSNotFound ) valPos = [value length];
+    NSRange valRange = NSMakeRange(client.location+client.length,valPos);
+    [url stringByReplacingCharactersInRange:valRange
+                                 withString:@"client=ytapi-youtube-user"];
+
+  }
+  // make sure the version property is set as v=2
+  if( [url rangeOfString:@"v=2"].location == NSNotFound )
+    url = [url stringByAppendingString:@"&v=2"];
+  return url;
+}
 @end
