@@ -73,7 +73,7 @@
     NSArray* myid = [node nodesForXPath:@"span[@class='title']" error:nil];
     NSString* _title = [[[[myid lastObject] stringValue] retain] autorelease];
     
-    NSArray* mylink = [node nodesForXPath:@"span/span/span/span/a/@href" 
+    NSArray* mylink = [node nodesForXPath:@"span/span/a/@href" 
                                     error:nil];
     NSString* _href = [[[[mylink lastObject] stringValue] retain] autorelease];  
     
