@@ -66,12 +66,16 @@
   if( res == errSecAuthFailed || res == errSecInteractionRequired )
   {
     res = SecKeychainSetUserInteractionAllowed(YES);
-    // order out the scene (i.e. stop showing Front Row)
+    // make sure the keychain dialog is visible:
+    // 1) order out the scene (i.e. stop showing Front Row)
+    // 2) hide any windows (if we're in an external viewew)
     BRSentinel* sentinel = [BRSentinel sharedInstance];
     id<BRRendererProvider> provider = [sentinel rendererProvider];
     BRRenderer* renderer = [provider renderer];
     [renderer orderOut];
- 
+    for( NSWindow* window in [NSApp windows] ){
+      [window orderOut:self];
+    }
     res = SecKeychainFindInternetPassword (NULL,servLen,serv,0,NULL,acntLen,
                                            acnt,0,NULL,0,kSecProtocolTypeHTTP,
                                            kSecAuthenticationTypeDefault,
@@ -84,7 +88,12 @@
                                              kSecAuthenticationTypeHTMLForm,
                                              &pwdLen,&pwd,NULL);
     }
-    [renderer orderIn];
+
+    if( [[NSApp windows] count] ){
+      for( NSWindow* window in [NSApp windows] ) [window orderFrontRegardless];
+    }else{
+      [renderer orderIn];
+    }
   }
 
   if( res == 0 && pwd != NULL && pwdLen > 0 )
