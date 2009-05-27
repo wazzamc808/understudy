@@ -18,10 +18,12 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import "UNDiPlayerAsset.h"
+@class UNDiPlayerAsset;
+@class UNDPluginControl;
 
 @interface UNDiPlayerController : BaseController{
   UNDiPlayerAsset* asset_;
+  UNDPluginControl* pluginControl_;
   NSWindow* window_;
 }
 

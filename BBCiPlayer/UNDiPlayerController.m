@@ -16,7 +16,9 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
+#import "UNDiPlayerAsset.h"
 #import "UNDiPlayerController.h"
+#import "UNDPluginControl.h"
 #import "UNDPreferenceManager.h"
 
 @implementation UNDiPlayerController
@@ -24,8 +26,15 @@
 - (id)initWithAsset:(UNDiPlayerAsset*)asset
 {
   [super init];
-  asset_ = asset;
+  asset_ = [asset retain];
   return self;
+}
+
+- (void)dealloc
+{
+  [asset_ release];
+  [pluginControl_ release];
+  [super dealloc];
 }
 
 // <WebFrameLoadDelegate> callback once the video loads
@@ -55,6 +64,7 @@
   NSURLRequest* pageRequest = [NSURLRequest requestWithURL:[asset_ url]];
   NSLog(@"loading url: %@",[asset_ url]);
   [[mainView_ mainFrame] loadRequest:pageRequest];
+  pluginControl_ = [[UNDPluginControl alloc] initWithView:mainView_];
 }
 
 - (void)controlWillDeactivate
@@ -67,12 +77,12 @@
 
 - (void)playPause
 {
-  [self sendPluginKeyCode:49 withCharCode:0]; // space-bar
+  [pluginControl_ sendPluginKeyCode:49 withCharCode:0]; // space-bar
 }
 
 - (void)fastForward
 {
-  [self sendPluginKeyCode:48  withCharCode:9]; // tab
+  [pluginControl_ sendPluginKeyCode:48  withCharCode:9]; // tab
 }
 
 @end

@@ -97,55 +97,6 @@ typedef enum
   [menushield_ close];
 }
 
-#pragma mark Subviews
-
-- (BOOL)hasPluginView
-{
-  if( pluginView_ ) return YES;
-  if( !mainView_ ) return NO;
-
-  NSMutableSet* views = [[[NSMutableSet set] retain] autorelease];
-  NSMutableSet* plugins = [[[NSMutableSet set] retain] autorelease];
-  WebView* view;
-  [views addObjectsFromArray:[mainView_ subviews]];
-  while( [views count] ){
-    view = [views anyObject];
-    if( [[view className] isEqual:@"WebNetscapePluginDocumentView"] )
-        [plugins addObject:view];
-    [views addObjectsFromArray:[view subviews]];
-    [views removeObject:view];
-  }
-  if( [plugins count] < 1 ){
-    NSLog(@"could not a find a plugin");
-    return NO;
-  }else if( [plugins count] > 1 ){
-    pluginView_ = [[plugins anyObject] retain];
-    float pluginsize = ([pluginView_ frame].size.height * [pluginView_ frame].size.width);
-    // pick the largest plugin view available
-    for( view in plugins )
-    {
-      NSSize size = [view frame].size;
-      NSPoint orig = [view frame].origin;
-//      NSLog(@"size: %6.0f origin:%5.0f/%-5.0f",size.height*size.width,orig.x,orig.y);
-      if( orig.x+size.width < 0
-         || orig.y+size.height < 0
-         || orig.x > [mainView_ frame].size.width
-         || orig.y > [mainView_ frame].size.height )
-        continue;
-      if( size.height*size.width > pluginsize )
-      {
-        [pluginView_ autorelease];
-        pluginView_ = [view retain];
-        pluginsize = size.height*size.width;
-      }
-    }
-    return YES;
-  }else{
-    pluginView_ = [[plugins anyObject] retain];
-    return YES;
-  }
-}
-
 - (BOOL)isNetworkDependent
 {
   return YES;
@@ -177,51 +128,6 @@ typedef enum
     default:
       return [super brEventAction:event];
   }
-}
-
-- (void)sendPluginKeyCode:(int)keyCode
-             withCharCode:(int)charCode
-             andModifiers:(int)modifiers
-{
-  if( ![self hasPluginView] )return;
-  if( ![pluginView_ respondsToSelector:@selector(sendEvent:)] ) return;
-  EventRecord event;
-  event.what = keyDown;
-  event.message = (keyCode << 8) + charCode;
-  event.modifiers = modifiers;
-  [(id)pluginView_ sendEvent:(NSEvent *)&event];
-  event.what = keyUp;
-  [(id)pluginView_ sendEvent:(NSEvent *)&event];
-}
-
-- (void)sendPluginKeyCode:(int)keyCode withCharCode:(int)charCode
-{
-  [self sendPluginKeyCode:keyCode withCharCode:charCode andModifiers:0];
-}
-
-// click on the plugin view at a given point in it's own coordinate space
-// (0,0) is top left, but negative values are measured from the bottom/right
-- (void)sendPluginMouseClickAtPoint:(NSPoint)point
-{
-  if( ![pluginView_ respondsToSelector:@selector(sendEvent:)] ) return;
-  EventRecord record;
-  NSPoint orig = [pluginView_ frame].origin;
-  // NSSize  size = [pluginView_ frame].size;
-  record.modifiers = btnState;
-  record.message = 0;
-  record.what = mouseDown;
-  record.when = TickCount();
-  record.where.h = orig.x + point.x;
-  record.where.v = orig.y + point.y;
-
-  // if a dimension of the point is negative, offset if from the bottom/right
-  //if( point.x < 0 ) record.where.h += size.width;
-  //if( point.y < 0 ) record.where.v += size.height;
-
-  [pluginView_ sendEvent:(NSEvent *)&record];
-  record.what = mouseUp;
-  record.when = TickCount();
-  [pluginView_ sendEvent:(NSEvent *)&record];
 }
 
 #pragma mark Subclasses Should Override

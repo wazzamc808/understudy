@@ -40,19 +40,6 @@
 // fullscreen mode.
 - (void)returnToFR;
 
-// Returns true if the |mainView| contains (or is) a plugin subview.
-- (BOOL)hasPluginView;
-
-// Sends the given key press information to a contained web plugin
-- (void)sendPluginKeyCode:(int)keyCode 
-             withCharCode:(int)charCode
-             andModifiers:(int)modifiers;
-- (void)sendPluginKeyCode:(int)keyCode withCharCode:(int)charCode;
-
-// Simulates a mouse press at the given point relative to the top left corner
-// of the plugin's view
-- (void)sendPluginMouseClickAtPoint:(NSPoint)point;
-
 // subclasses should override (default does nothing):
 - (void)playPause;
 - (void)fastForward;

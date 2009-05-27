@@ -21,11 +21,13 @@
 
 #import "BRController.h"
 
-#import "NetflixAsset.h"
+@class NetflixAsset;
+@class UNDPluginControl;
 
 @interface NetflixController : BaseController {
  @private
   NetflixAsset* asset_;
+  UNDPluginControl* pluginControl_;
   NSWindow* window_;
 }
 
