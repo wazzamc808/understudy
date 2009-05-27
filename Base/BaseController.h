@@ -43,16 +43,10 @@
 // Returns true if the |mainView| contains (or is) a plugin subview.
 - (BOOL)hasPluginView;
 
-// One of these (or some other sub-class specific) methods should be invoked 
-// before using the -reveal method.
-- (void)makeMainViewFullscreen;
-- (void)makePluginFullscreen;
-
-// Create a shield over the menu bar. For some reason, when we fullscreen a
-// flash player, it doesn't cover the menu bar properly.
-- (void)shieldMenu;
-
-// Sends the given key code (and character code) to a contained web plugin
+// Sends the given key press information to a contained web plugin
+- (void)sendPluginKeyCode:(int)keyCode 
+             withCharCode:(int)charCode
+             andModifiers:(int)modifiers;
 - (void)sendPluginKeyCode:(int)keyCode withCharCode:(int)charCode;
 
 // Simulates a mouse press at the given point relative to the top left corner
