@@ -40,14 +40,17 @@
 
 - (void)loadURL:(NSURL*)url
 {
-  NSRect rect = [[UNDPreferenceManager screen] frame];
+  NSScreen* screen = [UNDPreferenceManager screen];
+  NSRect rect = [screen frame];
+  rect.origin.x = rect.origin.y = 0;
   mainView_ = [[WebView alloc] initWithFrame:rect];
   [[[mainView_ mainFrame] frameView] setAllowsScrolling:NO];
   [mainView_ setFrameLoadDelegate:self];
   window_ = [[NSWindow alloc] initWithContentRect:rect
                                         styleMask:NSTitledWindowMask
                                           backing:NSBackingStoreBuffered
-                                            defer:YES];
+                                            defer:YES
+                                           screen:screen];
   [window_ display];
   [window_ orderFrontRegardless];
   [window_ setLevel:NSScreenSaverWindowLevel];
@@ -195,7 +198,7 @@
                 remoteControl:(RemoteControl*)remoteControl 
 {
   // ignore button release events
-//  if( !pressedDown ) return;
+  if( !pressedDown ) return;
   BRSettingsFacade* settings;
   switch(event){
     case kRemoteButtonPlus:
