@@ -8,8 +8,8 @@
 //  Software Foundation, either version 3 of the License, or (at your option)
 //  any later version.
 //
-//  Understudy is distributed in the hope that it will be useful, but WITHOUT 
-//  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
+//  Understudy is distributed in the hope that it will be useful, but WITHOUT
+//  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
 //  FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
 //  for more details.
 //
@@ -21,63 +21,49 @@
 
 @implementation UNDHuluSelector
 
-#define MARK_WIDTH 36
-#define MARK_HEIGHT 26
-
-- (id)initWithOrigin:(NSPoint)origin
+- (id)initWithView:(NSView*)view
 {
+  if( !view ) return nil;
+
   [super init];
 
   posCount_ = 5;
   positions_ = malloc( sizeof(NSPoint) * posCount_ );
-  if( ! positions_ ){
-    NSLog(@"failed to allocate positions");
-    return nil;
+  if( ! positions_ ) return nil;
+  
+  view_ = [view retain];
+  NSWindow* window = [view window];
+  NSScreen* screen = [window screen];
+  screenHeight_ = [screen frame].size.height;
+
+  positions_[0] = NSMakePoint(0,0);
+  positions_[1] = NSMakePoint(755,20);
+  positions_[2] = NSMakePoint(755,95);
+  positions_[3] = NSMakePoint(755,170);
+  positions_[4] = NSMakePoint(755,245);
+
+  int i;
+  for( i=1; i < posCount_; i++ ){
+    positions_[i] = [view convertPointToBase:positions_[i]];
+    positions_[i] = [window convertBaseToScreen:positions_[i]];
   }
-  
-  // the 0 position always represents a hidden state
-  positions_[0] = NSMakePoint(-MARK_WIDTH,-MARK_HEIGHT);
-  positions_[1] = NSMakePoint(origin.x + 750,origin.y + 325);
-  positions_[2] = NSMakePoint(origin.x + 750,origin.y + 250);
-  positions_[3] = NSMakePoint(origin.x + 750,origin.y + 175);
-  positions_[4] = NSMakePoint(origin.x + 750,origin.y + 100);
   currentPos_ = 0;
-  
-  NSRect rect;
-  rect.origin = origin;
-  rect.size.height = MARK_HEIGHT;
-  rect.size.width = MARK_WIDTH;
-  
-  window_ = [[NSWindow alloc] initWithContentRect:rect
-                                        styleMask:0
-                                          backing:NSBackingStoreBuffered
-                                            defer:YES];
-  [window_ setBackgroundColor:[NSColor redColor]];
-  [window_ setAlphaValue:0.4];
   return self;
 }
 
 - (void)dealloc
 {
-  [window_ close];
   free(positions_);
+  [view_ release];
   [super dealloc];
 }
 
 - (void)show
 {
-  NSPoint point;
-  point.x = positions_[currentPos_].x - MARK_WIDTH/2;
-  point.y = positions_[currentPos_].y - MARK_HEIGHT/2;
-  [window_ setFrameOrigin:point];
-  if( [self locationIsValid] ){
-    [window_ display];
-    [window_ setLevel:NSScreenSaverWindowLevel];
-    [window_ orderFrontRegardless];
-  }else{
-    [window_ setLevel:kCGMinimumWindowLevel];
-    [window_ orderBack:self];
-  }
+  CGPoint point;
+  point.x = positions_[currentPos_].x;
+  point.y = screenHeight_ - positions_[currentPos_].y;
+  CGPostMouseEvent(point,1,1,0);
 }
 
 - (void)hide
@@ -87,20 +73,35 @@
 }
 
 - (void)nextPosition
-{ 
+{
   currentPos_ = (currentPos_+1) % posCount_;
   [self show];
 }
 
 - (void)prevPosition
-{ 
+{
   currentPos_ = (posCount_ + currentPos_-1) % posCount_;
   [self show];
 }
 
 - (NSPoint)location{ return positions_[currentPos_];}
-- (NSWindow*)window{ return window_; }
 
 // the 0th position is offscreen and invalid.
 - (BOOL)locationIsValid{ return currentPos_ != 0; }
+
+- (void)select
+{
+  CGPoint cg;
+//  NSPoint point = positions_[currentPos_];
+  cg.x = positions_[currentPos_].x;
+  cg.y = screenHeight_ - positions_[currentPos_].y;
+  CGPostMouseEvent(cg,1,1,1);
+  CGPostMouseEvent(cg,1,1,0);    
+
+  // NSPoint fsPoint = [view_ convertPointFromBase:[selector_ location]];
+
+  // [pluginControl_ sendPluginMouseClickAtPoint:fsPoint];
+  // [pluginControl_ sendPluginMouseClickAtPoint:fsPoint];
+}
+
 @end

@@ -18,7 +18,9 @@
 
 #include <regex.h>
 
+#import "NetflixAsset.h"
 #import "NetflixController.h"
+#import "UNDPluginControl.h"
 #import "UNDPreferenceManager.h"
 #import "UNDPasswordProvider.h"
 
@@ -50,6 +52,7 @@
 
 - (void)dealloc
 {
+  [pluginControl_ release];
   [asset_ release];
   [super dealloc];
 }
@@ -70,6 +73,7 @@
   NSURLRequest* pageRequest = [NSURLRequest requestWithURL:[asset_ url]];
   [mainView_ setCustomUserAgent:AGENTSTRING];
   [[mainView_ mainFrame] loadRequest:pageRequest];
+  pluginControl_ = [[UNDPluginControl alloc] initWithView:mainView_];
 }
 
 - (BOOL)signIn
@@ -109,7 +113,7 @@
   [window_ display];
   
   // if there isn't a plugin, perhaps we need to signin
-  if( ![self hasPluginView] )
+  if( ![pluginControl_ plugin] )
   {
     if( [self signIn] ) return;
     if( ![UNDPreferenceManager alertsAreDisabled] )
@@ -135,7 +139,7 @@
 
 - (void)fullscreen
 {
-  if( ![self hasPluginView] ){
+  if( ![pluginControl_ plugin] ){
     NSLog(@"cannot fullscreen netflix player (no plugin available)");
     return;
   }
@@ -151,9 +155,8 @@
   if( size.width > 1000 ) fsPoint.x -= (size.width-1000)/2;
 
   
-  
-  [self sendPluginMouseClickAtPoint:fsPoint];
-  [self sendPluginMouseClickAtPoint:fsPoint];
+  [pluginControl_ sendPluginMouseClickAtPoint:fsPoint];
+  [pluginControl_ sendPluginMouseClickAtPoint:fsPoint];
   
 }
 
@@ -161,7 +164,7 @@
 
 - (void)playPause
 {
-  [self sendPluginKeyCode:49 withCharCode:0]; // space-bar
+  [pluginControl_ sendPluginKeyCode:49 withCharCode:0]; // space-bar
 }
 
 - (void)fastForward

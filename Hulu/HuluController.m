@@ -8,8 +8,8 @@
 //  Software Foundation, either version 3 of the License, or (at your option)
 //  any later version.
 //
-//  Understudy is distributed in the hope that it will be useful, but WITHOUT 
-//  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
+//  Understudy is distributed in the hope that it will be useful, but WITHOUT
+//  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
 //  FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
 //  for more details.
 //
@@ -20,16 +20,13 @@
 
 #import "HuluController.h"
 #import "MainMenuController.h"
+#import "UnderstudyAppliance.h"
 #import "UNDPreferenceManager.h"
 #import "UNDPasswordProvider.h"
 
 #import <BRControllerStack.h>
-#import <BRDisplayManager.h>
 #import <BREvent.h>
-#import <BRRenderScene.h>
-#import <BRSentinel.h>
-#import <BRSettingsFacade.h>
-#import <BRAlertController.h>
+#import <BREventManager.h>
 #import <Carbon/Carbon.h>
 
 @implementation HuluController
@@ -44,149 +41,28 @@
 - (void)dealloc
 {
   [asset_ release];
-  [selector_ release];
+  [player_ release];
   [super dealloc];
 }
 
 - (void)_loadVideo
 {
-  // invoking shared application ensures that windows can be ordered
-  [NSApplication sharedApplication];
-  NSRect rect = [[UNDPreferenceManager screen] frame];
-  mainView_ = [[WebView alloc] initWithFrame:rect];
-  [[[mainView_ mainFrame] frameView] setAllowsScrolling:NO];
-  [mainView_ setFrameLoadDelegate:self];
-  window_ = [[NSWindow alloc] initWithContentRect:rect 
-                                        styleMask:0
-                                          backing:NSBackingStoreBuffered
-                                            defer:YES];
-  [window_ setContentView:mainView_];
-  NSURLRequest* pageRequest = [NSURLRequest requestWithURL:[asset_ url]];
-  [[mainView_ mainFrame] loadRequest:pageRequest];
+  // load the HuluPlayer to actually play the video
+  NSString* path = @"/System/Library/CoreServices/Front Row.app/Contents/PlugI"\
+    "ns/frUnderstudy.frappliance/Contents/SharedSupport/HuluPlayer.app/Content"\
+    "s/MacOS/HuluPlayer";
+  NSString* url = [[asset_ url] absoluteString];
+  NSArray* args = [[NSArray alloc] initWithObjects:url,nil];
+  player_ = [[NSTask launchedTaskWithLaunchPath:path arguments:args] retain];
+
+  // create an event to mimic a spurious key press, causing Front Row to drop
+  // out to the loaded application. this is a reasonable compromize between
+  // ordering out or destroying the scene (which doesn't really give up user
+  // input to the new app) and terminating FR completely.
+  BREvent* ev = [[BREvent alloc] initWithPage:1 usage:136 value:1];
+  [[BREventManager sharedManager] postEvent:ev];
 }
 
-// tell the flash player to go fullscreen. we only try once, so the caller 
-// should check for success (i.e. |fsWindow| != nil) if necessary
-- (BOOL)fullscreenFlash
-{
-  // abort if we already have a fullscreen window
-  if( fsWindow_ ) return YES;
-  
-  // try clicking on the fullscreen button
-  NSPoint fsPoint = [pluginView_ convertPointFromBase:[selector_ location]];
-  
-  [self sendPluginMouseClickAtPoint:fsPoint];
-  [self sendPluginMouseClickAtPoint:fsPoint];
-  
-  // check the set of windows belonging to the application. we created one
-  // explicitly. anything else is the flash player creating it's own
-  NSArray* windows = [[NSApplication sharedApplication] windows];
-  int expectedWindows = 1;
-  if( selector_ ) expectedWindows++;
-  [[windows retain] autorelease];
-  if( [windows count] <= expectedWindows ) return NO;
-  
-  for ( NSWindow* window in windows )
-  {
-    if( window != window_ && window != [selector_ window])
-    {
-      fsWindow_ = [window retain];
-      [fsWindow_ display];
-      [fsWindow_ orderFrontRegardless];
-      [fsWindow_ setLevel:NSScreenSaverWindowLevel];
-      [window_ orderBack:self];
-      [selector_ hide];
-      [selector_ release];
-      selector_ = nil;
-    }
-  }  
-
-  return YES;
-}
-
-- (void)exitFullScreen
-{
-  [self sendPluginKeyCode:53 withCharCode:27];
-}
-
-- (void)ensureLogin
-{
-  WebScriptObject* script = [mainView_ windowScriptObject];
-  // check for the presence of a $("login") element
-  id result = [script evaluateWebScript:@"document.getElementById('login')"];
-  if( result == [WebUndefined undefined] ) return;
-
-  // if it is there, try to login
-  NSString* user = [UNDPreferenceManager accountForService:@"www.hulu.com"];
-  [[user retain] autorelease];
-  if( !user ) return;
-  
-  NSString* pass = [UNDPasswordProvider passwordForService:@"www.hulu.com"
-                                                   account:user];
-  [[pass retain] autorelease];
-  if( !pass ) return;
-  
-  NSString* setPass = @"document.getElementById('password').value='%@'";
-  NSString* setUser = @"document.getElementById('login').value='%@'";
-  NSString* submit = @"document.getElementById('login').parentNode.onsubmit()";
-
-  setPass = [NSString stringWithFormat:setPass,pass];
-  setUser = [NSString stringWithFormat:setUser,user];
-  result = [script evaluateWebScript:setPass];
-  result = [script evaluateWebScript:setUser];
-  result = [script evaluateWebScript:submit];
-}
-
-// <WebFrameLoadDelegate> callback once the video loads
-- (void)webView:(WebView*)view didFinishLoadForFrame:(WebFrame*)frame
-{
-  if( frame != [view mainFrame] ) return;
-
-  // the login process may show a dialog, so do it before displaying the video
-  [self ensureLogin];
-  [window_ display];
-  [window_ orderFrontRegardless];
-  [window_ setLevel:NSScreenSaverWindowLevel];
-
-  // the selector's origin is measured from the bottom up, while the view is 
-  // down from the top. we get the plugin's location and flip it relative to
-  // the main view, then take out the height of the plugin
-  if( [self hasPluginView] ){
-
-    NSPoint origin;
-    origin = [pluginView_ frame].origin;
-    origin.y = [mainView_ frame].size.height - origin.y;
-    origin.y -= [pluginView_ frame].size.height;
-
-    NSPoint screenOrigin = [[UNDPreferenceManager screen] frame].origin;
-    origin.x += screenOrigin.x;
-    origin.y += screenOrigin.y;    
-    
-    selector_ = [[UNDHuluSelector alloc] initWithOrigin:origin];
-    [selector_ show];
-  }
-  
-  [self reveal];
-  
-}
-
-- (void)playPause
-{
-  if( [selector_ locationIsValid] )
-    [self fullscreenFlash];
-  else
-    [self sendPluginKeyCode:49 withCharCode:0]; // space-bar
-}
-
-- (void)fastForward
-{
-  [selector_ nextPosition];
-}
-
-- (void)rewind
-{
-  [selector_ prevPosition];
-}
 
 #pragma mark BR Control
 
@@ -197,18 +73,9 @@
 }
 
 - (void)controlWillDeactivate
-{  
-  if( fsWindow_ ){
-    [self exitFullScreen];
-    [fsWindow_ close];
-    fsWindow_ = nil;
-  }
-  [selector_ release];
-  selector_ = nil;
-  [window_ close];
-  window_ = nil;
+{
+  CGCaptureAllDisplays();
   [self returnToFR];
-  
   [super controlWillDeactivate];
 }
 

@@ -1,5 +1,5 @@
 //
-//  Copyright 2008 Kirk Kelsey.
+//  Copyright 2008-2009 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -19,18 +19,28 @@
 #import <Cocoa/Cocoa.h>
 #import <WebKit/WebKit.h>
 
-#import "BRController.h"
-
-@class NetflixAsset;
-@class UNDPluginControl;
-
-@interface NetflixController : BaseController {
- @private
-  NetflixAsset* asset_;
-  UNDPluginControl* pluginControl_;
-  NSWindow* window_;
+@interface UNDPluginControl : NSObject 
+{
+ @protected
+  WebView* mainView_;
+  id pluginView_;
 }
 
-- (id)initWithAsset:(NetflixAsset*)asset;
+// designated initializer takes the main view
+- (id)initWithView:(WebView*)view;
+
+// Returns the |mainView| plugin subview (if any)
+- (id)plugin;
+
+// Sends the given key press information to a contained web plugin
+- (void)sendPluginKeyCode:(int)keyCode 
+             withCharCode:(int)charCode
+             andModifiers:(int)modifiers;
+- (void)sendPluginKeyCode:(int)keyCode withCharCode:(int)charCode;
+
+// Simulates a mouse press at the given point relative to the top left corner
+// of the plugin's view
+- (void)sendPluginMouseClickAtPoint:(NSPoint)point;
 
 @end
+

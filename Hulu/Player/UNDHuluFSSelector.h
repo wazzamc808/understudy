@@ -1,5 +1,5 @@
 //
-//  Copyright 2008 Kirk Kelsey.
+//  Copyright 2009 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -17,20 +17,14 @@
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
 #import <Cocoa/Cocoa.h>
-#import <WebKit/WebKit.h>
 
-#import "BRController.h"
+#import "UNDSelector.h"
 
-@class NetflixAsset;
-@class UNDPluginControl;
-
-@interface NetflixController : BaseController {
- @private
-  NetflixAsset* asset_;
-  UNDPluginControl* pluginControl_;
-  NSWindow* window_;
+@interface UNDHuluFSSelector : NSObject <UNDSelector> {
+  NSPoint currentPosition_;
+  NSRect  frame_;
 }
 
-- (id)initWithAsset:(NetflixAsset*)asset;
+- (id)initWithScreen:(NSScreen*)screen;
 
 @end

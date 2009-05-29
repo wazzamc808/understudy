@@ -1,5 +1,5 @@
 //
-//  Copyright 2008 Kirk Kelsey.
+//  Copyright 2009 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -16,21 +16,16 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
-#import <Cocoa/Cocoa.h>
-#import <WebKit/WebKit.h>
+#import "BaseUnderstudyAsset.h"
+#import "UnderstudyAsset.h"
 
-#import "BRController.h"
+@class BRTextMenuItemLayer;
+@class UNDHuluDesktopController;
 
-@class NetflixAsset;
-@class UNDPluginControl;
-
-@interface NetflixController : BaseController {
- @private
-  NetflixAsset* asset_;
-  UNDPluginControl* pluginControl_;
-  NSWindow* window_;
+@interface UNDHuluDesktopAsset : BaseUnderstudyAsset<UnderstudyAsset> 
+{
+  BRTextMenuItemLayer* menuitem_;
+  UNDHuluDesktopController* controller_;
 }
-
-- (id)initWithAsset:(NetflixAsset*)asset;
 
 @end

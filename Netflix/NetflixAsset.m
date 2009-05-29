@@ -71,13 +71,8 @@
   NSXMLElement* link = [[dom elementsForName:@"link"] objectAtIndex:0];
   mediaID = [[link stringValue] lastPathComponent];
 
-  // our heuristice for collections of videos is a bit weak, but if the title
-  // looks like a season of a television show try to get the episodes
-  if( [title rangeOfString:@"Season"].location != NSNotFound )
-  {
-    [self performSelectorInBackground:@selector(buildCollectionForMedia:)
-                           withObject:mediaID];
-  }
+  [self performSelectorInBackground:@selector(buildCollectionForMedia:)
+                         withObject:mediaID];
   
   url = [NSString stringWithFormat:WATCHURL,mediaID];
 
@@ -137,8 +132,7 @@
 {
   if( !menuitem_ )
   {
-    if( collection_ ) menuitem_ = [BRTextMenuItemLayer folderMenuItem];
-    else menuitem_ = [BRTextMenuItemLayer menuItem];
+    menuitem_ = [BRTextMenuItemLayer menuItem];
     [menuitem_ setTitle:[self title]];
     [menuitem_ retain];
   }
@@ -176,6 +170,14 @@
   urlString = [urlString stringByAppendingFormat:mediaID];
   NSURL* url = [NSURL URLWithString:urlString];
   collection_ = [[UNDNetflixCollection alloc] initWithTitle:title_ forUrl:url];
+  if( collection_ )
+  {
+    [menuitem_ release];
+    menuitem_ = [BRTextMenuItemLayer folderMenuItem];
+    menuitem_ = [BRTextMenuItemLayer menuItem];
+    [menuitem_ setTitle:[self title]];
+    [menuitem_ retain];
+  }
   [pool release];
 }
   

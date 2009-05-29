@@ -18,24 +18,16 @@
 
 #import <Cocoa/Cocoa.h>
 
+#import "UNDSelector.h"
 
-@interface UNDHuluSelector : NSObject {
-  NSWindow* window_;
+@interface UNDHuluSelector : NSObject <UNDSelector> {
   NSPoint* positions_;
+  NSView* view_;
   int currentPos_;
   int posCount_;
+  float screenHeight_;
 }
 
-- (id)initWithOrigin:(NSPoint)origin;
-
-- (void)show;
-- (void)hide;
-
-- (void)nextPosition;
-- (void)prevPosition;
-
-- (NSPoint)location;
-- (BOOL)locationIsValid;
-- (NSWindow*)window;
+- (id)initWithView:(NSView*)view;
 
 @end

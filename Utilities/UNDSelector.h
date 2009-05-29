@@ -1,5 +1,5 @@
 //
-//  Copyright 2008 Kirk Kelsey.
+//  Copyright 2009 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -16,21 +16,12 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
-#import <Cocoa/Cocoa.h>
-#import <WebKit/WebKit.h>
+@protocol UNDSelector
+- (void)nextPosition;
+- (void)prevPosition;
 
-#import "BRController.h"
+- (NSPoint)location;
+- (BOOL)locationIsValid;
 
-@class NetflixAsset;
-@class UNDPluginControl;
-
-@interface NetflixController : BaseController {
- @private
-  NetflixAsset* asset_;
-  UNDPluginControl* pluginControl_;
-  NSWindow* window_;
-}
-
-- (id)initWithAsset:(NetflixAsset*)asset;
-
+- (void)select;
 @end

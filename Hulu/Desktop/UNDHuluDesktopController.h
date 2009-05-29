@@ -1,5 +1,5 @@
 //
-//  Copyright 2008 Kirk Kelsey.
+//  Copyright 2009 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -17,20 +17,11 @@
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
 #import <Cocoa/Cocoa.h>
-#import <WebKit/WebKit.h>
 
-#import "BRController.h"
+#import "BRTextWithSpinnerController.h"
 
-@class NetflixAsset;
-@class UNDPluginControl;
+@interface UNDHuluDesktopController : BRTextWithSpinnerController {
 
-@interface NetflixController : BaseController {
- @private
-  NetflixAsset* asset_;
-  UNDPluginControl* pluginControl_;
-  NSWindow* window_;
 }
-
-- (id)initWithAsset:(NetflixAsset*)asset;
 
 @end

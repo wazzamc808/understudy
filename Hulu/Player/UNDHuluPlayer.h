@@ -19,16 +19,22 @@
 #import <Cocoa/Cocoa.h>
 #import <WebKit/WebKit.h>
 
-#import "BRController.h"
+#import "UNDSelector.h"
+#import "UNDPluginControl.h"
+#import "RemoteControl.h"
 
-#import "HuluAsset.h"
-
-@interface HuluController : BaseController {
- @private
-  HuluAsset* asset_;
-  NSTask* player_;
+@interface UNDHuluPlayer : NSObject {
+  WebView*               mainView_;
+  UNDPluginControl*      pluginControl_;
+  NSWindow*              window_;        // original window
+  NSWindow*              fsWindow_;      // created when player goes full screen
+  NSObject<UNDSelector>* selector_;      // to indicate which button to select
 }
 
-- (id)initWithAsset:(HuluAsset*)asset;
+- (void)loadURL:(NSURL*)url;
+
+- (void) sendRemoteButtonEvent:(RemoteControlEventIdentifier) event 
+                   pressedDown:(BOOL) pressedDown 
+                 remoteControl:(RemoteControl*) remoteControl;
 
 @end

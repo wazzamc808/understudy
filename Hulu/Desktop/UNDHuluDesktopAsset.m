@@ -1,5 +1,5 @@
 //
-//  Copyright 2008 Kirk Kelsey.
+//  Copyright 2009 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -16,21 +16,36 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
-#import <Cocoa/Cocoa.h>
-#import <WebKit/WebKit.h>
+#import "UNDHuluDesktopAsset.h"
+#import "UNDHuluDesktopController.h"
+#import "BRTextMenuItemLayer.h"
 
-#import "BRController.h"
+@implementation UNDHuluDesktopAsset
 
-@class NetflixAsset;
-@class UNDPluginControl;
-
-@interface NetflixController : BaseController {
- @private
-  NetflixAsset* asset_;
-  UNDPluginControl* pluginControl_;
-  NSWindow* window_;
+- (void)dealloc
+{
+  [menuitem_ release];
+  [controller_ release];
+  [super dealloc];
 }
 
-- (id)initWithAsset:(NetflixAsset*)asset;
+- (BRLayer<BRMenuItemLayer>*)menuItem
+{
+  if( !menuitem_ )
+  {
+    menuitem_ = [BRTextMenuItemLayer menuItem];
+    [menuitem_ setTitle:@"Hulu Desktop Player"];
+    [menuitem_ retain];
+  }
+  return menuitem_;  
+}
+
+- (BRController*)controller
+{
+  if( !controller_ )
+    controller_ = [[UNDHuluDesktopController alloc] init];
+  return controller_;
+}
+
 
 @end
