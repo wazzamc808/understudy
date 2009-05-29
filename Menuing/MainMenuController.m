@@ -17,6 +17,7 @@
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
 #import "HuluFeed.h"
+#import "UNDHuluDesktopAsset.h"
 #import "UNDiPlayerFeed.h"
 #import "NetflixFeed.h"
 #import "YouTubeFeed.h"
@@ -61,18 +62,28 @@ static MainMenuController *sharedInstance_;
   return sharedInstance_;
 }
 
+#define HDAPP @"/Applications/Hulu Desktop.app/Contents/MacOS/Hulu Desktop"
+// create an asset place holder for each feed in the preferences
 - (void)loadAssets
 {  
   int i = 0, count = [preferences_ feedCount];
   [assets_ autorelease];
   assets_ = [[NSMutableArray arrayWithCapacity:count] retain];
   for( i=0; i<count; i++ ) [assets_ addObject:[NSNull null]];
+
+  // if the Hulu Desktop is installed, add the asset for it
+  if( [[NSFileManager defaultManager] fileExistsAtPath:HDAPP] ){
+    [assets_ addObject:[[[UNDHuluDesktopAsset alloc] init] autorelease]];
+    count++;
+  }
   [assets_ addObject:[[[ManageFeedsDialog alloc] init] autorelease]];
+
   [[self list] removeDividers];
   [[self list] addDividerAtIndex:count withLabel:nil];
   [[self list] reload];
 }
 
+// if the asset hasn't actually been loaded, create it how
 - (NSObject<UnderstudyAsset>*)assetForRow:(long)row
 {
   NSObject<UnderstudyAsset>* asset = [assets_ objectAtIndex:row];
@@ -106,7 +117,7 @@ static MainMenuController *sharedInstance_;
   
 - (long)itemCount
 {
-  return 1+[preferences_ feedCount];
+  return [assets_ count];
 }
 
 - (id)titleForRow:(long)row

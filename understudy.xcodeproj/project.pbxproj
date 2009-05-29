@@ -34,6 +34,9 @@
 		DF3195F70FC85C43004CE50D /* BackRow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF7F84EF0EE3354E0049E5C3 /* BackRow.framework */; };
 		DF3196B80FC8CF7F004CE50D /* UNDHuluFSSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = DF3196B70FC8CF7F004CE50D /* UNDHuluFSSelector.m */; };
 		DF3197D00FCCE3BD004CE50D /* UNDPluginControl.m in Sources */ = {isa = PBXBuildFile; fileRef = DF31936C0FC71D91004CE50D /* UNDPluginControl.m */; };
+		DF31980C0FCF7CC3004CE50D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DF31980B0FCF7CC3004CE50D /* main.m */; };
+		DF3198130FCF7F1C004CE50D /* UNDHuluDesktopAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = DF3198120FCF7F1C004CE50D /* UNDHuluDesktopAsset.m */; };
+		DF3198480FCF8169004CE50D /* UNDHuluDesktopController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF3198470FCF8169004CE50D /* UNDHuluDesktopController.m */; };
 		DF375CC20F35300700DA7719 /* NetflixAddDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = DF375CBB0F35300700DA7719 /* NetflixAddDialog.m */; };
 		DF375CC30F35300700DA7719 /* NetflixAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = DF375CBD0F35300700DA7719 /* NetflixAsset.m */; };
 		DF375CC40F35300700DA7719 /* NetflixController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF375CBF0F35300700DA7719 /* NetflixController.m */; };
@@ -77,6 +80,13 @@
 			remoteGlobalIDString = DF318F2D0FC4B418004CE50D /* UnderstudyHelper */;
 			remoteInfo = UnderstudyHelper;
 		};
+		DF3197F60FCF7B7E004CE50D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 089C1669FE841209C02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DF3197E00FCF54FB004CE50D /* HuluDesktop */;
+			remoteInfo = HuluDesktop;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -117,6 +127,13 @@
 		DF31936C0FC71D91004CE50D /* UNDPluginControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UNDPluginControl.m; sourceTree = "<group>"; };
 		DF3196B60FC8CF7F004CE50D /* UNDHuluFSSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UNDHuluFSSelector.h; path = Player/UNDHuluFSSelector.h; sourceTree = "<group>"; };
 		DF3196B70FC8CF7F004CE50D /* UNDHuluFSSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UNDHuluFSSelector.m; path = Player/UNDHuluFSSelector.m; sourceTree = "<group>"; };
+		DF3197E10FCF54FB004CE50D /* HuluDesktop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = HuluDesktop.app; path = build/Debug/HuluDesktop.app; sourceTree = "<group>"; };
+		DF3197E30FCF54FB004CE50D /* HuluDesktop-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "HuluDesktop-Info.plist"; sourceTree = "<group>"; };
+		DF31980B0FCF7CC3004CE50D /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Desktop/main.m; sourceTree = "<group>"; };
+		DF3198110FCF7F1C004CE50D /* UNDHuluDesktopAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UNDHuluDesktopAsset.h; path = Desktop/UNDHuluDesktopAsset.h; sourceTree = "<group>"; };
+		DF3198120FCF7F1C004CE50D /* UNDHuluDesktopAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UNDHuluDesktopAsset.m; path = Desktop/UNDHuluDesktopAsset.m; sourceTree = "<group>"; };
+		DF3198460FCF8169004CE50D /* UNDHuluDesktopController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UNDHuluDesktopController.h; path = Desktop/UNDHuluDesktopController.h; sourceTree = "<group>"; };
+		DF3198470FCF8169004CE50D /* UNDHuluDesktopController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UNDHuluDesktopController.m; path = Desktop/UNDHuluDesktopController.m; sourceTree = "<group>"; };
 		DF375CBA0F35300700DA7719 /* NetflixAddDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetflixAddDialog.h; path = Netflix/NetflixAddDialog.h; sourceTree = "<group>"; };
 		DF375CBB0F35300700DA7719 /* NetflixAddDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NetflixAddDialog.m; path = Netflix/NetflixAddDialog.m; sourceTree = "<group>"; };
 		DF375CBC0F35300700DA7719 /* NetflixAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetflixAsset.h; path = Netflix/NetflixAsset.h; sourceTree = "<group>"; };
@@ -213,6 +230,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DF3197DF0FCF54FB004CE50D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -244,6 +268,7 @@
 				DF0EDFCA0EE5E187008FA08A /* English.lproj */,
 				DFCDFB1A0F3E2F7800D979F0 /* ApplianceIcon.png */,
 				8D5B49B7048680CD000E48DA /* Info.plist */,
+				DF3197E30FCF54FB004CE50D /* HuluDesktop-Info.plist */,
 				DF318F300FC4B418004CE50D /* HuluPlayer-Info.plist */,
 			);
 			name = Resources;
@@ -287,6 +312,7 @@
 			children = (
 				8D5B49B6048680CD000E48DA /* frUnderstudy.frappliance */,
 				DF318F2E0FC4B418004CE50D /* HuluPlayer.app */,
+				DF3197E10FCF54FB004CE50D /* HuluDesktop.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -328,6 +354,18 @@
 				DF3192D40FC6FD92004CE50D /* RemoteControlContainer.m */,
 			);
 			name = RemoteControlWrapper;
+			sourceTree = "<group>";
+		};
+		DF3198090FCF7C71004CE50D /* Desktop */ = {
+			isa = PBXGroup;
+			children = (
+				DF3198460FCF8169004CE50D /* UNDHuluDesktopController.h */,
+				DF3198470FCF8169004CE50D /* UNDHuluDesktopController.m */,
+				DF3198110FCF7F1C004CE50D /* UNDHuluDesktopAsset.h */,
+				DF3198120FCF7F1C004CE50D /* UNDHuluDesktopAsset.m */,
+				DF31980B0FCF7CC3004CE50D /* main.m */,
+			);
+			name = Desktop;
 			sourceTree = "<group>";
 		};
 		DF375CC60F35302600DA7719 /* Netflix */ = {
@@ -412,6 +450,7 @@
 		DF7D97030F08647400C9B7FB /* Hulu */ = {
 			isa = PBXGroup;
 			children = (
+				DF3198090FCF7C71004CE50D /* Desktop */,
 				DF318FFD0FC5B8EE004CE50D /* Player */,
 				DF7D97040F08647400C9B7FB /* HuluAddDialog.h */,
 				DF7D97050F08647400C9B7FB /* HuluAddDialog.m */,
@@ -456,12 +495,13 @@
 				8D5B49AF048680CD000E48DA /* Resources */,
 				8D5B49B1048680CD000E48DA /* Sources */,
 				8D5B49B3048680CD000E48DA /* Frameworks */,
-				DF3196210FC88F33004CE50D /* Copy HuluPlayer */,
+				DF3196210FC88F33004CE50D /* Copy External Launchers */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				DF3195C20FC8555A004CE50D /* PBXTargetDependency */,
+				DF3197F70FCF7B7E004CE50D /* PBXTargetDependency */,
 			);
 			name = Understudy;
 			productInstallPath = "$(HOME)/Library/Bundles";
@@ -486,6 +526,23 @@
 			productReference = DF318F2E0FC4B418004CE50D /* HuluPlayer.app */;
 			productType = "com.apple.product-type.application";
 		};
+		DF3197E00FCF54FB004CE50D /* HuluDesktop */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DF3197E60FCF54FD004CE50D /* Build configuration list for PBXNativeTarget "HuluDesktop" */;
+			buildPhases = (
+				DF3197DD0FCF54FB004CE50D /* Resources */,
+				DF3197DE0FCF54FB004CE50D /* Sources */,
+				DF3197DF0FCF54FB004CE50D /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = HuluDesktop;
+			productName = HuluDesktop;
+			productReference = DF3197E10FCF54FB004CE50D /* HuluDesktop.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -500,6 +557,7 @@
 			targets = (
 				8D5B49AC048680CD000E48DA /* Understudy */,
 				DF318F2D0FC4B418004CE50D /* HuluPlayer */,
+				DF3197E00FCF54FB004CE50D /* HuluDesktop */,
 			);
 		};
 /* End PBXProject section */
@@ -521,22 +579,29 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DF3197DD0FCF54FB004CE50D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		DF3196210FC88F33004CE50D /* Copy HuluPlayer */ = {
+		DF3196210FC88F33004CE50D /* Copy External Launchers */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy HuluPlayer";
+			name = "Copy External Launchers";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "mkdir -p $TARGET_BUILD_DIR/$SHARED_SUPPORT_FOLDER_PATH/\ncp -r $TARGET_BUILD_DIR/HuluPlayer.app/ $TARGET_BUILD_DIR/$SHARED_SUPPORT_FOLDER_PATH/ > /tmp/xcodecopy";
+			shellScript = "mkdir -p $TARGET_BUILD_DIR/$SHARED_SUPPORT_FOLDER_PATH/\ncp -r $TARGET_BUILD_DIR/HuluPlayer.app/ $TARGET_BUILD_DIR/$SHARED_SUPPORT_FOLDER_PATH/\ncp -r $TARGET_BUILD_DIR/HuluDesktop.app/ $TARGET_BUILD_DIR/$SHARED_SUPPORT_FOLDER_PATH/";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -578,6 +643,8 @@
 				DF6F9F880F9263AA00AB41CF /* UNDNetflixCollection.m in Sources */,
 				DFC877210F93D9EF002716B0 /* UNDMenuAsset.m in Sources */,
 				DF3197D00FCCE3BD004CE50D /* UNDPluginControl.m in Sources */,
+				DF3198130FCF7F1C004CE50D /* UNDHuluDesktopAsset.m in Sources */,
+				DF3198480FCF8169004CE50D /* UNDHuluDesktopController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -601,6 +668,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DF3197DE0FCF54FB004CE50D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DF31980C0FCF7CC3004CE50D /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -608,6 +683,11 @@
 			isa = PBXTargetDependency;
 			target = DF318F2D0FC4B418004CE50D /* HuluPlayer */;
 			targetProxy = DF3195C10FC8555A004CE50D /* PBXContainerItemProxy */;
+		};
+		DF3197F70FCF7B7E004CE50D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DF3197E00FCF54FB004CE50D /* HuluDesktop */;
+			targetProxy = DF3197F60FCF7B7E004CE50D /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -758,6 +838,54 @@
 			};
 			name = Release;
 		};
+		DF3197E40FCF54FC004CE50D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INFOPLIST_FILE = "HuluDesktop-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = HuluDesktop;
+			};
+			name = Debug;
+		};
+		DF3197E50FCF54FC004CE50D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INFOPLIST_FILE = "HuluDesktop-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = HuluDesktop;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -784,6 +912,15 @@
 			buildConfigurations = (
 				DF318F310FC4B419004CE50D /* Debug */,
 				DF318F320FC4B419004CE50D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DF3197E60FCF54FD004CE50D /* Build configuration list for PBXNativeTarget "HuluDesktop" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DF3197E40FCF54FC004CE50D /* Debug */,
+				DF3197E50FCF54FC004CE50D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
