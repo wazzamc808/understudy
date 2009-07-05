@@ -182,9 +182,6 @@
 		DFA511980F1A8E5B00FC903B /* HuluController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HuluController.m; sourceTree = "<group>"; };
 		DFA512340F1A92D900FC903B /* YouTubeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YouTubeController.h; sourceTree = "<group>"; };
 		DFA512350F1A92F300FC903B /* YouTubeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YouTubeController.m; sourceTree = "<group>"; };
-		DFC8771A0F93D733002716B0 /* UNDAssetProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UNDAssetProvider.h; sourceTree = "<group>"; };
-		DFC8771F0F93D9EF002716B0 /* UNDMenuAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UNDMenuAsset.h; sourceTree = "<group>"; };
-		DFC877200F93D9EF002716B0 /* UNDMenuAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UNDMenuAsset.m; sourceTree = "<group>"; };
 		DFCDFB090F3E2E9300D979F0 /* AddFeedDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddFeedDialog.h; sourceTree = "<group>"; };
 		DFCDFB0A0F3E2E9300D979F0 /* AddFeedDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddFeedDialog.m; sourceTree = "<group>"; };
 		DFCDFB0B0F3E2E9300D979F0 /* MainMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainMenuController.h; sourceTree = "<group>"; };
@@ -433,7 +430,6 @@
 			isa = PBXGroup;
 			children = (
 				DF5A244E0F11366F00F5F19F /* UnderstudyAsset.h */,
-				DFC8771A0F93D733002716B0 /* UNDAssetProvider.h */,
 				DFCDFC510F3E72A400D979F0 /* BaseUnderstudyAsset.h */,
 				DFCDFC520F3E72A400D979F0 /* BaseUnderstudyAsset.m */,
 				DF5A23920F11240400F5F19F /* BaseController.h */,
@@ -478,8 +474,6 @@
 				DFCDFB0E0F3E2E9300D979F0 /* ManageFeedsDialog.m */,
 				DFCDFB0F0F3E2E9300D979F0 /* RenameDialog.h */,
 				DFCDFB100F3E2E9300D979F0 /* RenameDialog.m */,
-				DFC8771F0F93D9EF002716B0 /* UNDMenuAsset.h */,
-				DFC877200F93D9EF002716B0 /* UNDMenuAsset.m */,
 			);
 			path = Menuing;
 			sourceTree = "<group>";
