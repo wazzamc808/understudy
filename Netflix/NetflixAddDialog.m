@@ -101,10 +101,13 @@ NSString* NETFLIXTITLES[] = {
   searchRange = NSMakeRange(NSMaxRange(start), 
                             [contents length]-NSMaxRange(start));
   end = [contents rangeOfString:@"\"" options:0 range:searchRange]; 
-  if( start.location == NSNotFound || end.location == NSNotFound) return;
+  if (start.location == NSNotFound || end.location == NSNotFound) return;
   queueRange = NSMakeRange(start.location, end.location-start.location);
-  queue_ = [[contents substringWithRange:queueRange] retain];
-  [self addOptionText:@"My Watch Instantly Queue"];
+  if ((queueRange.location + queueRange.length) <= [contents length])
+  {
+    queue_ = [[contents substringWithRange:queueRange] retain];
+    [self addOptionText:@"My Watch Instantly Queue"];
+  }
 }
 
 # pragma mark NSURLConnection Delegation
