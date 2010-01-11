@@ -100,14 +100,18 @@ NSString* NETFLIXTITLES[] = {
   start = [contents rangeOfString:@"http://rss.netflix.com/QueueEDRSS?id="];
   searchRange = NSMakeRange(NSMaxRange(start), 
                             [contents length]-NSMaxRange(start));
-  end = [contents rangeOfString:@"\"" options:0 range:searchRange]; 
-  if (start.location == NSNotFound || end.location == NSNotFound) return;
-  queueRange = NSMakeRange(start.location, end.location-start.location);
-  if ((queueRange.location + queueRange.length) <= [contents length])
-  {
-    queue_ = [[contents substringWithRange:queueRange] retain];
-    [self addOptionText:@"My Watch Instantly Queue"];
+  if ((searchRange.location + searchRange.length) <= [contents length]) {
+    end = [contents rangeOfString:@"\"" options:0 range:searchRange]; 
+    if (start.location != NSNotFound && end.location != NSNotFound) {
+      queueRange = NSMakeRange(start.location, end.location-start.location);
+      if ((queueRange.location + queueRange.length) <= [contents length])
+      {
+        queue_ = [[contents substringWithRange:queueRange] retain];
+        [self addOptionText:@"My Watch Instantly Queue"];
+      }
+    }
   }
+  [contents release];
 }
 
 # pragma mark NSURLConnection Delegation
