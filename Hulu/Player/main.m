@@ -35,7 +35,8 @@ int main(int argc, char* argv[])
 
   // the url to load should be the first argument
   if( argc < 1 ) return 1;
-  url = [NSURL URLWithString:[NSString stringWithCString:argv[1]]];
+  url = [NSURL URLWithString:[NSString stringWithCString:argv[1]
+                                                encoding:NSUTF8StringEncoding]];
   if(!url) return 1;
 
   player = [[UNDHuluPlayer alloc] init];
