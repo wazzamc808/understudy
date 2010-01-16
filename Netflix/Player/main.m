@@ -23,26 +23,38 @@
 #import "RemoteControl.h"
 #import "RemoteControlContainer.h"
 
-#import "UNDHuluPlayer.h"
+#import "UNDNetflixPlayer.h"
 
 int main(int argc, char* argv[])
 {
   [NSApplication sharedApplication];
   NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-  NSURL* url;
+  NSURL* url = nil;
   RemoteControlContainer* controls;
-  UNDHuluPlayer* player;
+  UNDNetflixPlayer* player;
+  BOOL returnToFR = NO;
+  
+  int i;
+  for (i = 1; i < argc; i++){
+    NSString* arg = [NSString stringWithCString:argv[i]
+                                       encoding:NSUTF8StringEncoding];
+    if ([arg compare:@"--FR"] == NSOrderedSame) returnToFR = YES;
+    else url = [NSURL URLWithString:arg];
+  }
+  
+  if(!url) {
+    NSLog (@"NetflixPlayer: no valid URL given", argv[1]);
+  } else {
+    NSLog (@"NetflixPlayer: loading URL %@",[url absoluteString]);
+  }
 
-  // the url to load should be the first argument
-  if( argc < 1 ) return 1;
-  url = [NSURL URLWithString:[NSString stringWithCString:argv[1]
-                                                encoding:NSUTF8StringEncoding]];
-  if(!url) return 1;
-
-  player = [[UNDHuluPlayer alloc] init];
+  player = [[UNDNetflixPlayer alloc] init];
+  [player setShouldReturnToFR:returnToFR];
+  
   controls = [[RemoteControlContainer alloc] initWithDelegate:player];
   [controls instantiateAndAddRemoteControlDeviceWithClass:[AppleRemote class]];
-  [controls instantiateAndAddRemoteControlDeviceWithClass:[FrontRowKeyboardDevice class]];
+  Class keyboardDevice = [FrontRowKeyboardDevice class];
+  [controls instantiateAndAddRemoteControlDeviceWithClass:keyboardDevice];
   [controls startListening:player];
 
   [player loadURL:url];

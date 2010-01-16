@@ -28,6 +28,7 @@
  @private
   NetflixAsset* asset_;
   UNDPluginControl* pluginControl_;
+  NSTask*   player_;
   NSWindow* window_;
 }
 
