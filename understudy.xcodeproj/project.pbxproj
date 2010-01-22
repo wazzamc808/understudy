@@ -47,6 +47,8 @@
 		DF37B9120F5AF1F70017766F /* UNDiPlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF37B9110F5AF1F70017766F /* UNDiPlayerController.m */; };
 		DF3D0F640F54CA3E0089CF2B /* LoadingAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = DF3D0F630F54CA3E0089CF2B /* LoadingAsset.m */; };
 		DF50285E0F7D86A200B04C78 /* UNDYouTubeAddDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = DF50285D0F7D86A200B04C78 /* UNDYouTubeAddDialog.m */; };
+		DF54B44F1106994D006F0930 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF54B44E1106994D006F0930 /* CoreAudio.framework */; };
+		DF54B4B911095D36006F0930 /* UNDVolumeControl.m in Sources */ = {isa = PBXBuildFile; fileRef = DF54B4B811095D36006F0930 /* UNDVolumeControl.m */; };
 		DF5A22210F0FC18200F5F19F /* YouTubeAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = DF5A22200F0FC18200F5F19F /* YouTubeAsset.m */; };
 		DF5A22250F0FD6B400F5F19F /* YouTubeFeed.m in Sources */ = {isa = PBXBuildFile; fileRef = DF5A22240F0FD6B400F5F19F /* YouTubeFeed.m */; };
 		DF5A223C0F100E4300F5F19F /* FeedMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF5A22390F100E4300F5F19F /* FeedMenuController.m */; };
@@ -180,6 +182,9 @@
 		DF3D0F630F54CA3E0089CF2B /* LoadingAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadingAsset.m; sourceTree = "<group>"; };
 		DF50285C0F7D86A200B04C78 /* UNDYouTubeAddDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UNDYouTubeAddDialog.h; sourceTree = "<group>"; };
 		DF50285D0F7D86A200B04C78 /* UNDYouTubeAddDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UNDYouTubeAddDialog.m; sourceTree = "<group>"; };
+		DF54B44E1106994D006F0930 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
+		DF54B4B711095D36006F0930 /* UNDVolumeControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UNDVolumeControl.h; sourceTree = "<group>"; };
+		DF54B4B811095D36006F0930 /* UNDVolumeControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UNDVolumeControl.m; sourceTree = "<group>"; };
 		DF5A221F0F0FC18200F5F19F /* YouTubeAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YouTubeAsset.h; sourceTree = "<group>"; };
 		DF5A22200F0FC18200F5F19F /* YouTubeAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YouTubeAsset.m; sourceTree = "<group>"; };
 		DF5A22230F0FD6B400F5F19F /* YouTubeFeed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YouTubeFeed.h; sourceTree = "<group>"; };
@@ -270,6 +275,7 @@
 				DFC24ED71068360500B4D149 /* Carbon.framework in Frameworks */,
 				DFC24ED81068360500B4D149 /* Security.framework in Frameworks */,
 				DFC24ED91068360500B4D149 /* BackRow.framework in Frameworks */,
+				DF54B44F1106994D006F0930 /* CoreAudio.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -284,6 +290,7 @@
 				089C167CFE841241C02AAC07 /* Resources */,
 				089C1671FE841209C02AAC07 /* Frameworks and Libraries */,
 				19C28FB8FE9D52D311CA2CBB /* Products */,
+				DF54B44E1106994D006F0930 /* CoreAudio.framework */,
 			);
 			name = HelloWorld;
 			sourceTree = "<group>";
@@ -442,6 +449,8 @@
 		DF37B8E40F5AE9400017766F /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				DF54B4B711095D36006F0930 /* UNDVolumeControl.h */,
+				DF54B4B811095D36006F0930 /* UNDVolumeControl.m */,
 				DFE8E7B40F52130200A5E120 /* UNDPreferenceManager.h */,
 				DFE8E7B50F52130200A5E120 /* UNDPreferenceManager.m */,
 				DF37B8CD0F5AE0940017766F /* UNDNSXMLElement+Parsing.h */,
@@ -763,6 +772,7 @@
 				DFC24ED21068360500B4D149 /* UNDPasswordProvider.m in Sources */,
 				DFC24F42106867E800B4D149 /* main.m in Sources */,
 				DFC24F43106867E800B4D149 /* UNDNetflixPlayer.m in Sources */,
+				DF54B4B911095D36006F0930 /* UNDVolumeControl.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
