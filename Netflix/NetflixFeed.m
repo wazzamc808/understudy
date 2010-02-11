@@ -1,5 +1,5 @@
 //
-//  Copyright 2008-2009 Kirk Kelsey.
+//  Copyright 2008-2010 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -16,8 +16,8 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
+#import "LoadingAsset.h"
 #import "NetflixFeed.h"
-#import "NetflixAsset.h"
 #import "NetflixController.h"
 
 #import <BRControllerStack.h>
@@ -57,7 +57,9 @@
   for( NSXMLElement* feeditem in feeditems ){
     NetflixAsset* asset = [[NetflixAsset alloc] initWithXMLElement:feeditem];
     [assets addObject:asset];
+    [asset setDelegate:self];
   }
+  assets_ = assets;
   return assets;
 }
 
@@ -71,8 +73,14 @@
 
 - (BRController*)controller
 {
-  FeedMenuController* con = [FeedMenuController alloc];
-  return [con initWithDelegate:self];
+  if (!controller_)
+    controller_ = [[FeedMenuController alloc] initWithDelegate:self];
+  return controller_;
+}
+
+- (void)assetUpdated:(NetflixAsset*)asset
+{
+  [[controller_ list] reload];
 }
 
 @end

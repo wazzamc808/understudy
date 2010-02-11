@@ -1,5 +1,5 @@
 //
-//  Copyright 2008-2009 Kirk Kelsey.
+//  Copyright 2008-2010 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -22,14 +22,18 @@
 
 #import "BaseUnderstudyAsset.h"
 #import "FeedMenuController.h"
+#import "NetflixAsset.h"
 
 @class BRTextMenuItemLayer;
 
-@interface NetflixFeed : BaseUnderstudyAsset <FeedDelegate>
+@interface NetflixFeed : BaseUnderstudyAsset
+<FeedDelegate, UNDNetflixAssetUpdateDelegate>
 {
- @private 
+ @private
+  NSMutableArray* assets_;
   NSURL* url_;
   NSString* title_;
+  FeedMenuController* controller_;
 }
 
 - (id)initWithTitle:(NSString*)title forUrl:(NSURL*)url;
