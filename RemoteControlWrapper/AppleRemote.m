@@ -39,6 +39,9 @@ const char* AppleRemoteDeviceName = "AppleIRController";
 #ifndef NSAppKitVersionNumber10_4
 	#define NSAppKitVersionNumber10_4 824
 #endif
+#ifndef NSAppKitVersionNumber10_5
+#define NSAppKitVersionNumber10_5 949
+#endif
 
 @implementation AppleRemote
 
