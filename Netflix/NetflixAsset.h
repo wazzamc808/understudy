@@ -1,5 +1,5 @@
 //
-//  Copyright 2008-2009 Kirk Kelsey.
+//  Copyright 2008-2010 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -31,6 +31,12 @@
 //
 // Represents the attributes of a Netflix Video
 
+@class NetflixAsset;
+
+@protocol UNDNetflixAssetUpdateDelegate
+- (void)assetUpdated:(NetflixAsset*)asset;
+@end
+
 @interface NetflixAsset : BaseUnderstudyAsset <UnderstudyAsset> {
  @private
   NSString* title_;
@@ -40,6 +46,8 @@
   BRImageManager* imageManager_;
   BRTextMenuItemLayer* menuitem_;
   UNDNetflixCollection* collection_;
+  id<UNDNetflixAssetUpdateDelegate> delegate_;
+  BOOL startsWithSpinner_;
 }
 
 // designated initializer
@@ -52,4 +60,7 @@
 
 // Provides the primary url of the media.
 - (NSURL*)url;
+
+- (void)setDelegate:(id<UNDNetflixAssetUpdateDelegate>)delegate;
+
 @end

@@ -22,6 +22,7 @@
 #import "UNDPasswordProvider.h"
 #import "UNDPluginControl.h"
 #import "UNDPreferenceManager.h"
+#import "UNDVolumeControl.h"
 
 #import "BRSettingsFacade.h"
 
@@ -29,6 +30,8 @@
 
 #define AGENTSTRING @"Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_1; en-us)"\
 " AppleWebKit/531.9 (KHTML, like Gecko) Version/4.0.3 Safari/531.9"
+
+//void changeVolume (float delta);
 
 @implementation UNDNetflixPlayer
 
@@ -276,15 +279,12 @@ void PostMouseEvent (CGPoint point, int a, int b, int c)
                 remoteControl:(RemoteControl*)remoteControl 
 {
   // ignore button release events
-  BRSettingsFacade* settings;
   switch(event){
     case kRemoteButtonPlus:
-      settings = [BRSettingsFacade sharedInstance];
-      [settings setSystemVolume:([settings systemVolume]+0.05)];
+      changeVolume (0.05);
       break;
     case kRemoteButtonMinus:
-      settings = [BRSettingsFacade sharedInstance];
-      [settings setSystemVolume:([settings systemVolume]-0.05)];
+      changeVolume (-0.05);
       break;
     case kRemoteButtonMenu:
       [self returnToFrontRow];

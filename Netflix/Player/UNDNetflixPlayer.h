@@ -1,5 +1,5 @@
 //
-//  Copyright 2008-2009 Kirk Kelsey.
+//  Copyright 2008-2010 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -16,6 +16,7 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
+#import <AppKit/AppKit.h>
 #import <Cocoa/Cocoa.h>
 #import <WebKit/WebKit.h>
 
@@ -23,7 +24,7 @@
 #import "UNDPluginControl.h"
 #import "RemoteControl.h"
 
-@interface UNDNetflixPlayer : NSObject <NSWindowDelegate> {
+@interface UNDNetflixPlayer : NSObject {
   WebView*               mainView_;
   UNDPluginControl*      pluginControl_;
   UNDPluginControl*      fsControl_;

@@ -45,11 +45,11 @@
 
   [self registerHotKeyCode:125
                  modifiers:0
-     remoteEventIdentifier:kRemoteButtonPlus];
+     remoteEventIdentifier:kRemoteButtonMinus];
 
   [self registerHotKeyCode:126
                  modifiers:0
-     remoteEventIdentifier:kRemoteButtonMinus];
+     remoteEventIdentifier:kRemoteButtonPlus];
 
   // ESC
   [self registerHotKeyCode:53

@@ -1,5 +1,5 @@
 //
-//  Copyright 2008-2009 Kirk Kelsey.
+//  Copyright 2008-2010 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -40,6 +40,7 @@
           mediaID:(NSString*)mediaID 
       description:(NSString*)description 
 {
+  startsWithSpinner_ = NO;
   imageManager_ = [BRImageManager sharedInstance];
   [super init];
   url_ = [[NSURL URLWithString:url] retain];
@@ -55,7 +56,6 @@
 - (id)initWithXMLElement:(NSXMLElement*) dom
 {
   NSString *mediaID, *url, *title;
-
   imageManager_ = [BRImageManager sharedInstance];
   [super init];
   
@@ -85,7 +85,7 @@
                                                        withString:@"\n"];
 
   [self initWithUrl:url title:title mediaID:mediaID description:description];
-  
+  startsWithSpinner_ = YES;
   return self;
 }
 
@@ -135,6 +135,7 @@
     menuitem_ = [BRTextMenuItemLayer menuItem];
     [menuitem_ setTitle:[self title]];
     [menuitem_ retain];
+    [menuitem_ setWaitSpinnerActive:startsWithSpinner_];
   }
   return menuitem_;  
 }
@@ -172,13 +173,18 @@
   collection_ = [[UNDNetflixCollection alloc] initWithTitle:title_ forUrl:url];
   if( collection_ )
   {
-    [menuitem_ release];
     menuitem_ = [BRTextMenuItemLayer folderMenuItem];
-    menuitem_ = [BRTextMenuItemLayer menuItem];
     [menuitem_ setTitle:[self title]];
     [menuitem_ retain];
   }
+  [menuitem_ setWaitSpinnerActive:NO];
+  if (delegate_) [delegate_ assetUpdated:self];
   [pool release];
 }
-  
+
+- (void)setDelegate:(id<UNDNetflixAssetUpdateDelegate>)delegate
+{
+  delegate_ = delegate;
+}
+
 @end

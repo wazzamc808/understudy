@@ -1,5 +1,5 @@
 //
-//  Copyright 2008-2010 Kirk Kelsey.
+//  Copyright 2010 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -16,26 +16,4 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
-#import <Cocoa/Cocoa.h>
-
-#import <BRMediaMenuController.h>
-
-#import "BaseUnderstudyAsset.h"
-#import "FeedMenuController.h"
-#import "NetflixAsset.h"
-
-@class BRTextMenuItemLayer;
-
-@interface NetflixFeed : BaseUnderstudyAsset
-<FeedDelegate, UNDNetflixAssetUpdateDelegate>
-{
- @private
-  NSMutableArray* assets_;
-  NSURL* url_;
-  NSString* title_;
-  FeedMenuController* controller_;
-}
-
-- (id)initWithTitle:(NSString*)title forUrl:(NSURL*)url;
-
-@end
+void changeVolume (float delta);
