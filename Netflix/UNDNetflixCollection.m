@@ -1,5 +1,5 @@
 //
-//  Copyright 2009 Kirk Kelsey.
+//  Copyright 2009-2010 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -45,8 +45,8 @@
 
 - (NSArray*)currentAssets
 {
-  if( assets_ ) return assets_;
-  
+  if (assets_) return assets_;
+
   NSMutableArray* assets = [[NSMutableArray alloc] init];
   NSError* err;
   
@@ -57,44 +57,57 @@
                                                 error:&err] autorelease];
   NSXMLElement* movieDiv = nil;
   NSXMLElement* root = [doc rootElement];
-  NSArray *items = [[[root nodesForXPath:@"//*[@id='mdpSeriesEpisodes']"  
+  NSArray *items = [[[root nodesForXPath:@"//*[@id='mdp-series']"  
                                    error:nil] retain] autorelease];
-  if( [items count] > 0 )  movieDiv = [items objectAtIndex:0];
+  if ([items count] > 0)  movieDiv = [items objectAtIndex:0];
   else return nil;
 
+  NSString* seriesClass 
+  = @"dl[@class='series-mapping']/dd | dl[@class='series-episodes']/dd";
+
   // find all the instant watch movie nodes
-  NSString* path = @"//div[@class='movie seriesMember seriesMemberShowLength']";
-  items = [doc nodesForXPath:path  error: nil];
-  int icount = [items count];
-  int j;
-  for (j=0; j < icount; j++) {
-    NSXMLElement* node = [items objectAtIndex:j];
-    
-    NSArray* myid = [node nodesForXPath:@"span[@class='title']" error:nil];
-    NSString* _title = [[[[myid lastObject] stringValue] retain] autorelease];
-    
-    NSArray* mylink = [node nodesForXPath:@"span/span/a/@href" 
-                                    error:nil];
-    NSString* _href = [[[[mylink lastObject] stringValue] retain] autorelease];  
-    
-    NSArray* myDes = [node nodesForXPath:@"div[@class='episodeDetails']" 
-                                   error:nil];
-    NSString* _des = [[[[myDes lastObject] stringValue] retain] autorelease];  
-    
-    // skip the items that are only available on the DVD
-    if( [_href rangeOfString:@"WiPlayer"].location != NSNotFound 
-       && _href && _title && _des)
+  NSArray *discs = [[[movieDiv nodesForXPath:seriesClass
+                                       error:nil] retain] autorelease];
+
+  NSString* seriesButton = @"dl/dd[starts-with(@class,'series-button ep')]";
+  for (NSXMLElement* disc in discs) 
+  {
+    NSArray* episodes = [[[disc nodesForXPath:seriesButton
+                                       error:nil] retain] autorelease];
+    for (NSXMLElement* node in episodes)
     {
-      @try {
-        NetflixAsset* asset = [[NetflixAsset alloc] initWithUrl:_href
-                                                          title:_title 
-                                                        mediaID:mediaID
-                                                    description:_des];
-        [assets addObject:asset];
-      }
-      @catch (NSException *exception) {
-        NSLog(@"exception: %@",exception);
-        NSLog(@"href = %@",_href);
+      NSString* attr = [[node attributeForName:@"class"] stringValue];
+      NSString* episode = [[attr componentsSeparatedByString:@" "] lastObject];
+      NSString* titleClass = [NSString stringWithFormat:@"dl/dt[@class='title %@']",
+                                       episode];
+
+      NSArray* myid = [disc nodesForXPath:titleClass error:nil];
+      NSString* title = [[[[myid lastObject] stringValue] retain] autorelease];
+
+      NSArray* mylink = [node nodesForXPath:@"span/a/@href" error:nil];
+      NSString* href = [[[[mylink lastObject] stringValue] retain] autorelease];
+
+      NSString* descPath = [NSString stringWithFormat:@"dl/dd[starts-with(@class,'details %@')]/p", episode];
+      NSArray* Desc = [disc nodesForXPath:descPath error:nil];
+      NSString* des = [[[[Desc lastObject] stringValue] retain] autorelease];
+
+      // skip the items that are only available on the DVD
+      if ([href rangeOfString:@"WiPlayer"].location != NSNotFound
+          && href && title && des)
+      {
+        @try 
+        {
+          NetflixAsset* asset = [[NetflixAsset alloc] initWithUrl:href
+                                                            title:title 
+                                                          mediaID:mediaID
+                                                      description:des];
+          [assets addObject:asset];
+        }
+        @catch (NSException *exception) 
+        {
+          NSLog(@"exception: %@",exception);
+          NSLog(@"href = %@",href);
+        }
       }
     }
   }
