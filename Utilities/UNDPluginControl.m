@@ -79,19 +79,27 @@
   return pluginView_;
 }
 
+// TODO: when Safari 3 is phased out, simplify the check for sendEvent
 - (void)sendPluginKeyCode:(int)keyCode
              withCharCode:(int)charCode
              andModifiers:(int)modifiers
 {
   if( ![self plugin] )return;
-  if( ![pluginView_ respondsToSelector:@selector(sendEvent:)] ) return;
   EventRecord event;
   event.what = keyDown;
   event.message = (keyCode << 8) + charCode;
   event.modifiers = modifiers;
-  [(id)pluginView_ sendEvent:(NSEvent *)&event];
+  if( [pluginView_ respondsToSelector:@selector(sendEvent:)] ){
+    [(id) pluginView_ sendEvent:(NSEvent*) &event];
+  }else if( [pluginView_ respondsToSelector:@selector(sendEvent:isDrawRect:)]){
+    [(id) pluginView_ sendEvent:(NSEvent*) &event isDrawRect:NO];
+  }
   event.what = keyUp;
-  [(id)pluginView_ sendEvent:(NSEvent *)&event];
+  if( [pluginView_ respondsToSelector:@selector(sendEvent:)] ){
+    [(id) pluginView_ sendEvent:(NSEvent*) &event];
+  }else if( [pluginView_ respondsToSelector:@selector(sendEvent:isDrawRect:)]){
+    [(id) pluginView_ sendEvent:(NSEvent*) &event isDrawRect:NO];
+  }
 }
 
 - (void)sendPluginKeyCode:(int)keyCode withCharCode:(int)charCode
@@ -103,7 +111,6 @@
 // (0,0) is top left, but negative values are measured from the bottom/right
 - (void)sendPluginMouseClickAtPoint:(NSPoint)point
 {
-  if( ![pluginView_ respondsToSelector:@selector(sendEvent:)] ) return;
   EventRecord record;
   NSPoint orig = [pluginView_ frame].origin;
   record.modifiers = btnState;
@@ -113,9 +120,18 @@
   record.where.h = orig.x + point.x;
   record.where.v = orig.y + point.y;
 
-  [pluginView_ sendEvent:(NSEvent *)&record];
-  record.what = mouseUp;
+  if( [pluginView_ respondsToSelector:@selector(sendEvent:)]){
+    [(id) pluginView_ sendEvent:(NSEvent*) &record];
+  }else if( [pluginView_ respondsToSelector:@selector(sendEvent:isDrawRect:)]){
+    [(id) pluginView_ sendEvent:(NSEvent*) &record isDrawRect:NO];
+  }  record.what = mouseUp;
+
   record.when = TickCount();
-  [pluginView_ sendEvent:(NSEvent *)&record];
+
+  if( [pluginView_ respondsToSelector:@selector(sendEvent:)]){
+    [(id) pluginView_ sendEvent:(NSEvent *)&record];
+  }else if( [pluginView_ respondsToSelector:@selector(sendEvent:isDrawRect:)]){
+    [(id) pluginView_ sendEvent:(NSEvent *)&record isDrawRect:NO];
+  }
 }
 @end
