@@ -108,6 +108,7 @@
 - (id)itemForRow:(long)row
 {
   if ([assets_ count] == 0) return nil;
+  if ([assets_ count] <= row) return nil;
   NSObject<UnderstudyAsset>* asset = [assets_ objectAtIndex:row];
   if( [asset respondsToSelector:@selector(menuItemForMenu:)] )
     return [asset menuItemForMenu:[delegate_ title]];
