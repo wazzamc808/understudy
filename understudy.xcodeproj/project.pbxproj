@@ -79,6 +79,7 @@
 		DFC24EE11068364800B4D149 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DF318FFE0FC5B916004CE50D /* main.m */; };
 		DFC24F42106867E800B4D149 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DFC24F3F106867E800B4D149 /* main.m */; };
 		DFC24F43106867E800B4D149 /* UNDNetflixPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = DFC24F41106867E800B4D149 /* UNDNetflixPlayer.m */; };
+		DFC877210F93D9EF002716B0 /* UNDMenuAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = DFC877200F93D9EF002716B0 /* UNDMenuAsset.m */; };
 		DFCDFB110F3E2E9300D979F0 /* AddFeedDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = DFCDFB0A0F3E2E9300D979F0 /* AddFeedDialog.m */; };
 		DFCDFB120F3E2E9300D979F0 /* MainMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFCDFB0C0F3E2E9300D979F0 /* MainMenuController.m */; };
 		DFCDFB130F3E2E9300D979F0 /* ManageFeedsDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = DFCDFB0E0F3E2E9300D979F0 /* ManageFeedsDialog.m */; };
@@ -215,6 +216,9 @@
 		DFC24F3F106867E800B4D149 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		DFC24F40106867E800B4D149 /* UNDNetflixPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UNDNetflixPlayer.h; sourceTree = "<group>"; };
 		DFC24F41106867E800B4D149 /* UNDNetflixPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UNDNetflixPlayer.m; sourceTree = "<group>"; };
+		DFC8771A0F93D733002716B0 /* UNDAssetProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UNDAssetProvider.h; sourceTree = "<group>"; };
+		DFC8771F0F93D9EF002716B0 /* UNDMenuAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UNDMenuAsset.h; sourceTree = "<group>"; };
+		DFC877200F93D9EF002716B0 /* UNDMenuAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UNDMenuAsset.m; sourceTree = "<group>"; };
 		DFCDFB090F3E2E9300D979F0 /* AddFeedDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddFeedDialog.h; sourceTree = "<group>"; };
 		DFCDFB0A0F3E2E9300D979F0 /* AddFeedDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddFeedDialog.m; sourceTree = "<group>"; };
 		DFCDFB0B0F3E2E9300D979F0 /* MainMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainMenuController.h; sourceTree = "<group>"; };
@@ -482,6 +486,7 @@
 			isa = PBXGroup;
 			children = (
 				DF5A244E0F11366F00F5F19F /* UnderstudyAsset.h */,
+				DFC8771A0F93D733002716B0 /* UNDAssetProvider.h */,
 				DFCDFC510F3E72A400D979F0 /* BaseUnderstudyAsset.h */,
 				DFCDFC520F3E72A400D979F0 /* BaseUnderstudyAsset.m */,
 				DF5A23920F11240400F5F19F /* BaseController.h */,
@@ -537,6 +542,8 @@
 				DFCDFB0E0F3E2E9300D979F0 /* ManageFeedsDialog.m */,
 				DFCDFB0F0F3E2E9300D979F0 /* RenameDialog.h */,
 				DFCDFB100F3E2E9300D979F0 /* RenameDialog.m */,
+				DFC8771F0F93D9EF002716B0 /* UNDMenuAsset.h */,
+				DFC877200F93D9EF002716B0 /* UNDMenuAsset.m */,
 			);
 			path = Menuing;
 			sourceTree = "<group>";
@@ -723,6 +730,7 @@
 				DF0DA2000F817BCE004AF3C3 /* UNDiPlayerAddDialog.m in Sources */,
 				DF7D07740F86A67B0014A0FB /* UNDPasswordProvider.m in Sources */,
 				DF6F9F880F9263AA00AB41CF /* UNDNetflixCollection.m in Sources */,
+				DFC877210F93D9EF002716B0 /* UNDMenuAsset.m in Sources */,
 				DF3197D00FCCE3BD004CE50D /* UNDPluginControl.m in Sources */,
 				DF3198130FCF7F1C004CE50D /* UNDHuluDesktopAsset.m in Sources */,
 				DF3198480FCF8169004CE50D /* UNDHuluDesktopController.m in Sources */,
@@ -839,7 +847,6 @@
 				GCC_PFE_FILE_C_DIALECTS = "c objective-c";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = understudy_Prefix.pch;
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/BRHeaders/";
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "/System/Library/CoreServices/Front Row.app/Contents/PlugIns/";
 				LD_OPENMP_FLAGS = "";
