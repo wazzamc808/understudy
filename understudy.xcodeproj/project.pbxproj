@@ -118,6 +118,7 @@
 		089C1672FE841209C02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		089C167FFE841241C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		34E1C7EC119B2587001ED87C /* NetflixPlayer-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "NetflixPlayer-Info.plist"; sourceTree = "<group>"; };
 		8D5B49B6048680CD000E48DA /* frUnderstudy.frappliance */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = frUnderstudy.frappliance; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		918B27AF0D7CFB2100D87AC2 /* UnderstudyAppliance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnderstudyAppliance.h; sourceTree = "<group>"; };
@@ -212,7 +213,6 @@
 		DFA512340F1A92D900FC903B /* YouTubeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YouTubeController.h; sourceTree = "<group>"; };
 		DFA512350F1A92F300FC903B /* YouTubeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YouTubeController.m; sourceTree = "<group>"; };
 		DFC24EDE1068360500B4D149 /* NetflixPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NetflixPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		DFC24EE01068360500B4D149 /* NetflixPlayer-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "NetflixPlayer-Info.plist"; sourceTree = "<group>"; };
 		DFC24F3F106867E800B4D149 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		DFC24F40106867E800B4D149 /* UNDNetflixPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UNDNetflixPlayer.h; sourceTree = "<group>"; };
 		DFC24F41106867E800B4D149 /* UNDNetflixPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UNDNetflixPlayer.m; sourceTree = "<group>"; };
@@ -312,12 +312,12 @@
 		089C167CFE841241C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				34E1C7EC119B2587001ED87C /* NetflixPlayer-Info.plist */,
 				DF0EDFCA0EE5E187008FA08A /* English.lproj */,
 				DFCDFB1A0F3E2F7800D979F0 /* ApplianceIcon.png */,
 				8D5B49B7048680CD000E48DA /* Info.plist */,
 				DF3197E30FCF54FB004CE50D /* HuluDesktop-Info.plist */,
 				DF318F300FC4B418004CE50D /* HuluPlayer-Info.plist */,
-				DFC24EE01068360500B4D149 /* NetflixPlayer-Info.plist */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -690,7 +690,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "mkdir -p $TARGET_BUILD_DIR/$SHARED_SUPPORT_FOLDER_PATH/\ncp -r $TARGET_BUILD_DIR/HuluPlayer.app/ $TARGET_BUILD_DIR/$SHARED_SUPPORT_FOLDER_PATH/\ncp -r $TARGET_BUILD_DIR/HuluDesktop.app/ $TARGET_BUILD_DIR/$SHARED_SUPPORT_FOLDER_PATH/\ncp -r $TARGET_BUILD_DIR/NetflixPlayer.app/ $TARGET_BUILD_DIR/$SHARED_SUPPORT_FOLDER_PATH/";
+			shellScript = "mkdir -p $TARGET_BUILD_DIR/$SHARED_SUPPORT_FOLDER_PATH/\ncp -r $TARGET_BUILD_DIR/HuluPlayer.app $TARGET_BUILD_DIR/$SHARED_SUPPORT_FOLDER_PATH/\ncp -r $TARGET_BUILD_DIR/HuluDesktop.app $TARGET_BUILD_DIR/$SHARED_SUPPORT_FOLDER_PATH/\ncp -r $TARGET_BUILD_DIR/NetflixPlayer.app $TARGET_BUILD_DIR/$SHARED_SUPPORT_FOLDER_PATH/";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1015,7 +1015,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/**";
-				INFOPLIST_FILE = "/Users/kelsey/Documents/Projects/understudy/branches/kelsey/NetflixPlayer-Info.plist";
+				INFOPLIST_FILE = "NetflixPlayer-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -1044,7 +1044,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/**";
-				INFOPLIST_FILE = "/Users/kelsey/Documents/Projects/understudy/branches/kelsey/NetflixPlayer-Info.plist";
+				INFOPLIST_FILE = "NetflixPlayer-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
 					"-framework",
