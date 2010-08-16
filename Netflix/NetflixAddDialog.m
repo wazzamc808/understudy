@@ -93,25 +93,34 @@ NSString* NETFLIXTITLES[] = {
 - (void)_autoDiscover
 {
   NSStringEncoding encoding = NSISOLatin1StringEncoding;
-  NSString *contents;
   NSRange start, end, searchRange, queueRange;
-  
-  contents = [[NSString alloc] initWithData:pageData_ encoding:encoding];
+
+  // Convert the URL contents to a string.
+  NSString* contents = [[[NSString alloc] initWithData:pageData_
+                                              encoding:encoding] autorelease];
+  // Identify the beginning of the URL for "My" queue.
   start = [contents rangeOfString:@"http://rss.netflix.com/QueueEDRSS?id="];
+  if (start.location == NSNotFound) return;
+
+  // Construct a range covering everything after the |start| identifier up to
+  // the end of the |contents| string. The length is 1> the valid position.
   searchRange = NSMakeRange(NSMaxRange(start), 
-                            [contents length]-NSMaxRange(start));
-  if ((searchRange.location + searchRange.length) <= [contents length]) {
-    end = [contents rangeOfString:@"\"" options:0 range:searchRange]; 
-    if (start.location != NSNotFound && end.location != NSNotFound) {
-      queueRange = NSMakeRange(start.location, end.location-start.location);
-      if ((queueRange.location + queueRange.length) <= [contents length])
-      {
-        queue_ = [[contents substringWithRange:queueRange] retain];
-        [self addOptionText:@"My Watch Instantly Queue"];
-      }
-    }
+                            [contents length] - NSMaxRange(start) - 1);
+
+  assert (NSMaxRange(searchRange) <= [contents length]);
+
+  // Find the matching quote that ends the URL.
+  end = [contents rangeOfString:@"\"" options:0 range:searchRange];
+
+  if (end.location == NSNotFound) return;
+
+  // Add a new option for the discovered queue.
+  queueRange = NSMakeRange(start.location, end.location-start.location);
+  if ((queueRange.location + queueRange.length) <= [contents length])
+  {
+    queue_ = [[contents substringWithRange:queueRange] retain];
+    [self addOptionText:@"My Watch Instantly Queue"];
   }
-  [contents release];
 }
 
 # pragma mark NSURLConnection Delegation
