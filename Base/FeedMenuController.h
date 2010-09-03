@@ -24,7 +24,7 @@
 @class BRTextMenuItemLayer;
 
 @protocol FeedDelegate <UnderstudyAsset>
-// return an autoreleased array of UnderStudyAsset objects. Feed delegates 
+// return an autoreleased array of UnderstudyAsset objects. Feed delegates 
 // should not load their assests until specifically asked.
 - (NSArray*) currentAssets;
 // feeds that are managed by the FR menu system should be named there
