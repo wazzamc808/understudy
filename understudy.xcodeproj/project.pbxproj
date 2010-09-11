@@ -46,6 +46,9 @@
 		DF37B8CF0F5AE0940017766F /* UNDNSXMLElement+Parsing.m in Sources */ = {isa = PBXBuildFile; fileRef = DF37B8CE0F5AE0940017766F /* UNDNSXMLElement+Parsing.m */; };
 		DF37B9120F5AF1F70017766F /* UNDiPlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF37B9110F5AF1F70017766F /* UNDiPlayerController.m */; };
 		DF3D0F640F54CA3E0089CF2B /* LoadingAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = DF3D0F630F54CA3E0089CF2B /* LoadingAsset.m */; };
+		DF444EF5123B25F9000331B7 /* PubSub.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF444EF4123B25F9000331B7 /* PubSub.framework */; };
+		DF444F33123C2661000331B7 /* PubSub.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF444EF4123B25F9000331B7 /* PubSub.framework */; };
+		DF444F34123C2663000331B7 /* PubSub.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF444EF4123B25F9000331B7 /* PubSub.framework */; };
 		DF50285E0F7D86A200B04C78 /* UNDYouTubeAddDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = DF50285D0F7D86A200B04C78 /* UNDYouTubeAddDialog.m */; };
 		DF54B44F1106994D006F0930 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF54B44E1106994D006F0930 /* CoreAudio.framework */; };
 		DF54B4B911095D36006F0930 /* UNDVolumeControl.m in Sources */ = {isa = PBXBuildFile; fileRef = DF54B4B811095D36006F0930 /* UNDVolumeControl.m */; };
@@ -182,6 +185,7 @@
 		DF37BA340F5B5DA70017766F /* UNDHuluSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UNDHuluSelector.m; sourceTree = "<group>"; };
 		DF3D0F620F54CA3E0089CF2B /* LoadingAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingAsset.h; sourceTree = "<group>"; };
 		DF3D0F630F54CA3E0089CF2B /* LoadingAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadingAsset.m; sourceTree = "<group>"; };
+		DF444EF4123B25F9000331B7 /* PubSub.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PubSub.framework; path = System/Library/Frameworks/PubSub.framework; sourceTree = SDKROOT; };
 		DF50285C0F7D86A200B04C78 /* UNDYouTubeAddDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UNDYouTubeAddDialog.h; sourceTree = "<group>"; };
 		DF50285D0F7D86A200B04C78 /* UNDYouTubeAddDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UNDYouTubeAddDialog.m; sourceTree = "<group>"; };
 		DF54B44E1106994D006F0930 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
@@ -246,6 +250,7 @@
 				DF2EB1960F574D5200D650B7 /* IOKit.framework in Frameworks */,
 				DF2EB2110F577F0C00D650B7 /* Carbon.framework in Frameworks */,
 				DF7D07680F86A0BE0014A0FB /* Security.framework in Frameworks */,
+				DF444EF5123B25F9000331B7 /* PubSub.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -258,6 +263,7 @@
 				DF3191C70FC5D62F004CE50D /* Carbon.framework in Frameworks */,
 				DF3195F50FC85BFB004CE50D /* Security.framework in Frameworks */,
 				DF3195F70FC85C43004CE50D /* BackRow.framework in Frameworks */,
+				DF444F34123C2663000331B7 /* PubSub.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -279,6 +285,7 @@
 				DFC24ED81068360500B4D149 /* Security.framework in Frameworks */,
 				DFC24ED91068360500B4D149 /* BackRow.framework in Frameworks */,
 				DF54B44F1106994D006F0930 /* CoreAudio.framework in Frameworks */,
+				DF444F33123C2661000331B7 /* PubSub.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -295,6 +302,7 @@
 				19C28FB8FE9D52D311CA2CBB /* Products */,
 				DF54B44E1106994D006F0930 /* CoreAudio.framework */,
 				DFC9BEB21273DE4D006B91FA /* AppKit.framework */,
+				DF444EF4123B25F9000331B7 /* PubSub.framework */,
 			);
 			name = HelloWorld;
 			sourceTree = "<group>";

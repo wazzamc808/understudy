@@ -8,8 +8,8 @@
 //  Software Foundation, either version 3 of the License, or (at your option)
 //  any later version.
 //
-//  Understudy is distributed in the hope that it will be useful, but WITHOUT 
-//  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
+//  Understudy is distributed in the hope that it will be useful, but WITHOUT
+//  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
 //  FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
 //  for more details.
 //
@@ -24,6 +24,8 @@
 #import "UnderstudyAppliance.h"
 
 #import <RUIPreferences.h>
+
+#import <PubSub/PubSub.h>
 
 #define DEFAULTS_DOMAIN @"com.apple.frontrow.appliance.understudy"
 
@@ -76,7 +78,7 @@ static UNDPreferenceManager *sharedInstance_;
     NSString* feed = [feeds_ objectAtIndex:index];
     return [NSURL URLWithString:feed];
   } else {
-    return nil;  
+    return nil;
   }
 }
 
@@ -137,17 +139,25 @@ static UNDPreferenceManager *sharedInstance_;
     [defaults setPersistentDomain:prefDict forName:DEFAULTS_DOMAIN];
     [FRprefs setObject:nil forKey:@"understudy"];
   }
-  
+
   prefDict = [defaults persistentDomainForName:DEFAULTS_DOMAIN];
 
   feeds_ = [[[prefDict objectForKey:@"feeds"] mutableCopy] retain];
   if( !feeds_ ) feeds_ = [[NSMutableArray alloc] init];
 
-  titles_ = [[[prefDict objectForKey:@"titles"] mutableCopy] retain];  
+  titles_ = [[[prefDict objectForKey:@"titles"] mutableCopy] retain];
   if( !titles_ ) titles_ = [[NSMutableArray alloc] init];
-  
+
   alertsDisabled_ = ( [prefDict objectForKey:@"disableAlerts"] != nil);
   debugMode_ = ( [prefDict objectForKey:@"debugMode"] != nil);
+
+  // ensure that all feeds are subscribed via PubSub
+  PSClient* psClient = [PSClient applicationClient];
+  for (NSString* urlString in feeds_) {
+    NSURL* url = [NSURL URLWithString:urlString];
+    PSFeed* feed = [psClient feedWithURL:url];
+    if (!feed) [psClient addFeedWithURL:url];
+  }
 }
 
 - (void)save
@@ -194,6 +204,9 @@ static UNDPreferenceManager *sharedInstance_;
     }while( [titles_ containsObject:newtitle]);
     title = newtitle;
   }
+
+  [[PSClient applicationClient] addFeedWithURL:[NSURL URLWithString:feedURL]];
+
   [feeds_ addObject:feedURL];
   [titles_ addObject:title];
   [self save];
@@ -204,14 +217,14 @@ static UNDPreferenceManager *sharedInstance_;
 {
   NSObject* item;
   // ensure the values are valid
-  if( from < 0 || ([titles_ count]-1) < from 
-     || to < 0 || ([titles_ count]-1) < to 
+  if( from < 0 || ([titles_ count]-1) < from
+     || to < 0 || ([titles_ count]-1) < to
      || to == from ) return;
 
   // if the |to| position is after the |from|, the new index must be decremented
   // to acount for the item no longer being in the array by the time is't added
   if( from < to ) --to;
-  
+
   // move the feed
   item = [[[feeds_ objectAtIndex:from] retain] autorelease];
   [feeds_ removeObjectAtIndex:from];
@@ -226,6 +239,11 @@ static UNDPreferenceManager *sharedInstance_;
 
 - (void)removeFeedAtIndex:(long)index
 {
+  NSString* url = [feeds_ objectAtIndex:index];
+  PSClient* client = [PSClient applicationClient];
+  PSFeed* feed = [client feedWithURL:[NSURL URLWithString:url]];
+  if (feed) [client removeFeed:feed];
+
   [feeds_ removeObjectAtIndex:index];
   [titles_ removeObjectAtIndex:index];
   [self save];
