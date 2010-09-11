@@ -27,19 +27,15 @@
 
 @implementation NetflixAddDialog
 
-#define FEED_OPTION_COUNT 4
+#define FEED_OPTION_COUNT 1
 
 NSString* NETFLIXURLS[] = {
 @"http://netflix.com/NewWatchInstantlyRSS",
-@"http://netflix.com/TopWatchInstantlyRSS",
-@"http://netflix.com/TopWatchInstantlyThisWeekRSS",
-@"http://netflix.com/TopWatchInstantlyPastThreeMonthsRSS"};
+};
 
 NSString* NETFLIXTITLES[] = { 
 @"New Choices to Watch Instantly",
-@"All Time Top Choices",
-@"Last Week's Top Choices",
-@"Last 3 Month's Top Choices"};
+};
 
 - (id)init
 {
