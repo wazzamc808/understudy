@@ -1,5 +1,5 @@
 //
-//  Copyright 2008 Kirk Kelsey.
+//  Copyright 2008-2010 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -8,8 +8,8 @@
 //  Software Foundation, either version 3 of the License, or (at your option)
 //  any later version.
 //
-//  Understudy is distributed in the hope that it will be useful, but WITHOUT 
-//  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
+//  Understudy is distributed in the hope that it will be useful, but WITHOUT
+//  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
 //  FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
 //  for more details.
 //
@@ -33,7 +33,7 @@ NSString* NETFLIXURLS[] = {
 @"http://netflix.com/NewWatchInstantlyRSS",
 };
 
-NSString* NETFLIXTITLES[] = { 
+NSString* NETFLIXTITLES[] = {
 @"New Choices to Watch Instantly",
 };
 
@@ -66,6 +66,7 @@ NSString* NETFLIXTITLES[] = {
   }else if( index == FEED_OPTION_COUNT ){
     [pref addFeed:queue_ withTitle:@"Netflix Queue"];
   }else NSLog(@"unexpected option selected for Netflix");
+
   // we might want to pop back to the main menu
   [[self stack] popController];
 }
@@ -100,7 +101,7 @@ NSString* NETFLIXTITLES[] = {
 
   // Construct a range covering everything after the |start| identifier up to
   // the end of the |contents| string. The length is 1> the valid position.
-  searchRange = NSMakeRange(NSMaxRange(start), 
+  searchRange = NSMakeRange(NSMaxRange(start),
                             [contents length] - NSMaxRange(start) - 1);
 
   assert (NSMaxRange(searchRange) <= [contents length]);
@@ -121,13 +122,13 @@ NSString* NETFLIXTITLES[] = {
 
 # pragma mark NSURLConnection Delegation
 
-- (void)connection:(NSURLConnection*)connection 
+- (void)connection:(NSURLConnection*)connection
 didReceiveResponse:(NSURLResponse*)response
 {
-  [pageData_ setLength:0];  
+  [pageData_ setLength:0];
 }
 
-- (void)connection:(NSURLConnection*)connection 
+- (void)connection:(NSURLConnection*)connection
   didFailWithError:(NSError*)error
 {
   NSLog(@"Netflix RSS auto-discovery failed: %@",error);
@@ -138,7 +139,7 @@ didReceiveResponse:(NSURLResponse*)response
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
-  [pageData_ appendData:data];  
+  [pageData_ appendData:data];
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection*)connection

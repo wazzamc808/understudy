@@ -25,6 +25,7 @@
 #import <BRTextMenuItemLayer.h>
 
 #import <Foundation/NSXMLDocument.h>
+#import <PubSub/PubSub.h>
 
 @implementation NetflixFeed
 
