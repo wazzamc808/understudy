@@ -1,5 +1,7 @@
 #import "UNDNetflixLoadingController.h"
 
+#import "BRControllerStack.h"
+
 @implementation UNDNetflixLoadingController
 
 - (id)init
