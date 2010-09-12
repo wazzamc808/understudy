@@ -49,11 +49,11 @@
   [super init];
   delegate_ = [delegate retain];
   [self setListTitle:[delegate_ title]];
+  LoadingAsset* loading = [[[LoadingAsset alloc] init] autorelease];
+  assets_ = [[NSArray arrayWithObject:loading] retain];
   [[self list] setDatasource:self];
   lastrebuild_ = [[NSDate distantPast] retain];
   [self performSelectorInBackground:@selector(reload) withObject:nil];
-  LoadingAsset* loading = [[[LoadingAsset alloc] init] autorelease];
-  assets_ = [[NSArray arrayWithObject:loading] retain];
   return self;
 }
 
