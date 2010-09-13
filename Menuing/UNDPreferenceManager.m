@@ -194,10 +194,9 @@ static UNDPreferenceManager *sharedInstance_;
   NSDictionary* prefDict = [defaults persistentDomainForName:DEFAULTS_DOMAIN];
   NSMutableDictionary* prefs;
   if( prefDict )
-    prefs = [prefDict mutableCopy];
+    prefs = [[prefDict mutableCopy] autorelease];
   else
     prefs = [NSMutableDictionary dictionary];
-  [[prefs retain] autorelease];
 
   // the only preferences that are modifiable through the user interface are the
   // feeds and their titles, so only those need to be updated

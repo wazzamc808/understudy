@@ -37,7 +37,6 @@
 {
  @private
   // menu item -> controller (or nil if the controller hasn't been used)
-  NSMutableDictionary* controllers_;
   NSMutableArray* assets_;
   UNDPreferenceManager* preferences_;
 }

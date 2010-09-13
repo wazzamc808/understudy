@@ -8,8 +8,8 @@
 //  Software Foundation, either version 3 of the License, or (at your option)
 //  any later version.
 //
-//  Understudy is distributed in the hope that it will be useful, but WITHOUT 
-//  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
+//  Understudy is distributed in the hope that it will be useful, but WITHOUT
+//  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
 //  FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
 //  for more details.
 //
@@ -31,7 +31,6 @@
 @interface HuluAsset (Parsing)
 - (void)parseDescriptionElementFromDom:(NSXMLElement*) dom;
 - (void)parseTitleElementFromDom:(NSXMLElement*) dom;
-- (void)setAirDateFromString:(NSString*) text;
 - (void)setDateAddedFromString:(NSString*) text;
 - (void)setDurationFromString:(NSString*) text;
 - (void)setTitleAndEpisodeInfoFromString:(NSString*) text;
@@ -57,19 +56,19 @@
   NSXMLNode* tnAttribute = [tnElement attributeForName:@"url"];
   NSURL* thumburl = [NSURL URLWithString:[tnAttribute stringValue]];
   thumbnailID_ = [[imageManager_ writeImageFromURL:thumburl] retain];
-  
+
   NSXMLElement* credit = [[dom elementsForName:@"media:credit"] objectAtIndex:0];
   credit_ = [[credit stringValue] retain];
-  
+
   NSXMLElement* pubDate = [[dom elementsForName:@"pubDate"] objectAtIndex:0];
   airdate_ = [NSDate dateWithNaturalLanguageString:[pubDate stringValue]];
   [airdate_ retain];
 
-  // if the url isn't for /watch/ something, start an asynchronous load of the 
+  // if the url isn't for /watch/ something, start an asynchronous load of the
   // url and try to find a feed for the (assumed) show on that page
   if( ![[url_ path] hasPrefix:@"/watch/"] )
     feedDiscoverer_ = [[HuluFeedDiscoverer alloc] initWithUrl:url_];
-  
+
   return self;
 }
 
@@ -95,53 +94,34 @@
   NSArray* components = [titlestring componentsSeparatedByString:@": "];
   if( [components count] == 1)
   {
-    title_ = titlestring;
-    series_ = titlestring;
+    title_ = [titlestring copy];
+    series_ = [titlestring copy];
     episode_ = 0;
     season_ = 0;
   } else {
     title_ = [components lastObject];
     NSRange seriesRange = {0, [components count] -1};
     NSArray* seriesComponents = [components subarrayWithRange:seriesRange];
-    series_ = [seriesComponents componentsJoinedByString:@": "];
+    series_ = [[seriesComponents componentsJoinedByString:@": "] copy];
     [self setTitleAndEpisodeInfoFromString:title_];
   }
-  [title_ retain];
-  [series_ retain];
+  [titlestring release];
 }
 
 - (void)parseDescriptionElementFromDom:(NSXMLElement*)dom
 {
-  NSXMLElement* description = [[dom elementsForName:@"description"] 
+  NSXMLElement* description = [[dom elementsForName:@"description"]
                                objectAtIndex:0];
   description_ = [description stringValue];
-  [self setAirDateFromString: description_];
   [self setDateAddedFromString: description_];
   [self setDurationFromString: description_];
-  int start = [description_ rangeOfString:@"<p>"].location; 
+  int start = [description_ rangeOfString:@"<p>"].location;
   int end = [description_ rangeOfString:@"</p>"].location;
   if( start != NSNotFound && end != NSNotFound ){
     NSRange descRange = NSMakeRange(start+3, end-start-3);
     description_ = [description_ substringWithRange:descRange];
   }
   description_ = (NSString*) CFXMLCreateStringByUnescapingEntities(NULL,(CFStringRef)description_,NULL);
-}
-
-- (void)setAirDateFromString:(NSString*) text
-{
-  regex_t SnumEnum;
-  regcomp(&SnumEnum,"Air[[:space:]]]date:[[:space:]]+([^<]+)",REG_EXTENDED);
-  int nmatch = 2;
-  regmatch_t pmatch[nmatch];
-  const char* cText = [text cStringUsingEncoding:[NSString defaultCStringEncoding]];
-  int res = regexec(&SnumEnum, cText, nmatch, pmatch, 0);
-  if( res != 0 || pmatch[nmatch - 1].rm_so == -1 ) return;
-  NSRange dateRange = {pmatch[1].rm_so, pmatch[1].rm_eo-pmatch[1].rm_so};
-  return;
-  NSString* dateString = [text substringWithRange:dateRange];
-  airdate_ = [NSDate dateWithNaturalLanguageString:dateString];
-  [airdate_ retain];
-  regfree(&SnumEnum);
 }
 
 - (void)setDateAddedFromString:(NSString*)text
@@ -202,7 +182,7 @@
   season_ = [season intValue];
   episode_ = [episode intValue];
   title_ = [text substringToIndex: pmatch[0].rm_so];
-  
+
   regfree(&SnumEnum);
 }
 
@@ -221,7 +201,7 @@
 - (NSString*)datePublishedString{ return [airdate_ description]; }
 - (BRImage*)coverArt{ return [self thumbnailArt]; }
 - (BRImage*)thumbnailArt
-{ 
+{
   return [imageManager_ imageNamed:thumbnailID_];
 }
 - (BRMediaType*)mediaType{ return [BRMediaType TVShow]; }
@@ -231,8 +211,8 @@
 - (NSString*)seriesNameForSorting{ return series_; }
 - (NSString*)broadcaster{ return credit_; }
 - (NSString*)episodeNumber
-{ 
-  return [NSString stringWithFormat:@"%d", episode_, nil]; 
+{
+  return [NSString stringWithFormat:@"%d", episode_, nil];
 }
 - (unsigned)season{ return season_; }
 - (unsigned)episode{ return episode_; }
@@ -250,7 +230,7 @@
     [menuitem_ setRightJustifiedText:[self episodeInfo]];
     [menuitem_ retain];
   }
-  return menuitem_;  
+  return menuitem_;
 }
 
 // If the menu is titled by the series name of this asset, then the menu items
@@ -275,15 +255,15 @@
 {
   // if there is a feed discover in progress, see what it has
   if ( feedDiscoverer_ ) {
-    if ([feedDiscoverer_ error]) 
+    if ([feedDiscoverer_ error])
       NSLog(@"discovery error: %@",[feedDiscoverer_ error]);
-    
+
     [url_ autorelease];
     url_ = [[feedDiscoverer_ finalURL] retain];
-    
+
     if( [feedDiscoverer_ feed] ){
       if ( [[[feedDiscoverer_ feed] path] hasPrefix:@"/feed/"] ){
-        feed_ = [[HuluFeed alloc] initWithTitle:title_ 
+        feed_ = [[HuluFeed alloc] initWithTitle:title_
                                          forUrl:[feedDiscoverer_ feed]];
       }
       [feedDiscoverer_ release];
@@ -292,12 +272,12 @@
   }
 
   // if the URL is for watching a video, provide a video controller
-  if ( [[url_ path] hasPrefix:@"/watch/"] ) 
-    return [[HuluController alloc] initWithAsset:self];  
+  if ( [[url_ path] hasPrefix:@"/watch/"] )
+    return [[[HuluController alloc] initWithAsset:self] autorelease];
 
   // if we're wrapping a feed, return it's controller
   if ( feed_ ) return [feed_ controller];
-  
+
   // in all other cases return nil
   return nil;
 }

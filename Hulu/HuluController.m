@@ -52,7 +52,7 @@
     "Ins/frUnderstudy.frappliance/Contents/SharedSupport/HuluPlayer.app/Conte"\
     "nts/MacOS/HuluPlayer";
   NSString* url = [[asset_ url] absoluteString];
-  NSArray* args = [[NSArray alloc] initWithObjects:url,nil];
+  NSArray* args = [[[NSArray alloc] initWithObjects:url,nil] autorelease];
   player_ = [[NSTask launchedTaskWithLaunchPath:path arguments:args] retain];
 
   // create an event to mimic a spurious key press, causing Front Row to drop
@@ -61,6 +61,7 @@
   // input to the new app) and terminating FR completely.
   BREvent* ev = [[BREvent alloc] initWithPage:1 usage:136 value:1];
   [[BREventManager sharedManager] postEvent:ev];
+  [ev release];
 }
 
 

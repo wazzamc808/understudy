@@ -8,8 +8,8 @@
 //  Software Foundation, either version 3 of the License, or (at your option)
 //  any later version.
 //
-//  Understudy is distributed in the hope that it will be useful, but WITHOUT 
-//  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
+//  Understudy is distributed in the hope that it will be useful, but WITHOUT
+//  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
 //  FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
 //  for more details.
 //
@@ -31,11 +31,12 @@
   [super init];
   imageManager_ = [BRImageManager sharedInstance];
   title_ = [[[dom firstElementNamed:@"title"] stringValue] retain];
-  
-  NSXMLElement* alternate = [[dom linkWithRelationship:@"alternate"] retain];
+
+  NSXMLElement* alternate = [dom linkWithRelationship:@"alternate"];
+  [[alternate retain] autorelease];
   NSString*  href = [[alternate attributeForName:@"href"] stringValue];
   url_ = [[NSURL URLWithString:href] retain];
-  
+
   NSXMLElement* element = [alternate firstElementNamed:@"media:content"];
   element = [element firstElementNamed:@"media:thumbnail"];
   href = [[element attributeForName:@"url"] stringValue];
@@ -58,7 +59,7 @@
 - (BRImage*)coverArt{ return [imageManager_ imageNamed:thumbnailID_]; }
 
 - (BRController*)controller
-{ 
+{
   BRController* con = [[UNDiPlayerController alloc] initWithAsset:self];
   return [con autorelease];
 }
@@ -71,7 +72,7 @@
     [menuitem_ setTitle:[self title]];
     [menuitem_ retain];
   }
-  return menuitem_;  
+  return menuitem_;
 }
 
 @end

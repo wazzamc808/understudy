@@ -66,6 +66,7 @@
   title = (NSString*) CFXMLCreateStringByUnescapingEntities(NULL,
                                                             (CFStringRef)title,
                                                             NULL);
+  [title autorelease];
   NSRange hy = [title rangeOfString:@"- "];
   if( hy.location != NSNotFound )
     title = [[title substringFromIndex:(hy.location+hy.length)] retain];
@@ -166,7 +167,7 @@
                                                 secondaryText:secondary];
     return alert;
   } else {
-    return [[NetflixController alloc] initWithAsset:self];
+    return [[[NetflixController alloc] initWithAsset:self] autorelease];
   }
 }
 

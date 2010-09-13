@@ -8,8 +8,8 @@
 //  Software Foundation, either version 3 of the License, or (at your option)
 //  any later version.
 //
-//  Understudy is distributed in the hope that it will be useful, but WITHOUT 
-//  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
+//  Understudy is distributed in the hope that it will be useful, but WITHOUT
+//  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
 //  FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
 //  for more details.
 //
@@ -43,15 +43,15 @@
   const char* serv = [service cStringUsingEncoding:NSUTF8StringEncoding];
   int acntLen = [account length];
   int servLen = [service length];
-  
+
   // attempt to get the password without user interaction (dialog boxes)
-  res = SecKeychainSetUserInteractionAllowed(NO);
-  
+  SecKeychainSetUserInteractionAllowed(NO);
+
   res = SecKeychainFindInternetPassword (NULL,servLen,serv,0,NULL,acntLen,acnt,
                                          0,NULL,0,kSecProtocolTypeHTTP,
                                          kSecAuthenticationTypeDefault,
                                          &pwdLen,&pwd,NULL);
-  
+
   // if we don't find a default type password, look for a webform one
   if( res == errSecItemNotFound )
   {
@@ -60,12 +60,12 @@
                                            kSecAuthenticationTypeHTMLForm,
                                            &pwdLen,&pwd,NULL);
   }
-  
+
   // if we fail to get the information because authorization failed or
   // interaction is required, try again with user interaction
   if( res == errSecAuthFailed || res == errSecInteractionRequired )
   {
-    res = SecKeychainSetUserInteractionAllowed(YES);
+    SecKeychainSetUserInteractionAllowed(YES);
     // make sure the keychain dialog is visible:
     // 1) order out the scene (i.e. stop showing Front Row)
     // 2) hide any windows (if we're in an external viewew)
@@ -98,13 +98,12 @@
 
   if( res == 0 && pwd != NULL && pwdLen > 0 )
   {
-    password = [NSString stringWithCharacters:pwd length:pwdLen];
-    password = [NSString stringWithCString:pwd 
+    password = [NSString stringWithCString:pwd
                                   encoding:NSASCIIStringEncoding];
     SecKeychainItemFreeContent (NULL,pwd);
     password = [password substringToIndex:pwdLen];
   }
-  
+
   return password;
 }
 
