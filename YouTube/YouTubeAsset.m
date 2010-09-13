@@ -8,8 +8,8 @@
 //  Software Foundation, either version 3 of the License, or (at your option)
 //  any later version.
 //
-//  Understudy is distributed in the hope that it will be useful, but WITHOUT 
-//  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
+//  Understudy is distributed in the hope that it will be useful, but WITHOUT
+//  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
 //  FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
 //  for more details.
 //
@@ -42,7 +42,7 @@
   title_ = [title_ stringByReplacingOccurrencesOfString:@"Videos published by :"
                                              withString:@""];
   [title_ retain];
-  
+
   NSXMLElement* content = [[dom elementsForName:@"content"] objectAtIndex:0];
   // some YouTube feeds contain other feeds, some contain videos. we make the
   // distinction here at the asset level
@@ -53,7 +53,7 @@
     // depending on the feed, the video |entry| will be structured differently
     // those with a media:group are easier to work with
     NSArray* mediagroups = [dom elementsForName:@"media:group"];
-    if( [mediagroups count] ) 
+    if( [mediagroups count] )
       [self parseMediaGroup:[mediagroups objectAtIndex:0]];
     else
       [self buildFromId:[[dom elementsForName:@"id"] lastObject]];
@@ -101,12 +101,12 @@
     mediaid = [mediaid substringToIndex:range.location];
   player = [@"http://www.youtube.com/watch?v=" stringByAppendingString:mediaid];
   url_ = [[NSURL URLWithString:player] retain];
-  
+
   thumbnail = [@"http://i.ytimg.com/vi/" stringByAppendingString:mediaid];
   thumbnail = [thumbnail stringByAppendingString:@"/1.jpg"];
   url = [NSURL URLWithString:thumbnail];
   thumbnailID_ = [[imageManager_ writeImageFromURL:url] retain];
-  
+
   videoID_ = [mediaid retain];
 }
 
@@ -122,7 +122,7 @@
   xml = [[media elementsForName:@"media:player"] objectAtIndex:0];
   url_ = [[xml stringValue] retain];
   // YT often has multiple thumbnails. we could provide them as a parade, or
-  // make them available for 
+  // make them available for
   xml = [[media elementsForName:@"media:thumbnail"] objectAtIndex:0];
   attribute = [xml attributeForName:@"url"];
   NSURL* thumburl = [NSURL URLWithString:[attribute stringValue]];
@@ -131,7 +131,7 @@
   duration_ = [[[xml attributeForName:@"seconds"] stringValue] intValue];
   xml = [[media elementsForName:@"gd:rating"] objectAtIndex:0];
   starrating_ = [[[xml attributeForName:@"average"] stringValue] floatValue];
-  xml = [[media elementsForName:@"published"] objectAtIndex:0];
+  [[media elementsForName:@"published"] objectAtIndex:0];
   return;
 }
 
@@ -150,7 +150,7 @@
 - (BRController*)controller
 {
   if( isVideo_ ){
-    return [[YouTubeController alloc] initWithAsset:self];
+    return [[[YouTubeController alloc] initWithAsset:self] autorelease];
   } else {
     if( !feedDelegate_ )
       feedDelegate_ = [[YouTubeFeed alloc] initWithTitle:title_ forUrl:url_];
@@ -172,7 +172,7 @@
 - (NSString*)thumbnailArtID{ return thumbnailID_; }
 - (BRImage*)coverArt{ return [self thumbnailArt]; }
 - (BRImage*)thumbnailArt
-{ 
+{
   return [imageManager_ imageNamed:thumbnailID_];
 }
 - (BRMediaType*)mediaType{ return [BRMediaType ytVideo]; }

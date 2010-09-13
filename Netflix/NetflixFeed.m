@@ -52,9 +52,10 @@
 {
   NSMutableArray* assets = [NSMutableArray array];
   NSError* err;
-  NSXMLDocument* doc = [[NSXMLDocument alloc] initWithContentsOfURL:url_
-                                                            options:0
-                                                              error:&err];
+  NSXMLDocument* doc;
+  doc = [[[NSXMLDocument alloc] initWithContentsOfURL:url_
+                                              options:0
+                                                error:&err] autorelease];
   if( !doc ) return nil;
   NSXMLElement* root = [doc rootElement];
   NSXMLElement* channel = [[root elementsForName:@"channel"] objectAtIndex:0];

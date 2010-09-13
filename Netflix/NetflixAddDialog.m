@@ -52,6 +52,7 @@ NSString* NETFLIXTITLES[] = {
 - (void)dealloc
 {
   [super dealloc];
+  [connection_ release];
   [pageData_ release];
   [queue_ release];
 }
@@ -80,10 +81,10 @@ NSString* NETFLIXTITLES[] = {
 {
   NSURL* url = [NSURL URLWithString:@"http://www.netflix.com/RSSFeeds"];
   NSURLRequest* request = [NSURLRequest requestWithURL:url];
-  NSURLConnection* connection = [[NSURLConnection alloc] initWithRequest:request
-                                                                delegate:self
-                                                        startImmediately:YES];
-  if(connection) pageData_ = [[NSMutableData data] retain];
+  connection_ = [[NSURLConnection alloc] initWithRequest:request
+                                                delegate:self
+                                        startImmediately:YES];
+  if(connection_) pageData_ = [[NSMutableData data] retain];
   else NSLog(@"Failed to open connection for Netflix feed auto-discovery");
 }
 

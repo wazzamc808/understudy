@@ -8,8 +8,8 @@
 //  Software Foundation, either version 3 of the License, or (at your option)
 //  any later version.
 //
-//  Understudy is distributed in the hope that it will be useful, but WITHOUT 
-//  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
+//  Understudy is distributed in the hope that it will be useful, but WITHOUT
+//  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
 //  FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
 //  for more details.
 //
@@ -61,12 +61,15 @@
   NSXMLDocument* doc = [[NSXMLDocument alloc] initWithContentsOfURL:url_
                                                             options:0
                                                               error:&err];
+  [doc autorelease];
   if( !doc ) return nil;
   NSMutableArray* assets = [NSMutableArray array];
   NSXMLElement* feed = [doc rootElement];
   NSArray* entries = [feed elementsForName:@"entry"];
-  for( NSXMLElement* item in entries )
-    [assets addObject:[[YouTubeAsset alloc] initWithXMLElement:item]];
+  for( NSXMLElement* item in entries ) {
+    YouTubeAsset* asset = [[YouTubeAsset alloc] initWithXMLElement:item];
+    [assets addObject:[asset autorelease]];
+  }
   return assets;
 }
 

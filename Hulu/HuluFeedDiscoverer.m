@@ -8,8 +8,8 @@
 //  Software Foundation, either version 3 of the License, or (at your option)
 //  any later version.
 //
-//  Understudy is distributed in the hope that it will be useful, but WITHOUT 
-//  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
+//  Understudy is distributed in the hope that it will be useful, but WITHOUT
+//  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
 //  FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
 //  for more details.
 //
@@ -44,14 +44,14 @@
   NSStringEncoding encoding = NSISOLatin1StringEncoding;
   NSString *contents, *url;
   NSRange start, end, searchRange, urlRange;
-  
-  contents = [[NSString alloc] initWithData:[self content]
-                                   encoding:encoding];
+
+  contents = [[[NSString alloc] initWithData:[self content]
+                                    encoding:encoding] autorelease];
   // we're banking on the "episodes" feed preceeding the "clips"
   start = [contents rangeOfString:@"http://www.hulu.com/feed/show/"];
-  searchRange = NSMakeRange(NSMaxRange(start), 
+  searchRange = NSMakeRange(NSMaxRange(start),
                             [contents length]-NSMaxRange(start));
-  end = [contents rangeOfString:@"\"" options:0 range:searchRange]; 
+  end = [contents rangeOfString:@"\"" options:0 range:searchRange];
   if( start.location != NSNotFound && end.location != NSNotFound){
     urlRange = NSMakeRange(start.location, end.location-start.location);
     url = [contents substringWithRange:urlRange];

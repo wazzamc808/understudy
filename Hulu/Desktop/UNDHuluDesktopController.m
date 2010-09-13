@@ -8,8 +8,8 @@
 //  Software Foundation, either version 3 of the License, or (at your option)
 //  any later version.
 //
-//  Understudy is distributed in the hope that it will be useful, but WITHOUT 
-//  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
+//  Understudy is distributed in the hope that it will be useful, but WITHOUT
+//  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
 //  FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
 //  for more details.
 //
@@ -28,14 +28,20 @@
   return self;
 }
 
+- (void)dealloc
+{
+  [task_ release];
+  [super dealloc];
+}
+
 - (void)controlWillActivate
 {
   // launch the internal Hulu Desktop launcher and leave Front Row
   NSString* path = @"/System/Library/CoreServices/Front Row.app/Contents/PlugI"\
     "ns/frUnderstudy.frappliance/Contents/SharedSupport/HuluDesktop.app/Conten"\
     "ts/MacOS/HuluDesktop";
-  NSArray* args = [[NSArray alloc] init];
-  [[NSTask launchedTaskWithLaunchPath:path arguments:args] retain];
+  NSArray* args = [[[NSArray alloc] init] autorelease];
+  task_ = [[NSTask launchedTaskWithLaunchPath:path arguments:args] retain];
 
   // create an event to mimic a spurious key press, causing Front Row to drop
   // out to the loaded application. this is a reasonable compromize between
@@ -43,6 +49,7 @@
   // input to the new app) and terminating FR completely.
   BREvent* ev = [[BREvent alloc] initWithPage:1 usage:136 value:1];
   [[BREventManager sharedManager] postEvent:ev];
+  [ev release];
 }
 
 @end

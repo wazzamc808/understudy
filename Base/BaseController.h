@@ -1,4 +1,4 @@
-//
+//                                                                -*- objc -*-
 //  Copyright 2008-2009 Kirk Kelsey.
 //
 //  This file is part of Understudy.
@@ -8,8 +8,8 @@
 //  Software Foundation, either version 3 of the License, or (at your option)
 //  any later version.
 //
-//  Understudy is distributed in the hope that it will be useful, but WITHOUT 
-//  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
+//  Understudy is distributed in the hope that it will be useful, but WITHOUT
+//  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
 //  FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
 //  for more details.
 //
@@ -23,9 +23,6 @@
 #import "BRTextWithSpinnerController.h"
 
 @interface BaseController : BRTextWithSpinnerController {
- @private
-  IOPMAssertionID pmAssertion_;
-
  @protected
   WebView* mainView_; // subclasses should set this to be the primary web view
   NSWindow* menushield_; // window used to cover the menu bar
@@ -36,7 +33,7 @@
 // orders out the FR interface to reveal an understudy player
 - (void)reveal;
 
-// brings the FR interface back, and takes any views (main or plugin) out of 
+// brings the FR interface back, and takes any views (main or plugin) out of
 // fullscreen mode.
 - (void)returnToFR;
 

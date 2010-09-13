@@ -1,4 +1,4 @@
-//
+//                                                                -*- objc -*-
 //  Copyright 2008-2009 Kirk Kelsey.
 //
 //  This file is part of Understudy.
@@ -8,8 +8,8 @@
 //  Software Foundation, either version 3 of the License, or (at your option)
 //  any later version.
 //
-//  Understudy is distributed in the hope that it will be useful, but WITHOUT 
-//  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
+//  Understudy is distributed in the hope that it will be useful, but WITHOUT
+//  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
 //  FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
 //  for more details.
 //
@@ -24,6 +24,7 @@
   NSString* profile_;
   NSMutableArray* titles_;
   NSMutableArray* feeds_;
+  NSURLConnection* connection_;
   BOOL searching_;
 }
 

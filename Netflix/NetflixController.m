@@ -66,12 +66,15 @@
   NSString* path = @"/System/Library/CoreServices/Front Row.app/Contents/Plug"\
   "Ins/frUnderstudy.frappliance/Contents/SharedSupport/NetflixPlayer.app/Conte"\
   "nts/MacOS/NetflixPlayer";
-  NSString* url = [[asset_ url] absoluteString];
-  NSArray* args = [[NSArray alloc] initWithObjects:@"--FR", url, nil];
-  if( [[NSFileManager defaultManager] fileExistsAtPath:path] )
+
+  if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
+    NSString* url = [[asset_ url] absoluteString];
+    NSArray* args = [[NSArray alloc] initWithObjects:@"--FR", url, nil];
     player_ = [[NSTask launchedTaskWithLaunchPath:path arguments:args] retain];
-  else
+    [args release];
+  } else {
     NSLog (@"NetflixPlayer not available");
+  }
   // TODO: need to provide a meaningful error dialog here
 
   // create an event to mimic a spurious key press, causing Front Row to drop
@@ -79,7 +82,7 @@
   // ordering out or destroying the scene (which doesn't really give up user
   // input to the new app) and terminating FR completely.
   BREvent* ev = [[BREvent alloc] initWithPage:1 usage:136 value:1];
-  [[BREventManager sharedManager] postEvent:ev];
+  [[BREventManager sharedManager] postEvent:[ev autorelease]];
 }
 
 
