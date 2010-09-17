@@ -1,5 +1,5 @@
 //
-//  Copyright 2008 Kirk Kelsey.
+//  Copyright 2008-2010 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -17,6 +17,16 @@
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
 #import "UnderstudyAppliance.h"
+
+#import "BRControllerStack.h"
+#import "BRSentinel.h"
+
+@implementation BRSentinel (UNDExposeStack)
+- (BRControllerStack*)stack
+{
+  return _controllerStack;
+}
+@end
 
 @implementation UnderstudyAppliance
 

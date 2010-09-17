@@ -5,20 +5,21 @@
  */
 
 #import "BRSingleton.h"
+#import "BRControllerStack.h"
 
 @class BRControllerStack;
 
 @interface BRSentinel : BRSingleton
 {
-//    id <BRMusicStoreImageDecryptionAgent> _musicStoreImageDecryptionAgent;
-//    id <BRDRMSyncAgent> _drmSyncAgent;
-//    id <BRSyncProgressAgent> _syncProgressAgent;
-//    id <BRYTSigningAgent> _signingAgent;
-//    id <BRRendererProvider> _rendererProvider;
-//    id <BRDAAPListenerEnabler> _daapListenerEnabler;
-//    BRControllerStack *_controllerStack;
-//    unsigned int _networkDependentControllerCount;
-//    BOOL _shouldAttemptDRMSync;
+   id /* <BRMusicStoreImageDecryptionAgent> */ _musicStoreImageDecryptionAgent;
+   id /* <BRDRMSyncAgent> */ _drmSyncAgent;
+   id /* <BRSyncProgressAgent> */ _syncProgressAgent;
+   id /* <BRYTSigningAgent> */ _signingAgent;
+   id /* <BRRendererProvider> */ _rendererProvider;
+   id /* <BRDAAPListenerEnabler> */ _daapListenerEnabler;
+   BRControllerStack *_controllerStack;
+   unsigned int _networkDependentControllerCount;
+   BOOL _shouldAttemptDRMSync;
 }
 
 + (id)singleton;

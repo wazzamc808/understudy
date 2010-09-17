@@ -8,8 +8,8 @@
 //  Software Foundation, either version 3 of the License, or (at your option)
 //  any later version.
 //
-//  Understudy is distributed in the hope that it will be useful, but WITHOUT 
-//  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
+//  Understudy is distributed in the hope that it will be useful, but WITHOUT
+//  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
 //  FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
 //  for more details.
 //
@@ -29,6 +29,7 @@
 #import <BRDisplayManager.h>
 #import <BREvent.h>
 #import <BREventManager.h>
+#import <BRMenuSavedState-Private.h>
 #import <BRRenderScene.h>
 #import <BRSentinel.h>
 #import <BRSettingsFacade.h>
@@ -72,7 +73,7 @@
   else
     NSLog (@"NetflixPlayer not available");
   // TODO: need to provide a meaningful error dialog here
-  
+
   // create an event to mimic a spurious key press, causing Front Row to drop
   // out to the loaded application. this is a reasonable compromize between
   // ordering out or destroying the scene (which doesn't really give up user
@@ -86,6 +87,10 @@
 
 - (void)controlWillActivate
 {
+  // Save the current stack path here. Note that this must be done before the
+  // controller is active so the saved state does not include the video itself.
+  [[UNDPreferenceManager sharedInstance] saveMenuState];
+
   [super controlWillActivate];
   [self _loadVideo];
 }

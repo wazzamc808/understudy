@@ -1,5 +1,5 @@
-//
-//  Copyright 2008-2009 Kirk Kelsey.
+//                                                                -*- objc -*-
+//  Copyright 2008-2010 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -8,8 +8,8 @@
 //  Software Foundation, either version 3 of the License, or (at your option)
 //  any later version.
 //
-//  Understudy is distributed in the hope that it will be useful, but WITHOUT 
-//  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
+//  Understudy is distributed in the hope that it will be useful, but WITHOUT
+//  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
 //  FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
 //  for more details.
 //
@@ -29,10 +29,10 @@
 // class MainMenuController
 //
 // The primary window returned by the appliance controller. Use the
-// sharedInstance method to access the menu singleton rather than init (which 
+// sharedInstance method to access the menu singleton rather than init (which
 // is the designated initializer).
 
-@interface MainMenuController : BRMediaMenuController 
+@interface MainMenuController : BRMediaMenuController
 <BRMenuListItemProvider,UNDPreferenceSubscriber>
 {
  @private
