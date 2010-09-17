@@ -1,5 +1,5 @@
 //
-//  Copyright 2009 Kirk Kelsey.
+//  Copyright 2009-2010 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -8,8 +8,8 @@
 //  Software Foundation, either version 3 of the License, or (at your option)
 //  any later version.
 //
-//  Understudy is distributed in the hope that it will be useful, but WITHOUT 
-//  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
+//  Understudy is distributed in the hope that it will be useful, but WITHOUT
+//  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
 //  FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
 //  for more details.
 //
@@ -21,14 +21,26 @@
 #import "UnderstudyAsset.h"
 #import "BaseUnderstudyAsset.h"
 #import "LoadingAsset.h"
+#import "UNDPreferenceManager.h"
 
 #import <BRControllerStack.h>
 #import <BRComboMenuItemLayer.h>
 #import <BRListControl.h>
 #import <BRMenuController-HeaderConvienceMethods.h>
+#import <BRMenuSavedState-Private.h>
 #import <BRTextMenuItemLayer.h>
 
-#import <Foundation/NSXMLDocument.h>
+@implementation BRMenuSavedState (PrivateExpose)
+- (NSMutableDictionary*) cachedMenuState
+{
+  BRMenuSavedState* shared = [BRMenuSavedState sharedInstance];
+  return shared->_cachedMenuState;
+}
+@end
+
+@interface FeedMenuController (Private)
+- (void)attemptMenuRestore;
+@end
 
 @implementation FeedMenuController
 
@@ -56,28 +68,66 @@
 {
   NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
   if( [lastrebuild_ timeIntervalSinceNow] > (- 60 * 5)) return;
-  [lastrebuild_ release];
+  reloadActive_ = YES;
+  [lastrebuild_ autorelease];
   lastrebuild_ = [[NSDate date] retain];
   [assets_ autorelease];
   assets_ = [[delegate_ currentAssets] retain];
   [[self list] reload];
   [self updatePreviewController];
   [pool release];
+  reloadActive_ = NO;
 }
 
 #pragma mark Controller
 
 - (void)controlWasActivated
 {
-  [self performSelectorInBackground:@selector(reload) withObject:nil];
+  [self reload];
   [super controlWasActivated];
+  if (!reloadActive_) [self attemptMenuRestore];
+  height_ = [[self stack] count];
+}
+
+- (void)controlWasDeactivated
+{
+  UNDPreferenceManager* preferences = [UNDPreferenceManager sharedInstance];
+  BRControllerStack* stack = [self stack];
+  if (!stack || ([stack count] < height_))  [preferences clearMenuState];
+  [super controlWasDeactivated];
+}
+
+- (void)attemptMenuRestore
+{
+  UNDPreferenceManager* preferences = [UNDPreferenceManager sharedInstance];
+
+  static BOOL first = YES;
+  if (!first) return;
+  first = NO;
+
+  NSDictionary* cachedState = [preferences savedMenuState];
+  if (!cachedState) return;
+  NSArray* stack = [[BRMenuSavedState sharedInstance] stackPath];
+  NSString* path = [stack componentsJoinedByString:@"/"];
+  NSArray* selection = [cachedState objectForKey:path];
+  NSString* selectionTitle = [selection objectAtIndex:0];
+  NSNumber* selectionIndex = [selection objectAtIndex:1];
+  int index = [selectionIndex integerValue];
+  if (index >= [assets_ count]) return;
+  NSObject<UnderstudyAsset>* asset = [assets_ objectAtIndex:index];
+  if ([selectionTitle compare:[asset title]] == NSOrderedSame) {
+    [[self list] setSelection:index];
+    [[self stack] pushController:[asset controller]];
+  }
 }
 
 - (void)itemSelected:(long)itemIndex
 {
   if( ![self rowSelectable:itemIndex] ) return;
+
   id<UnderstudyAsset> asset = [assets_ objectAtIndex:itemIndex];
   BRController* controller = [asset controller];
+
   if (controller)
     [[self stack] pushController:controller];
 }

@@ -1,5 +1,5 @@
 //
-//  Copyright 2009 Kirk Kelsey.
+//  Copyright 2009-2010 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -23,11 +23,16 @@
 #import "UNDPreferenceManager.h"
 #import "UnderstudyAppliance.h"
 
+#import <BRMenuSavedState-Private.h>
 #import <RUIPreferences.h>
 
 #import <PubSub/PubSub.h>
 
 #define DEFAULTS_DOMAIN @"com.apple.frontrow.appliance.understudy"
+
+@interface BRMenuSavedState (PrivateExpose)
+- (NSMutableDictionary*) cachedMenuState;
+@end
 
 @implementation UNDPreferenceManager
 @synthesize huluFSAlerted = huluFSAlerted_;
@@ -112,6 +117,26 @@ static UNDPreferenceManager *sharedInstance_;
   return  [[UNDPreferenceManager sharedInstance] alertsDisabled];
 }
 
+- (void)clearMenuState
+{
+  [menuState_ release];
+  menuState_ = nil;
+  [self save];
+}
+
+- (void)saveMenuState
+{
+  [menuState_ release];
+  BRMenuSavedState* menuSavedState = [BRMenuSavedState sharedInstance];
+  menuState_ = [[menuSavedState cachedMenuState] retain];
+  [self save];
+}
+
+- (NSDictionary*)savedMenuState
+{
+  return menuState_;
+}
+
 - (void)load
 {
   RUIPreferences* FRprefs = [RUIPreferences sharedFrontRowPreferences];
@@ -148,6 +173,9 @@ static UNDPreferenceManager *sharedInstance_;
   titles_ = [[[prefDict objectForKey:@"titles"] mutableCopy] retain];
   if( !titles_ ) titles_ = [[NSMutableArray alloc] init];
 
+  // A nil menu state indicates that nothing should be restored.
+  menuState_ = [[prefDict objectForKey:@"menustate"] retain];
+
   alertsDisabled_ = ( [prefDict objectForKey:@"disableAlerts"] != nil);
   debugMode_ = ( [prefDict objectForKey:@"debugMode"] != nil);
 
@@ -175,7 +203,11 @@ static UNDPreferenceManager *sharedInstance_;
   // feeds and their titles, so only those need to be updated
   [prefs setObject:titles_ forKey:@"titles"];
   [prefs setObject:feeds_ forKey:@"feeds"];
+  if (menuState_) [prefs setObject:menuState_ forKey:@"menustate"];
+  else [prefs removeObjectForKey:@"menustate"];
   [defaults setPersistentDomain:prefs forName:DEFAULTS_DOMAIN];
+  // we do not automatically notify subscribers because some internal state
+  // (e.g. the menu stack) may be updated and saved by not affect subscribers.
 }
 
 #pragma mark Subscription

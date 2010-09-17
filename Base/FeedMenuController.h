@@ -1,5 +1,5 @@
-//
-//  Copyright 2009 Kirk Kelsey.
+//                                                                -*- objc -*-
+//  Copyright 2009-2010 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -8,8 +8,8 @@
 //  Software Foundation, either version 3 of the License, or (at your option)
 //  any later version.
 //
-//  Understudy is distributed in the hope that it will be useful, but WITHOUT 
-//  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
+//  Understudy is distributed in the hope that it will be useful, but WITHOUT
+//  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
 //  FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
 //  for more details.
 //
@@ -24,7 +24,7 @@
 @class BRTextMenuItemLayer;
 
 @protocol FeedDelegate <UnderstudyAsset>
-// return an autoreleased array of UnderstudyAsset objects. Feed delegates 
+// return an autoreleased array of UnderstudyAsset objects. Feed delegates
 // should not load their assests until specifically asked.
 - (NSArray*) currentAssets;
 // feeds that are managed by the FR menu system should be named there
@@ -38,6 +38,8 @@
   NSArray* assets_;
   NSObject<FeedDelegate>* delegate_;  // delegate is retained by controller
   NSDate* lastrebuild_;
+  BOOL reloadActive_;           // true when the asset list is being reloaded
+  int  height_;                 // how high on the stack this controller is
 }
 
 - (id)initWithDelegate:(NSObject<FeedDelegate>*)delegate;

@@ -8,8 +8,8 @@
 //  Software Foundation, either version 3 of the License, or (at your option)
 //  any later version.
 //
-//  Understudy is distributed in the hope that it will be useful, but WITHOUT 
-//  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
+//  Understudy is distributed in the hope that it will be useful, but WITHOUT
+//  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
 //  FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
 //  for more details.
 //
@@ -27,8 +27,8 @@
 
 #import <BRControllerStack.h>
 #import <BRListControl.h>
+#import <BRMenuSavedState-Private.h>
 #import <BRTextMenuItemLayer.h>
-#import <RUIPreferences.h>
 
 @interface MainMenuController (PrivateMenuHandling)
 - (void)loadAssets;
@@ -65,7 +65,7 @@ static MainMenuController *sharedInstance_;
 #define HDAPP @"/Applications/Hulu Desktop.app/Contents/MacOS/Hulu Desktop"
 // create an asset place holder for each feed in the preferences
 - (void)loadAssets
-{  
+{
   int i = 0, count = [preferences_ feedCount];
   [assets_ autorelease];
   assets_ = [[NSMutableArray arrayWithCapacity:count] retain];
@@ -91,7 +91,7 @@ static MainMenuController *sharedInstance_;
     NSURL* url = [preferences_ URLAtIndex:row];
     NSString* title = [preferences_ titleAtIndex:row];
     NSString* host = [[url host] lowercaseString];
-    
+
     if( [host rangeOfString:@"hulu"].location != NSNotFound )
       asset = [[HuluFeed alloc] initWithTitle:title forUrl:url];
     else if( [host rangeOfString:@"netflix"].location != NSNotFound )
@@ -101,7 +101,7 @@ static MainMenuController *sharedInstance_;
     else if( [host rangeOfString:@"bbc.co.uk"].location != NSNotFound )
       asset = [[UNDiPlayerFeed alloc] initWithTitle:title forUrl:url];
     else asset = (BaseUnderstudyAsset<UnderstudyAsset>*)[NSNull null];
-    
+
     [assets_ replaceObjectAtIndex:row withObject:asset];
     [asset autorelease];
   }
@@ -114,7 +114,7 @@ static MainMenuController *sharedInstance_;
 }
 
 #pragma mark Back Row subclassing
-  
+
 - (long)itemCount
 {
   return [assets_ count];
@@ -155,6 +155,36 @@ static MainMenuController *sharedInstance_;
     return [asset preview];
   else
     return nil;
+}
+
+-(void)controlWasActivated
+{
+  [super controlWasActivated];
+
+  static BOOL first = YES;
+  if (!first) return;
+  first = NO;
+
+  NSDictionary* cachedState = [preferences_ savedMenuState];
+  if (!cachedState) return;
+  NSArray* stack = [[BRMenuSavedState sharedInstance] stackPath];
+  NSString* path = [stack componentsJoinedByString:@"/"];
+  NSArray* selection = [cachedState objectForKey:path];
+  NSString* selectionTitle = [selection objectAtIndex:0];
+  NSNumber* selectionIndex = [selection objectAtIndex:1];
+  int index = [selectionIndex integerValue];
+  if (index >= [assets_ count]) return;
+  NSObject<UnderstudyAsset>* asset = [assets_ objectAtIndex:index];
+  if ([selectionTitle compare:[asset title]] == NSOrderedSame) {
+    [self setSelectedItem:index];
+    [[self stack] pushController:[asset controller]];
+  }
+}
+
+- (void) controlWasDeactivated
+{
+  if ([[self stack] count] < 2) [preferences_ clearMenuState];
+  [super controlWasDeactivated];
 }
 
 @end
