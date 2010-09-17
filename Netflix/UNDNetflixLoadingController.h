@@ -1,5 +1,5 @@
-//
-//  Copyright 2008-2010 Kirk Kelsey.
+//                                                                  -*- objc -*-
+//  Copyright 2010 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -16,29 +16,16 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
-#import <Cocoa/Cocoa.h>
+#import <BRTextWithSpinnerController.h>
 
-#import <BRMediaMenuController.h>
-
-#import "BaseUnderstudyAsset.h"
-#import "FeedMenuController.h"
 #import "NetflixAsset.h"
 
-@class BRTextMenuItemLayer;
-
-@interface NetflixFeed : BaseUnderstudyAsset
-<FeedDelegate, UNDNetflixAssetUpdateDelegate>
+@interface UNDNetflixLoadingController : BRTextWithSpinnerController
+<UNDNetflixAssetUpdateDelegate>
 {
- @private
-  NSMutableArray* assets_;
-  NSMutableArray* unfinishedAssets_;
-  NSURL* url_;
-  NSString* title_;
-  FeedMenuController* controller_;
-  unsigned updateSlots_;
-  unsigned finishedAssets_;
+
 }
 
-- (id)initWithTitle:(NSString*)title forUrl:(NSURL*)url;
+- (id)init;
 
 @end

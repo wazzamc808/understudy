@@ -46,6 +46,7 @@
 		DF37B8CF0F5AE0940017766F /* UNDNSXMLElement+Parsing.m in Sources */ = {isa = PBXBuildFile; fileRef = DF37B8CE0F5AE0940017766F /* UNDNSXMLElement+Parsing.m */; };
 		DF37B9120F5AF1F70017766F /* UNDiPlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF37B9110F5AF1F70017766F /* UNDiPlayerController.m */; };
 		DF3D0F640F54CA3E0089CF2B /* LoadingAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = DF3D0F630F54CA3E0089CF2B /* LoadingAsset.m */; };
+		DF42345112351DBD0044317C /* UNDNetflixLoadingController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF42345012351DBD0044317C /* UNDNetflixLoadingController.m */; };
 		DF444EF5123B25F9000331B7 /* PubSub.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF444EF4123B25F9000331B7 /* PubSub.framework */; };
 		DF444F33123C2661000331B7 /* PubSub.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF444EF4123B25F9000331B7 /* PubSub.framework */; };
 		DF444F34123C2663000331B7 /* PubSub.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF444EF4123B25F9000331B7 /* PubSub.framework */; };
@@ -185,6 +186,8 @@
 		DF37BA340F5B5DA70017766F /* UNDHuluSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UNDHuluSelector.m; sourceTree = "<group>"; };
 		DF3D0F620F54CA3E0089CF2B /* LoadingAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingAsset.h; sourceTree = "<group>"; };
 		DF3D0F630F54CA3E0089CF2B /* LoadingAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadingAsset.m; sourceTree = "<group>"; };
+		DF42344F12351DBD0044317C /* UNDNetflixLoadingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UNDNetflixLoadingController.h; path = Netflix/UNDNetflixLoadingController.h; sourceTree = "<group>"; };
+		DF42345012351DBD0044317C /* UNDNetflixLoadingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UNDNetflixLoadingController.m; path = Netflix/UNDNetflixLoadingController.m; sourceTree = "<group>"; };
 		DF444EF4123B25F9000331B7 /* PubSub.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PubSub.framework; path = System/Library/Frameworks/PubSub.framework; sourceTree = SDKROOT; };
 		DF50285C0F7D86A200B04C78 /* UNDYouTubeAddDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UNDYouTubeAddDialog.h; sourceTree = "<group>"; };
 		DF50285D0F7D86A200B04C78 /* UNDYouTubeAddDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UNDYouTubeAddDialog.m; sourceTree = "<group>"; };
@@ -439,6 +442,8 @@
 				DF375CC10F35300700DA7719 /* NetflixFeed.m */,
 				DF6F9F870F9263AA00AB41CF /* UNDNetflixCollection.h */,
 				DF6F9F860F9263AA00AB41CF /* UNDNetflixCollection.m */,
+				DF42344F12351DBD0044317C /* UNDNetflixLoadingController.h */,
+				DF42345012351DBD0044317C /* UNDNetflixLoadingController.m */,
 			);
 			name = Netflix;
 			sourceTree = "<group>";
@@ -738,6 +743,7 @@
 				DF3197D00FCCE3BD004CE50D /* UNDPluginControl.m in Sources */,
 				DF3198130FCF7F1C004CE50D /* UNDHuluDesktopAsset.m in Sources */,
 				DF3198480FCF8169004CE50D /* UNDHuluDesktopController.m in Sources */,
+				DF42345112351DBD0044317C /* UNDNetflixLoadingController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
