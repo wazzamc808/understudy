@@ -8,8 +8,8 @@
 //  Software Foundation, either version 3 of the License, or (at your option)
 //  any later version.
 //
-//  Understudy is distributed in the hope that it will be useful, but WITHOUT 
-//  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
+//  Understudy is distributed in the hope that it will be useful, but WITHOUT
+//  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
 //  FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
 //  for more details.
 //
@@ -45,11 +45,12 @@
 
 - (NSArray*)currentAssets
 {
+//  return nil;
   if (assets_) return assets_;
 
   NSMutableArray* assets = [[NSMutableArray alloc] init];
   NSError* err;
-  
+
   NSXMLDocument* doc;
   NSString* mediaID = [[url_ path] lastPathComponent];
   doc = [[[NSXMLDocument alloc] initWithContentsOfURL:url_
@@ -57,12 +58,12 @@
                                                 error:&err] autorelease];
   NSXMLElement* movieDiv = nil;
   NSXMLElement* root = [doc rootElement];
-  NSArray *items = [[[root nodesForXPath:@"//*[@id='mdp-series']"  
+  NSArray *items = [[[root nodesForXPath:@"//*[@id='mdp-series']"
                                    error:nil] retain] autorelease];
   if ([items count] > 0)  movieDiv = [items objectAtIndex:0];
   else return nil;
 
-  NSString* seriesClass 
+  NSString* seriesClass
   = @"dl[@class='series-mapping']/dd | dl[@class='series-episodes']/dd";
 
   // find all the instant watch movie nodes
@@ -70,7 +71,7 @@
                                        error:nil] retain] autorelease];
 
   NSString* seriesButton = @"dl/dd[starts-with(@class,'series-button ep')]";
-  for (NSXMLElement* disc in discs) 
+  for (NSXMLElement* disc in discs)
   {
     NSArray* episodes = [[[disc nodesForXPath:seriesButton
                                        error:nil] retain] autorelease];
@@ -95,15 +96,15 @@
       if ([href rangeOfString:@"WiPlayer"].location != NSNotFound
           && href && title && des)
       {
-        @try 
+        @try
         {
           NetflixAsset* asset = [[NetflixAsset alloc] initWithUrl:href
-                                                            title:title 
+                                                            title:title
                                                           mediaID:mediaID
                                                       description:des];
           [assets addObject:asset];
         }
-        @catch (NSException *exception) 
+        @catch (NSException *exception)
         {
           NSLog(@"exception: %@",exception);
           NSLog(@"href = %@",href);
@@ -130,7 +131,7 @@
 {
   if( !controller_ ){
     controller_ = [[FeedMenuController alloc] initWithDelegate:self];
-  } 
+  }
   return controller_;
 }
 

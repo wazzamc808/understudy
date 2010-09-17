@@ -1,4 +1,4 @@
-//
+//                                                                -*- objc -*-
 //  Copyright 2008-2010 Kirk Kelsey.
 //
 //  This file is part of Understudy.
@@ -8,8 +8,8 @@
 //  Software Foundation, either version 3 of the License, or (at your option)
 //  any later version.
 //
-//  Understudy is distributed in the hope that it will be useful, but WITHOUT 
-//  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
+//  Understudy is distributed in the hope that it will be useful, but WITHOUT
+//  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
 //  FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
 //  for more details.
 //
@@ -41,19 +41,21 @@
  @private
   NSString* title_;
   NSString* description_;
+  NSString* mediaID_;
   NSURL* url_;
   NSString* thumbnailID_;
   BRImageManager* imageManager_;
   BRTextMenuItemLayer* menuitem_;
   UNDNetflixCollection* collection_;
   id<UNDNetflixAssetUpdateDelegate> delegate_;
-  BOOL startsWithSpinner_;
+  BOOL collectionSearchNeeded_;
+  BOOL collectionSearchIncomplete_;
 }
 
 // designated initializer
-- (id)initWithUrl:(NSString*)url 
-            title:(NSString*)title 
-          mediaID:(NSString*)mediaID 
+- (id)initWithUrl:(NSString*)url
+            title:(NSString*)title
+          mediaID:(NSString*)mediaID
       description:(NSString*)description;
 
 - (id)initWithXMLElement:(NSXMLElement*)dom;
@@ -62,5 +64,9 @@
 - (NSURL*)url;
 
 - (void)setDelegate:(id<UNDNetflixAssetUpdateDelegate>)delegate;
+
+// Initiates the processes of determining whether this asset refers to a single
+// video or a collection of them (e.g. a TV series).
+- (void)startAutoDiscovery;
 
 @end
