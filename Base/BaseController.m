@@ -1,5 +1,5 @@
 //
-//  Copyright 2008-2009 Kirk Kelsey.
+//  Copyright 2008-2010 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -69,6 +69,9 @@ typedef enum
   }
 }
 
+// This method will reveal windows that don't belong to Front Row, but it will
+// leave control with FR, preventing a player from using mouse or keyboard
+// injection to control its content.
 - (void)reveal
 {
   BRSentinel* sentinel = [BRSentinel sharedInstance];
