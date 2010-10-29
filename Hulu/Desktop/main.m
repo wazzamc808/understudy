@@ -1,5 +1,5 @@
 //
-//  Copyright 2009 Kirk Kelsey.
+//  Copyright 2009,2010 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -8,57 +8,49 @@
 //  Software Foundation, either version 3 of the License, or (at your option)
 //  any later version.
 //
-//  Understudy is distributed in the hope that it will be useful, but WITHOUT 
-//  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
+//  Understudy is distributed in the hope that it will be useful, but WITHOUT
+//  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
 //  FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
 //  for more details.
 //
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
-@interface UNDHuluDesktopActivator : NSObject{}
-@end
-
-@implementation UNDHuluDesktopActivator
-- (void)activate
-{
-  NSString* source = @"tell application \"System Events\" to activate application \"Hulu Desktop\"";
-  NSAppleScript* script = [[NSAppleScript alloc] initWithSource:source];
-  NSDictionary* err;
-  
-  [script executeAndReturnError:&err];
-  [self performSelector:@selector(activate) withObject:nil afterDelay:1];
-}
-@end
-
 int main(int argc, char* argv[])
 {
+  NSString *huluID = @"com.hulu.HuluDesktop";
   NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-  [NSApplication sharedApplication];
-  [NSApp hideOtherApplications:NSApp];
-  NSTask*   player;
-  NSString* path;
-  NSArray*  args;
-  //CGCaptureAllDisplays();
-
-  // load the Hulu player
-  path = @"/Applications/Hulu Desktop.app/Contents/MacOS/Hulu Desktop";
-  args = [[NSArray alloc] init];
-  player = [[NSTask launchedTaskWithLaunchPath:path arguments:args] retain];
-
-  // once it's launched activate it
-  [[[UNDHuluDesktopActivator alloc] init] activate];
-  //CGReleaseAllDisplays();
-
-  // once it terminates, restart Front Row
-  [player waitUntilExit];
   NSWorkspace* work = [NSWorkspace sharedWorkspace];
+
+  [work hideOtherApplications];
+  [work launchAppWithBundleIdentifier:huluID
+                              options:NSWorkspaceLaunchDefault
+       additionalEventParamDescriptor:[NSAppleEventDescriptor nullDescriptor]
+                     launchIdentifier:nil];
+
+
+  // Loop until we don't find Hulu Desktop among the running applications. Once
+  // we are no longer targeting 10.5, this loop should be changed to use
+  // NSRunningApplication and get the active application directly.
+  bool active;
+  do {
+    active = NO;
+    [NSThread sleepForTimeInterval:1];
+    NSArray* applications = [work launchedApplications];
+    for (NSDictionary* app in applications) {
+      NSString* ID = [app objectForKey:@"NSApplicationBundleIdentifier"];
+      if ([ID compare:huluID] == NSOrderedSame) active=YES;
+    }
+  } while(active);
+
   [work launchAppWithBundleIdentifier:@"com.apple.frontrowlauncher"
                               options:NSWorkspaceLaunchDefault
        additionalEventParamDescriptor:[NSAppleEventDescriptor nullDescriptor]
                      launchIdentifier:nil];
+
   // wait a bit, then die
   [NSThread sleepForTimeInterval:5];
+
   [pool release];
   return 0;
 }
