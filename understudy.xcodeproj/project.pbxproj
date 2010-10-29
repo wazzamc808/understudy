@@ -64,13 +64,13 @@
 		DF7D970D0F08647400C9B7FB /* HuluAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = DF7D97070F08647400C9B7FB /* HuluAsset.m */; };
 		DF7D970F0F08647400C9B7FB /* HuluFeed.m in Sources */ = {isa = PBXBuildFile; fileRef = DF7D970B0F08647400C9B7FB /* HuluFeed.m */; };
 		DF7F84F00EE3354E0049E5C3 /* BackRow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF7F84EF0EE3354E0049E5C3 /* BackRow.framework */; };
+		DF906CFF127B5D3A00B95C6E /* UNDNetflixKeyboardDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = DF906CFE127B5D3A00B95C6E /* UNDNetflixKeyboardDevice.m */; };
 		DFA511990F1A8E5B00FC903B /* HuluController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA511980F1A8E5B00FC903B /* HuluController.m */; };
 		DFA512360F1A92F300FC903B /* YouTubeController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA512350F1A92F300FC903B /* YouTubeController.m */; };
 		DFC24EC81068360500B4D149 /* AppleRemote.m in Sources */ = {isa = PBXBuildFile; fileRef = DF3190320FC5D34B004CE50D /* AppleRemote.m */; };
 		DFC24EC91068360500B4D149 /* RemoteControl.m in Sources */ = {isa = PBXBuildFile; fileRef = DF3190480FC5D3C9004CE50D /* RemoteControl.m */; };
 		DFC24ECA1068360500B4D149 /* HIDRemoteControlDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = DF3190570FC5D598004CE50D /* HIDRemoteControlDevice.m */; };
 		DFC24ECB1068360500B4D149 /* GlobalKeyboardDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = DF3191CA0FC5D657004CE50D /* GlobalKeyboardDevice.m */; };
-		DFC24ECC1068360500B4D149 /* FrontRowKeyboardDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = DF31928F0FC6FA4C004CE50D /* FrontRowKeyboardDevice.m */; };
 		DFC24ECD1068360500B4D149 /* RemoteControlContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = DF3192D40FC6FD92004CE50D /* RemoteControlContainer.m */; };
 		DFC24ECF1068360500B4D149 /* UNDPluginControl.m in Sources */ = {isa = PBXBuildFile; fileRef = DF31936C0FC71D91004CE50D /* UNDPluginControl.m */; };
 		DFC24ED11068360500B4D149 /* UNDPreferenceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DFE8E7B50F52130200A5E120 /* UNDPreferenceManager.m */; };
@@ -215,6 +215,7 @@
 		DF7D970A0F08647400C9B7FB /* HuluFeed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HuluFeed.h; sourceTree = "<group>"; };
 		DF7D970B0F08647400C9B7FB /* HuluFeed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HuluFeed.m; sourceTree = "<group>"; };
 		DF7F84EF0EE3354E0049E5C3 /* BackRow.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BackRow.framework; path = /System/Library/PrivateFrameworks/BackRow.framework; sourceTree = "<absolute>"; };
+		DF906CFE127B5D3A00B95C6E /* UNDNetflixKeyboardDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UNDNetflixKeyboardDevice.m; path = Netflix/Player/UNDNetflixKeyboardDevice.m; sourceTree = "<group>"; };
 		DFA511970F1A8E5B00FC903B /* HuluController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HuluController.h; sourceTree = "<group>"; };
 		DFA511980F1A8E5B00FC903B /* HuluController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HuluController.m; sourceTree = "<group>"; };
 		DFA512340F1A92D900FC903B /* YouTubeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YouTubeController.h; sourceTree = "<group>"; };
@@ -298,6 +299,7 @@
 		089C166AFE841209C02AAC07 /* HelloWorld */ = {
 			isa = PBXGroup;
 			children = (
+				DF906CFE127B5D3A00B95C6E /* UNDNetflixKeyboardDevice.m */,
 				08FB77AFFE84173DC02AAC07 /* Classes */,
 				32C88E010371C26100C91783 /* Other Sources */,
 				089C167CFE841241C02AAC07 /* Resources */,
@@ -783,7 +785,6 @@
 				DFC24EC91068360500B4D149 /* RemoteControl.m in Sources */,
 				DFC24ECA1068360500B4D149 /* HIDRemoteControlDevice.m in Sources */,
 				DFC24ECB1068360500B4D149 /* GlobalKeyboardDevice.m in Sources */,
-				DFC24ECC1068360500B4D149 /* FrontRowKeyboardDevice.m in Sources */,
 				DFC24ECD1068360500B4D149 /* RemoteControlContainer.m in Sources */,
 				DFC24ECF1068360500B4D149 /* UNDPluginControl.m in Sources */,
 				DFC24ED11068360500B4D149 /* UNDPreferenceManager.m in Sources */,
@@ -791,6 +792,7 @@
 				DFC24F42106867E800B4D149 /* main.m in Sources */,
 				DFC24F43106867E800B4D149 /* UNDNetflixPlayer.m in Sources */,
 				DF54B4B911095D36006F0930 /* UNDVolumeControl.m in Sources */,
+				DF906CFF127B5D3A00B95C6E /* UNDNetflixKeyboardDevice.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
