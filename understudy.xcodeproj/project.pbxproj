@@ -79,6 +79,7 @@
 		DFC24EE11068364800B4D149 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DF318FFE0FC5B916004CE50D /* main.m */; };
 		DFC24F42106867E800B4D149 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DFC24F3F106867E800B4D149 /* main.m */; };
 		DFC24F43106867E800B4D149 /* UNDNetflixPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = DFC24F41106867E800B4D149 /* UNDNetflixPlayer.m */; };
+		DFC9BEB31273DE4D006B91FA /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFC9BEB21273DE4D006B91FA /* AppKit.framework */; };
 		DFCDFB110F3E2E9300D979F0 /* AddFeedDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = DFCDFB0A0F3E2E9300D979F0 /* AddFeedDialog.m */; };
 		DFCDFB120F3E2E9300D979F0 /* MainMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFCDFB0C0F3E2E9300D979F0 /* MainMenuController.m */; };
 		DFCDFB130F3E2E9300D979F0 /* ManageFeedsDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = DFCDFB0E0F3E2E9300D979F0 /* ManageFeedsDialog.m */; };
@@ -215,6 +216,7 @@
 		DFC24F3F106867E800B4D149 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		DFC24F40106867E800B4D149 /* UNDNetflixPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UNDNetflixPlayer.h; sourceTree = "<group>"; };
 		DFC24F41106867E800B4D149 /* UNDNetflixPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UNDNetflixPlayer.m; sourceTree = "<group>"; };
+		DFC9BEB21273DE4D006B91FA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		DFCDFB090F3E2E9300D979F0 /* AddFeedDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddFeedDialog.h; sourceTree = "<group>"; };
 		DFCDFB0A0F3E2E9300D979F0 /* AddFeedDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddFeedDialog.m; sourceTree = "<group>"; };
 		DFCDFB0B0F3E2E9300D979F0 /* MainMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainMenuController.h; sourceTree = "<group>"; };
@@ -263,6 +265,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DFC9BEB31273DE4D006B91FA /* AppKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -291,6 +294,7 @@
 				089C1671FE841209C02AAC07 /* Frameworks and Libraries */,
 				19C28FB8FE9D52D311CA2CBB /* Products */,
 				DF54B44E1106994D006F0930 /* CoreAudio.framework */,
+				DFC9BEB21273DE4D006B91FA /* AppKit.framework */,
 			);
 			name = HelloWorld;
 			sourceTree = "<group>";
