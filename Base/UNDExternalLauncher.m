@@ -16,46 +16,107 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
+@interface UNDNotificationObserver : NSObject
+{
+  NSString* bundleID_;
+}
+- (id)   initWithBundleID:(NSString*)bundleID;
+- (void) applicationDidLaunch;
+- (void) applicationDidTerminate;
+@end
+
 int main(int argc, char* argv[])
 {
   if (argc < 2) return 1;
 
   NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 
-  NSString *bundleID = [NSString stringWithCString:argv[1]
+  NSString* bundleID = [NSString stringWithCString:argv[1]
                                           encoding:NSASCIIStringEncoding];
 
   NSWorkspace* work = [NSWorkspace sharedWorkspace];
 
-  [work hideOtherApplications];
-  [work launchAppWithBundleIdentifier:bundleID
-                              options:NSWorkspaceLaunchDefault
-       additionalEventParamDescriptor:[NSAppleEventDescriptor nullDescriptor]
-                     launchIdentifier:nil];
+  // Setup notifications so we know if the application is running.
+  UNDNotificationObserver* observer
+    = [[UNDNotificationObserver alloc] initWithBundleID:bundleID];
 
+  NSNotificationCenter* notificationCenter = [[work notificationCenter] retain];
 
-  // Loop until we don't find the application among those running. Once
-  // we are no longer targeting 10.5, this loop should be changed to use
-  // NSRunningApplication and get the active application directly.
-  bool active;
-  do {
-    active = NO;
-    [NSThread sleepForTimeInterval:1];
-    NSArray* applications = [work launchedApplications];
-    for (NSDictionary* app in applications) {
-      NSString* ID = [app objectForKey:@"NSApplicationBundleIdentifier"];
-      if ([ID compare:bundleID] == NSOrderedSame) active=YES;
+  [notificationCenter addObserver:observer
+                         selector:@selector(applicationDidTerminate)
+                             name:@"NSWorkspaceDidTerminateApplicationNotification"
+                           object:nil];
+
+  [notificationCenter addObserver:observer
+                         selector:@selector(applicationDidLaunch)
+                             name:@"NSWorkspaceDidLaunchApplicationNotification"
+                           object:nil];
+
+  // Launch the application.
+  BOOL launched =
+    [work launchAppWithBundleIdentifier:bundleID
+                                options:NSWorkspaceLaunchDefault
+         additionalEventParamDescriptor:[NSAppleEventDescriptor nullDescriptor]
+                       launchIdentifier:nil];
+
+  if (!launched) {
+
+    NSLog(@"failed to launch application %@", bundleID);
+
+  } else {
+    [work hideOtherApplications];
+    NSRunLoop* runLoop = [[NSRunLoop mainRunLoop] retain];
+    [runLoop run];
+  }
+
+  [notificationCenter removeObserver:observer];
+  [pool release];
+  return 0;
+}
+
+@implementation UNDNotificationObserver : NSObject
+- (id) initWithBundleID:(NSString*)bundleID
+{
+  [super init];
+  bundleID_ = [bundleID copy];
+  return self;
+}
+
+- (void) dealloc
+{
+  [bundleID_ release];
+  [super dealloc];
+}
+
+- (void) applicationDidLaunch
+{
+  // We should be setting up shield windows to hide the transition in/out of
+  // the external application. At this point they should be hidden.
+}
+
+- (void) applicationDidTerminate
+{
+  bool active = NO;
+  NSWorkspace* work = [NSWorkspace sharedWorkspace];
+
+  // Check whether the original application is still running
+  NSArray* applications = [work launchedApplications];
+  for (NSDictionary* app in applications) {
+    NSString* ID = [app objectForKey:@"NSApplicationBundleIdentifier"];
+    if ([ID compare:bundleID_] == NSOrderedSame) {
+      active=YES;
+      break;
     }
-  } while(active);
+  }
 
+  if (active) return;
+
+  // If the application is no longer running then we should return to FR.
   [work launchAppWithBundleIdentifier:@"com.apple.frontrowlauncher"
                               options:NSWorkspaceLaunchDefault
        additionalEventParamDescriptor:[NSAppleEventDescriptor nullDescriptor]
                      launchIdentifier:nil];
 
-  // wait a bit, then die
-  [NSThread sleepForTimeInterval:5];
-
-  [pool release];
-  return 0;
+  exit(0);
 }
+@end
