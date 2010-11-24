@@ -20,12 +20,12 @@
 #import "UnderstudyAsset.h"
 
 @class BRTextMenuItemLayer;
-@class UNDHuluDesktopController;
+@class UNDExternalLaunchController;
 
-@interface UNDHuluDesktopAsset : BaseUnderstudyAsset<UnderstudyAsset> 
+@interface UNDHuluDesktopAsset : BaseUnderstudyAsset<UnderstudyAsset>
 {
   BRTextMenuItemLayer* menuitem_;
-  UNDHuluDesktopController* controller_;
+  UNDExternalLaunchController* controller_;
 }
 
 @end

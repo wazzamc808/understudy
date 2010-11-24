@@ -17,10 +17,12 @@
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
 #import "UNDHuluDesktopAsset.h"
-#import "UNDHuluDesktopController.h"
+#import "UNDExternalLaunchController.h"
 #import "BRTextMenuItemLayer.h"
 
 @implementation UNDHuluDesktopAsset
+
+static NSString* title = @"Hulu Desktop Player";
 
 - (void)dealloc
 {
@@ -34,18 +36,20 @@
   if( !menuitem_ )
   {
     menuitem_ = [BRTextMenuItemLayer menuItem];
-    [menuitem_ setTitle:@"Hulu Desktop Player"];
+    [menuitem_ setTitle:title];
     [menuitem_ retain];
   }
-  return menuitem_;  
+  return menuitem_;
 }
 
 - (BRController*)controller
 {
-  if( !controller_ )
-    controller_ = [[UNDHuluDesktopController alloc] init];
+  if( !controller_ ) {
+    controller_ = [[UNDExternalLaunchController alloc]
+                    initWithTitle:title
+                      andBundleID:@"com.hulu.HuluDesktop"];
+  }
   return controller_;
 }
-
 
 @end
