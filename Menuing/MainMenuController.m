@@ -17,7 +17,7 @@
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
 #import "HuluFeed.h"
-#import "UNDHuluDesktopAsset.h"
+#import "UNDExternalAppAsset.h"
 #import "UNDiPlayerFeed.h"
 #import "NetflixFeed.h"
 #import "YouTubeFeed.h"
@@ -73,7 +73,8 @@ static MainMenuController *sharedInstance_;
 
   // if the Hulu Desktop is installed, add the asset for it
   if( [[NSFileManager defaultManager] fileExistsAtPath:HDAPP] ){
-    [assets_ addObject:[[[UNDHuluDesktopAsset alloc] init] autorelease]];
+    [assets_ addObject:[[[UNDExternalAppAsset alloc]
+                          initWithAppName:@"Hulu Desktop"] autorelease]];
     count++;
   }
   [assets_ addObject:[[[ManageFeedsDialog alloc] init] autorelease]];
