@@ -22,19 +22,24 @@
 
 @implementation UNDExternalLaunchController
 
-- (id)initWithTitle:(NSString*)title andBundleID:(NSString*)bundleID
+- (id)initWithTitle:(NSString*)title forApp:(NSString*)appName
 {
   [super initWithTitle:@"loading" text:title];
-  bundleID_ = [bundleID copy];
+  appName_ = [appName copy];
   return self;
 }
 
 - (void)dealloc
 {
   [task_ release];
-  [bundleID_ release];
-  [arguments_ release];
+  [appName_ release];
+  [url_ release];
   [super dealloc];
+}
+
+- (void)setURL:(NSString*)url
+{
+  url_ = [url_ copy];
 }
 
 - (void)controlWillActivate
@@ -44,11 +49,12 @@
     "/PlugIns/frUnderstudy.frappliance/Contents/SharedSupport"            \
     "/UNDExternalLauncher.app/Contents/MacOS/UNDExternalLauncher";
 
-  if (!arguments_)
-    arguments_ = [NSArray arrayWithObjects:bundleID_, nil];
+  NSArray* arguments;
+  if (url_) arguments = [NSArray arrayWithObjects:appName_, url_, nil];
+  else arguments = [NSArray arrayWithObjects:appName_, nil];
 
   task_ = [[NSTask launchedTaskWithLaunchPath:path
-                                    arguments:arguments_] retain];
+                                    arguments:arguments] retain];
 
   // create an event to mimic a spurious key press, causing Front Row to drop
   // out to the loaded application. this is a reasonable compromize between
