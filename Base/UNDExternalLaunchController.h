@@ -21,17 +21,23 @@
 #import "BRTextWithSpinnerController.h"
 
 /// Uses the UNDExternalLauncher to start and monitor an external application.
-/// This is useful for starting existing media apps that from Front Row.
+/// This is useful for starting existing media apps from Front Row, but is not
+/// appropriate for UNIX style command line programs.
 @interface UNDExternalLaunchController : BRTextWithSpinnerController
 {
 @private
   NSTask*   task_;
-  NSString* bundleID_;  // Bundle identifier of the external program.
-  NSArray*  arguments_; // Command line arguments for the external program.
+  NSString* appName_;       // Application name or path.
+  NSString* url_;           // URL to open with the application.
 }
 
-/// Designated initializer. Creates a controller to launch the application with
-/// the given bundle id. Title is displayed until the program is launched.
-- (id)initWithTitle:(NSString*)title andBundleID:(NSString*)bundleID;
+/// Designated initializer. Creates a controller to launch the named
+/// application. The name parameter should be either a name (without .app
+/// extension) or an absolute path (with .app extension). Title is displayed
+/// until the program is launched.
+- (id)initWithTitle:(NSString*)title forApp:(NSString*)appName;
+
+/// Assigns a url to open with the app.
+- (void)setURL:(NSString*)url;
 
 @end

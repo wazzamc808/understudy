@@ -18,53 +18,57 @@
 
 @interface UNDNotificationObserver : NSObject
 {
-  NSString* bundleID_;
+  NSString* app_;
 }
-- (id)   initWithBundleID:(NSString*)bundleID;
-- (void) applicationDidLaunch;
-- (void) applicationDidTerminate;
+- (id)   initWithApp:(NSString*)app;
+- (void) applicationDidLaunch:(NSNotification*)notification;
+- (void) applicationDidTerminate:(NSNotification*)notification;
 @end
 
+// The command line arguments should be
+// 1) Either:
+//  a) The name of an app (e.g. Safari)
+//  b) He complete path to an app (e.g. /Applications/Safari.app)
+// 2) A url for that app to open [optionally]
 int main(int argc, char* argv[])
 {
   if (argc < 2) return 1;
 
   NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 
-  NSString* bundleID = [NSString stringWithCString:argv[1]
-                                          encoding:NSASCIIStringEncoding];
+  NSString* appName = [NSString stringWithCString:argv[1]
+                                         encoding:NSASCIIStringEncoding];
+
+  NSString* url = nil;
+  if (argc > 2)
+    url = [NSString stringWithCString:argv[2] encoding:NSASCIIStringEncoding];
 
   NSWorkspace* work = [NSWorkspace sharedWorkspace];
 
   // Setup notifications so we know if the application is running.
   UNDNotificationObserver* observer
-    = [[UNDNotificationObserver alloc] initWithBundleID:bundleID];
+    = [[UNDNotificationObserver alloc] initWithApp:appName];
 
   NSNotificationCenter* notificationCenter = [[work notificationCenter] retain];
 
   [notificationCenter addObserver:observer
-                         selector:@selector(applicationDidTerminate)
+                         selector:@selector(applicationDidTerminate:)
                              name:@"NSWorkspaceDidTerminateApplicationNotification"
                            object:nil];
 
   [notificationCenter addObserver:observer
-                         selector:@selector(applicationDidLaunch)
+                         selector:@selector(applicationDidLaunch:)
                              name:@"NSWorkspaceDidLaunchApplicationNotification"
                            object:nil];
 
   // Launch the application.
-  BOOL launched =
-    [work launchAppWithBundleIdentifier:bundleID
-                                options:NSWorkspaceLaunchDefault
-         additionalEventParamDescriptor:[NSAppleEventDescriptor nullDescriptor]
-                       launchIdentifier:nil];
+  BOOL launched;
+  if (url) launched = [work openFile:url withApplication:appName];
+  else launched = [work launchApplication:appName];
 
   if (!launched) {
-
-    NSLog(@"failed to launch application %@", bundleID);
-
+    NSLog(@"failed to launch application %@", appName);
   } else {
-    [work hideOtherApplications];
     NSRunLoop* runLoop = [[NSRunLoop mainRunLoop] retain];
     [runLoop run];
   }
@@ -75,43 +79,44 @@ int main(int argc, char* argv[])
 }
 
 @implementation UNDNotificationObserver : NSObject
-- (id) initWithBundleID:(NSString*)bundleID
+- (id) initWithApp:(NSString*)app
 {
   [super init];
-  bundleID_ = [bundleID copy];
+  app_ = [app copy];
   return self;
 }
 
 - (void) dealloc
 {
-  [bundleID_ release];
+  [app_ release];
   [super dealloc];
 }
 
-- (void) applicationDidLaunch
+- (void) applicationDidLaunch:(NSNotification*)notification
 {
   // We should be setting up shield windows to hide the transition in/out of
   // the external application. At this point they should be hidden.
 }
 
-- (void) applicationDidTerminate
+- (void) applicationDidTerminate:(NSNotification*)notification
 {
-  bool active = NO;
-  NSWorkspace* work = [NSWorkspace sharedWorkspace];
+  bool found = NO;
 
-  // Check whether the original application is still running
-  NSArray* applications = [work launchedApplications];
-  for (NSDictionary* app in applications) {
-    NSString* ID = [app objectForKey:@"NSApplicationBundleIdentifier"];
-    if ([ID compare:bundleID_] == NSOrderedSame) {
-      active=YES;
-      break;
-    }
-  }
+  NSDictionary* userInfo = [[[notification userInfo] retain] autorelease];
+  NSString *applicationName, *applicationPath;
 
-  if (active) return;
+  // OS 10.6 stores a NSRunningApplication in the user info.
+  applicationName = [userInfo objectForKey:@"NSApplicationName"];
+  applicationPath = [userInfo objectForKey:@"NSApplicationPath"];
+
+  // The app might represented by the complete path or the name.
+  if ([applicationName compare:app_] == NSOrderedSame) found = YES;
+  else if ([applicationPath compare:app_] == NSOrderedSame) found = YES;
+
+  if (!found) return;
 
   // If the application is no longer running then we should return to FR.
+  NSWorkspace* work = [NSWorkspace sharedWorkspace];
   [work launchAppWithBundleIdentifier:@"com.apple.frontrowlauncher"
                               options:NSWorkspaceLaunchDefault
        additionalEventParamDescriptor:[NSAppleEventDescriptor nullDescriptor]

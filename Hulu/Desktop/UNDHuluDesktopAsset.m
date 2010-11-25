@@ -47,7 +47,7 @@ static NSString* title = @"Hulu Desktop Player";
   if( !controller_ ) {
     controller_ = [[UNDExternalLaunchController alloc]
                     initWithTitle:title
-                      andBundleID:@"com.hulu.HuluDesktop"];
+                      forApp:@"Hulu Desktop"];
   }
   return controller_;
 }
