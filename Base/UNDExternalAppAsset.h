@@ -16,40 +16,19 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
-#import "UNDHuluDesktopAsset.h"
-#import "UNDExternalLaunchController.h"
-#import "BRTextMenuItemLayer.h"
+#import "BaseUnderstudyAsset.h"
+#import "UnderstudyAsset.h"
 
-@implementation UNDHuluDesktopAsset
+@class BRTextMenuItemLayer;
+@class UNDExternalLaunchController;
 
-static NSString* title = @"Hulu Desktop Player";
-
-- (void)dealloc
+@interface UNDExternalAppAsset : BaseUnderstudyAsset<UnderstudyAsset>
 {
-  [menuitem_ release];
-  [controller_ release];
-  [super dealloc];
+  BRTextMenuItemLayer* menuitem_;
+  UNDExternalLaunchController* controller_;
+  NSString* appName_;
 }
 
-- (BRLayer<BRMenuItemLayer>*)menuItem
-{
-  if( !menuitem_ )
-  {
-    menuitem_ = [BRTextMenuItemLayer menuItem];
-    [menuitem_ setTitle:title];
-    [menuitem_ retain];
-  }
-  return menuitem_;
-}
-
-- (BRController*)controller
-{
-  if( !controller_ ) {
-    controller_ = [[UNDExternalLaunchController alloc]
-                    initWithTitle:title
-                      forApp:@"Hulu Desktop"];
-  }
-  return controller_;
-}
+- (id) initWithAppName:(NSString*)appName;
 
 @end

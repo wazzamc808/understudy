@@ -33,7 +33,6 @@
 		DF3195F70FC85C43004CE50D /* BackRow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF7F84EF0EE3354E0049E5C3 /* BackRow.framework */; };
 		DF3196B80FC8CF7F004CE50D /* UNDHuluFSSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = DF3196B70FC8CF7F004CE50D /* UNDHuluFSSelector.m */; };
 		DF3197D00FCCE3BD004CE50D /* UNDPluginControl.m in Sources */ = {isa = PBXBuildFile; fileRef = DF31936C0FC71D91004CE50D /* UNDPluginControl.m */; };
-		DF3198130FCF7F1C004CE50D /* UNDHuluDesktopAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = DF3198120FCF7F1C004CE50D /* UNDHuluDesktopAsset.m */; };
 		DF375CC20F35300700DA7719 /* NetflixAddDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = DF375CBB0F35300700DA7719 /* NetflixAddDialog.m */; };
 		DF375CC30F35300700DA7719 /* NetflixAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = DF375CBD0F35300700DA7719 /* NetflixAsset.m */; };
 		DF375CC40F35300700DA7719 /* NetflixController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF375CBF0F35300700DA7719 /* NetflixController.m */; };
@@ -90,6 +89,7 @@
 		DFDF5AC5129D8EC400B1941C /* UNDExternalLaunchController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFDF5AC4129D8EC400B1941C /* UNDExternalLaunchController.m */; };
 		DFDF5ACD129D907000B1941C /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFC9BEB21273DE4D006B91FA /* AppKit.framework */; };
 		DFDF5AEA129D90FA00B1941C /* UNDExternalLauncher.m in Sources */ = {isa = PBXBuildFile; fileRef = DFDF5AE9129D90FA00B1941C /* UNDExternalLauncher.m */; };
+		DFDF5BD0129F154C00B1941C /* UNDExternalAppAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = DFDF5BCF129F154C00B1941C /* UNDExternalAppAsset.m */; };
 		DFE014950EDF681D00AFD18F /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFE014940EDF681D00AFD18F /* WebKit.framework */; };
 		DFE8E7B60F52130200A5E120 /* UNDPreferenceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DFE8E7B50F52130200A5E120 /* UNDPreferenceManager.m */; };
 /* End PBXBuildFile section */
@@ -157,8 +157,6 @@
 		DF31936C0FC71D91004CE50D /* UNDPluginControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UNDPluginControl.m; sourceTree = "<group>"; };
 		DF3196B60FC8CF7F004CE50D /* UNDHuluFSSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UNDHuluFSSelector.h; path = Player/UNDHuluFSSelector.h; sourceTree = "<group>"; };
 		DF3196B70FC8CF7F004CE50D /* UNDHuluFSSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UNDHuluFSSelector.m; path = Player/UNDHuluFSSelector.m; sourceTree = "<group>"; };
-		DF3198110FCF7F1C004CE50D /* UNDHuluDesktopAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UNDHuluDesktopAsset.h; path = Desktop/UNDHuluDesktopAsset.h; sourceTree = "<group>"; };
-		DF3198120FCF7F1C004CE50D /* UNDHuluDesktopAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UNDHuluDesktopAsset.m; path = Desktop/UNDHuluDesktopAsset.m; sourceTree = "<group>"; };
 		DF375CBA0F35300700DA7719 /* NetflixAddDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetflixAddDialog.h; path = Netflix/NetflixAddDialog.h; sourceTree = "<group>"; };
 		DF375CBB0F35300700DA7719 /* NetflixAddDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NetflixAddDialog.m; path = Netflix/NetflixAddDialog.m; sourceTree = "<group>"; };
 		DF375CBC0F35300700DA7719 /* NetflixAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetflixAsset.h; path = Netflix/NetflixAsset.h; sourceTree = "<group>"; };
@@ -235,6 +233,8 @@
 		DFDF5AC4129D8EC400B1941C /* UNDExternalLaunchController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UNDExternalLaunchController.m; sourceTree = "<group>"; };
 		DFDF5AD1129D907000B1941C /* UNDExternalLauncher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UNDExternalLauncher.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DFDF5AE9129D90FA00B1941C /* UNDExternalLauncher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UNDExternalLauncher.m; path = Base/UNDExternalLauncher.m; sourceTree = "<group>"; };
+		DFDF5BCE129F154C00B1941C /* UNDExternalAppAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UNDExternalAppAsset.h; sourceTree = "<group>"; };
+		DFDF5BCF129F154C00B1941C /* UNDExternalAppAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UNDExternalAppAsset.m; sourceTree = "<group>"; };
 		DFE014940EDF681D00AFD18F /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = /System/Library/Frameworks/WebKit.framework; sourceTree = "<absolute>"; };
 		DFE8E7B40F52130200A5E120 /* UNDPreferenceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UNDPreferenceManager.h; path = ../Menuing/UNDPreferenceManager.h; sourceTree = "<group>"; };
 		DFE8E7B50F52130200A5E120 /* UNDPreferenceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UNDPreferenceManager.m; path = ../Menuing/UNDPreferenceManager.m; sourceTree = "<group>"; };
@@ -417,15 +417,6 @@
 			name = RemoteControlWrapper;
 			sourceTree = "<group>";
 		};
-		DF3198090FCF7C71004CE50D /* Desktop */ = {
-			isa = PBXGroup;
-			children = (
-				DF3198110FCF7F1C004CE50D /* UNDHuluDesktopAsset.h */,
-				DF3198120FCF7F1C004CE50D /* UNDHuluDesktopAsset.m */,
-			);
-			name = Desktop;
-			sourceTree = "<group>";
-		};
 		DF375CC60F35302600DA7719 /* Netflix */ = {
 			isa = PBXGroup;
 			children = (
@@ -496,6 +487,8 @@
 		DF5A22370F100E4300F5F19F /* Base */ = {
 			isa = PBXGroup;
 			children = (
+				DFDF5BCE129F154C00B1941C /* UNDExternalAppAsset.h */,
+				DFDF5BCF129F154C00B1941C /* UNDExternalAppAsset.m */,
 				DFDF5AC3129D8EC400B1941C /* UNDExternalLaunchController.h */,
 				DFDF5AC4129D8EC400B1941C /* UNDExternalLaunchController.m */,
 				DF5A244E0F11366F00F5F19F /* UnderstudyAsset.h */,
@@ -514,7 +507,6 @@
 		DF7D97030F08647400C9B7FB /* Hulu */ = {
 			isa = PBXGroup;
 			children = (
-				DF3198090FCF7C71004CE50D /* Desktop */,
 				DF318FFD0FC5B8EE004CE50D /* Player */,
 				DF7D97040F08647400C9B7FB /* HuluAddDialog.h */,
 				DF7D97050F08647400C9B7FB /* HuluAddDialog.m */,
@@ -741,9 +733,9 @@
 				DF7D07740F86A67B0014A0FB /* UNDPasswordProvider.m in Sources */,
 				DF6F9F880F9263AA00AB41CF /* UNDNetflixCollection.m in Sources */,
 				DF3197D00FCCE3BD004CE50D /* UNDPluginControl.m in Sources */,
-				DF3198130FCF7F1C004CE50D /* UNDHuluDesktopAsset.m in Sources */,
 				DF42345112351DBD0044317C /* UNDNetflixLoadingController.m in Sources */,
 				DFDF5AC5129D8EC400B1941C /* UNDExternalLaunchController.m in Sources */,
+				DFDF5BD0129F154C00B1941C /* UNDExternalAppAsset.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

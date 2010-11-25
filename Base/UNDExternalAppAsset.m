@@ -16,16 +16,45 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
-#import "BaseUnderstudyAsset.h"
-#import "UnderstudyAsset.h"
+#import "UNDExternalAppAsset.h"
+#import "UNDExternalLaunchController.h"
+#import "BRTextMenuItemLayer.h"
 
-@class BRTextMenuItemLayer;
-@class UNDExternalLaunchController;
+@implementation UNDExternalAppAsset
 
-@interface UNDHuluDesktopAsset : BaseUnderstudyAsset<UnderstudyAsset>
+- (id)initWithAppName:(NSString*)appName
 {
-  BRTextMenuItemLayer* menuitem_;
-  UNDExternalLaunchController* controller_;
+  [super init];
+  appName_ = [appName copy];
+  return self;
+}
+
+- (void)dealloc
+{
+  [appName_ release];
+  [menuitem_ release];
+  [controller_ release];
+  [super dealloc];
+}
+
+- (BRLayer<BRMenuItemLayer>*)menuItem
+{
+  if( !menuitem_ )
+  {
+    menuitem_ = [BRTextMenuItemLayer menuItem];
+    [menuitem_ setTitle:appName_];
+    [menuitem_ retain];
+  }
+  return menuitem_;
+}
+
+- (BRController*)controller
+{
+  if( !controller_ ) {
+    controller_ = [[UNDExternalLaunchController alloc]
+                    initWithTitle:appName_ forApp:appName_];
+  }
+  return controller_;
 }
 
 @end
