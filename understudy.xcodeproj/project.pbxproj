@@ -232,7 +232,7 @@
 		DFDF5AC3129D8EC400B1941C /* UNDExternalLaunchController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UNDExternalLaunchController.h; sourceTree = "<group>"; };
 		DFDF5AC4129D8EC400B1941C /* UNDExternalLaunchController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UNDExternalLaunchController.m; sourceTree = "<group>"; };
 		DFDF5AD1129D907000B1941C /* UNDExternalLauncher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UNDExternalLauncher.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		DFDF5AE9129D90FA00B1941C /* UNDExternalLauncher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UNDExternalLauncher.m; path = Base/UNDExternalLauncher.m; sourceTree = "<group>"; };
+		DFDF5AE9129D90FA00B1941C /* UNDExternalLauncher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UNDExternalLauncher.m; sourceTree = "<group>"; };
 		DFDF5BCE129F154C00B1941C /* UNDExternalAppAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UNDExternalAppAsset.h; sourceTree = "<group>"; };
 		DFDF5BCF129F154C00B1941C /* UNDExternalAppAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UNDExternalAppAsset.m; sourceTree = "<group>"; };
 		DFE014940EDF681D00AFD18F /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = /System/Library/Frameworks/WebKit.framework; sourceTree = "<absolute>"; };
@@ -298,7 +298,6 @@
 		089C166AFE841209C02AAC07 /* HelloWorld */ = {
 			isa = PBXGroup;
 			children = (
-				DFDF5AE9129D90FA00B1941C /* UNDExternalLauncher.m */,
 				DF906CFE127B5D3A00B95C6E /* UNDNetflixKeyboardDevice.m */,
 				08FB77AFFE84173DC02AAC07 /* Classes */,
 				32C88E010371C26100C91783 /* Other Sources */,
@@ -491,6 +490,7 @@
 				DFDF5BCF129F154C00B1941C /* UNDExternalAppAsset.m */,
 				DFDF5AC3129D8EC400B1941C /* UNDExternalLaunchController.h */,
 				DFDF5AC4129D8EC400B1941C /* UNDExternalLaunchController.m */,
+				DFDF5AE9129D90FA00B1941C /* UNDExternalLauncher.m */,
 				DF5A244E0F11366F00F5F19F /* UnderstudyAsset.h */,
 				DFCDFC510F3E72A400D979F0 /* BaseUnderstudyAsset.h */,
 				DFCDFC520F3E72A400D979F0 /* BaseUnderstudyAsset.m */,
@@ -551,6 +551,23 @@
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
+
+/* Begin PBXLegacyTarget section */
+		DFDF5BF412A1F81800B1941C /* Doxygen */ = {
+			isa = PBXLegacyTarget;
+			buildArgumentsString = "";
+			buildConfigurationList = DFDF5BF712A1F83C00B1941C /* Build configuration list for PBXLegacyTarget "Doxygen" */;
+			buildPhases = (
+			);
+			buildToolPath = make;
+			buildWorkingDirectory = doxygen;
+			dependencies = (
+			);
+			name = Doxygen;
+			passBuildSettingsInEnvironment = 1;
+			productName = Doxygen;
+		};
+/* End PBXLegacyTarget section */
 
 /* Begin PBXNativeTarget section */
 		8D5B49AC048680CD000E48DA /* Understudy */ = {
@@ -642,6 +659,7 @@
 				DF318F2D0FC4B418004CE50D /* HuluPlayer */,
 				DFC24EC51068360500B4D149 /* NetflixPlayer */,
 				DFDF5AC8129D907000B1941C /* UNDExternalLauncher */,
+				DFDF5BF412A1F81800B1941C /* Doxygen */,
 			);
 		};
 /* End PBXProject section */
@@ -1055,6 +1073,20 @@
 			};
 			name = Release;
 		};
+		DFDF5BF512A1F81800B1941C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = Understudy;
+			};
+			name = Debug;
+		};
+		DFDF5BF612A1F81800B1941C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = Understudy;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1099,6 +1131,15 @@
 			buildConfigurations = (
 				DFDF5ACF129D907000B1941C /* Debug */,
 				DFDF5AD0129D907000B1941C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DFDF5BF712A1F83C00B1941C /* Build configuration list for PBXLegacyTarget "Doxygen" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DFDF5BF512A1F81800B1941C /* Debug */,
+				DFDF5BF612A1F81800B1941C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
