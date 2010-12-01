@@ -23,12 +23,14 @@
 #import "HuluAddDialog.h"
 #import "NetflixAddDialog.h"
 #import "UNDYouTubeAddDialog.h"
+#import "DailyShowAddDialog.h"
 
 @interface AddFeedDialog : BROptionDialog {
 @private
   HuluAddDialog* hulu_;
   NetflixAddDialog* netflix_;
   UNDYouTubeAddDialog* youtube_;
+  DailyShowAddDialog* dailyshow_;
 }
 
 @end

@@ -21,6 +21,7 @@
 #import "UNDiPlayerFeed.h"
 #import "NetflixFeed.h"
 #import "YouTubeFeed.h"
+#import "DailyShowFullEpisodesFeed.h"
 
 #import "MainMenuController.h"
 #import "ManageFeedsDialog.h"
@@ -98,6 +99,8 @@ static MainMenuController *sharedInstance_;
       asset = [[NetflixFeed alloc] initWithTitle:title forUrl:url];
     else if( [host rangeOfString:@"youtube"].location != NSNotFound )
       asset = [[YouTubeFeed alloc] initWithTitle:title forUrl:url];
+    else if( [host rangeOfString:@"thedailyshow"].location != NSNotFound )
+      asset = [[DailyShowFullEpisodesFeed alloc] initWithTitle:title forUrl:url];
     else if( [host rangeOfString:@"bbc.co.uk"].location != NSNotFound )
       asset = [[UNDiPlayerFeed alloc] initWithTitle:title forUrl:url];
     else asset = (BaseUnderstudyAsset<UnderstudyAsset>*)[NSNull null];
