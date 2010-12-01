@@ -33,6 +33,7 @@
   [self addOptionText:@"Hulu"];
   [self addOptionText:@"Netflix"];
   [self addOptionText:@"YouTube"];
+  [self addOptionText:@"The Daily Show"];
   [self addOptionText:@"URL in Clipboard"];
   [self setActionSelector:@selector(itemSelected) target:self];  
   return self;
@@ -42,6 +43,7 @@
 {
   [hulu_ release];
   [netflix_ release];
+  [dailyshow_ release];
   [super dealloc];
 }
 
@@ -138,6 +140,13 @@
                                          withTitle:@"BBC Feed"];
     [[self stack] popToController:[MainMenuController sharedInstance]];    
   }
+  
+  else if( [host rangeOfString:@"dailyshow"].location != NSNotFound )
+  {
+    [[UNDPreferenceManager sharedInstance] addFeed:[url absoluteString]
+                                         withTitle:@"The DailyShow Feed"];
+    [[self stack] popToController:[MainMenuController sharedInstance]];    
+  }
     
   else
     [self _presentInvalidHostAlert];
@@ -160,7 +169,11 @@
       if( !youtube_ ) youtube_ = [[UNDYouTubeAddDialog alloc] init];
       [[self stack] pushController:youtube_];
       break;
-    case 3: // pasteboard
+    case 3: // DailyShow
+      if( !dailyshow_ ) dailyshow_ = [[DailyShowAddDialog alloc] init];
+      [[self stack] pushController:dailyshow_];
+      break;
+    case 4: // pasteboard
       [self _loadFeedFromPasteboard];
       break;
     default:
