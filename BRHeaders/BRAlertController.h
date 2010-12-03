@@ -8,6 +8,9 @@
 
 @class BRHeaderControl, BRImageControl, BRTextControl;
 
+/// \addtogroup BackRow
+
+/// \ingroup BackRow
 @interface BRAlertController : BRController
 {
     id _eventDelegate;

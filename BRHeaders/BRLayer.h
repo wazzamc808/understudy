@@ -6,6 +6,9 @@
 
 #import <QuartzCore/QuartzCore.h>
 
+/// \addtogroup BackRow
+
+/// \ingroup BackRow
 @interface BRLayer : CALayer
 {
 }

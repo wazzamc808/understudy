@@ -8,6 +8,9 @@
 
 @class BRTextControl, BRWaitSpinnerControl;
 
+/// \addtogroup BackRow
+
+/// \ingroup BackRow
 @interface BRTextWithSpinnerController : BRController
 {
     BRWaitSpinnerControl *_spinner;

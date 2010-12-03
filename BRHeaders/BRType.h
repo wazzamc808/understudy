@@ -8,6 +8,9 @@
 
 @class NSString;
 
+/// \addtogroup BackRow
+
+/// \ingroup BackRow
 @interface BRType : NSObject
 {
     NSString *_typeString;

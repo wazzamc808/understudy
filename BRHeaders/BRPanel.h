@@ -8,6 +8,9 @@
 
 @class NSMutableArray;
 
+/// \addtogroup BackRow
+
+/// \ingroup BackRow
 @interface BRPanel : BRControl
 {
     NSMutableArray *_controls;

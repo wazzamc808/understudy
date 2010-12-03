@@ -8,6 +8,9 @@
 
 @class BRCenteredLayoutManager, BRHeaderControl, BRListControl, BRTextControl, NSDictionary, NSMutableArray;
 
+/// \addtogroup BackRow
+
+/// \ingroup BackRow
 @interface BROptionDialog : BRController
 {
     int _tag;

@@ -9,6 +9,9 @@
 
 @class BRControllerStack;
 
+/// \addtogroup BackRow
+
+/// \ingroup BackRow
 @interface BRSentinel : BRSingleton
 {
    id /* <BRMusicStoreImageDecryptionAgent> */ _musicStoreImageDecryptionAgent;

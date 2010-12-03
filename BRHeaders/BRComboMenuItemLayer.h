@@ -9,6 +9,9 @@
 
 @class BRAutoScrollingTextLayer, BRImageLayer, BRTextLayer, NSString;
 
+/// \addtogroup BackRow
+
+/// \ingroup BackRow
 @interface BRComboMenuItemLayer : BRLayer <BRMenuItemLayer>
 {
     BRImageLayer *_thumbnailLayer;

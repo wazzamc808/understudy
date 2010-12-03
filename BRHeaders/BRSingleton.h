@@ -6,6 +6,9 @@
 
 #import <Foundation/Foundation.h>
 
+/// \addtogroup BackRow
+
+/// \ingroup BackRow
 @interface BRSingleton : NSObject
 {
 }

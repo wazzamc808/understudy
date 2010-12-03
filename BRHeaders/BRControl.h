@@ -9,6 +9,9 @@
 
 @class BRLayer;
 
+/// \addtogroup BackRow
+
+/// \ingroup BackRow
 @interface BRControl : NSObject <BREventResponder>
 {
     id _parent;

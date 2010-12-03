@@ -6,6 +6,9 @@
 
 @class NSString;
 
+/// \addtogroup BackRow
+
+/// \ingroup BackRow
 @interface RUIPreferences : NSObject
 {
     NSString *_domain;

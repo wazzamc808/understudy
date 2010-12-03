@@ -9,6 +9,9 @@
 
 @class BRAutoScrollingTextLayer, BRImageLayer, BRTextLayer, BRWaitSpinnerLayer, NSDictionary;
 
+/// \addtogroup BackRow
+
+/// \ingroup BackRow
 @interface BRTextMenuItemLayer : BRLayer <BRMenuItemLayer>
 {
     BRAutoScrollingTextLayer *_textLine;

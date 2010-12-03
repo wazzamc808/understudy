@@ -8,6 +8,9 @@
 
 @class BRListLayer, NSMutableArray, NSTimer;
 
+/// \addtogroup BackRow
+
+/// \ingroup BackRow
 @interface BRListControl : BRControl
 {
     id <BRMenuListItemProvider> _source;

@@ -8,6 +8,9 @@
 
 @class BRRenderDisplayLink;
 
+/// \addtogroup BackRow
+
+/// \ingroup BackRow
 @interface BRRenderer : NSObject
 {
     BRRenderDisplayLink *_link;
