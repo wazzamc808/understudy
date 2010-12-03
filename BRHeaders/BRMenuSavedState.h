@@ -8,6 +8,9 @@
 
 @class NSMutableArray, NSMutableDictionary;
 
+/// \addtogroup BackRow
+
+/// \ingroup BackRow
 @interface BRMenuSavedState : BRSingleton
 {
     NSMutableArray *_currentStackPath;

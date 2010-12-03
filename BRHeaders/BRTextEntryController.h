@@ -8,6 +8,9 @@
 
 @class BRHeaderControl, BRTextControl, BRTextEntryControl;
 
+/// \addtogroup BackRow
+
+/// \ingroup BackRow
 @interface BRTextEntryController : BRController
 {
     BRTextEntryControl *_editor;

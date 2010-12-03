@@ -8,6 +8,9 @@
 
 @class BRCenteredMenuLayoutManager, BRTextControl;
 
+/// \addtogroup BackRow
+
+/// \ingroup BackRow
 @interface BRCenteredMenuController : BRMenuController
 {
     BRCenteredMenuLayoutManager *_layoutManager;

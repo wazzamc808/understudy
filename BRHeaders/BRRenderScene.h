@@ -9,6 +9,9 @@
 
 @class BRLayer, BRRenderContext, CARenderer, NSMutableArray;
 
+/// \addtogroup BackRow
+
+/// \ingroup BackRow
 @interface BRRenderScene : BRSingleton <BREventResponder>
 {
 //    BRLayer *_root;

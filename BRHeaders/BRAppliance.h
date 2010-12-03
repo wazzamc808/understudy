@@ -8,6 +8,9 @@
 
 @class NSBundle;
 
+/// \addtogroup BackRow
+
+/// \ingroup BackRow
 @interface BRAppliance : NSObject <BRApplianceProtocol>
 {
     NSBundle *_myBundle;

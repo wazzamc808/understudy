@@ -8,6 +8,9 @@
 
 @class BRWaitSpinnerLayer;
 
+/// \addtogroup BackRow
+
+/// \ingroup BackRow
 @interface BRWaitSpinnerControl : BRControl
 {
     BRWaitSpinnerLayer *_layer;

@@ -6,6 +6,9 @@
 
 #import "BRMenuController.h"
 
+/// \addtogroup BackRow
+
+/// \ingroup BackRow
 @interface BRMenuController (HeaderConvienceMethods)
 - (void)setListTitle:(id)fp8 withAttributes:(id)fp12;
 - (void)setListTitle:(id)fp8;

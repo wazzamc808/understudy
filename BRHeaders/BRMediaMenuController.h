@@ -9,6 +9,9 @@
 
 @class BRControl, NSMutableArray, NSTimer;
 
+/// \addtogroup BackRow
+
+/// \ingroup BackRow
 @interface BRMediaMenuController : BRMenuController <BRMediaPreviewFactoryDelegate>
 {
     BRControl *_previewControl;

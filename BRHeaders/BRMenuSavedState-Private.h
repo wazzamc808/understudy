@@ -6,6 +6,9 @@
 
 #import "BRMenuSavedState.h"
 
+/// \addtogroup BackRow
+
+/// \ingroup BackRow
 @interface BRMenuSavedState (Private)
 - (id)stackPath;
 @end

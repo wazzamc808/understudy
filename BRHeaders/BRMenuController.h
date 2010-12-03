@@ -9,6 +9,9 @@
 
 @class BRHeaderControl, BRListControl;
 
+/// \addtogroup BackRow
+
+/// \ingroup BackRow
 @interface BRMenuController : BRController <BRApplianceControllerIconProtocol>
 {
     BRListControl *_list;

@@ -8,6 +8,9 @@
 
 @class NSLock, NSMutableArray, NSMutableDictionary, NSString;
 
+/// \addtogroup BackRow
+
+/// \ingroup BackRow
 @interface BRImageManager : BRSingleton
 {
     unsigned long long _maxCacheSize;

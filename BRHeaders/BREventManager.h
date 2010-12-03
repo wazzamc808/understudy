@@ -7,6 +7,9 @@
 @class BREvent, NSMutableArray, NSTimer;
 //<BREventResponder>, 
 
+/// \addtogroup BackRow
+
+/// \ingroup BackRow
 @interface BREventManager : NSObject
 {
     NSObject<BREventResponder> *_firstResponder;

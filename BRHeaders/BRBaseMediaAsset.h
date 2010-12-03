@@ -7,6 +7,9 @@
 #import "BRMediaAsset-Protocol.h"
 #import "BRMediaProvider-Protocol.h"
 
+/// \addtogroup BackRow
+
+/// \ingroup BackRow
 @interface BRBaseMediaAsset : NSObject <BRMediaAsset>
 {
     id <BRMediaProvider> _provider;

@@ -8,6 +8,9 @@
 
 @class BRControllerStack, NSMutableDictionary;
 
+/// \addtogroup BackRow
+
+/// \ingroup BackRow
 @interface BRController : BRPanel
 {
     NSMutableDictionary *_labels;

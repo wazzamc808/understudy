@@ -6,6 +6,9 @@
 
 @class BRURLDocumentManager, NSError, NSMutableData, NSMutableDictionary, NSThread, NSURLConnection, NSURLRequest, NSURLResponse;
 
+/// \addtogroup BackRow
+
+/// \ingroup BackRow
 @interface BRURLDocument : NSObject
 {
     NSURLRequest *_request;

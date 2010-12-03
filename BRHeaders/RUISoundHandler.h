@@ -6,6 +6,9 @@
 
 #import "BRSingleton.h"
 
+/// \addtogroup BackRow
+
+/// \ingroup BackRow
 @interface RUISoundHandler : BRSingleton
 {
     BOOL _isSoundEnabled;

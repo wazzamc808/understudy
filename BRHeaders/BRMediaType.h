@@ -6,6 +6,9 @@
 
 #import "BRType.h"
 
+/// \addtogroup BackRow
+
+/// \ingroup BackRow
 @interface BRMediaType : BRType
 {
     BRMediaType *_derivedFrom;

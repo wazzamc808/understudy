@@ -8,6 +8,9 @@
 
 @class NSTimer;
 
+/// \addtogroup BackRow
+
+/// \ingroup BackRow
 @interface BRDisplayManager : BRSingleton
 {
     unsigned int _display;

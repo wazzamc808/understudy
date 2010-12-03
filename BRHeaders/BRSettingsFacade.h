@@ -8,6 +8,9 @@
 
 @class BRIPConfiguration;
 
+/// \addtogroup BackRow
+
+/// \ingroup BackRow
 @interface BRSettingsFacade : BRSingleton
 {
     BRIPConfiguration *_ipConfiguration;
