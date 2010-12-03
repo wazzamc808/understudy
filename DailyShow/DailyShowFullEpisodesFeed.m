@@ -52,19 +52,17 @@
   TFHpple *seasonParser = [[TFHpple alloc] initWithHTMLData:seasonData];
   
   NSArray *seasons = [seasonParser search:@"//div[@class=\"seasons\"]//a"];
-  int i = 0;
-  //for( i = 0; i < [seasons count]; i++ )
-  for( i = 0; i < 1; i++ )
+  for( int i = 0; i < [seasons count]; i++ )
+  //for( i = 0; i < 1; i++ )
   {
     
     // Access the first cell
     TFHppleElement *season = [seasons objectAtIndex:i];
     
     // Get the text within the cell tag
-//    NSString *content = [season content]; 
     NSString *idContent = [season objectForKey:@"id"];
     
-//    NSLog( @"DailyShowFullEpisodesFeed:currentAssets Content(%d): %@", i, content );
+//    NSLog( @"DailyShowFullEpisodesFeed:currentAssets Content(%d): %@", i, [season content] );
 //    NSLog( @"DailyShowFullEpisodesFeed:currentAssets id(%d): %@", i, idContent );
     NSURL *seasonUrl = [NSURL URLWithString:idContent];
     NSData *seasonData = [[NSData alloc] initWithContentsOfURL:seasonUrl
@@ -94,8 +92,7 @@
 //      return nil;
 //    }
     
-    int j;
-    for( j = 0; j < [titles count]; j++ )
+    for( int j = 0; j < [titles count]; j++ )
     {
       TFHppleElement *titleElement = [titles objectAtIndex:j];
       NSString *title = [titleElement content];
