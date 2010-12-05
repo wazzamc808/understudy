@@ -71,6 +71,7 @@
 {
   [super controlWillDeactivate];
   [self returnToFR];
+  [mainView_ close]; // subclasses should set this to be the primary web view
   [window_ close];
   window_ = nil;
 }

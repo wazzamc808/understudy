@@ -22,13 +22,7 @@
 
 #import "BRTextWithSpinnerController.h"
 
-@interface BaseController : BRTextWithSpinnerController {
- @protected
-  WebView* mainView_; // subclasses should set this to be the primary web view
-  NSWindow* menushield_; // window used to cover the menu bar
-  id pluginView_; // WebNetscapePluginDocumentView beneath the mainView (if any)
-}
-
+@interface BaseController : BRTextWithSpinnerController { }
 
 // orders out the FR interface to reveal an understudy player
 - (void)reveal;
@@ -42,4 +36,3 @@
 - (void)fastForward;
 - (void)rewind;
 @end
-

@@ -92,12 +92,6 @@ typedef enum
   id<BRRendererProvider> provider = [sentinel rendererProvider];
   BRRenderer* renderer = [provider renderer];
   [renderer orderIn];
-  if( [mainView_ isInFullScreenMode] )
-    [mainView_ exitFullScreenModeWithOptions:nil];
-  if( [pluginView_ isInFullScreenMode] )
-    [pluginView_ exitFullScreenModeWithOptions:nil];
-  [mainView_ close];
-  [menushield_ close];
 }
 
 - (BOOL)isNetworkDependent
