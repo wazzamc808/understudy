@@ -1,4 +1,4 @@
-//
+//                                                                -*- objc -*-
 //  Copyright 2009 Kirk Kelsey.
 //
 //  This file is part of Understudy.
@@ -25,6 +25,7 @@
   UNDiPlayerAsset* asset_;
   UNDPluginControl* pluginControl_;
   NSWindow* window_;
+  WebView* mainView_;
 }
 
 - (id)initWithAsset:(UNDiPlayerAsset*)asset;
