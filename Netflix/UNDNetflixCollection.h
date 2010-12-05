@@ -31,4 +31,6 @@
   NSArray* assets_;
 }
 
+- (id)initWithTitle:(NSString*)title forUrl:(NSURL*)url;
+
 @end
