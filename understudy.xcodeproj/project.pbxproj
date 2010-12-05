@@ -42,7 +42,7 @@
 		DF37B8B00F59EFFE0017766F /* UNDiPlayerAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = DF37B8AF0F59EFFE0017766F /* UNDiPlayerAsset.m */; };
 		DF37B8CF0F5AE0940017766F /* UNDNSXMLElement+Parsing.m in Sources */ = {isa = PBXBuildFile; fileRef = DF37B8CE0F5AE0940017766F /* UNDNSXMLElement+Parsing.m */; };
 		DF37B9120F5AF1F70017766F /* UNDiPlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF37B9110F5AF1F70017766F /* UNDiPlayerController.m */; };
-		DF3D0F640F54CA3E0089CF2B /* LoadingAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = DF3D0F630F54CA3E0089CF2B /* LoadingAsset.m */; };
+		DF3D0F640F54CA3E0089CF2B /* UNDLoadingAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = DF3D0F630F54CA3E0089CF2B /* UNDLoadingAsset.m */; };
 		DF42345112351DBD0044317C /* UNDNetflixLoadingController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF42345012351DBD0044317C /* UNDNetflixLoadingController.m */; };
 		DF444EF5123B25F9000331B7 /* PubSub.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF444EF4123B25F9000331B7 /* PubSub.framework */; };
 		DF444F33123C2661000331B7 /* PubSub.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF444EF4123B25F9000331B7 /* PubSub.framework */; };
@@ -113,7 +113,7 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 089C1669FE841209C02AAC07 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = DFDF5AC8129D907000B1941C /* UNDExternalLauncher */;
+			remoteGlobalIDString = DFDF5AC8129D907000B1941C;
 			remoteInfo = UNDExternalLauncher;
 		};
 /* End PBXContainerItemProxy section */
@@ -177,8 +177,8 @@
 		DF37B9110F5AF1F70017766F /* UNDiPlayerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UNDiPlayerController.m; sourceTree = "<group>"; };
 		DF37BA330F5B5DA70017766F /* UNDHuluSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UNDHuluSelector.h; sourceTree = "<group>"; };
 		DF37BA340F5B5DA70017766F /* UNDHuluSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UNDHuluSelector.m; sourceTree = "<group>"; };
-		DF3D0F620F54CA3E0089CF2B /* LoadingAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingAsset.h; sourceTree = "<group>"; };
-		DF3D0F630F54CA3E0089CF2B /* LoadingAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadingAsset.m; sourceTree = "<group>"; };
+		DF3D0F620F54CA3E0089CF2B /* UNDLoadingAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UNDLoadingAsset.h; sourceTree = "<group>"; };
+		DF3D0F630F54CA3E0089CF2B /* UNDLoadingAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UNDLoadingAsset.m; sourceTree = "<group>"; };
 		DF42344F12351DBD0044317C /* UNDNetflixLoadingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UNDNetflixLoadingController.h; path = Netflix/UNDNetflixLoadingController.h; sourceTree = "<group>"; };
 		DF42345012351DBD0044317C /* UNDNetflixLoadingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UNDNetflixLoadingController.m; path = Netflix/UNDNetflixLoadingController.m; sourceTree = "<group>"; };
 		DF444EF4123B25F9000331B7 /* PubSub.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PubSub.framework; path = System/Library/Frameworks/PubSub.framework; sourceTree = SDKROOT; };
@@ -498,8 +498,8 @@
 				DF5A23930F11240400F5F19F /* BaseController.m */,
 				DF5A22380F100E4300F5F19F /* FeedMenuController.h */,
 				DF5A22390F100E4300F5F19F /* FeedMenuController.m */,
-				DF3D0F620F54CA3E0089CF2B /* LoadingAsset.h */,
-				DF3D0F630F54CA3E0089CF2B /* LoadingAsset.m */,
+				DF3D0F620F54CA3E0089CF2B /* UNDLoadingAsset.h */,
+				DF3D0F630F54CA3E0089CF2B /* UNDLoadingAsset.m */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -741,7 +741,7 @@
 				DFCDFB140F3E2E9300D979F0 /* RenameDialog.m in Sources */,
 				DFCDFC530F3E72A400D979F0 /* BaseUnderstudyAsset.m in Sources */,
 				DFE8E7B60F52130200A5E120 /* UNDPreferenceManager.m in Sources */,
-				DF3D0F640F54CA3E0089CF2B /* LoadingAsset.m in Sources */,
+				DF3D0F640F54CA3E0089CF2B /* UNDLoadingAsset.m in Sources */,
 				DF37B8AD0F59ED5E0017766F /* UNDiPlayerFeed.m in Sources */,
 				DF37B8B00F59EFFE0017766F /* UNDiPlayerAsset.m in Sources */,
 				DF37B8CF0F5AE0940017766F /* UNDNSXMLElement+Parsing.m in Sources */,

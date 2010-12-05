@@ -16,15 +16,33 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
-#import <Cocoa/Cocoa.h>
+#import "UNDLoadingAsset.h"
 
-#import <BRTextMenuItemLayer.h>
 
-#import "UnderstudyAsset.h"
+@implementation UNDLoadingAsset
 
-@interface LoadingAsset : NSObject <UnderstudyAsset> {
- @private
-  BRTextMenuItemLayer* menuItem_;
+- (BRLayer<BRMenuItemLayer>*)menuItem
+{
+  if( !menuItem_ ){
+    menuItem_ = [[BRTextMenuItemLayer progressMenuItem] retain];
+    [menuItem_ setTitle:@"Loading"];
+  }
+  return menuItem_;
+}
+
+- (BRController*)controller
+{
+  return nil;
+}
+
+- (BRControl*)preview
+{
+  return nil;
+}
+
+- (NSString*)title
+{
+  return @"Loading";
 }
 
 @end
