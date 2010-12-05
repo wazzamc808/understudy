@@ -20,7 +20,7 @@
 #import "BaseController.h"
 #import "UnderstudyAsset.h"
 #import "BaseUnderstudyAsset.h"
-#import "LoadingAsset.h"
+#import "UNDLoadingAsset.h"
 #import "UNDPreferenceManager.h"
 
 #import <BRControllerStack.h>
@@ -49,7 +49,7 @@
   [super init];
   delegate_ = [delegate retain];
   [self setListTitle:[delegate_ title]];
-  LoadingAsset* loading = [[[LoadingAsset alloc] init] autorelease];
+  UNDLoadingAsset* loading = [[[UNDLoadingAsset alloc] init] autorelease];
   assets_ = [[NSArray arrayWithObject:loading] retain];
   [[self list] setDatasource:self];
   lastrebuild_ = [[NSDate distantPast] retain];
