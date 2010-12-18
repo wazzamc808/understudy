@@ -19,6 +19,7 @@
 #import <BRTextMenuItemLayer.h>
 
 #import "UNDAssetCollection.h"
+#import "UNDAssetFactory.h"
 
 @implementation UNDAssetCollection
 
@@ -38,16 +39,6 @@
   [super dealloc];
 }
 
-- (NSObject<UnderstudyAsset>*)assetForContent:(NSDictionary*)content
-{
-  return nil;
-}
-
-- (id<UnderstudyAsset>)assetCollectionForContent:(NSDictionary*)content
-{
-  return nil;
-}
-
 - (BRController*)controller
 {
   if (!controller_)
@@ -60,12 +51,9 @@
   if (!assets_) {
     NSMutableArray* assets
       = [NSMutableArray arrayWithCapacity:[contents_ count]];
-    for (NSDictionary* content in contents_) {
-      if ([content objectForKey:@"Class"])
-        [assets addObject:[self assetForContent:content]];
-      else
-        [assets addObject:[self assetCollectionForContent:content]];
-    }
+    UNDAssetFactory* assetFactory = [UNDAssetFactory sharedInstance];
+    for (NSDictionary* content in contents_)
+      [assets addObject:[assetFactory assetForContent:content]];
     assets_ = assets;
   }
   return assets_;

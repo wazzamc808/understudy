@@ -1,4 +1,4 @@
-//                                                                -*- objc -*-
+//
 //  Copyright 2010 Kirk Kelsey.
 //
 //  This file is part of Understudy.
@@ -16,19 +16,25 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
-#import "BaseUnderstudyAsset.h"
-#import "FeedMenuController.h"
+#import <Cocoa/Cocoa.h>
+
 #import "UnderstudyAsset.h"
 
-@interface UNDAssetCollection : BaseUnderstudyAsset <FeedDelegate>
+@protocol UNDAssetProvider
+- (NSObject<UnderstudyAsset>*)assetForContent:(NSDictionary*)content;
+@end
+
+
+@interface UNDAssetFactory : NSObject <UNDAssetProvider>
 {
-  NSString* title_;
-  NSArray*  contents_;
-  NSArray*  assets_;
-  BRController* controller_;
-  BRLayer<BRMenuItemLayer>* menuItem_;
+  NSMutableDictionary* providers_;
 }
 
-- (id)initWithTitle:(NSString*)title forContents:(NSArray*)contents;
+- (NSObject<UnderstudyAsset>*)assetForContent:(NSDictionary*)content;
+
+- (void)registerProvider:(NSObject<UNDAssetProvider>*)provider
+                withName:(NSString*) name;
+
++ (UNDAssetFactory*)sharedInstance;
 
 @end

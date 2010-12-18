@@ -81,6 +81,7 @@
 		DFC24F42106867E800B4D149 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DFC24F3F106867E800B4D149 /* main.m */; };
 		DFC24F43106867E800B4D149 /* UNDNetflixPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = DFC24F41106867E800B4D149 /* UNDNetflixPlayer.m */; };
 		DFC876B312AB33FC00CB8E88 /* UNDAssetCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = DFC876B212AB33FC00CB8E88 /* UNDAssetCollection.m */; };
+		DFC876EF12AB454000CB8E88 /* UNDAssetFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = DFC876EE12AB454000CB8E88 /* UNDAssetFactory.m */; };
 		DFCDFB110F3E2E9300D979F0 /* AddFeedDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = DFCDFB0A0F3E2E9300D979F0 /* AddFeedDialog.m */; };
 		DFCDFB120F3E2E9300D979F0 /* MainMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFCDFB0C0F3E2E9300D979F0 /* MainMenuController.m */; };
 		DFCDFB130F3E2E9300D979F0 /* ManageFeedsDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = DFCDFB0E0F3E2E9300D979F0 /* ManageFeedsDialog.m */; };
@@ -220,6 +221,8 @@
 		DFC24F41106867E800B4D149 /* UNDNetflixPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UNDNetflixPlayer.m; sourceTree = "<group>"; };
 		DFC876B112AB33FC00CB8E88 /* UNDAssetCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UNDAssetCollection.h; sourceTree = "<group>"; };
 		DFC876B212AB33FC00CB8E88 /* UNDAssetCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UNDAssetCollection.m; sourceTree = "<group>"; };
+		DFC876ED12AB454000CB8E88 /* UNDAssetFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UNDAssetFactory.h; sourceTree = "<group>"; };
+		DFC876EE12AB454000CB8E88 /* UNDAssetFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UNDAssetFactory.m; sourceTree = "<group>"; };
 		DFC9BEB21273DE4D006B91FA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		DFCDFB090F3E2E9300D979F0 /* AddFeedDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddFeedDialog.h; sourceTree = "<group>"; };
 		DFCDFB0A0F3E2E9300D979F0 /* AddFeedDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddFeedDialog.m; sourceTree = "<group>"; };
@@ -489,6 +492,8 @@
 		DF5A22370F100E4300F5F19F /* Base */ = {
 			isa = PBXGroup;
 			children = (
+				DFC876ED12AB454000CB8E88 /* UNDAssetFactory.h */,
+				DFC876EE12AB454000CB8E88 /* UNDAssetFactory.m */,
 				DFC876B112AB33FC00CB8E88 /* UNDAssetCollection.h */,
 				DFC876B212AB33FC00CB8E88 /* UNDAssetCollection.m */,
 				DFDF5BCE129F154C00B1941C /* UNDExternalAppAsset.h */,
@@ -760,6 +765,7 @@
 				DFDF5AC5129D8EC400B1941C /* UNDExternalLaunchController.m in Sources */,
 				DFDF5BD0129F154C00B1941C /* UNDExternalAppAsset.m in Sources */,
 				DFC876B312AB33FC00CB8E88 /* UNDAssetCollection.m in Sources */,
+				DFC876EF12AB454000CB8E88 /* UNDAssetFactory.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
