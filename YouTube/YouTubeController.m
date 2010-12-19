@@ -107,10 +107,19 @@
 - (void)controlWillDeactivate
 {
   [self returnToFR];
-  [view_ close];
-  view_ = nil;
-  [window_ close];
-  window_ = nil;
+
+  // FIXME: After 10.6.5, closing the view or window causes Front Row to
+  // silently quit (no error, no crash report). The current work-around is to
+  // pause the video and hide the window, but we're leaking the objects.
+
+  [view_ stopLoading:self];
+  [self _playerFunction:@"pauseVideo()"];
+  [window_ orderOut:self];
+
+  // [view_ close];
+  // view_ = nil;
+  // [window_ close];
+  // window_ = nil;
 }
 
 
