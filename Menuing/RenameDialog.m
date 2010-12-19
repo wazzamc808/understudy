@@ -29,10 +29,11 @@
 {
   [super init];
   [self setActionSelector:@selector(itemSelected) target:self];
-  int i;
+
   UNDPreferenceManager* prefs = [UNDPreferenceManager sharedInstance];
-  for( i = 0; i < [prefs feedCount]; i++ )
-    [self addOptionText:[prefs titleAtIndex:i]];
+  for (NSDictionary* asset in [prefs assetDescriptions])
+    [self addOptionText:[asset objectForKey:@"title"]];
+
   [self setTitle:@"Rename Feed"];
   [self setPrimaryInfoText:@"Select a feed to rename" withAttributes:nil];
   return self;
@@ -51,9 +52,13 @@
 
 - (void)textDidEndEditing:(id)container
 {
-  NSString* newname = [container stringValue];
+  long index = [self selectedIndex];
   UNDPreferenceManager* pref = [UNDPreferenceManager sharedInstance];
-  [pref renameFeedAtIndex:[self selectedIndex] withTitle:newname];
+  NSMutableDictionary* asset =
+    [[[pref assetDescriptions] objectAtIndex:index] mutableCopy];
+  [asset setObject:[container stringValue] forKey:@"title"];
+  [pref replaceAssetDescriptionAtIndex:[self selectedIndex]
+                       withDescription:asset];
   [[self stack] popToController:[MainMenuController sharedInstance]];
 }
 

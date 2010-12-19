@@ -16,12 +16,9 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
-#import "HuluFeed.h"
-#import "NetflixFeed.h"
-#import "YouTubeFeed.h"
-
 #import "UNDPreferenceManager.h"
-#import "UnderstudyAppliance.h"
+
+#import "UNDExternalAppAssetProvider.h"
 
 #import <BRMenuSavedState-Private.h>
 #import <RUIPreferences.h>
@@ -39,6 +36,9 @@
 @synthesize alertsDisabled = alertsDisabled_;
 @synthesize debugMode = debugMode_;
 
+static NSString* kPrefsVersion   = @"prefs-version";
+static int       kCurrentVersion = 1;
+
 - (id)init
 {
   [super init];
@@ -50,8 +50,8 @@
 
 - (void)dealloc
 {
-  [feeds_ release];
-  [titles_ release];
+  [assets_ release];
+  [subscribers_ release];
   [super dealloc];
 }
 
@@ -63,28 +63,9 @@ static UNDPreferenceManager *sharedInstance_;
   return sharedInstance_;
 }
 
-- (long)feedCount
+- (NSArray*)assetDescriptions
 {
-  return [titles_ count];
-}
-
-- (NSString*)titleAtIndex:(long)index
-{
-  if( index >= 0 && index < [titles_ count] )
-    return [titles_ objectAtIndex:index];
-  else
-    return nil;
-}
-
-- (NSURL*)URLAtIndex:(long)index
-{
-  if( index >= 0 && index < [feeds_ count] )
-  {
-    NSString* feed = [feeds_ objectAtIndex:index];
-    return [NSURL URLWithString:feed];
-  } else {
-    return nil;
-  }
+  return assets_;
 }
 
 // preferred display for front row (if any) or main screen
@@ -137,55 +118,83 @@ static UNDPreferenceManager *sharedInstance_;
   return menuState_;
 }
 
+// Older versions assumed everything was a feed with a title and figured out
+// the provides on the fly.
+- (NSMutableArray*)transitionFeeds:(NSArray*)feeds  andTitles:(NSArray*)titles
+{
+  NSMutableArray* assets = [[NSMutableArray alloc] init];
+
+  int i, count = [feeds count];
+  if (count > [titles count]) count = [titles count];
+
+  PSClient* psClient = [PSClient applicationClient];
+  for (i = 0; i < count; ++i) {
+    NSURL* url = [NSURL URLWithString:[feeds objectAtIndex:i]];
+
+    [psClient addFeedWithURL:url];
+
+    NSString* host = [[url host] lowercaseString];
+    NSString *provider, *title = [titles objectAtIndex:i];
+
+    if ([host rangeOfString:@"hulu"].location != NSNotFound)
+      provider = @"hulu";
+    else if( [host rangeOfString:@"netflix"].location != NSNotFound )
+      provider = @"netflix";
+    else if( [host rangeOfString:@"youtube"].location != NSNotFound )
+      provider = @"youtube";
+    else if( [host rangeOfString:@"bbc.co.uk"].location != NSNotFound )
+      provider = @"bbciplayer";
+
+    if (provider) {
+      NSDictionary* asset =[NSDictionary dictionaryWithObjectsAndKeys:title,
+                                          @"title", [url absoluteString],
+                                          @"URL", provider, @"provider", nil];
+      [assets addObject:asset];
+    }
+    provider = nil;
+  }
+  return assets;
+}
+
+#define HDAPP @"/Applications/Hulu Desktop.app"
+- (void)addDefaultsToAssets:(NSMutableArray*)assets
+{
+  if ([[NSFileManager defaultManager] fileExistsAtPath:HDAPP]) {
+    NSDictionary* asset =
+      [NSDictionary dictionaryWithObjectsAndKeys:@"Hulu Desktop", @"appname",
+                    @"externalapp", @"provider", nil];
+    [assets addObject:asset];
+  }
+}
+
 - (void)load
 {
-  RUIPreferences* FRprefs = [RUIPreferences sharedFrontRowPreferences];
   NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
-
-  // versions up to 0.2 used "hulu" as the name for the feeds information
-  NSDictionary* prefDict = (NSDictionary*) [FRprefs objectForKey:@"hulu"];
-  if( prefDict )
-  {
-    prefDict = (NSDictionary*) [prefDict objectForKey:@"feeds"];
-    // we now use an array of feeds, another array of titles
-    NSMutableDictionary* newprefs = [NSMutableDictionary dictionary];
-    NSArray* feeds = [prefDict allKeys];
-    NSMutableArray* titles = [NSMutableArray array];
-    for(NSString* url in feeds) [titles addObject:[prefDict objectForKey:url]];
-    [newprefs setObject:titles forKey:@"titles"];
-    [newprefs setObject:feeds forKey:@"feeds"];
-    [FRprefs setObject:newprefs forKey:@"understudy"];
-    [FRprefs setObject:nil forKey:@"hulu"];
-  }
-
-  // preferences moved from the FR plist into our own
-  prefDict = (NSDictionary*) [FRprefs objectForKey:@"understudy"];
-  if( prefDict ){
-    [defaults setPersistentDomain:prefDict forName:DEFAULTS_DOMAIN];
-    [FRprefs setObject:nil forKey:@"understudy"];
-  }
+  NSDictionary* prefDict;
 
   prefDict = [defaults persistentDomainForName:DEFAULTS_DOMAIN];
 
-  feeds_ = [[[prefDict objectForKey:@"feeds"] mutableCopy] retain];
-  if( !feeds_ ) feeds_ = [[NSMutableArray alloc] init];
+  assets_ = [[prefDict objectForKey:@"assets"] mutableCopy];
 
-  titles_ = [[[prefDict objectForKey:@"titles"] mutableCopy] retain];
-  if( !titles_ ) titles_ = [[NSMutableArray alloc] init];
+  // If there are no assets, look for feeds/titles from older versions.
+  if (!assets_) {
+    NSArray* feeds = [prefDict objectForKey:@"feeds"];
+    NSArray* titles = [prefDict objectForKey:@"titles"];
+
+    if (feeds && titles)
+      assets_ = [self transitionFeeds:feeds andTitles:titles];
+  }
+
+  if (!assets_) assets_ = [[NSMutableArray alloc] init];
+
+  if (![prefDict objectForKey:kPrefsVersion])
+    [self addDefaultsToAssets:assets_];
 
   // A nil menu state indicates that nothing should be restored.
   menuState_ = [[prefDict objectForKey:@"menustate"] retain];
 
-  alertsDisabled_ = ( [prefDict objectForKey:@"disableAlerts"] != nil);
-  debugMode_ = ( [prefDict objectForKey:@"debugMode"] != nil);
-
-  // ensure that all feeds are subscribed via PubSub
-  PSClient* psClient = [PSClient applicationClient];
-  for (NSString* urlString in feeds_) {
-    NSURL* url = [NSURL URLWithString:urlString];
-    PSFeed* feed = [psClient feedWithURL:url];
-    if (!feed) [psClient addFeedWithURL:url];
-  }
+  alertsDisabled_ = ([prefDict objectForKey:@"disableAlerts"] != nil);
+  debugMode_ = ([prefDict objectForKey:@"debugMode"] != nil);
 }
 
 - (void)save
@@ -198,15 +207,14 @@ static UNDPreferenceManager *sharedInstance_;
   else
     prefs = [NSMutableDictionary dictionary];
 
-  // the only preferences that are modifiable through the user interface are the
-  // feeds and their titles, so only those need to be updated
-  [prefs setObject:titles_ forKey:@"titles"];
-  [prefs setObject:feeds_ forKey:@"feeds"];
+  [prefs setObject:[NSNumber numberWithInt:kCurrentVersion]
+            forKey:kPrefsVersion];
+  [prefs setObject:assets_ forKey:@"assets"];
   if (menuState_) [prefs setObject:menuState_ forKey:@"menustate"];
   else [prefs removeObjectForKey:@"menustate"];
   [defaults setPersistentDomain:prefs forName:DEFAULTS_DOMAIN];
-  // we do not automatically notify subscribers because some internal state
-  // (e.g. the menu stack) may be updated and saved by not affect subscribers.
+  // We do not automatically notify subscribers because some internal state
+  // (e.g. the menu stack) may update and be saved but not affect subscribers.
 }
 
 #pragma mark Subscription
@@ -223,67 +231,44 @@ static UNDPreferenceManager *sharedInstance_;
 }
 
 #pragma mark Feed Arrangement
-- (void)addFeed:(NSString*)feedURL withTitle:(NSString*)title
+- (void)addAssetWithDescription:(NSDictionary*)description
 {
-  // ensure no duplicate titles
-  if( [titles_ containsObject:title] )
-  {
-    NSString* format = @"%@ %d", *newtitle;
-    int i = 0;
-    do{
-      newtitle = [NSString stringWithFormat:format,title,i++];
-    }while( [titles_ containsObject:newtitle]);
-    title = newtitle;
-  }
-
-  [[PSClient applicationClient] addFeedWithURL:[NSURL URLWithString:feedURL]];
-
-  [feeds_ addObject:feedURL];
-  [titles_ addObject:title];
+  [assets_ addObject:description];
   [self save];
   [self notifySubscribers];
 }
 
-- (void)moveFeedFromIndex:(long)from toIndex:(long)to
+- (void)moveAssetFromIndex:(long)from toIndex:(long)to
 {
   NSObject* item;
   // ensure the values are valid
-  if( from < 0 || ([titles_ count]-1) < from
-     || to < 0 || ([titles_ count]-1) < to
+  if( from < 0 || ([assets_ count]-1) < from
+     || to < 0 || ([assets_ count]-1) < to
      || to == from ) return;
 
   // if the |to| position is after the |from|, the new index must be decremented
   // to acount for the item no longer being in the array by the time is't added
   if( from < to ) --to;
 
-  // move the feed
-  item = [[[feeds_ objectAtIndex:from] retain] autorelease];
-  [feeds_ removeObjectAtIndex:from];
-  [feeds_ insertObject:item atIndex:to];
-  // move the title
-  item = [[[titles_ objectAtIndex:from] retain] autorelease];
-  [titles_ removeObjectAtIndex:from];
-  [titles_ insertObject:item atIndex:to];
+  item = [[[assets_ objectAtIndex:from] retain] autorelease];
+  [assets_ removeObjectAtIndex:from];
+  [assets_ insertObject:item atIndex:to];
+
   [self save];
   [self notifySubscribers];
 }
 
-- (void)removeFeedAtIndex:(long)index
+- (void)removeAssetAtIndex:(long)index
 {
-  NSString* url = [feeds_ objectAtIndex:index];
-  PSClient* client = [PSClient applicationClient];
-  PSFeed* feed = [client feedWithURL:[NSURL URLWithString:url]];
-  if (feed) [client removeFeed:feed];
-
-  [feeds_ removeObjectAtIndex:index];
-  [titles_ removeObjectAtIndex:index];
+  [assets_ removeObjectAtIndex:index];
   [self save];
   [self notifySubscribers];
 }
 
-- (void)renameFeedAtIndex:(long)index withTitle:(NSString*)title
+- (void)replaceAssetDescriptionAtIndex:(long)index
+                       withDescription:(NSDictionary*)description
 {
-  [titles_ replaceObjectAtIndex:index withObject:[[title copy]autorelease]];
+  [assets_ replaceObjectAtIndex:index withObject:description];
   [self save];
   [self notifySubscribers];
 }

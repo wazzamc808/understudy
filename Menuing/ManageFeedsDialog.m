@@ -51,16 +51,15 @@ typedef enum ManageOptionEnum ManageOption;
   moveDialog_ = [[BROptionDialog alloc] init];
   [moveDialog_ setTitle:@"Move Feed"];
   UNDPreferenceManager* prefs = [UNDPreferenceManager sharedInstance];
-  int i;
-  for(i = 0; i<[prefs feedCount]; i++)
-    [moveDialog_ addOptionText:[prefs titleAtIndex:i]];  
+  for (NSDictionary* asset in [prefs assetDescriptions])
+    [moveDialog_ addOptionText:[asset objectForKey:@"title"]];
   [moveDialog_ setActionSelector:@selector(_moveFrom) target:self];
-  [[self stack] pushController:moveDialog_];  
+  [[self stack] pushController:moveDialog_];
 }
 
 - (void)_moveFrom
 {
-  [moveDialog_ setPrimaryInfoText:@"Select new position." 
+  [moveDialog_ setPrimaryInfoText:@"Select new position."
                    withAttributes:nil];
   [moveDialog_ setActionSelector:@selector(_moveTo) target:self];
   // misusing the |tag|, rather than using the user info
@@ -71,7 +70,7 @@ typedef enum ManageOptionEnum ManageOption;
 {
   long from = [moveDialog_ tag];
   long to = [moveDialog_ selectedIndex];
-  [[UNDPreferenceManager sharedInstance] moveFeedFromIndex:from toIndex:to];
+  [[UNDPreferenceManager sharedInstance] moveAssetFromIndex:from toIndex:to];
   [[self stack] popController];
 }
 
@@ -80,11 +79,11 @@ typedef enum ManageOptionEnum ManageOption;
   [removeDialog_ release];
   removeDialog_ = [[BROptionDialog alloc] init];
   [removeDialog_ setTitle:@"Remove Feed"];
-  
+
   UNDPreferenceManager* prefs = [UNDPreferenceManager sharedInstance];
-  int i;
-  for(i = 0; i<[prefs feedCount]; i++)
-    [removeDialog_ addOptionText:[prefs titleAtIndex:i]];  
+  for (NSDictionary* asset in [prefs assetDescriptions])
+    [removeDialog_ addOptionText:[asset objectForKey:@"title"]];
+
   [removeDialog_ setActionSelector:@selector(_remove) target:self];
   [[self stack] pushController:removeDialog_];
 }
@@ -93,7 +92,7 @@ typedef enum ManageOptionEnum ManageOption;
 - (void)_remove
 {
   long index = [removeDialog_ selectedIndex];
-  [[UNDPreferenceManager sharedInstance] removeFeedAtIndex:index];
+  [[UNDPreferenceManager sharedInstance] removeAssetAtIndex:index];
   [[self stack] popController];
 }
 
@@ -142,7 +141,9 @@ typedef enum ManageOptionEnum ManageOption;
 - (float)heightForRow:(long)row{ return 0; }
 - (BOOL)rowSelectable:(long)row
 {
-  return (row == 0 || [[UNDPreferenceManager sharedInstance] feedCount] > 0); 
+  int count
+    = [[[UNDPreferenceManager sharedInstance] assetDescriptions] count];
+  return (row == 0 || count > 0);
 }
 
 - (id)titleForRow:(long)row

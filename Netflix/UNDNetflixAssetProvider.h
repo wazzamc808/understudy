@@ -16,30 +16,18 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
-#import <Cocoa/Cocoa.h>
+#import "UNDAssetFactory.h"
+#import "NetflixFeed.h"
 
-#import "BRSingleton.h"
+extern NSString* UNDNetflixAssetProviderName;
 
-#import "UnderstudyAsset.h"
+@interface UNDNetflixAssetProvider : NSObject <UNDAssetProvider>
 
-@protocol UNDAssetProvider
+/// Returns a Netflix related asset based on the given dictionary.
+///
+/// The content should contain keys @"URL" and @"Title". If the expected keys
+/// are not found, or the asset cannot be constructed for any other reason, nil
+/// will be returned.
 - (NSObject<UnderstudyAsset>*)assetForContent:(NSDictionary*)content;
-- (NSString*)name;
-@end
-
-// Standard keys used in asset content descriptions.
-extern NSString* UNDAssetProviderNameKey;  // @"provider"
-extern NSString* UNDAssetProviderTitleKey; // @"title"
-extern NSString* UNDAssetProviderUrlKey;   // @"URL"
-
-@interface UNDAssetFactory : BRSingleton <UNDAssetProvider>
-{
-  NSMutableDictionary* providers_;
-}
-
-/// Returns an asset based on the \param content.
-- (NSObject<UnderstudyAsset>*)assetForContent:(NSDictionary*)content;
-
-- (void)registerProvider:(NSObject<UNDAssetProvider>*)provider;
 
 @end

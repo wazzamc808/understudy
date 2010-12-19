@@ -17,9 +17,39 @@
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
 #import "UNDAssetFactory.h"
-#import "UNDAssetProvider.h"
+#import "UNDUnknownAsset.h"
 
 @implementation UNDAssetFactory
+
+static NSString* kAssetFactoryName = @"factory";
+
+NSString* UNDAssetProviderNameKey  = @"provider";
+NSString* UNDAssetProviderTitleKey = @"title";
+NSString* UNDAssetProviderUrlKey   = @"URL";
+
+- (id)init
+{
+  providers_ = [[NSMutableDictionary alloc] init];
+  [self registerProvider:self];
+  return self;
+}
+
+UNDAssetFactory* singleton_;
++ (id)singleton
+{
+  return singleton_;
+}
+
++ (void)setSingleton:(UNDAssetFactory*)value
+{
+  singleton_ = value;
+}
+
+- (void)dealloc
+{
+  [providers_ release];
+  [super dealloc];
+}
 
 - (NSObject<UNDAssetProvider>*)providerNamed:(NSString*)name
 {
@@ -27,27 +57,24 @@
 }
 
 - (void)registerProvider:(NSObject<UNDAssetProvider>*)provider
-                withName:(NSString*)name
 {
-  if (!providers_) providers_ = [[NSMutableDictionary alloc] init];
-  [providers_ setObject:provider forKey:name];
+  [providers_ setObject:provider forKey:[provider name]];
 }
 
-static UNDAssetFactory* sharedInstance_;
-+ (UNDAssetFactory*)sharedInstance
-{
-  if (!sharedInstance_) sharedInstance_ = [[UNDAssetFactory alloc] init];
-  return sharedInstance_;
-}
-
+/// An asset is always provided, though it may be a simple placeholder if the
+/// content does not indicate a known provider.
 - (NSObject<UnderstudyAsset>*)assetForContent:(NSDictionary*)content
 {
   NSObject<UNDAssetProvider>* provider
-    = [self providerNamed:[content objectForKey:@"provider"]];
+    = [self providerNamed:[content objectForKey:UNDAssetProviderNameKey]];
+  NSObject<UnderstudyAsset>* asset = [provider assetForContent:content];
+  if (!asset) asset = [[UNDUnknownAsset alloc] initWithContents:content];
+  return asset;
+}
 
-  return [provider assetForContent:content];
-
-  return nil;
+- (NSString*)name
+{
+  return kAssetFactoryName;
 }
 
 @end

@@ -61,6 +61,12 @@
 		DF7D970D0F08647400C9B7FB /* HuluAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = DF7D97070F08647400C9B7FB /* HuluAsset.m */; };
 		DF7D970F0F08647400C9B7FB /* HuluFeed.m in Sources */ = {isa = PBXBuildFile; fileRef = DF7D970B0F08647400C9B7FB /* HuluFeed.m */; };
 		DF7F84F00EE3354E0049E5C3 /* BackRow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF7F84EF0EE3354E0049E5C3 /* BackRow.framework */; };
+		DF8A378C12BD810A008B8274 /* UNDExternalAppAssetProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = DF8A378712BD810A008B8274 /* UNDExternalAppAssetProvider.m */; };
+		DF8A378D12BD810A008B8274 /* UNDUnknownAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = DF8A378912BD810A008B8274 /* UNDUnknownAsset.m */; };
+		DF8A379112BD812D008B8274 /* UNDHuluAssetProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = DF8A379012BD812D008B8274 /* UNDHuluAssetProvider.m */; };
+		DF8A379412BD8143008B8274 /* UNDNetflixAssetProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = DF8A379312BD8143008B8274 /* UNDNetflixAssetProvider.m */; };
+		DF8A37FB12BD9B9B008B8274 /* UNDiPlayerAssetProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = DF8A37FA12BD9B9B008B8274 /* UNDiPlayerAssetProvider.m */; };
+		DF8A37FE12BD9BC0008B8274 /* UNDYouTubeAssetProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = DF8A37FD12BD9BC0008B8274 /* UNDYouTubeAssetProvider.m */; };
 		DF906CFF127B5D3A00B95C6E /* UNDNetflixKeyboardDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = DF906CFE127B5D3A00B95C6E /* UNDNetflixKeyboardDevice.m */; };
 		DFA511990F1A8E5B00FC903B /* HuluController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA511980F1A8E5B00FC903B /* HuluController.m */; };
 		DFA512360F1A92F300FC903B /* YouTubeController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA512350F1A92F300FC903B /* YouTubeController.m */; };
@@ -210,6 +216,18 @@
 		DF7D970A0F08647400C9B7FB /* HuluFeed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HuluFeed.h; sourceTree = "<group>"; };
 		DF7D970B0F08647400C9B7FB /* HuluFeed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HuluFeed.m; sourceTree = "<group>"; };
 		DF7F84EF0EE3354E0049E5C3 /* BackRow.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BackRow.framework; path = /System/Library/PrivateFrameworks/BackRow.framework; sourceTree = "<absolute>"; };
+		DF8A378612BD810A008B8274 /* UNDExternalAppAssetProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UNDExternalAppAssetProvider.h; sourceTree = "<group>"; };
+		DF8A378712BD810A008B8274 /* UNDExternalAppAssetProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UNDExternalAppAssetProvider.m; sourceTree = "<group>"; };
+		DF8A378812BD810A008B8274 /* UNDUnknownAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UNDUnknownAsset.h; sourceTree = "<group>"; };
+		DF8A378912BD810A008B8274 /* UNDUnknownAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UNDUnknownAsset.m; sourceTree = "<group>"; };
+		DF8A378F12BD812D008B8274 /* UNDHuluAssetProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UNDHuluAssetProvider.h; sourceTree = "<group>"; };
+		DF8A379012BD812D008B8274 /* UNDHuluAssetProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UNDHuluAssetProvider.m; sourceTree = "<group>"; };
+		DF8A379212BD8143008B8274 /* UNDNetflixAssetProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UNDNetflixAssetProvider.h; path = Netflix/UNDNetflixAssetProvider.h; sourceTree = "<group>"; };
+		DF8A379312BD8143008B8274 /* UNDNetflixAssetProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UNDNetflixAssetProvider.m; path = Netflix/UNDNetflixAssetProvider.m; sourceTree = "<group>"; };
+		DF8A37F912BD9B9B008B8274 /* UNDiPlayerAssetProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UNDiPlayerAssetProvider.h; sourceTree = "<group>"; };
+		DF8A37FA12BD9B9B008B8274 /* UNDiPlayerAssetProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UNDiPlayerAssetProvider.m; sourceTree = "<group>"; };
+		DF8A37FC12BD9BC0008B8274 /* UNDYouTubeAssetProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UNDYouTubeAssetProvider.h; sourceTree = "<group>"; };
+		DF8A37FD12BD9BC0008B8274 /* UNDYouTubeAssetProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UNDYouTubeAssetProvider.m; sourceTree = "<group>"; };
 		DF906CFE127B5D3A00B95C6E /* UNDNetflixKeyboardDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UNDNetflixKeyboardDevice.m; path = Netflix/Player/UNDNetflixKeyboardDevice.m; sourceTree = "<group>"; };
 		DFA511970F1A8E5B00FC903B /* HuluController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HuluController.h; sourceTree = "<group>"; };
 		DFA511980F1A8E5B00FC903B /* HuluController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HuluController.m; sourceTree = "<group>"; };
@@ -425,6 +443,8 @@
 		DF375CC60F35302600DA7719 /* Netflix */ = {
 			isa = PBXGroup;
 			children = (
+				DF8A379212BD8143008B8274 /* UNDNetflixAssetProvider.h */,
+				DF8A379312BD8143008B8274 /* UNDNetflixAssetProvider.m */,
 				DFC24F3E106867E800B4D149 /* Player */,
 				DF375CBA0F35300700DA7719 /* NetflixAddDialog.h */,
 				DF375CBB0F35300700DA7719 /* NetflixAddDialog.m */,
@@ -445,6 +465,8 @@
 		DF37B8AA0F59ED1F0017766F /* BBCiPlayer */ = {
 			isa = PBXGroup;
 			children = (
+				DF8A37F912BD9B9B008B8274 /* UNDiPlayerAssetProvider.h */,
+				DF8A37FA12BD9B9B008B8274 /* UNDiPlayerAssetProvider.m */,
 				DF37B8AB0F59ED5E0017766F /* UNDiPlayerFeed.h */,
 				DF37B8AC0F59ED5E0017766F /* UNDiPlayerFeed.m */,
 				DF37B8AE0F59EFFE0017766F /* UNDiPlayerAsset.h */,
@@ -477,6 +499,8 @@
 		DF5A221E0F0FC14B00F5F19F /* YouTube */ = {
 			isa = PBXGroup;
 			children = (
+				DF8A37FC12BD9BC0008B8274 /* UNDYouTubeAssetProvider.h */,
+				DF8A37FD12BD9BC0008B8274 /* UNDYouTubeAssetProvider.m */,
 				DF5A221F0F0FC18200F5F19F /* YouTubeAsset.h */,
 				DF5A22200F0FC18200F5F19F /* YouTubeAsset.m */,
 				DFA512340F1A92D900FC903B /* YouTubeController.h */,
@@ -492,6 +516,10 @@
 		DF5A22370F100E4300F5F19F /* Base */ = {
 			isa = PBXGroup;
 			children = (
+				DF8A378612BD810A008B8274 /* UNDExternalAppAssetProvider.h */,
+				DF8A378712BD810A008B8274 /* UNDExternalAppAssetProvider.m */,
+				DF8A378812BD810A008B8274 /* UNDUnknownAsset.h */,
+				DF8A378912BD810A008B8274 /* UNDUnknownAsset.m */,
 				DFC876ED12AB454000CB8E88 /* UNDAssetFactory.h */,
 				DFC876EE12AB454000CB8E88 /* UNDAssetFactory.m */,
 				DFC876B112AB33FC00CB8E88 /* UNDAssetCollection.h */,
@@ -517,6 +545,8 @@
 		DF7D97030F08647400C9B7FB /* Hulu */ = {
 			isa = PBXGroup;
 			children = (
+				DF8A378F12BD812D008B8274 /* UNDHuluAssetProvider.h */,
+				DF8A379012BD812D008B8274 /* UNDHuluAssetProvider.m */,
 				DF318FFD0FC5B8EE004CE50D /* Player */,
 				DF7D97040F08647400C9B7FB /* HuluAddDialog.h */,
 				DF7D97050F08647400C9B7FB /* HuluAddDialog.m */,
@@ -766,6 +796,12 @@
 				DFDF5BD0129F154C00B1941C /* UNDExternalAppAsset.m in Sources */,
 				DFC876B312AB33FC00CB8E88 /* UNDAssetCollection.m in Sources */,
 				DFC876EF12AB454000CB8E88 /* UNDAssetFactory.m in Sources */,
+				DF8A378C12BD810A008B8274 /* UNDExternalAppAssetProvider.m in Sources */,
+				DF8A378D12BD810A008B8274 /* UNDUnknownAsset.m in Sources */,
+				DF8A379112BD812D008B8274 /* UNDHuluAssetProvider.m in Sources */,
+				DF8A379412BD8143008B8274 /* UNDNetflixAssetProvider.m in Sources */,
+				DF8A37FB12BD9B9B008B8274 /* UNDiPlayerAssetProvider.m in Sources */,
+				DF8A37FE12BD9BC0008B8274 /* UNDYouTubeAssetProvider.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

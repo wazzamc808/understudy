@@ -16,30 +16,25 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
-#import <Cocoa/Cocoa.h>
+#import "UNDHuluAssetProvider.h"
+#import "HuluFeed.h"
 
-#import "BRSingleton.h"
+NSString* UNDHuluAssetProviderName = @"hulu";
 
-#import "UnderstudyAsset.h"
+@implementation UNDHuluAssetProvider
 
-@protocol UNDAssetProvider
-- (NSObject<UnderstudyAsset>*)assetForContent:(NSDictionary*)content;
-- (NSString*)name;
-@end
-
-// Standard keys used in asset content descriptions.
-extern NSString* UNDAssetProviderNameKey;  // @"provider"
-extern NSString* UNDAssetProviderTitleKey; // @"title"
-extern NSString* UNDAssetProviderUrlKey;   // @"URL"
-
-@interface UNDAssetFactory : BRSingleton <UNDAssetProvider>
+- (NSObject<UnderstudyAsset>*)assetForContent:(NSDictionary*)content
 {
-  NSMutableDictionary* providers_;
+  NSString* title = [content objectForKey:UNDAssetProviderTitleKey];
+  NSURL* url
+    = [NSURL URLWithString:[content objectForKey:UNDAssetProviderUrlKey]];
+  if (!title || !url) return nil;
+  return [[HuluFeed alloc] initWithTitle:title forUrl:url];
 }
 
-/// Returns an asset based on the \param content.
-- (NSObject<UnderstudyAsset>*)assetForContent:(NSDictionary*)content;
-
-- (void)registerProvider:(NSObject<UNDAssetProvider>*)provider;
+- (NSString*)name
+{
+  return [UNDHuluAssetProviderName copy];
+}
 
 @end
