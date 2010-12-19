@@ -23,7 +23,7 @@
 #import "UnderstudyAsset.h"
 
 @protocol UNDAssetProvider
-- (NSObject<UnderstudyAsset>*)assetForContent:(NSDictionary*)content;
+- (NSObject<UnderstudyAsset>*)newAssetForContent:(NSDictionary*)content;
 - (NSString*)name;
 @end
 
@@ -38,7 +38,7 @@ extern NSString* UNDAssetProviderUrlKey;   // @"URL"
 }
 
 /// Returns an asset based on the \param content.
-- (NSObject<UnderstudyAsset>*)assetForContent:(NSDictionary*)content;
+- (NSObject<UnderstudyAsset>*)newAssetForContent:(NSDictionary*)content;
 
 - (void)registerProvider:(NSObject<UNDAssetProvider>*)provider;
 

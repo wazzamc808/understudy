@@ -42,14 +42,13 @@
       description:(NSString*)description
 {
   imageManager_ = [BRImageManager sharedInstance];
-  [super init];
+  [super initWithTitle:title];
   url_ = [[NSURL URLWithString:url] retain];
   description_ = (NSString*) CFXMLCreateStringByUnescapingEntities(NULL,
                                                        (CFStringRef)description,
                                                                    NULL);
   [description_ retain];
   mediaID_ = [mediaID copy];
-  title_ = [title copy];
   NSURL* thumburl;
   thumburl = [NSURL URLWithString:[NSString stringWithFormat:BOXSHOTS,mediaID]];
   thumbnailID_ = [[imageManager_ writeImageFromURL:thumburl] retain];
@@ -96,7 +95,6 @@
   [collection_ release];
   [description_ release];
   [mediaID_ release];
-  [title_ release];
   [url_ release];
   [super dealloc];
 }
@@ -110,7 +108,6 @@
 
 
 #pragma mark BRMediaAsset
-- (NSString*)title{ return title_; }
 - (NSString*)titleForSorting{ return [self title]; }
 - (NSString*)mediaSummary{ return description_; }
 - (NSString*)mediaDescription{ return [self mediaSummary]; }
@@ -131,17 +128,6 @@
 #pragma mark BRImageProvider
 - (NSString*)imageID{return nil;}
 
-- (BRLayer<BRMenuItemLayer>*)menuItem
-{
-  if( !menuitem_ )
-  {
-    menuitem_ = [BRTextMenuItemLayer menuItem];
-    [menuitem_ setTitle:[self title]];
-    [menuitem_ retain];
-  }
-  return menuitem_;
-}
-
 - (BRController*)controller
 {
   if (collectionSearchIncomplete_) {
@@ -154,9 +140,10 @@
 
   NSString* path = @"/Library/Internet Plug-Ins/Silverlight.plugin";
   // if we have a collection (of episodes) return the collection's controller
-  if( collection_ ){
+  if (collection_)
     return [collection_ controller];
-  }else if( ![[NSFileManager defaultManager] fileExistsAtPath:path] ){
+
+  if (![[NSFileManager defaultManager] fileExistsAtPath:path]) {
     NSString* title = @"Error";
     NSString* primary = @"Silverlight Not Installed";
     NSString* secondary = @"The Silverlight plugin must be installed in order "\
@@ -166,9 +153,9 @@
                                                   primaryText:primary
                                                 secondaryText:secondary];
     return alert;
-  } else {
-    return [[[NetflixController alloc] initWithAsset:self] autorelease];
   }
+
+  return [[[NetflixController alloc] initWithAsset:self] autorelease];
 }
 
 #pragma mark Episode Discovery
@@ -193,12 +180,12 @@
   urlString = [urlString stringByAppendingFormat:mediaID];
   NSURL* url = [NSURL URLWithString:urlString];
   collection_ = [[UNDNetflixCollection alloc] initWithTitle:title_ forUrl:url];
-  if( collection_ )
-    menuitem_ = [BRTextMenuItemLayer folderMenuItem];
-  else
-    menuitem_ = [BRTextMenuItemLayer menuItem];
-  [menuitem_ setTitle:[self title]];
-  [menuitem_ retain];
+  if (collection_) {
+    BRTextMenuItemLayer* menuItem = [BRTextMenuItemLayer folderMenuItem];
+    [menuItem setTitle:[self title]];
+    [menuItem_ autorelease];
+    menuItem_ = [menuItem retain];
+  }
   collectionSearchIncomplete_ = NO;
   if (delegate_) [delegate_ assetUpdated:self];
   [pool release];

@@ -24,7 +24,7 @@
 
 - (id)initWithAppName:(NSString*)appName
 {
-  [super init];
+  [super initWithTitle:appName];
   appName_ = [appName copy];
   return self;
 }
@@ -32,20 +32,8 @@
 - (void)dealloc
 {
   [appName_ release];
-  [menuitem_ release];
   [controller_ release];
   [super dealloc];
-}
-
-- (BRLayer<BRMenuItemLayer>*)menuItem
-{
-  if( !menuitem_ )
-  {
-    menuitem_ = [BRTextMenuItemLayer menuItem];
-    [menuitem_ setTitle:appName_];
-    [menuitem_ retain];
-  }
-  return menuitem_;
 }
 
 - (BRController*)controller

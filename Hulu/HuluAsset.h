@@ -37,7 +37,6 @@
 @interface HuluAsset : BaseUnderstudyAsset<UnderstudyAsset> 
 {
  @private
-  NSString* title_;
   NSString* series_;
   NSString* description_;
   NSString* credit_;
@@ -50,7 +49,6 @@
   NSDate* added_;
   NSString* thumbnailID_;
   BRImageManager* imageManager_;
-  BRTextMenuItemLayer* menuitem_;
   BRTextMenuItemLayer* specificMenuItem_;
   
   // url's that aren't for a video are loaded in hopes of finding a feed url

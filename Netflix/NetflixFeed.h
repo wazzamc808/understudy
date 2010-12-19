@@ -18,23 +18,14 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import <BRMediaMenuController.h>
-
-#import "BaseUnderstudyAsset.h"
-#import "FeedMenuController.h"
+#import "UNDAssetCollection.h"
 #import "NetflixAsset.h"
 
-@class BRTextMenuItemLayer;
-
-@interface NetflixFeed : BaseUnderstudyAsset
-<FeedDelegate, UNDNetflixAssetUpdateDelegate>
+@interface NetflixFeed : UNDAssetCollection <UNDNetflixAssetUpdateDelegate>
 {
  @private
-  NSMutableArray* assets_;
   NSMutableArray* unfinishedAssets_;
   NSURL* url_;
-  NSString* title_;
-  FeedMenuController* controller_;
   unsigned updateSlots_;
   unsigned finishedAssets_;
 }

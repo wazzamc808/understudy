@@ -120,7 +120,7 @@ static UNDPreferenceManager *sharedInstance_;
 
 // Older versions assumed everything was a feed with a title and figured out
 // the provides on the fly.
-- (NSMutableArray*)transitionFeeds:(NSArray*)feeds  andTitles:(NSArray*)titles
+- (NSMutableArray*)newAssetsFromFeeds:(NSArray*)feeds andTitles:(NSArray*)titles
 {
   NSMutableArray* assets = [[NSMutableArray alloc] init];
 
@@ -134,7 +134,7 @@ static UNDPreferenceManager *sharedInstance_;
     [psClient addFeedWithURL:url];
 
     NSString* host = [[url host] lowercaseString];
-    NSString *provider, *title = [titles objectAtIndex:i];
+    NSString *provider = nil, *title = [titles objectAtIndex:i];
 
     if ([host rangeOfString:@"hulu"].location != NSNotFound)
       provider = @"hulu";
@@ -151,7 +151,6 @@ static UNDPreferenceManager *sharedInstance_;
                                           @"URL", provider, @"provider", nil];
       [assets addObject:asset];
     }
-    provider = nil;
   }
   return assets;
 }
@@ -182,7 +181,7 @@ static UNDPreferenceManager *sharedInstance_;
     NSArray* titles = [prefDict objectForKey:@"titles"];
 
     if (feeds && titles)
-      assets_ = [self transitionFeeds:feeds andTitles:titles];
+      assets_ = [self newAssetsFromFeeds:feeds andTitles:titles];
   }
 
   if (!assets_) assets_ = [[NSMutableArray alloc] init];

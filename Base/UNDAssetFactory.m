@@ -63,11 +63,11 @@ UNDAssetFactory* singleton_;
 
 /// An asset is always provided, though it may be a simple placeholder if the
 /// content does not indicate a known provider.
-- (NSObject<UnderstudyAsset>*)assetForContent:(NSDictionary*)content
+- (NSObject<UnderstudyAsset>*)newAssetForContent:(NSDictionary*)content
 {
   NSObject<UNDAssetProvider>* provider
     = [self providerNamed:[content objectForKey:UNDAssetProviderNameKey]];
-  NSObject<UnderstudyAsset>* asset = [provider assetForContent:content];
+  NSObject<UnderstudyAsset>* asset = [provider newAssetForContent:content];
   if (!asset) asset = [[UNDUnknownAsset alloc] initWithContents:content];
   return asset;
 }

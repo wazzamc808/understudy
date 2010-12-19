@@ -1,5 +1,5 @@
 //
-//  Copyright 2009 Kirk Kelsey.
+//  Copyright 2009,2010 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -29,7 +29,6 @@
 @interface YouTubeAsset : BaseUnderstudyAsset<UnderstudyAsset> 
 {
  @private
-  BRTextMenuItemLayer* menuitem_;
   NSString* description_;
   long duration_;
   BRImageManager* imageManager_;
@@ -37,7 +36,6 @@
   NSDate* published_;
   float starrating_;
   NSString* thumbnailID_;
-  NSString* title_;
   NSURL* url_;
   BOOL isVideo_;
   YouTubeFeed* feedDelegate_;

@@ -35,22 +35,20 @@
 
 - (id)initWithTitle:(NSString*)title forUrl:(NSURL*)url
 {
-  [super init];
-  title_ = [title copy];
+  [super initWithTitle:title];
   url_ = [url retain];
   return self;
 }
 
 - (void)dealloc
 {
-  [title_ release];
   [url_ release];
   [super dealloc];
 }
 
 - (NSArray*)currentAssets
 {
-  NSMutableArray* assets = [NSMutableArray array];
+  assets_ = [NSMutableArray array];
   NSError* err;
   NSXMLDocument* doc;
   doc = [[[NSXMLDocument alloc] initWithContentsOfURL:url_
@@ -60,9 +58,8 @@
   NSXMLElement* root = [doc rootElement];
   NSXMLElement* channel = [[root elementsForName:@"channel"] objectAtIndex:0];
   NSArray* feeditems = [channel elementsForName:@"item"];
-  assets_ = assets;
   [self loadAssets:feeditems];
-  return assets;
+  return assets_;
 }
 
 - (void)loadAssets:(NSArray*)feedItems
@@ -81,19 +78,11 @@
   for (i = 0; i < 5; ++i) [self assetUpdated:nil];
 }
 
-- (NSString*)title{ return title_; }
 - (BRLayer<BRMenuItemLayer>*)menuItem
 {
   BRTextMenuItemLayer*item = [BRTextMenuItemLayer folderMenuItem];
   [item setTitle:[self title]];
   return item;
-}
-
-- (BRController*)controller
-{
-  if (!controller_)
-    controller_ = [[FeedMenuController alloc] initWithDelegate:self];
-  return controller_;
 }
 
 - (void)assetUpdated:(NetflixAsset*)asset

@@ -1,5 +1,5 @@
 //
-//  Copyright 2008-2009 Kirk Kelsey.
+//  Copyright 2008-2010 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -223,32 +223,29 @@
 
 - (BRLayer<BRMenuItemLayer>*)menuItem
 {
-  if( !menuitem_ )
-  {
-    menuitem_ = [BRTextMenuItemLayer menuItem];
-    [menuitem_ setTitle:[self seriesName]];
-    [menuitem_ setRightJustifiedText:[self episodeInfo]];
-    [menuitem_ retain];
+  if (!menuItem_) {
+    BRTextMenuItemLayer* menuItem = [[BRTextMenuItemLayer menuItem] retain];
+    [menuItem setTitle:[self seriesName]];
+    [menuItem setRightJustifiedText:[self episodeInfo]];
+    menuItem_ = menuItem;
   }
-  return menuitem_;
+  return menuItem_;
 }
 
 // If the menu is titled by the series name of this asset, then the menu items
 // should use something else for their titles (like the episode title).
 - (BRLayer<BRMenuItemLayer>*)menuItemForMenu:(NSString*)menu
 {
-  if( [menu compare:[self seriesName]] != NSOrderedSame ){
+  if ([menu compare:[self seriesName]] != NSOrderedSame)
     return [self menuItem];
-  } else {
-    if( !specificMenuItem_ )
-    {
-      specificMenuItem_ = [BRTextMenuItemLayer menuItem];
-      [specificMenuItem_ setTitle:title_];
-      [specificMenuItem_ setRightJustifiedText:[self episodeInfo]];
-      [specificMenuItem_ retain];
-    }
-    return specificMenuItem_;
+
+  if (!specificMenuItem_) {
+    specificMenuItem_ = [BRTextMenuItemLayer menuItem];
+    [specificMenuItem_ setTitle:title_];
+    [specificMenuItem_ setRightJustifiedText:[self episodeInfo]];
+    [specificMenuItem_ retain];
   }
+  return specificMenuItem_;
 }
 
 - (BRController*)controller

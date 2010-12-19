@@ -25,7 +25,7 @@
 
 - (id)initWithTitle:(NSString*)title forContents:(NSArray*)contents
 {
-  title_ = [title copy];
+  [super initWithTitle:title];
   contents_ = [contents retain];
   return self;
 }
@@ -34,8 +34,6 @@
 {
   [contents_ release];
   [controller_ release];
-  [menuItem_ release];
-  [title_ release];
   [super dealloc];
 }
 
@@ -49,19 +47,13 @@
 - (NSArray*)currentAssets
 {
   if (!assets_) {
-    NSMutableArray* assets
-      = [NSMutableArray arrayWithCapacity:[contents_ count]];
+    assets_ = [[NSMutableArray arrayWithCapacity:[contents_ count]] retain];
     UNDAssetFactory* assetFactory = [UNDAssetFactory sharedInstance];
     for (NSDictionary* content in contents_)
-      [assets addObject:[assetFactory assetForContent:content]];
-    assets_ = assets;
+      [assets_
+        addObject:[[assetFactory newAssetForContent:content] autorelease]];
   }
   return assets_;
-}
-
-- (NSString*)title
-{
-  return title_;
 }
 
 - (BRLayer<BRMenuItemLayer>*)menuItem

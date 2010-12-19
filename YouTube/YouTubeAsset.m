@@ -1,5 +1,5 @@
 //
-//  Copyright 2009 Kirk Kelsey.
+//  Copyright 2009,2010 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -17,13 +17,14 @@
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
 #import <BRImageManager.h>
-#import <BRImageManager.h>
 #import <BRTextMenuItemLayer.h>
 
 #import "FeedMenuController.h"
 #import "YouTubeAsset.h"
 #import "YouTubeFeed.h"
 #import "YouTubeController.h"
+
+@class BRImage;
 
 @interface YouTubeAsset (Parsing)
 - (void)buildFromId:(NSXMLElement*)idtag;
@@ -36,12 +37,11 @@
 - (id)initWithXMLElement:(NSXMLElement*)dom
 {
   imageManager_ = [BRImageManager sharedInstance];
-  [super init];
-  NSXMLElement* title = [[dom elementsForName:@"title"] objectAtIndex:0];
-  title_ = [[title childAtIndex:0] stringValue];
-  title_ = [title_ stringByReplacingOccurrencesOfString:@"Videos published by :"
-                                             withString:@""];
-  [title_ retain];
+  NSXMLElement* titleXML = [[dom elementsForName:@"title"] objectAtIndex:0];
+  NSString* title = [[titleXML childAtIndex:0] stringValue];
+  title = [title stringByReplacingOccurrencesOfString:@"Videos published by :"
+                                           withString:@""];
+  [super initWithTitle:title];
 
   NSXMLElement* content = [[dom elementsForName:@"content"] objectAtIndex:0];
   // some YouTube feeds contain other feeds, some contain videos. we make the
@@ -77,10 +77,8 @@
 {
   [feedDelegate_ release];
   [description_ release];
-  [menuitem_ release];
   [published_ release];
   [thumbnailID_ release];
-  [title_ release];
   [url_ release];
   [videoID_ release];
 }
@@ -135,32 +133,20 @@
   return;
 }
 
-- (BRLayer<BRMenuItemLayer>*)menuItem
-{
-  if( !menuitem_ )
-  {
-    if( isVideo_ ) menuitem_ = [BRTextMenuItemLayer menuItem];
-    else menuitem_ = [BRTextMenuItemLayer folderMenuItem];
-    [menuitem_ setTitle:[self title]];
-    [menuitem_ retain];
-  }
-  return menuitem_;
-}
-
 - (BRController*)controller
 {
-  if( isVideo_ ){
+  if (isVideo_)
     return [[[YouTubeController alloc] initWithAsset:self] autorelease];
-  } else {
-    if( !feedDelegate_ )
-      feedDelegate_ = [[YouTubeFeed alloc] initWithTitle:title_ forUrl:url_];
-    return [feedDelegate_ controller];
-  }
+
+  if (!feedDelegate_)
+      feedDelegate_ = [[YouTubeFeed alloc] initWithTitle:[self title]
+                                                  forUrl:url_];
+
+  return [feedDelegate_ controller];
 }
 
 
 - (NSString*)assetID{ return [url_ description]; }
-- (NSString*)title{ return title_; }
 - (NSString*)titleForSorting{ return [self title]; }
 - (NSString*)mediaSummary{ return description_; }
 - (NSString*)mediaDescription{ return description_; }

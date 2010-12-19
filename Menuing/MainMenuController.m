@@ -60,11 +60,16 @@ static MainMenuController *sharedInstance_;
 {
   if(!sharedInstance_) {
     UNDAssetFactory* factory = [UNDAssetFactory sharedInstance];
-    [factory registerProvider:[[UNDExternalAppAssetProvider alloc] init]];
-    [factory registerProvider:[[UNDHuluAssetProvider alloc] init]];
-    [factory registerProvider:[[UNDNetflixAssetProvider alloc] init]];
-    [factory registerProvider:[[UNDYouTubeAssetProvider alloc] init]];
-    [factory registerProvider:[[UNDiPlayerAssetProvider alloc] init]];
+    [factory
+      registerProvider:[[[UNDExternalAppAssetProvider alloc] init] autorelease]];
+    [factory
+      registerProvider:[[[UNDHuluAssetProvider alloc] init] autorelease]];
+    [factory
+      registerProvider:[[[UNDNetflixAssetProvider alloc] init] autorelease]];
+    [factory
+      registerProvider:[[[UNDYouTubeAssetProvider alloc] init] autorelease]];
+    [factory
+      registerProvider:[[[UNDiPlayerAssetProvider alloc] init] autorelease]];
     sharedInstance_ = [[MainMenuController alloc] init];
   }
   return sharedInstance_;
@@ -78,10 +83,12 @@ static MainMenuController *sharedInstance_;
   int count = [descriptions count];
 
   UNDAssetFactory* factory = [UNDAssetFactory sharedInstance];
+  id<UnderstudyAsset> asset;
   for (NSDictionary* description in descriptions) {
-    id<UnderstudyAsset> asset =  [factory assetForContent:description];
+    asset = [[factory newAssetForContent:description] autorelease];
     if (asset) [assets_ addObject:asset];
   }
+
   [assets_ addObject:[[[ManageFeedsDialog alloc] init] autorelease]];
 
   [[self list] removeDividers];
@@ -89,11 +96,9 @@ static MainMenuController *sharedInstance_;
   [[self list] reload];
 }
 
-// if the asset hasn't actually been loaded, create it how
 - (NSObject<UnderstudyAsset>*)assetForRow:(long)row
 {
-  NSObject<UnderstudyAsset>* asset = [assets_ objectAtIndex:row];
-  return asset;
+  return [assets_ objectAtIndex:row];
 }
 
 - (void)preferencesDidChange

@@ -25,7 +25,7 @@ NSString* UNDExternalAppAssetKey = @"appname";
 
 @implementation UNDExternalAppAssetProvider
 
-- (NSObject<UnderstudyAsset>*)assetForContent:(NSDictionary*)content
+- (NSObject<UnderstudyAsset>*)newAssetForContent:(NSDictionary*)content
 {
   NSString* appname = [content objectForKey:UNDExternalAppAssetKey];
   if (!appname) return nil;
@@ -34,7 +34,7 @@ NSString* UNDExternalAppAssetKey = @"appname";
 
 - (NSString*)name
 {
-  return [UNDExternalAppAssetProviderName copy];
+  return UNDExternalAppAssetProviderName;
 }
 
 @end

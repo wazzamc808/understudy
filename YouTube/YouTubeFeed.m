@@ -1,5 +1,5 @@
 //
-//  Copyright 2009 Kirk Kelsey.
+//  Copyright 2009,2010 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -19,40 +19,23 @@
 #import "YouTubeFeed.h"
 #import "YouTubeAsset.h"
 
-#import <BRTextMenuItemLayer.h>
-
 @implementation YouTubeFeed
 
 - (id)initWithTitle:(NSString*)title forUrl:(NSURL*)url
 {
+  [super initWithTitle:title];
+
   NSString* temp = [url absoluteString];
   temp = [YouTubeFeed canonicalFormOfURL:temp];
   url_ = [[NSURL URLWithString:temp] retain];
 
-  title_ = [title copy];
   return self;
 }
 
 - (void)dealloc
 {
-  [controller_ release];
-  [title_ release];
   [url_ release];
   [super dealloc];
-}
-
-- (BRLayer<BRMenuItemLayer>*)menuItem
-{
-  BRTextMenuItemLayer*item = [BRTextMenuItemLayer folderMenuItem];
-  [item setTitle:title_];
-  return item;
-}
-
-- (BRController*)controller
-{
-  if( !controller_ )
-    controller_ = [[FeedMenuController alloc] initWithDelegate:self];
-  return controller_;
 }
 
 - (NSArray*)currentAssets
@@ -62,20 +45,15 @@
                                                             options:0
                                                               error:&err];
   [doc autorelease];
-  if( !doc ) return nil;
+  if (!doc) return nil;
   NSMutableArray* assets = [NSMutableArray array];
   NSXMLElement* feed = [doc rootElement];
   NSArray* entries = [feed elementsForName:@"entry"];
-  for( NSXMLElement* item in entries ) {
+  for (NSXMLElement* item in entries) {
     YouTubeAsset* asset = [[YouTubeAsset alloc] initWithXMLElement:item];
     [assets addObject:[asset autorelease]];
   }
   return assets;
-}
-
-- (NSString*)title
-{
-  return title_;
 }
 
 + (NSString*)canonicalFormOfURL:(NSString*)url

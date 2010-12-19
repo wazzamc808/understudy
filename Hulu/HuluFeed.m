@@ -20,33 +20,21 @@
 #import "HuluAsset.h"
 #import "HuluController.h"
 
-
-#import <BRControllerStack.h>
-#import <BRComboMenuItemLayer.h>
-#import <BRTextMenuItemLayer.h>
-
 #import <Foundation/NSXMLDocument.h>
 
 @implementation HuluFeed
 
 - (id)initWithTitle:(NSString*)title forUrl:(NSURL*)url
 {
-  [super init];
+  [super initWithTitle:title];
   url_ = [url retain];
-  title_ = [title copy];
   return self;
 }
 
 - (void)dealloc
 {
   [url_ release];
-  [title_ release];
   [super dealloc];
-}
-
-- (NSString*)title
-{
-  return title_;
 }
 
 - (NSArray*)currentAssets
@@ -70,13 +58,6 @@
   [assets_ autorelease];
   assets_ = [assets retain];
   return assets;
-}
-
-- (BRLayer<BRMenuItemLayer>*)menuItem
-{
-  BRTextMenuItemLayer*item = [BRTextMenuItemLayer folderMenuItem];
-  [item setTitle:title_];
-  return item;
 }
 
 - (BRController*)controller

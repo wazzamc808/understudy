@@ -28,8 +28,6 @@
 @interface UNDiPlayerAsset : BaseUnderstudyAsset <UnderstudyAsset> {
  @private
   BRImageManager* imageManager_;
-  BRTextMenuItemLayer* menuitem_;
-  NSString* title_;
   NSURL* url_;
   NSString* thumbnailID_;
 }

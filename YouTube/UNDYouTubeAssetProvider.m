@@ -23,7 +23,7 @@ NSString* UNDYouTubeAssetProviderName = @"youtube";
 
 @implementation UNDYouTubeAssetProvider
 
-- (NSObject<UnderstudyAsset>*)assetForContent:(NSDictionary*)content
+- (NSObject<UnderstudyAsset>*)newAssetForContent:(NSDictionary*)content
 {
   NSString* title = [content objectForKey:UNDAssetProviderTitleKey];
   NSURL* url
@@ -34,7 +34,7 @@ NSString* UNDYouTubeAssetProviderName = @"youtube";
 
 - (NSString*)name
 {
-  return [UNDYouTubeAssetProviderName copy];
+  return UNDYouTubeAssetProviderName;
 }
 
 @end
