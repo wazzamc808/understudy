@@ -39,13 +39,11 @@
 
 @interface NetflixAsset : BaseUnderstudyAsset <UnderstudyAsset> {
  @private
-  NSString* title_;
   NSString* description_;
   NSString* mediaID_;
   NSURL* url_;
   NSString* thumbnailID_;
   BRImageManager* imageManager_;
-  BRTextMenuItemLayer* menuitem_;
   UNDNetflixCollection* collection_;
   id<UNDNetflixAssetUpdateDelegate> delegate_;
   BOOL collectionSearchNeeded_;

@@ -18,18 +18,12 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import <BRMediaMenuController.h>
-
 #import "FeedMenuController.h"
-#import "BaseUnderstudyAsset.h"
+#import "UNDAssetCollection.h"
 
-@class BRTextMenuItemLayer;
-
-@interface HuluFeed : BaseUnderstudyAsset <FeedDelegate>
+@interface HuluFeed : UNDAssetCollection <FeedDelegate>
 {
   NSURL* url_;
-  NSString* title_;
-  NSArray* assets_;
 }
 
 - (id)initWithTitle:(NSString*)title forUrl:(NSURL*)url;

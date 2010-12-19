@@ -23,7 +23,7 @@ NSString* UNDiPlayerAssetProviderName = @"hulu";
 
 @implementation UNDiPlayerAssetProvider
 
-- (NSObject<UnderstudyAsset>*)assetForContent:(NSDictionary*)content
+- (NSObject<UnderstudyAsset>*)newAssetForContent:(NSDictionary*)content
 {
   NSString* title = [content objectForKey:UNDAssetProviderTitleKey];
   NSURL* url
@@ -34,7 +34,7 @@ NSString* UNDiPlayerAssetProviderName = @"hulu";
 
 - (NSString*)name
 {
-  return [UNDiPlayerAssetProviderName copy];
+  return UNDiPlayerAssetProviderName;
 }
 
 @end

@@ -17,25 +17,50 @@
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
 #import "BaseUnderstudyAsset.h"
+
+#import <BRControl.h>
 #import <BRMediaPreviewControllerFactory.h>
+#import <BRTextMenuItemLayer.h>
 
 @implementation BaseUnderstudyAsset
+
+- (id)initWithTitle:(NSString*)title
+{
+  [super init];
+  title_ = [title copy];
+  return self;
+}
 
 - (void)dealloc
 {
   [preview_ release];
+  [title_ release];
   [super dealloc];
+}
+
+- (BRLayer<BRMenuItemLayer>*)menuItem
+{
+  if (!menuItem_) {
+    BRTextMenuItemLayer* menuItem = [[BRTextMenuItemLayer menuItem] retain];
+    [menuItem setTitle:title_];
+    menuItem_ = menuItem;
+  }
+  return menuItem_;
 }
 
 - (BRControl*)preview
 {
-  if( !preview_ )
-  {
+  if (!preview_) {
     preview_ = [BRMediaPreviewControllerFactory previewControlForAsset:self
                                                           withDelegate:self];
     [preview_ retain];
   }
   return preview_;
+}
+
+- (NSString*)title
+{
+  return title_;
 }
 
 #pragma mark BRMediaPreviewFactoryDelegate

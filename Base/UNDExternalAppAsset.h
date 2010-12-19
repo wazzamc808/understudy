@@ -24,7 +24,6 @@
 
 @interface UNDExternalAppAsset : BaseUnderstudyAsset<UnderstudyAsset>
 {
-  BRTextMenuItemLayer* menuitem_;
   UNDExternalLaunchController* controller_;
   NSString* appName_;
 }

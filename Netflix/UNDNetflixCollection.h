@@ -1,5 +1,5 @@
 //
-//  Copyright 2009 Kirk Kelsey.
+//  Copyright 2009,2010 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -17,18 +17,14 @@
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
 #import <Cocoa/Cocoa.h>
-#import "BaseUnderstudyAsset.h"
+#import "UNDAssetCollection.h"
 #import "FeedMenuController.h"
 
 // Represents a collection of Netflix videos found by loading the web page
 // for some content (typically a season of a television show).
-@interface UNDNetflixCollection : BaseUnderstudyAsset <FeedDelegate> {
+@interface UNDNetflixCollection : UNDAssetCollection {
  @private 
   NSURL* url_;
-  NSString* title_;
-  FeedMenuController* controller_;
-  BRTextMenuItemLayer* menuItem_;
-  NSArray* assets_;
 }
 
 - (id)initWithTitle:(NSString*)title forUrl:(NSURL*)url;

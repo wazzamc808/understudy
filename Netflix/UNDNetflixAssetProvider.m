@@ -22,7 +22,7 @@ NSString* UNDNetflixAssetProviderName = @"netflix";
 
 @implementation UNDNetflixAssetProvider
 
-- (NSObject<UnderstudyAsset>*)assetForContent:(NSDictionary*)content
+- (NSObject<UnderstudyAsset>*)newAssetForContent:(NSDictionary*)content
 {
   NSString* title = [content objectForKey:UNDAssetProviderTitleKey];
   NSURL* url

@@ -22,11 +22,9 @@
 
 @interface UNDAssetCollection : BaseUnderstudyAsset <FeedDelegate>
 {
-  NSString* title_;
-  NSArray*  contents_;
-  NSArray*  assets_;
-  BRController* controller_;
-  BRLayer<BRMenuItemLayer>* menuItem_;
+  NSArray*        contents_;
+  NSMutableArray* assets_;
+  BRController*   controller_;
 }
 
 - (id)initWithTitle:(NSString*)title forContents:(NSArray*)contents;

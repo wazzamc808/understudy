@@ -24,23 +24,15 @@
 @implementation UNDiPlayerFeed
 - (id)initWithTitle:(NSString*)title forUrl:(NSURL*)url
 {
-  [super init];
+  [super initWithTitle:title];
   url_ = [url retain];
-  title_ = [title copy];
   return self;
 }
 
 - (void)dealloc
 {
-  [item_ release];
-  [title_ release];
   [url_ release];
   [super dealloc];
-}
-
-- (NSString*)title
-{
-  return title_;
 }
 
 - (NSArray*)currentAssets
@@ -59,15 +51,6 @@
     [assets insertObject:asset atIndex:0];
   }
   return assets;
-}
-
-- (BRLayer<BRMenuItemLayer>*)menuItem
-{
-  if( !item_ ){
-    item_ = [[BRTextMenuItemLayer folderMenuItem] retain];
-    [item_ setTitle:title_];
-  }
-  return item_;
 }
 
 - (BRController*)controller

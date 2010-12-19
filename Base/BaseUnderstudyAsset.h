@@ -1,5 +1,5 @@
 //
-//  Copyright 2009 Kirk Kelsey.
+//  Copyright 2009,2010 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -17,20 +17,27 @@
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
 #import <Cocoa/Cocoa.h>
+
 #import "BRBaseMediaAsset.h"
-#import "BRControl.h"
-#import "BRImage.h"
-#import "BRMediaPreviewControllerFactory.h"
 #import "BRMediaPreviewFactoryDelegate-Protocol.h"
 #import "BRMediaType.h"
 
+@class BRControl;
+@class BRLayer;
+
+@protocol BRMenuItemLayer;
+
 @interface BaseUnderstudyAsset : BRBaseMediaAsset<BRMediaPreviewFactoryDelegate> 
 {
+  BRLayer<BRMenuItemLayer>* menuItem_;
   BRControl* preview_;
+  NSString*  title_;
 }
 
-// Default implementation simply calls the BRMediaPreviewControllerFactory 
-// previewControlForAsset with self.
+- (id)initWithTitle:(NSString*)title;
+
+- (BRLayer<BRMenuItemLayer>*)menuItem;
 - (BRControl*)preview;
+- (NSString*)title;
 
 @end

@@ -19,17 +19,11 @@
 #import <Cocoa/Cocoa.h>
 
 #import "FeedMenuController.h"
-#import "BaseUnderstudyAsset.h"
+#import "UNDAssetCollection.h"
 
-@class BRTextMenuItemLayer;
-@class FeedMenuController;
-
-@interface UNDiPlayerFeed : BaseUnderstudyAsset <FeedDelegate>
+@interface UNDiPlayerFeed : UNDAssetCollection <FeedDelegate>
 {
   NSURL* url_;
-  NSString* title_;
-  BRTextMenuItemLayer* item_;
-  FeedMenuController* controller_;
 }
 
 - (id)initWithTitle:(NSString*)title forUrl:(NSURL*)url;

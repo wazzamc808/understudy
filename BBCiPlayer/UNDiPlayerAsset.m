@@ -28,9 +28,8 @@
 
 - (id)initWithXMLElement:(NSXMLElement*)dom
 {
-  [super init];
   imageManager_ = [BRImageManager sharedInstance];
-  title_ = [[[dom firstElementNamed:@"title"] stringValue] retain];
+  [super initWithTitle:[[dom firstElementNamed:@"title"] stringValue]];
 
   NSXMLElement* alternate = [dom linkWithRelationship:@"alternate"];
   [[alternate retain] autorelease];
@@ -47,14 +46,11 @@
 
 - (void)dealloc
 {
-  [menuitem_ release];
   [thumbnailID_ release];
-  [title_ release];
   [url_ release];
   [super dealloc];
 }
 
-- (NSString*)title{ return title_; }
 - (NSURL*)url{ return url_; }
 - (BRImage*)coverArt{ return [imageManager_ imageNamed:thumbnailID_]; }
 
@@ -62,17 +58,6 @@
 {
   BRController* con = [[UNDiPlayerController alloc] initWithAsset:self];
   return [con autorelease];
-}
-
-- (BRLayer<BRMenuItemLayer>*)menuItem
-{
-  if( !menuitem_ )
-  {
-    menuitem_ = [BRTextMenuItemLayer menuItem];
-    [menuitem_ setTitle:[self title]];
-    [menuitem_ retain];
-  }
-  return menuitem_;
 }
 
 @end

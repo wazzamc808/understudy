@@ -1,5 +1,5 @@
 //
-//  Copyright 2009 Kirk Kelsey.
+//  Copyright 2009,2010 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -18,14 +18,12 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import "BaseUnderstudyAsset.h"
+#import "UNDAssetCollection.h"
 #import "FeedMenuController.h"
 
-@interface YouTubeFeed : BaseUnderstudyAsset<FeedDelegate>
+@interface YouTubeFeed : UNDAssetCollection
 {
-  NSString* title_;
   NSURL* url_;
-  FeedMenuController* controller_;
 }
 
 - (id)initWithTitle:(NSString*)title forUrl:(NSURL*)url;

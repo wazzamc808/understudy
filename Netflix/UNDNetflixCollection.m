@@ -23,29 +23,23 @@
 
 - (id)initWithTitle:(NSString*)title forUrl:(NSURL*)url
 {
-  [super init];
-  title_ = [title copy];
+  [super initWithTitle:title];
   url_ = [url retain];
-  if( [self currentAssets] == nil )
-  {
-    [self release];
-    return nil;
-  }else{
-    return self;
-  }
+
+  if ([self currentAssets]) return self;
+
+  [self release];
+  return nil;
 }
 
 - (void)dealloc
 {
-  [menuItem_ release];
-  [title_ release];
   [url_ release];
   [super dealloc];
 }
 
 - (NSArray*)currentAssets
 {
-//  return nil;
   if (assets_) return assets_;
 
   NSMutableArray* assets = [[NSMutableArray alloc] init];
@@ -114,25 +108,6 @@
   }
   assets_ = [assets retain];
   return assets_;
-}
-
-- (NSString*)title{ return title_; }
-- (BRLayer<BRMenuItemLayer>*)menuItem
-{
-  if( !menuItem_ ){
-    menuItem_ = [BRTextMenuItemLayer folderMenuItem];
-    [menuItem_ setTitle:[self title]];
-    [menuItem_ retain];
-  }
-  return menuItem_;
-}
-
-- (BRController*)controller
-{
-  if( !controller_ ){
-    controller_ = [[FeedMenuController alloc] initWithDelegate:self];
-  }
-  return controller_;
 }
 
 @end

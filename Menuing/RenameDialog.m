@@ -58,7 +58,7 @@
     [[[pref assetDescriptions] objectAtIndex:index] mutableCopy];
   [asset setObject:[container stringValue] forKey:@"title"];
   [pref replaceAssetDescriptionAtIndex:[self selectedIndex]
-                       withDescription:asset];
+                       withDescription:[asset autorelease]];
   [[self stack] popToController:[MainMenuController sharedInstance]];
 }
 

@@ -28,6 +28,6 @@ extern NSString* UNDNetflixAssetProviderName;
 /// The content should contain keys @"URL" and @"Title". If the expected keys
 /// are not found, or the asset cannot be constructed for any other reason, nil
 /// will be returned.
-- (NSObject<UnderstudyAsset>*)assetForContent:(NSDictionary*)content;
+- (NSObject<UnderstudyAsset>*)newAssetForContent:(NSDictionary*)content;
 
 @end
