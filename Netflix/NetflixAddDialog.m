@@ -18,8 +18,11 @@
 
 #import "MainMenuController.h"
 #import "NetflixAddDialog.h"
+#import "UNDNetflixAssetProvider.h"
 
 #import <BRControllerStack.h>
+
+#import <PubSub/PubSub.h>
 
 @interface NetflixAddDialog (PrivateMethods)
 - (void)_startAutoDiscovery;
@@ -60,13 +63,28 @@ NSString* NETFLIXTITLES[] = {
 // call-back for an item having been selected
 - (void)itemSelected
 {
-  UNDPreferenceManager* pref = [UNDPreferenceManager sharedInstance];
   int index = [self selectedIndex];
-  if( index < FEED_OPTION_COUNT ){
-    [pref addFeed:NETFLIXURLS[index] withTitle:NETFLIXTITLES[index]];
-  }else if( index == FEED_OPTION_COUNT ){
-    [pref addFeed:queue_ withTitle:@"Netflix Queue"];
-  }else NSLog(@"unexpected option selected for Netflix");
+
+  NSString *url = nil, *title = nil;
+
+  if (index < FEED_OPTION_COUNT) {
+    url = NETFLIXURLS[index];
+    title = NETFLIXTITLES[index];
+  } else if (index == FEED_OPTION_COUNT) {
+    url = queue_;
+    title = @"Netflix Queue";
+  } else {
+    NSLog(@"unexpected option selected for Netflix");
+  }
+
+  if (url && title) {
+    UNDPreferenceManager* pref = [UNDPreferenceManager sharedInstance];
+    NSDictionary* asset =
+      [NSDictionary dictionaryWithObjectsAndKeys:url, @"URL", title, @"title",
+                    UNDNetflixAssetProviderName, @"provider", nil];
+    [pref addAssetWithDescription:asset];
+    [[PSClient applicationClient] addFeedWithURL:[NSURL URLWithString:url]];
+  }
 
   // we might want to pop back to the main menu
   [[self stack] popController];

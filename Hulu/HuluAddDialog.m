@@ -17,11 +17,14 @@
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
 #import <HuluAddDialog.h>
-#import <MainMenuController.h>
+#import <UNDHuluAssetProvider.h>
+#import <UNDPreferenceManager.h>
 
 #import <BRControllerStack.h>
 #import <BRListControl.h>
 #import <BRTextMenuItemLayer.h>
+
+#import <PubSub/PubSub.h>
 
 @implementation HuluAddDialog
 
@@ -62,10 +65,15 @@
 // call-back for an item having been selected
 - (void)itemSelected:(long)index
 {
-  if( index < [feeds_ count] ){
+  if (index < [feeds_ count]) {
     UNDPreferenceManager* pref = [UNDPreferenceManager sharedInstance];
-    [pref addFeed:[feeds_ objectAtIndex:index]
-        withTitle:[titles_ objectAtIndex:index]];
+    NSString* feed = [feeds_ objectAtIndex:index];
+    NSString* title = [titles_ objectAtIndex:index];
+    NSDictionary* asset =
+      [NSDictionary dictionaryWithObjectsAndKeys:feed, @"URL", title, @"title",
+                    UNDHuluAssetProviderName, @"provider", nil];
+    [pref addAssetWithDescription:asset];
+    [[PSClient applicationClient] addFeedWithURL:[NSURL URLWithString:feed]];
   }
   [[self stack] popController];
 }

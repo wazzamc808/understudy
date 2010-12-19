@@ -16,11 +16,12 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
-#import "HuluFeed.h"
-#import "UNDExternalAppAsset.h"
-#import "UNDiPlayerFeed.h"
-#import "NetflixFeed.h"
-#import "YouTubeFeed.h"
+#import "UNDAssetFactory.h"
+#import "UNDExternalAppAssetProvider.h"
+#import "UNDHuluAssetProvider.h"
+#import "UNDNetflixAssetProvider.h"
+#import "UNDYouTubeAssetProvider.h"
+#import "UNDiPlayerAssetProvider.h"
 
 #import "MainMenuController.h"
 #import "ManageFeedsDialog.h"
@@ -32,7 +33,6 @@
 
 @interface MainMenuController (PrivateMenuHandling)
 - (void)loadAssets;
-- (NSObject<UnderstudyAsset>*)assetForRow:(long)row;
 @end
 
 @implementation MainMenuController
@@ -58,24 +58,29 @@
 static MainMenuController *sharedInstance_;
 + (MainMenuController*)sharedInstance
 {
-  if(!sharedInstance_) sharedInstance_ = [[MainMenuController alloc] init];
+  if(!sharedInstance_) {
+    UNDAssetFactory* factory = [UNDAssetFactory sharedInstance];
+    [factory registerProvider:[[UNDExternalAppAssetProvider alloc] init]];
+    [factory registerProvider:[[UNDHuluAssetProvider alloc] init]];
+    [factory registerProvider:[[UNDNetflixAssetProvider alloc] init]];
+    [factory registerProvider:[[UNDYouTubeAssetProvider alloc] init]];
+    [factory registerProvider:[[UNDiPlayerAssetProvider alloc] init]];
+    sharedInstance_ = [[MainMenuController alloc] init];
+  }
   return sharedInstance_;
 }
 
-#define HDAPP @"/Applications/Hulu Desktop.app/Contents/MacOS/Hulu Desktop"
-// create an asset place holder for each feed in the preferences
 - (void)loadAssets
 {
-  int i = 0, count = [preferences_ feedCount];
+  NSArray* descriptions = [preferences_ assetDescriptions];
   [assets_ autorelease];
-  assets_ = [[NSMutableArray arrayWithCapacity:count] retain];
-  for( i=0; i<count; i++ ) [assets_ addObject:[NSNull null]];
+  assets_ = [[NSMutableArray arrayWithCapacity:[descriptions count]] retain];
+  int count = [descriptions count];
 
-  // if the Hulu Desktop is installed, add the asset for it
-  if( [[NSFileManager defaultManager] fileExistsAtPath:HDAPP] ){
-    [assets_ addObject:[[[UNDExternalAppAsset alloc]
-                          initWithAppName:@"Hulu Desktop"] autorelease]];
-    count++;
+  UNDAssetFactory* factory = [UNDAssetFactory sharedInstance];
+  for (NSDictionary* description in descriptions) {
+    id<UnderstudyAsset> asset =  [factory assetForContent:description];
+    if (asset) [assets_ addObject:asset];
   }
   [assets_ addObject:[[[ManageFeedsDialog alloc] init] autorelease]];
 
@@ -88,24 +93,6 @@ static MainMenuController *sharedInstance_;
 - (NSObject<UnderstudyAsset>*)assetForRow:(long)row
 {
   NSObject<UnderstudyAsset>* asset = [assets_ objectAtIndex:row];
-  if( (id)asset == (id)[NSNull null] ){
-    NSURL* url = [preferences_ URLAtIndex:row];
-    NSString* title = [preferences_ titleAtIndex:row];
-    NSString* host = [[url host] lowercaseString];
-
-    if( [host rangeOfString:@"hulu"].location != NSNotFound )
-      asset = [[HuluFeed alloc] initWithTitle:title forUrl:url];
-    else if( [host rangeOfString:@"netflix"].location != NSNotFound )
-      asset = [[NetflixFeed alloc] initWithTitle:title forUrl:url];
-    else if( [host rangeOfString:@"youtube"].location != NSNotFound )
-      asset = [[YouTubeFeed alloc] initWithTitle:title forUrl:url];
-    else if( [host rangeOfString:@"bbc.co.uk"].location != NSNotFound )
-      asset = [[UNDiPlayerFeed alloc] initWithTitle:title forUrl:url];
-    else asset = (BaseUnderstudyAsset<UnderstudyAsset>*)[NSNull null];
-
-    [assets_ replaceObjectAtIndex:row withObject:asset];
-    [asset autorelease];
-  }
   return asset;
 }
 
@@ -128,7 +115,7 @@ static MainMenuController *sharedInstance_;
 
 - (id)itemForRow:(long)row
 {
-  NSObject<UnderstudyAsset>* asset = [self assetForRow:row];
+  NSObject<UnderstudyAsset>* asset = [assets_ objectAtIndex:row];
   return [asset menuItem];
 }
 
@@ -144,7 +131,7 @@ static MainMenuController *sharedInstance_;
 
 - (void)itemSelected:(long)itemIndex
 {
-  NSObject<UnderstudyAsset>* asset = [self assetForRow:itemIndex];
+  NSObject<UnderstudyAsset>* asset = [assets_ objectAtIndex:itemIndex];
   [[self stack] pushController:[asset controller]];
 }
 

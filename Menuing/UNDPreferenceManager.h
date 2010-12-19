@@ -27,10 +27,8 @@
 @interface UNDPreferenceManager : NSObject
 {
 @private
-  // feed urls in NSString format
-  NSMutableArray* feeds_;
-  // feed titles in NSString format
-  NSMutableArray* titles_;
+  /// Array of dictionaries representing <UnderstudyAsset> assets.
+  NSMutableArray* assets_;
   // menu state used to restore selections after external player
   NSDictionary* menuState_;
 
@@ -49,14 +47,13 @@
 + (NSString*)accountForService:(NSString*)service;
 + (BOOL)alertsAreDisabled;
 
-- (long)feedCount;
-- (NSString*)titleAtIndex:(long)index;
-- (NSURL*)URLAtIndex:(long)index;
+- (NSArray*)assetDescriptions;
 
-- (void)addFeed:(NSString*)feedURL withTitle:(NSString*)title;
-- (void)moveFeedFromIndex:(long)from toIndex:(long)to;
-- (void)removeFeedAtIndex:(long)index;
-- (void)renameFeedAtIndex:(long)index withTitle:(NSString*)title;
+- (void)addAssetWithDescription:(NSDictionary*)description;
+- (void)moveAssetFromIndex:(long)from toIndex:(long)to;
+- (void)removeAssetAtIndex:(long)index;
+- (void)replaceAssetDescriptionAtIndex:(long)index
+                       withDescription:(NSDictionary*)description;
 
 // The menu state should be saved as it should later be used (e.g. before
 // pushing the final controller). The menu state may be nil if nothing should

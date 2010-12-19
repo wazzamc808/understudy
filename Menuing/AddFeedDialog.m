@@ -33,7 +33,7 @@
   [self addOptionText:@"Hulu"];
   [self addOptionText:@"Netflix"];
   [self addOptionText:@"YouTube"];
-  [self addOptionText:@"URL in Clipboard"];
+  // [self addOptionText:@"URL in Clipboard"];
   [self setActionSelector:@selector(itemSelected) target:self];  
   return self;
 }
@@ -93,55 +93,55 @@
 
 // looks for a string in the clipboard. if there isn't a string, or it isn't
 // a url, or that url doesn't refer to a known video provider, sound an error
-- (void)_loadFeedFromPasteboard
-{
-  NSPasteboard* pasteboard = [NSPasteboard generalPasteboard];
-  NSString* copied = [pasteboard stringForType:@"NSStringPboardType"];
-  // NSURL expects a full feed including protocol, but doesn't accept some of
-  // the protocols (like feed:// which safari likes)
-  if( [copied hasPrefix:@"feed://"] )
-    copied = [copied stringByReplacingOccurrencesOfString:@"feed://"
-                                               withString:@"http://"];
+// - (void)_loadFeedFromPasteboard
+// {
+//   NSPasteboard* pasteboard = [NSPasteboard generalPasteboard];
+//   NSString* copied = [pasteboard stringForType:@"NSStringPboardType"];
+//   // NSURL expects a full feed including protocol, but doesn't accept some of
+//   // the protocols (like feed:// which safari likes)
+//   if( [copied hasPrefix:@"feed://"] )
+//     copied = [copied stringByReplacingOccurrencesOfString:@"feed://"
+//                                                withString:@"http://"];
 
-  NSURL* url = [NSURL URLWithString:copied];
-  NSString* host = [[url host] lowercaseString];
-  if( !host )
-    [self _presentInvalidURLAlert];
+//   NSURL* url = [NSURL URLWithString:copied];
+//   NSString* host = [[url host] lowercaseString];
+//   if( !host )
+//     [self _presentInvalidURLAlert];
 
-  else if( ![self _validateFeed:url] )
-    [self _presentInvalidHostAlert];
+//   else if( ![self _validateFeed:url] )
+//     [self _presentInvalidHostAlert];
+
+//   else if( [host rangeOfString:@"hulu"].location != NSNotFound )
+//   {
+//     [[UNDPreferenceManager sharedInstance] addFeed:[url absoluteString]
+//                                          withTitle:@"Hulu Feed"];
+//     [[self stack] popToController:[MainMenuController sharedInstance]];
+//   }
+
+//   else if( [host rangeOfString:@"netflix"].location != NSNotFound )
+//   {
+//     [[UNDPreferenceManager sharedInstance] addFeed:[url absoluteString] 
+//                                          withTitle:@"Netflix Feed"];
+//     [[self stack] popToController:[MainMenuController sharedInstance]];
+//   }
   
-  else if( [host rangeOfString:@"hulu"].location != NSNotFound )
-  {
-    [[UNDPreferenceManager sharedInstance] addFeed:[url absoluteString] 
-                                         withTitle:@"Hulu Feed"];
-    [[self stack] popToController:[MainMenuController sharedInstance]];
-  }
+//   else if( [host rangeOfString:@"gdata.youtube"].location != NSNotFound )
+//   {
+//     [[UNDPreferenceManager sharedInstance] addFeed:[url absoluteString]
+//                                          withTitle:@"YouTube Feed"];
+//     [[self stack] popToController:[MainMenuController sharedInstance]];    
+//   }
   
-  else if( [host rangeOfString:@"netflix"].location != NSNotFound )
-  {
-    [[UNDPreferenceManager sharedInstance] addFeed:[url absoluteString] 
-                                         withTitle:@"Netflix Feed"];
-    [[self stack] popToController:[MainMenuController sharedInstance]];
-  }
-  
-  else if( [host rangeOfString:@"gdata.youtube"].location != NSNotFound )
-  {
-    [[UNDPreferenceManager sharedInstance] addFeed:[url absoluteString]
-                                         withTitle:@"YouTube Feed"];
-    [[self stack] popToController:[MainMenuController sharedInstance]];    
-  }
-  
-  else if( [host rangeOfString:@"bbc"].location != NSNotFound )
-  {
-    [[UNDPreferenceManager sharedInstance] addFeed:[url absoluteString]
-                                         withTitle:@"BBC Feed"];
-    [[self stack] popToController:[MainMenuController sharedInstance]];    
-  }
+//   else if( [host rangeOfString:@"bbc"].location != NSNotFound )
+//   {
+//     [[UNDPreferenceManager sharedInstance] addFeed:[url absoluteString]
+//                                          withTitle:@"BBC Feed"];
+//     [[self stack] popToController:[MainMenuController sharedInstance]];    
+//   }
     
-  else
-    [self _presentInvalidHostAlert];
-}
+//   else
+//     [self _presentInvalidHostAlert];
+// }
 
 // call-back for an item having been selected
 - (void)itemSelected
@@ -160,9 +160,9 @@
       if( !youtube_ ) youtube_ = [[UNDYouTubeAddDialog alloc] init];
       [[self stack] pushController:youtube_];
       break;
-    case 3: // pasteboard
-      [self _loadFeedFromPasteboard];
-      break;
+    // case 3: // pasteboard
+    //   [self _loadFeedFromPasteboard];
+    //   break;
     default:
       NSLog(@"unexpected index in add dialog");
   }
