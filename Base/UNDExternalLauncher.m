@@ -18,9 +18,12 @@
 
 @interface UNDNotificationObserver : NSObject
 {
-  NSString* app_;
+  NSString* app_;               // The app name we're looking for.
+  BOOL frActive_;               // True when FR is active.
+  BOOL hasAppKey_;              // Are we working with NSRunningApplication.
 }
 - (id)   initWithApp:(NSString*)app;
+- (void) applicationDidDeactivate:(NSNotification*)notification;
 - (void) applicationDidLaunch:(NSNotification*)notification;
 - (void) applicationDidTerminate:(NSNotification*)notification;
 @end
@@ -61,6 +64,13 @@ int main(int argc, char* argv[])
                              name:@"NSWorkspaceDidLaunchApplicationNotification"
                            object:nil];
 
+  [notificationCenter addObserver:observer
+                         selector:@selector(applicationDidDeactivate:)
+                             name:@"NSWorkspaceDidDeactivateApplicationNotification"
+                           object:nil];
+
+  // [work hideOtherApplications];
+
   // Launch the application.
   BOOL launched;
   if (url) launched = [work openFile:url withApplication:appName];
@@ -83,6 +93,18 @@ int main(int argc, char* argv[])
 {
   [super init];
   app_ = [app copy];
+
+  NSDictionary* active = [[NSWorkspace sharedWorkspace] activeApplication];
+  id runningApp = [active objectForKey:@"NSWorkspaceApplicationKey"];
+  if (runningApp
+      && [runningApp respondsToSelector:@selector(bundleIdentifier)])
+  {
+    hasAppKey_ = YES;
+    NSString* bundleId = (NSString*)[runningApp bundleIdentifier];
+    if ([bundleId compare:@"com.apple.frontrow"] == NSOrderedSame)
+      frActive_ = YES;
+  }
+
   return self;
 }
 
@@ -92,16 +114,24 @@ int main(int argc, char* argv[])
   [super dealloc];
 }
 
-- (void) applicationDidLaunch:(NSNotification*)notification
+/// Attempts to bring the app forward. This method can safely be called
+/// multiple times (and is - once when we know FR is done and once when we know
+/// the app has launched).
+- (void) activateApp
 {
-  // We should be setting up shield windows to hide the transition in/out of
-  // the external application. At this point they should be hidden.
+  NSString* format = @"tell application \"%@\" to activate";
+  NSString* source = [NSString stringWithFormat:format, app_];
+
+  NSAppleScript* script = [[NSAppleScript alloc] initWithSource:source];
+  NSDictionary* err = nil;
+
+  [script executeAndReturnError:&err];
+
+  if (err) NSLog(@"activation error %@", err);
 }
 
-- (void) applicationDidTerminate:(NSNotification*)notification
+- (BOOL) applicationMatches:(NSNotification*)notification
 {
-  bool found = NO;
-
   NSDictionary* userInfo = [[[notification userInfo] retain] autorelease];
   NSString *applicationName, *applicationPath;
 
@@ -110,18 +140,62 @@ int main(int argc, char* argv[])
   applicationPath = [userInfo objectForKey:@"NSApplicationPath"];
 
   // The app might represented by the complete path or the name.
-  if ([applicationName compare:app_] == NSOrderedSame) found = YES;
-  else if ([applicationPath compare:app_] == NSOrderedSame) found = YES;
+  if ([applicationName compare:app_] == NSOrderedSame) return YES;
+  if ([applicationPath compare:app_] == NSOrderedSame) return YES;
 
-  if (!found) return;
+  return NO;
+}
+
+- (void) applicationDidDeactivate:(NSNotification*)notification
+{
+  if (!hasAppKey_) return;
+  if (!frActive_) return;
+
+  // Look for front row deactivating
+  id runningApp = [[notification userInfo]
+                    objectForKey:@"NSWorkspaceApplicationKey"];
+  if (!runningApp) return;
+  if (![runningApp respondsToSelector:@selector(bundleIdentifier)]) return;
+
+  NSString* bundleId = (NSString*)[runningApp bundleIdentifier];
+  if ([bundleId compare:@"com.apple.frontrow"] == NSOrderedSame) {
+    frActive_ = NO;
+    [self activateApp];
+  }
+}
+
+- (void) applicationDidLaunch:(NSNotification*)notification
+{
+  if (![self applicationMatches:notification]) return;
+
+  // If FR is active, we can't activate anything else.
+  if (!frActive_) [self activateApp];
+
+  // If we don't get NSRunningApplication information (OS 10.6) then we won't
+  // know when FR has deactivated. In that case, wait a while and try again.
+  if (!hasAppKey_) {
+    [NSThread sleepForTimeInterval:5];
+    [self activateApp];
+  }
+
+  // We should be setting up shield windows to hide the transition in/out of
+  // the external application. At this point they should be hidden.
+}
+
+- (void) applicationDidTerminate:(NSNotification*)notification
+{
+  NSWorkspace* work = [NSWorkspace sharedWorkspace];
+
+  if (![self applicationMatches:notification]) return;
 
   // If the application is no longer running then we should return to FR.
-  NSWorkspace* work = [NSWorkspace sharedWorkspace];
   [work launchAppWithBundleIdentifier:@"com.apple.frontrowlauncher"
                               options:NSWorkspaceLaunchDefault
        additionalEventParamDescriptor:[NSAppleEventDescriptor nullDescriptor]
                      launchIdentifier:nil];
 
+  [[work notificationCenter] removeObserver:self];
   exit(0);
 }
+
 @end
