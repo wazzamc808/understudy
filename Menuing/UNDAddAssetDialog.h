@@ -20,15 +20,9 @@
 
 #import <BROptionDialog.h>
 
-#import "HuluAddDialog.h"
-#import "NetflixAddDialog.h"
-#import "UNDYouTubeAddDialog.h"
-
-@interface AddFeedDialog : BROptionDialog {
-@private
-  HuluAddDialog* hulu_;
-  NetflixAddDialog* netflix_;
-  UNDYouTubeAddDialog* youtube_;
+@interface UNDAddAssetDialog : BROptionDialog
+{
+  NSMutableArray* dialogs_;
 }
 
 @end

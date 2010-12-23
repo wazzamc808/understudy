@@ -16,6 +16,7 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
+#import "UNDiPlayerAddDialog.h"
 #import "UNDiPlayerAssetProvider.h"
 #import "UNDiPlayerFeed.h"
 
@@ -34,7 +35,12 @@ NSString* UNDiPlayerAssetProviderName = @"hulu";
 
 - (NSString*)name
 {
-  return UNDiPlayerAssetProviderName;
+  return [[UNDiPlayerAssetProviderName copy] autorelease];
+}
+
+- (BRController*)assetAdditionDialog
+{
+  return [[[UNDiPlayerAddDialog alloc] init] autorelease];
 }
 
 @end

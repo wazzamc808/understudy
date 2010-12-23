@@ -22,9 +22,14 @@
 
 #import "UnderstudyAsset.h"
 
+@class BRController;
+
 @protocol UNDAssetProvider
 - (NSObject<UnderstudyAsset>*)newAssetForContent:(NSDictionary*)content;
 - (NSString*)name;
+
+/// Returns a (possibly nil) BRController allowing the user to add new assets.
+- (BRController*)assetAdditionDialog;
 @end
 
 // Standard keys used in asset content descriptions.
@@ -32,14 +37,20 @@ extern NSString* UNDAssetProviderNameKey;  // @"provider"
 extern NSString* UNDAssetProviderTitleKey; // @"title"
 extern NSString* UNDAssetProviderUrlKey;   // @"URL"
 
+@class UNDAddAssetDialog;
+
 @interface UNDAssetFactory : BRSingleton <UNDAssetProvider>
 {
   NSMutableDictionary* providers_;
+  UNDAddAssetDialog*   addDialog_;
 }
 
 /// Returns an asset based on the \param content.
 - (NSObject<UnderstudyAsset>*)newAssetForContent:(NSDictionary*)content;
 
 - (void)registerProvider:(NSObject<UNDAssetProvider>*)provider;
+
+/// Returns an array of objects conforming to the UNDAssetProvider protocol.
+- (NSArray*)providers;
 
 @end

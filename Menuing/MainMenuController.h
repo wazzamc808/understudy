@@ -23,7 +23,7 @@
 #import <BRMenuController-HeaderConvienceMethods.h>
 #import <BROptionDialog.h>
 
-#import "AddFeedDialog.h"
+#import "UNDAddAssetDialog.h"
 #import "UNDPreferenceManager.h"
 
 // class MainMenuController
