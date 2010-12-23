@@ -34,7 +34,13 @@ NSString* UNDExternalAppAssetKey = @"appname";
 
 - (NSString*)name
 {
-  return UNDExternalAppAssetProviderName;
+  return [[UNDExternalAppAssetProviderName copy] autorelease];
+}
+
+/// Returns nil. An add dialog needs to be implemented for external apps.
+- (BRController*)assetAdditionDialog
+{
+  return nil;
 }
 
 @end

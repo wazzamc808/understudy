@@ -40,7 +40,7 @@ typedef enum ManageOptionEnum ManageOption;
 {
   [super init];
   [self setTitle:[self title]];
-  addController_ = [[AddFeedDialog alloc] init];
+  addController_ = [[UNDAddAssetDialog alloc] init];
   [[self list] setDatasource:self];
   return self;
 }

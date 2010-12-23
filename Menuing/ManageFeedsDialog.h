@@ -19,16 +19,18 @@
 #import <Cocoa/Cocoa.h>
 
 #import <BROptionDialog.h>
-#import "BRMenuListItemProvider-Protocol.h"
-#import "AddFeedDialog.h"
+#import <BRMenuListItemProvider-Protocol.h>
+#import <BRCenteredMenuController.h>
+
+#import "UNDAddAssetDialog.h"
 #import "UnderstudyAsset.h"
   
 @interface ManageFeedsDialog : BRCenteredMenuController 
 <BRMenuListItemProvider,UnderstudyAsset>
 {
-  AddFeedDialog* addController_;
-  BROptionDialog* moveDialog_;
-  BROptionDialog* removeDialog_;
+  UNDAddAssetDialog* addController_;
+  BROptionDialog*    moveDialog_;
+  BROptionDialog*    removeDialog_;
 }
 
 @end

@@ -16,6 +16,7 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
+#import "UNDAddAssetDialog.h"
 #import "UNDAssetFactory.h"
 #import "UNDUnknownAsset.h"
 
@@ -56,6 +57,11 @@ UNDAssetFactory* singleton_;
   return [providers_ objectForKey:name];
 }
 
+- (NSArray*)providers
+{
+  return [providers_ allValues];
+}
+
 - (void)registerProvider:(NSObject<UNDAssetProvider>*)provider
 {
   [providers_ setObject:provider forKey:[provider name]];
@@ -75,6 +81,12 @@ UNDAssetFactory* singleton_;
 - (NSString*)name
 {
   return kAssetFactoryName;
+}
+
+/// Returns nil.
+- (BRController*)assetAdditionDialog
+{
+  return nil;
 }
 
 @end

@@ -16,6 +16,7 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
+#import "NetflixAddDialog.h"
 #import "UNDNetflixAssetProvider.h"
 
 NSString* UNDNetflixAssetProviderName = @"netflix";
@@ -35,5 +36,11 @@ NSString* UNDNetflixAssetProviderName = @"netflix";
 {
   return [[UNDNetflixAssetProviderName copy] autorelease];
 }
+
+- (BRController*)assetAdditionDialog
+{
+  return [[[NetflixAddDialog alloc] init] autorelease];
+}
+
 
 @end
