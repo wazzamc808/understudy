@@ -1,5 +1,5 @@
 //
-//  Copyright 2008-2009 Kirk Kelsey.
+//  Copyright 2008-2010 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -20,6 +20,10 @@
 
 #import "UNDPluginControl.h"
 
+@interface WebNetscapePluginView
+-(BOOL)sendEvent:(void*)event isDrawRect:(BOOL)eventIsDrawRect;
+@end
+
 @implementation UNDPluginControl
 
 - (id)initWithView:(WebView*)view
@@ -37,8 +41,8 @@
 
 - (id)plugin
 {
-  if( pluginView_ ) return pluginView_;
-  if( !mainView_ ) return nil;
+  if (pluginView_) return pluginView_;
+  if (!mainView_) return nil;
 
   NSMutableSet* views = [[[NSMutableSet set] retain] autorelease];
   NSMutableSet* plugins = [[[NSMutableSet set] retain] autorelease];
@@ -79,27 +83,28 @@
   return pluginView_;
 }
 
+static void sendEventToPlugin(EventRecord* event, id plugin)
+{
+  if ([plugin respondsToSelector:@selector(sendEvent:)]){
+    [plugin sendEvent:(NSEvent*) event];
+  } else if ([plugin respondsToSelector:@selector(sendEvent:isDrawRect:)]) {
+    [plugin sendEvent:(NSEvent*) event isDrawRect:NO];
+  }
+}
+
 // TODO: when Safari 3 is phased out, simplify the check for sendEvent
 - (void)sendPluginKeyCode:(int)keyCode
              withCharCode:(int)charCode
              andModifiers:(int)modifiers
 {
-  if( ![self plugin] )return;
+  if (![self plugin])return;
   EventRecord event;
   event.what = keyDown;
   event.message = (keyCode << 8) + charCode;
   event.modifiers = modifiers;
-  if( [pluginView_ respondsToSelector:@selector(sendEvent:)] ){
-    [(id) pluginView_ sendEvent:(NSEvent*) &event];
-  }else if( [pluginView_ respondsToSelector:@selector(sendEvent:isDrawRect:)]){
-    [(id) pluginView_ sendEvent:(NSEvent*) &event isDrawRect:NO];
-  }
+  sendEventToPlugin(&event, pluginView_);
   event.what = keyUp;
-  if( [pluginView_ respondsToSelector:@selector(sendEvent:)] ){
-    [(id) pluginView_ sendEvent:(NSEvent*) &event];
-  }else if( [pluginView_ respondsToSelector:@selector(sendEvent:isDrawRect:)]){
-    [(id) pluginView_ sendEvent:(NSEvent*) &event isDrawRect:NO];
-  }
+  sendEventToPlugin(&event, pluginView_);
 }
 
 - (void)sendPluginKeyCode:(int)keyCode withCharCode:(int)charCode
@@ -120,18 +125,9 @@
   record.where.h = orig.x + point.x;
   record.where.v = orig.y + point.y;
 
-  if( [pluginView_ respondsToSelector:@selector(sendEvent:)]){
-    [(id) pluginView_ sendEvent:(NSEvent*) &record];
-  }else if( [pluginView_ respondsToSelector:@selector(sendEvent:isDrawRect:)]){
-    [(id) pluginView_ sendEvent:(NSEvent*) &record isDrawRect:NO];
-  }  record.what = mouseUp;
-
+  sendEventToPlugin(&record, pluginView_);
+  record.what = mouseUp;
   record.when = TickCount();
-
-  if( [pluginView_ respondsToSelector:@selector(sendEvent:)]){
-    [(id) pluginView_ sendEvent:(NSEvent *)&record];
-  }else if( [pluginView_ respondsToSelector:@selector(sendEvent:isDrawRect:)]){
-    [(id) pluginView_ sendEvent:(NSEvent *)&record isDrawRect:NO];
-  }
+  sendEventToPlugin(&record, pluginView_);
 }
 @end
