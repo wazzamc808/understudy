@@ -58,6 +58,8 @@ changeVolume (float delta)
                                   kAudioDevicePropertyVolumeScalar,
                                   size,
                                   &involume);
+	if (err != noErr) NSLog (@"error getting audio device value scalar");
+	  
     return;
   }
   
@@ -76,7 +78,7 @@ changeVolume (float delta)
   
   // get volume
   size = sizeof (involume);
-  err = AudioDeviceGetProperty(device,
+  AudioDeviceGetProperty(device,
                                channels[0],
                                false,
                                kAudioDevicePropertyVolumeScalar,
@@ -93,7 +95,7 @@ changeVolume (float delta)
                                &involume);
   if(noErr!=err) NSLog(@"error setting volume of channel %d",channels[0]);
   
-  err = AudioDeviceGetProperty(device,
+  AudioDeviceGetProperty(device,
                                channels[1],
                                false,
                                kAudioDevicePropertyVolumeScalar,

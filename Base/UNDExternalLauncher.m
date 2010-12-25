@@ -50,9 +50,10 @@ int main(int argc, char* argv[])
 
   // Setup notifications so we know if the application is running.
   UNDNotificationObserver* observer
-    = [[UNDNotificationObserver alloc] initWithApp:appName];
+    = [[[UNDNotificationObserver alloc] initWithApp:appName] autorelease];
 
-  NSNotificationCenter* notificationCenter = [[work notificationCenter] retain];
+  NSNotificationCenter* notificationCenter
+    = [[[work notificationCenter] retain] autorelease];
 
   [notificationCenter addObserver:observer
                          selector:@selector(applicationDidTerminate:)
@@ -79,7 +80,7 @@ int main(int argc, char* argv[])
   if (!launched) {
     NSLog(@"failed to launch application %@", appName);
   } else {
-    NSRunLoop* runLoop = [[NSRunLoop mainRunLoop] retain];
+    NSRunLoop* runLoop = [[[NSRunLoop mainRunLoop] retain] autorelease];
     [runLoop run];
   }
 
@@ -122,7 +123,8 @@ int main(int argc, char* argv[])
   NSString* format = @"tell application \"%@\" to activate";
   NSString* source = [NSString stringWithFormat:format, app_];
 
-  NSAppleScript* script = [[NSAppleScript alloc] initWithSource:source];
+  NSAppleScript* script =
+    [[[NSAppleScript alloc] initWithSource:source] autorelease];
   NSDictionary* err = nil;
 
   [script executeAndReturnError:&err];
