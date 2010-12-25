@@ -39,8 +39,8 @@ int main(int argc, char* argv[])
                                                 encoding:NSUTF8StringEncoding]];
   if(!url) return 1;
 
-  player = [[UNDHuluPlayer alloc] init];
-  controls = [[RemoteControlContainer alloc] initWithDelegate:player];
+  player = [[[UNDHuluPlayer alloc] init] autorelease];
+  controls = [[[RemoteControlContainer alloc] initWithDelegate:player] autorelease];
   [controls instantiateAndAddRemoteControlDeviceWithClass:[AppleRemote class]];
   [controls instantiateAndAddRemoteControlDeviceWithClass:[FrontRowKeyboardDevice class]];
   [controls startListening:player];

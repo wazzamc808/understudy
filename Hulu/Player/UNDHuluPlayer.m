@@ -125,9 +125,10 @@
 
   setPass = [NSString stringWithFormat:setPass,pass];
   setUser = [NSString stringWithFormat:setUser,user];
-  result = [script evaluateWebScript:setPass];
-  result = [script evaluateWebScript:setUser];
-  result = [script evaluateWebScript:submit];
+
+  [script evaluateWebScript:setPass];
+  [script evaluateWebScript:setUser];
+  [script evaluateWebScript:submit];
 }
 
 // periodically check for a fullscreen window. since the user can click the 

@@ -48,10 +48,10 @@ int main(int argc, char* argv[])
     NSLog (@"NetflixPlayer: loading URL %@",[url absoluteString]);
   }
 
-  player = [[UNDNetflixPlayer alloc] init];
+  player = [[[UNDNetflixPlayer alloc] init] autorelease];
   [player setShouldReturnToFR:returnToFR];
   
-  controls = [[RemoteControlContainer alloc] initWithDelegate:player];
+  controls = [[[RemoteControlContainer alloc] initWithDelegate:player] autorelease];
   [controls instantiateAndAddRemoteControlDeviceWithClass:[AppleRemote class]];
   Class keyboardDevice = [FrontRowKeyboardDevice class];
   [controls instantiateAndAddRemoteControlDeviceWithClass:keyboardDevice];

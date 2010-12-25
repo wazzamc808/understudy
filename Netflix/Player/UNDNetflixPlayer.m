@@ -214,7 +214,7 @@ int64_t SystemIdleTime(void) {
   NSString* source =
     @"tell application \"System Events\" to activate application \"%@\"";
   source = [NSString stringWithFormat:source,name];
-  NSAppleScript* script = [[NSAppleScript alloc] initWithSource:source];
+  NSAppleScript* script = [[[NSAppleScript alloc] initWithSource:source] autorelease];
   NSDictionary* err;
   [script executeAndReturnError:&err];
 }
@@ -248,6 +248,10 @@ int64_t SystemIdleTime(void) {
     CGEventPost(1,e2);
     CGEventPost(1,e3);
     CGEventPost(1,e4);
+    CFRelease(e1);
+    CFRelease(e2);
+    CFRelease(e2);
+    CFRelease(e4);
   }
 }
 
