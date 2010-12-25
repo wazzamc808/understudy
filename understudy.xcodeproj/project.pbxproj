@@ -90,8 +90,8 @@
 		DFC876EF12AB454000CB8E88 /* UNDAssetFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = DFC876EE12AB454000CB8E88 /* UNDAssetFactory.m */; };
 		DFCDFB110F3E2E9300D979F0 /* UNDAddAssetDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = DFCDFB0A0F3E2E9300D979F0 /* UNDAddAssetDialog.m */; };
 		DFCDFB120F3E2E9300D979F0 /* MainMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFCDFB0C0F3E2E9300D979F0 /* MainMenuController.m */; };
-		DFCDFB130F3E2E9300D979F0 /* ManageFeedsDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = DFCDFB0E0F3E2E9300D979F0 /* ManageFeedsDialog.m */; };
-		DFCDFB140F3E2E9300D979F0 /* RenameDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = DFCDFB100F3E2E9300D979F0 /* RenameDialog.m */; };
+		DFCDFB130F3E2E9300D979F0 /* UNDManageDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = DFCDFB0E0F3E2E9300D979F0 /* UNDManageDialog.m */; };
+		DFCDFB140F3E2E9300D979F0 /* UNDRenameDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = DFCDFB100F3E2E9300D979F0 /* UNDRenameDialog.m */; };
 		DFCDFB1B0F3E2F7800D979F0 /* ApplianceIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = DFCDFB1A0F3E2F7800D979F0 /* ApplianceIcon.png */; };
 		DFCDFC530F3E72A400D979F0 /* BaseUnderstudyAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = DFCDFC520F3E72A400D979F0 /* BaseUnderstudyAsset.m */; };
 		DFDF5AC5129D8EC400B1941C /* UNDExternalLaunchController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFDF5AC4129D8EC400B1941C /* UNDExternalLaunchController.m */; };
@@ -246,10 +246,10 @@
 		DFCDFB0A0F3E2E9300D979F0 /* UNDAddAssetDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UNDAddAssetDialog.m; sourceTree = "<group>"; };
 		DFCDFB0B0F3E2E9300D979F0 /* MainMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainMenuController.h; sourceTree = "<group>"; };
 		DFCDFB0C0F3E2E9300D979F0 /* MainMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainMenuController.m; sourceTree = "<group>"; };
-		DFCDFB0D0F3E2E9300D979F0 /* ManageFeedsDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManageFeedsDialog.h; sourceTree = "<group>"; };
-		DFCDFB0E0F3E2E9300D979F0 /* ManageFeedsDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManageFeedsDialog.m; sourceTree = "<group>"; };
-		DFCDFB0F0F3E2E9300D979F0 /* RenameDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenameDialog.h; sourceTree = "<group>"; };
-		DFCDFB100F3E2E9300D979F0 /* RenameDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RenameDialog.m; sourceTree = "<group>"; };
+		DFCDFB0D0F3E2E9300D979F0 /* UNDManageDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UNDManageDialog.h; sourceTree = "<group>"; };
+		DFCDFB0E0F3E2E9300D979F0 /* UNDManageDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UNDManageDialog.m; sourceTree = "<group>"; };
+		DFCDFB0F0F3E2E9300D979F0 /* UNDRenameDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UNDRenameDialog.h; sourceTree = "<group>"; };
+		DFCDFB100F3E2E9300D979F0 /* UNDRenameDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UNDRenameDialog.m; sourceTree = "<group>"; };
 		DFCDFB1A0F3E2F7800D979F0 /* ApplianceIcon.png */ = {isa = PBXFileReference; explicitFileType = image.png; name = ApplianceIcon.png; path = Resources/ApplianceIcon.png; sourceTree = "<group>"; };
 		DFCDFC510F3E72A400D979F0 /* BaseUnderstudyAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseUnderstudyAsset.h; sourceTree = "<group>"; };
 		DFCDFC520F3E72A400D979F0 /* BaseUnderstudyAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseUnderstudyAsset.m; sourceTree = "<group>"; };
@@ -582,10 +582,10 @@
 				DFCDFB0A0F3E2E9300D979F0 /* UNDAddAssetDialog.m */,
 				DFCDFB0B0F3E2E9300D979F0 /* MainMenuController.h */,
 				DFCDFB0C0F3E2E9300D979F0 /* MainMenuController.m */,
-				DFCDFB0D0F3E2E9300D979F0 /* ManageFeedsDialog.h */,
-				DFCDFB0E0F3E2E9300D979F0 /* ManageFeedsDialog.m */,
-				DFCDFB0F0F3E2E9300D979F0 /* RenameDialog.h */,
-				DFCDFB100F3E2E9300D979F0 /* RenameDialog.m */,
+				DFCDFB0D0F3E2E9300D979F0 /* UNDManageDialog.h */,
+				DFCDFB0E0F3E2E9300D979F0 /* UNDManageDialog.m */,
+				DFCDFB0F0F3E2E9300D979F0 /* UNDRenameDialog.h */,
+				DFCDFB100F3E2E9300D979F0 /* UNDRenameDialog.m */,
 			);
 			path = Menuing;
 			sourceTree = "<group>";
@@ -777,8 +777,8 @@
 				DF375D600F36049A00DA7719 /* HuluFeedDiscoverer.m in Sources */,
 				DFCDFB110F3E2E9300D979F0 /* UNDAddAssetDialog.m in Sources */,
 				DFCDFB120F3E2E9300D979F0 /* MainMenuController.m in Sources */,
-				DFCDFB130F3E2E9300D979F0 /* ManageFeedsDialog.m in Sources */,
-				DFCDFB140F3E2E9300D979F0 /* RenameDialog.m in Sources */,
+				DFCDFB130F3E2E9300D979F0 /* UNDManageDialog.m in Sources */,
+				DFCDFB140F3E2E9300D979F0 /* UNDRenameDialog.m in Sources */,
 				DFCDFC530F3E72A400D979F0 /* BaseUnderstudyAsset.m in Sources */,
 				DFE8E7B60F52130200A5E120 /* UNDPreferenceManager.m in Sources */,
 				DF3D0F640F54CA3E0089CF2B /* UNDLoadingAsset.m in Sources */,
