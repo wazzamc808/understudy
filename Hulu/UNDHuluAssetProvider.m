@@ -20,7 +20,7 @@
 #import "UNDHuluAssetProvider.h"
 #import "HuluFeed.h"
 
-NSString* UNDHuluAssetProviderName = @"hulu";
+NSString* UNDHuluAssetProviderId = @"hulu";
 
 @implementation UNDHuluAssetProvider
 
@@ -33,9 +33,14 @@ NSString* UNDHuluAssetProviderName = @"hulu";
   return [[HuluFeed alloc] initWithTitle:title forUrl:url];
 }
 
-- (NSString*)name
+- (NSString*)providerId
 {
-  return [[UNDHuluAssetProviderName copy] autorelease];
+  return [[UNDHuluAssetProviderId copy] autorelease];
+}
+
+- (NSString*)providerName
+{
+  return [[@"Hulu" copy] autorelease];
 }
 
 - (BRController*)assetAdditionDialog

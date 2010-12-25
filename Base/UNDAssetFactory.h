@@ -26,7 +26,11 @@
 
 @protocol UNDAssetProvider
 - (NSObject<UnderstudyAsset>*)newAssetForContent:(NSDictionary*)content;
-- (NSString*)name;
+/// Returns a unique identifier for this type of provider.
+- (NSString*)providerId;
+/// Returns a descriptive name for the provider.
+- (NSString*)providerName;
+
 
 /// Returns a (possibly nil) BRController allowing the user to add new assets.
 - (BRController*)assetAdditionDialog;

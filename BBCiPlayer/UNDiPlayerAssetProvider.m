@@ -20,7 +20,7 @@
 #import "UNDiPlayerAssetProvider.h"
 #import "UNDiPlayerFeed.h"
 
-NSString* UNDiPlayerAssetProviderName = @"hulu";
+NSString* UNDiPlayerAssetProviderId = @"bbciplayer";
 
 @implementation UNDiPlayerAssetProvider
 
@@ -33,9 +33,14 @@ NSString* UNDiPlayerAssetProviderName = @"hulu";
   return [[UNDiPlayerFeed alloc] initWithTitle:title forUrl:url];
 }
 
-- (NSString*)name
+- (NSString*)providerId
 {
-  return [[UNDiPlayerAssetProviderName copy] autorelease];
+  return [[UNDiPlayerAssetProviderId copy] autorelease];
+}
+
+- (NSString*)providerName
+{
+  return [[@"BBC iPlayer" copy] autorelease];
 }
 
 - (BRController*)assetAdditionDialog

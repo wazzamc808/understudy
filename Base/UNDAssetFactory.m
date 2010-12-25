@@ -22,7 +22,7 @@
 
 @implementation UNDAssetFactory
 
-static NSString* kAssetFactoryName = @"factory";
+static NSString* kAssetFactoryId = @"factory";
 
 NSString* UNDAssetProviderNameKey  = @"provider";
 NSString* UNDAssetProviderTitleKey = @"title";
@@ -52,9 +52,9 @@ UNDAssetFactory* singleton_;
   [super dealloc];
 }
 
-- (NSObject<UNDAssetProvider>*)providerNamed:(NSString*)name
+- (NSObject<UNDAssetProvider>*)providerWithId:(NSString*)identifier
 {
-  return [providers_ objectForKey:name];
+  return [providers_ objectForKey:identifier];
 }
 
 - (NSArray*)providers
@@ -64,7 +64,7 @@ UNDAssetFactory* singleton_;
 
 - (void)registerProvider:(NSObject<UNDAssetProvider>*)provider
 {
-  [providers_ setObject:provider forKey:[provider name]];
+  [providers_ setObject:provider forKey:[provider providerId]];
 }
 
 /// An asset is always provided, though it may be a simple placeholder if the
@@ -72,15 +72,21 @@ UNDAssetFactory* singleton_;
 - (NSObject<UnderstudyAsset>*)newAssetForContent:(NSDictionary*)content
 {
   NSObject<UNDAssetProvider>* provider
-    = [self providerNamed:[content objectForKey:UNDAssetProviderNameKey]];
+    = [self providerWithId:[content objectForKey:UNDAssetProviderNameKey]];
   NSObject<UnderstudyAsset>* asset = [provider newAssetForContent:content];
   if (!asset) asset = [[UNDUnknownAsset alloc] initWithContents:content];
   return asset;
 }
 
-- (NSString*)name
+- (NSString*)providerId
 {
-  return kAssetFactoryName;
+  return [[kAssetFactoryId copy] autorelease];
+}
+
+/// Returns nil (this provider shouldn't appear in the menu).
+- (NSString*)providerName
+{
+  return nil;
 }
 
 /// Returns nil.
