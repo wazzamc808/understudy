@@ -18,7 +18,7 @@
 
 #import "UNDAssetFactory.h"
 
-extern NSString* UNDHuluAssetProviderName;
+extern NSString* UNDHuluAssetProviderId;
 
 @interface UNDHuluAssetProvider : NSObject<UNDAssetProvider>
 

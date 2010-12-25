@@ -71,7 +71,7 @@
     NSString* title = [titles_ objectAtIndex:index];
     NSDictionary* asset =
       [NSDictionary dictionaryWithObjectsAndKeys:feed, @"URL", title, @"title",
-                    UNDHuluAssetProviderName, @"provider", nil];
+                    UNDHuluAssetProviderId, @"provider", nil];
     [pref addAssetWithDescription:asset];
     [[PSClient applicationClient] addFeedWithURL:[NSURL URLWithString:feed]];
   }

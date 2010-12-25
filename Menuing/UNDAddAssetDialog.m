@@ -35,7 +35,7 @@
     id dialog = [provider assetAdditionDialog];
     if (dialog) {
       [dialogs_ addObject:dialog];
-      [self addOptionText:[provider name]];
+      [self addOptionText:[provider providerName]];
     }
   }
   [self setActionSelector:@selector(itemSelected) target:self];

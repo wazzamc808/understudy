@@ -18,7 +18,7 @@
 
 #import "UNDAssetFactory.h"
 
-extern NSString* UNDYouTubeAssetProviderName;
+extern NSString* UNDYouTubeAssetProviderId;
 
 @interface UNDYouTubeAssetProvider : NSObject<UNDAssetProvider>
 

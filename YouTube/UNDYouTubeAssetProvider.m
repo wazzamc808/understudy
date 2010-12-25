@@ -20,7 +20,7 @@
 #import "UNDYouTubeAssetProvider.h"
 #import "YouTubeFeed.h"
 
-NSString* UNDYouTubeAssetProviderName = @"youtube";
+NSString* UNDYouTubeAssetProviderId = @"youtube";
 
 @implementation UNDYouTubeAssetProvider
 
@@ -33,9 +33,14 @@ NSString* UNDYouTubeAssetProviderName = @"youtube";
   return [[YouTubeFeed alloc] initWithTitle:title forUrl:url];
 }
 
-- (NSString*)name
+- (NSString*)providerId
 {
-  return [[UNDYouTubeAssetProviderName copy] autorelease];
+  return [[UNDYouTubeAssetProviderId copy] autorelease];
+}
+
+- (NSString*)providerName
+{
+  return [[@"YouTube" copy] autorelease];
 }
 
 - (BRController*)assetAdditionDialog

@@ -19,7 +19,7 @@
 #import "UNDAssetFactory.h"
 #import "NetflixFeed.h"
 
-extern NSString* UNDNetflixAssetProviderName;
+extern NSString* UNDNetflixAssetProviderId;
 
 @interface UNDNetflixAssetProvider : NSObject <UNDAssetProvider>
 

@@ -81,7 +81,7 @@ NSString* NETFLIXTITLES[] = {
     UNDPreferenceManager* pref = [UNDPreferenceManager sharedInstance];
     NSDictionary* asset =
       [NSDictionary dictionaryWithObjectsAndKeys:url, @"URL", title, @"title",
-                    UNDNetflixAssetProviderName, @"provider", nil];
+                    UNDNetflixAssetProviderId, @"provider", nil];
     [pref addAssetWithDescription:asset];
     [[PSClient applicationClient] addFeedWithURL:[NSURL URLWithString:url]];
   }

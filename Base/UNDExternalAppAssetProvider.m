@@ -19,7 +19,7 @@
 #import "UNDExternalAppAssetProvider.h"
 #import "UNDExternalAppAsset.h"
 
-NSString* UNDExternalAppAssetProviderName = @"externalapp";
+NSString* UNDExternalAppAssetProviderId = @"externalapp";
 
 NSString* UNDExternalAppAssetKey = @"appname";
 
@@ -32,9 +32,15 @@ NSString* UNDExternalAppAssetKey = @"appname";
   return [[UNDExternalAppAsset alloc] initWithAppName:appname];
 }
 
-- (NSString*)name
+- (NSString*)providerId
 {
-  return [[UNDExternalAppAssetProviderName copy] autorelease];
+  return [[UNDExternalAppAssetProviderId copy] autorelease];
+}
+
+/// Returns nil (this provider shouldn't appear in the menu).
+- (NSString*)providerName
+{
+  return nil;
 }
 
 /// Returns nil. An add dialog needs to be implemented for external apps.

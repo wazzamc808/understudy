@@ -18,7 +18,7 @@
 
 #import "UNDAssetFactory.h"
 
-extern NSString* UNDiPlayerAssetProviderName;
+extern NSString* UNDiPlayerAssetProviderId;
 
 @interface UNDiPlayerAssetProvider : NSObject<UNDAssetProvider> { }
 

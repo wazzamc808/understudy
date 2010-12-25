@@ -19,7 +19,7 @@
 #import "NetflixAddDialog.h"
 #import "UNDNetflixAssetProvider.h"
 
-NSString* UNDNetflixAssetProviderName = @"netflix";
+NSString* UNDNetflixAssetProviderId = @"netflix";
 
 @implementation UNDNetflixAssetProvider
 
@@ -32,9 +32,14 @@ NSString* UNDNetflixAssetProviderName = @"netflix";
   return [[NetflixFeed alloc] initWithTitle:title forUrl:url];
 }
 
-- (NSString*)name
+- (NSString*)providerId
 {
-  return [[UNDNetflixAssetProviderName copy] autorelease];
+  return [[UNDNetflixAssetProviderId copy] autorelease];
+}
+
+- (NSString*)providerName
+{
+  return [[@"Netflix" copy] autorelease];
 }
 
 - (BRController*)assetAdditionDialog
