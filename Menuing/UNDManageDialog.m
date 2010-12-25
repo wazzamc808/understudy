@@ -1,5 +1,5 @@
 //
-//  Copyright 2008-2009 Kirk Kelsey.
+//  Copyright 2008-2010 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -16,15 +16,15 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
-#import "ManageFeedsDialog.h"
-#import "RenameDialog.h"
+#import "UNDManageDialog.h"
 #import "UNDPreferenceManager.h"
+#import "UNDRenameDialog.h"
 
 #import <BRControllerStack.h>
 #import <BRListControl.h>
 #import <BRTextMenuItemLayer.h>
 
-@implementation ManageFeedsDialog
+@implementation UNDManageDialog
 
 enum ManageOptionEnum
 {
@@ -49,7 +49,7 @@ typedef enum ManageOptionEnum ManageOption;
 {
   [moveDialog_ release];
   moveDialog_ = [[BROptionDialog alloc] init];
-  [moveDialog_ setTitle:@"Move Feed"];
+  [moveDialog_ setTitle:@"Move Asset"];
   UNDPreferenceManager* prefs = [UNDPreferenceManager sharedInstance];
   for (NSDictionary* asset in [prefs assetDescriptions])
     [moveDialog_ addOptionText:[asset objectForKey:@"title"]];
@@ -78,7 +78,7 @@ typedef enum ManageOptionEnum ManageOption;
 {
   [removeDialog_ release];
   removeDialog_ = [[BROptionDialog alloc] init];
-  [removeDialog_ setTitle:@"Remove Feed"];
+  [removeDialog_ setTitle:@"Remove Asset"];
 
   UNDPreferenceManager* prefs = [UNDPreferenceManager sharedInstance];
   for (NSDictionary* asset in [prefs assetDescriptions])
@@ -98,7 +98,7 @@ typedef enum ManageOptionEnum ManageOption;
 
 - (void)_presentRenameDialog
 {
-  RenameDialog* rename = [[RenameDialog alloc] init];
+  UNDRenameDialog* rename = [[UNDRenameDialog alloc] init];
   [[self stack] pushController:rename];
   [rename autorelease];
 }
@@ -147,10 +147,10 @@ typedef enum ManageOptionEnum ManageOption;
 }
 
 - (id)titleForRow:(long)row
-{ 
+{
   ManageOption option = (ManageOption)row;
   switch (option) {
-    case AddOption: return @"Add Feed";
+    case AddOption: return @"Add";
     case RemoveOption: return @"Remove";
     case RenameOption: return @"Rename";
     case MoveOption: return @"Move";
@@ -179,7 +179,7 @@ typedef enum ManageOptionEnum ManageOption;
 
 - (NSString*)title
 {
-  return @"Manage Feeds";
+  return @"Manage Assets";
 }
 
 - (NSArray*)containedAssets

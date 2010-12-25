@@ -1,5 +1,5 @@
 //
-//  Copyright 2009 Kirk Kelsey.
+//  Copyright 2009,2010 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -18,12 +18,13 @@
 
 #import "BRControllerStack.h"
 #import "BRTextContainer-Protocol.h"
+
 #import "MainMenuController.h"
-#import "RenameDialog.h"
+#import "UNDRenameDialog.h"
 #import "UNDPreferenceManager.h"
 
 
-@implementation RenameDialog
+@implementation UNDRenameDialog
 
 - (id)init
 {
@@ -34,8 +35,8 @@
   for (NSDictionary* asset in [prefs assetDescriptions])
     [self addOptionText:[asset objectForKey:@"title"]];
 
-  [self setTitle:@"Rename Feed"];
-  [self setPrimaryInfoText:@"Select a feed to rename" withAttributes:nil];
+  [self setTitle:@"Rename Asset"];
+  [self setPrimaryInfoText:@"Select an asset to rename" withAttributes:nil];
   return self;
 }
 

@@ -1,5 +1,5 @@
 //
-//  Copyright 2008 Kirk Kelsey.
+//  Copyright 2009,2010 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -17,20 +17,12 @@
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
 #import <Cocoa/Cocoa.h>
+#import "BROptionDialog.h"
+#import "BRTextEntryController.h"
+#import "BRTextEntryDelegate-Protocol.h"
 
-#import <BROptionDialog.h>
-#import <BRMenuListItemProvider-Protocol.h>
-#import <BRCenteredMenuController.h>
+@interface UNDRenameDialog : BROptionDialog <BRTextEntryDelegate> {
 
-#import "UNDAddAssetDialog.h"
-#import "UnderstudyAsset.h"
-  
-@interface ManageFeedsDialog : BRCenteredMenuController 
-<BRMenuListItemProvider,UnderstudyAsset>
-{
-  UNDAddAssetDialog* addController_;
-  BROptionDialog*    moveDialog_;
-  BROptionDialog*    removeDialog_;
 }
 
 @end

@@ -24,7 +24,7 @@
 #import "UNDiPlayerAssetProvider.h"
 
 #import "MainMenuController.h"
-#import "ManageFeedsDialog.h"
+#import "UNDManageDialog.h"
 
 #import <BRControllerStack.h>
 #import <BRListControl.h>
@@ -89,7 +89,7 @@ static MainMenuController *sharedInstance_;
     if (asset) [assets_ addObject:asset];
   }
 
-  [assets_ addObject:[[[ManageFeedsDialog alloc] init] autorelease]];
+  [assets_ addObject:[[[UNDManageDialog alloc] init] autorelease]];
 
   [[self list] removeDividers];
   [[self list] addDividerAtIndex:count withLabel:nil];
