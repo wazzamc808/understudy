@@ -18,7 +18,6 @@
 
 #import <Cocoa/Cocoa.h>
 #import "UNDAssetCollection.h"
-#import "FeedMenuController.h"
 
 // Represents a collection of Netflix videos found by loading the web page
 // for some content (typically a season of a television show).

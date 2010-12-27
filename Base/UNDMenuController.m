@@ -16,7 +16,7 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
-#import "FeedMenuController.h"
+#import "UNDMenuController.h"
 #import "BaseController.h"
 #import "UnderstudyAsset.h"
 #import "BaseUnderstudyAsset.h"
@@ -38,13 +38,13 @@
 }
 @end
 
-@interface FeedMenuController (Private)
+@interface UNDMenuController (Private)
 - (void)attemptMenuRestore;
 @end
 
-@implementation FeedMenuController
+@implementation UNDMenuController
 
-- (id)initWithDelegate:(NSObject<FeedDelegate>*)delegate
+- (id)initWithDelegate:(NSObject<UNDMenuDelegate>*)delegate
 {
   [super init];
   delegate_ = [delegate retain];

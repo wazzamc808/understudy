@@ -17,10 +17,10 @@
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
 #import "BaseUnderstudyAsset.h"
-#import "FeedMenuController.h"
 #import "UnderstudyAsset.h"
+#import "UNDMenuController.h"
 
-@interface UNDAssetCollection : BaseUnderstudyAsset <FeedDelegate>
+@interface UNDAssetCollection : BaseUnderstudyAsset <UNDMenuDelegate>
 {
   NSArray*        contents_;
   NSMutableArray* assets_;

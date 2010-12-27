@@ -17,6 +17,7 @@
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
 #import "UNDAssetFactory.h"
+#import "BaseUnderstudyAsset.h"
 #import "UNDExternalAppAssetProvider.h"
 #import "UNDHuluAssetProvider.h"
 #import "UNDNetflixAssetProvider.h"

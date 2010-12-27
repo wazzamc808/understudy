@@ -18,6 +18,7 @@
 
 #import "NetflixAddDialog.h"
 #import "UNDNetflixAssetProvider.h"
+#import "NetflixFeed.h"
 
 NSString* UNDNetflixAssetProviderId = @"netflix";
 

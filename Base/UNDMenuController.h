@@ -23,22 +23,22 @@
 
 @class BRTextMenuItemLayer;
 
-@protocol FeedDelegate <UnderstudyAsset>
+@protocol UNDMenuDelegate <UnderstudyAsset>
 // return an autoreleased array of UnderstudyAsset objects. Feed delegates
 // should not load their assests until specifically asked.
 - (NSArray*) currentAssets;
 @end
 
-@interface FeedMenuController : BRMediaMenuController<BRMenuListItemProvider>
+@interface UNDMenuController : BRMediaMenuController<BRMenuListItemProvider>
 {
  @private
   NSArray* assets_;
-  NSObject<FeedDelegate>* delegate_;  // delegate is retained by controller
+  NSObject<UNDMenuDelegate>* delegate_;  // delegate is retained by controller
   NSDate* lastrebuild_;
   BOOL reloadActive_;           // true when the asset list is being reloaded
   int  height_;                 // how high on the stack this controller is
 }
 
-- (id)initWithDelegate:(NSObject<FeedDelegate>*)delegate;
+- (id)initWithDelegate:(NSObject<UNDMenuDelegate>*)delegate;
 
 @end
