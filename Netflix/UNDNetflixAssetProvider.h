@@ -17,7 +17,6 @@
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
 #import "UNDAssetFactory.h"
-#import "NetflixFeed.h"
 
 extern NSString* UNDNetflixAssetProviderId;
 

@@ -19,7 +19,6 @@
 #import <Cocoa/Cocoa.h>
 
 #import "UNDAssetCollection.h"
-#import "FeedMenuController.h"
 
 @interface YouTubeFeed : UNDAssetCollection
 {

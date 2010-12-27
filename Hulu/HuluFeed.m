@@ -1,5 +1,5 @@
 //
-//  Copyright 2008-2009 Kirk Kelsey.
+//  Copyright 2008-2010 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -62,7 +62,7 @@
 
 - (BRController*)controller
 {
-  return [[[FeedMenuController alloc] initWithDelegate:self] autorelease];
+  return [[[UNDMenuController alloc] initWithDelegate:self] autorelease];
 }
 
 - (BRControl*)preview

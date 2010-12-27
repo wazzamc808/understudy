@@ -56,7 +56,7 @@
 - (BRController*)controller
 {
   if( !controller_ )
-    controller_ = [[FeedMenuController alloc] initWithDelegate:self];
+    controller_ = [[UNDMenuController alloc] initWithDelegate:self];
   return controller_;
 }
 

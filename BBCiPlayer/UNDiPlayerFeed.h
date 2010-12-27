@@ -18,10 +18,10 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import "FeedMenuController.h"
 #import "UNDAssetCollection.h"
+#import "UNDMenuController.h"
 
-@interface UNDiPlayerFeed : UNDAssetCollection <FeedDelegate>
+@interface UNDiPlayerFeed : UNDAssetCollection <UNDMenuDelegate>
 {
   NSURL* url_;
 }

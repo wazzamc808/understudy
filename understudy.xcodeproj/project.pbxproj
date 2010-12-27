@@ -52,7 +52,7 @@
 		DF54B4B911095D36006F0930 /* UNDVolumeControl.m in Sources */ = {isa = PBXBuildFile; fileRef = DF54B4B811095D36006F0930 /* UNDVolumeControl.m */; };
 		DF5A22210F0FC18200F5F19F /* YouTubeAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = DF5A22200F0FC18200F5F19F /* YouTubeAsset.m */; };
 		DF5A22250F0FD6B400F5F19F /* YouTubeFeed.m in Sources */ = {isa = PBXBuildFile; fileRef = DF5A22240F0FD6B400F5F19F /* YouTubeFeed.m */; };
-		DF5A223C0F100E4300F5F19F /* FeedMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF5A22390F100E4300F5F19F /* FeedMenuController.m */; };
+		DF5A223C0F100E4300F5F19F /* UNDMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF5A22390F100E4300F5F19F /* UNDMenuController.m */; };
 		DF5A23940F11240400F5F19F /* BaseController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF5A23930F11240400F5F19F /* BaseController.m */; };
 		DF6F9F880F9263AA00AB41CF /* UNDNetflixCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = DF6F9F860F9263AA00AB41CF /* UNDNetflixCollection.m */; };
 		DF7D07680F86A0BE0014A0FB /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF7D07670F86A0BD0014A0FB /* Security.framework */; };
@@ -199,8 +199,8 @@
 		DF5A22200F0FC18200F5F19F /* YouTubeAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YouTubeAsset.m; sourceTree = "<group>"; };
 		DF5A22230F0FD6B400F5F19F /* YouTubeFeed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YouTubeFeed.h; sourceTree = "<group>"; };
 		DF5A22240F0FD6B400F5F19F /* YouTubeFeed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YouTubeFeed.m; sourceTree = "<group>"; };
-		DF5A22380F100E4300F5F19F /* FeedMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedMenuController.h; sourceTree = "<group>"; };
-		DF5A22390F100E4300F5F19F /* FeedMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedMenuController.m; sourceTree = "<group>"; };
+		DF5A22380F100E4300F5F19F /* UNDMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UNDMenuController.h; sourceTree = "<group>"; };
+		DF5A22390F100E4300F5F19F /* UNDMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UNDMenuController.m; sourceTree = "<group>"; };
 		DF5A23920F11240400F5F19F /* BaseController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseController.h; sourceTree = "<group>"; };
 		DF5A23930F11240400F5F19F /* BaseController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseController.m; sourceTree = "<group>"; };
 		DF5A244E0F11366F00F5F19F /* UnderstudyAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnderstudyAsset.h; sourceTree = "<group>"; };
@@ -534,8 +534,8 @@
 				DFCDFC520F3E72A400D979F0 /* BaseUnderstudyAsset.m */,
 				DF5A23920F11240400F5F19F /* BaseController.h */,
 				DF5A23930F11240400F5F19F /* BaseController.m */,
-				DF5A22380F100E4300F5F19F /* FeedMenuController.h */,
-				DF5A22390F100E4300F5F19F /* FeedMenuController.m */,
+				DF5A22380F100E4300F5F19F /* UNDMenuController.h */,
+				DF5A22390F100E4300F5F19F /* UNDMenuController.m */,
 				DF3D0F620F54CA3E0089CF2B /* UNDLoadingAsset.h */,
 				DF3D0F630F54CA3E0089CF2B /* UNDLoadingAsset.m */,
 			);
@@ -766,7 +766,7 @@
 				DF7D970F0F08647400C9B7FB /* HuluFeed.m in Sources */,
 				DF5A22210F0FC18200F5F19F /* YouTubeAsset.m in Sources */,
 				DF5A22250F0FD6B400F5F19F /* YouTubeFeed.m in Sources */,
-				DF5A223C0F100E4300F5F19F /* FeedMenuController.m in Sources */,
+				DF5A223C0F100E4300F5F19F /* UNDMenuController.m in Sources */,
 				DF5A23940F11240400F5F19F /* BaseController.m in Sources */,
 				DFA511990F1A8E5B00FC903B /* HuluController.m in Sources */,
 				DFA512360F1A92F300FC903B /* YouTubeController.m in Sources */,
