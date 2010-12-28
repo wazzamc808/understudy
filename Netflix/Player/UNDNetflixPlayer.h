@@ -30,7 +30,6 @@
   UNDPluginControl*      fsControl_;
   NSWindow*              window_;   // original window
   NSWindow*              fsWindow_; // created when player goes full screen
-//  NSObject<UNDSelector>* selector_; // to indicate which button to select
   BOOL                   shouldReturnToFR_;
 }
 
