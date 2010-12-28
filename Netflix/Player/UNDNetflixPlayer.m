@@ -130,6 +130,26 @@ int64_t SystemIdleTime(void) {
       [fsWindow_ setLevel:NSScreenSaverWindowLevel];
       [window_ setLevel:NSNormalWindowLevel];
       [window_ orderBack:self];
+
+      // Once the full-screen window is found, we need to click on it to ensure
+      // that it will receive later input we simulate (e.g. to play/pause).
+      NSSize size = [fsWindow_ frame].size;
+
+      CGPoint point;
+      point.x = size.height/2;
+      point.y = size.width/2;
+
+      CGMouseButton button = kCGMouseButtonLeft;
+      CGEventType type = kCGEventLeftMouseDown;
+      CGEventRef event = CGEventCreateMouseEvent(NULL, type, point, button);
+      CGEventSetType(event, type);
+      CGEventPost(kCGHIDEventTap, event);
+
+      type = kCGEventLeftMouseUp;
+      CGEventSetType(event, type);
+      CGEventPost(kCGHIDEventTap, event);
+
+      CFRelease(event);
     }
   }
 
@@ -139,17 +159,6 @@ int64_t SystemIdleTime(void) {
 // Attempts to activate the full-screen mode.
 -(void)fullscreen
 {
-  // Click in the center of the screen, which should ensure that the player has
-  // input focus, then enter the 'f' key to full-screen.
-  WebView* view = (WebView*)[pluginControl_ plugin];
-  NSSize size = [view frame].size;
-
-  NSPoint fsPoint, basePoint;
-  fsPoint.y = size.width/2;
-  fsPoint.x = size.height/2;
-
-  basePoint = [view convertPointToBase:fsPoint];
-
   // press 'f' to activate Netflix (silverlight) player fullscreen
   [pluginControl_ sendPluginKeyCode:3 withCharCode:0];
 }
@@ -248,7 +257,7 @@ int64_t SystemIdleTime(void) {
     CGEventPost(1,e4);
     CFRelease(e1);
     CFRelease(e2);
-    CFRelease(e2);
+    CFRelease(e3);
     CFRelease(e4);
   }
 }
