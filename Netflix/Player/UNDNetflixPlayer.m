@@ -125,9 +125,9 @@ int64_t SystemIdleTime(void) {
 
   for (NSWindow* window in windows){
     if (window != window_) {
-      NSLog(@"fullscreen window found");
       fsWindow_ = [window retain];
       [fsWindow_ setDelegate:self];
+      [fsWindow_ setLevel:NSScreenSaverWindowLevel];
       [window_ setLevel:NSNormalWindowLevel];
       [window_ orderBack:self];
     }
@@ -237,8 +237,6 @@ int64_t SystemIdleTime(void) {
 - (void)fastForward
 {
   if (fsWindow_) {
-    NSLog(@"ff");
-
     CGEventRef e1,e2,e3,e4;
     e1 = CGEventCreateKeyboardEvent(NULL, 56, true);
     e2 = CGEventCreateKeyboardEvent(NULL, 124, true);
@@ -309,7 +307,6 @@ int64_t SystemIdleTime(void) {
 // when the full screen window closes we bring the main window back
 - (void)windowWillClose:(NSNotification *)notification
 {
-//  NSLog (@"window will close");
   fsWindow_ = nil;
   [window_ setLevel:NSScreenSaverWindowLevel];
   [window_ display];
