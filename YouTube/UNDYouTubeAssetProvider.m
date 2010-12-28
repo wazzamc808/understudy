@@ -18,7 +18,7 @@
 
 #import "UNDYouTubeAddDialog.h"
 #import "UNDYouTubeAssetProvider.h"
-#import "YouTubeFeed.h"
+#import "UNDYouTubeFeed.h"
 
 NSString* UNDYouTubeAssetProviderId = @"youtube";
 
@@ -30,7 +30,7 @@ NSString* UNDYouTubeAssetProviderId = @"youtube";
   NSURL* url
     = [NSURL URLWithString:[content objectForKey:UNDAssetProviderUrlKey]];
   if (!title || !url) return nil;
-  return [[YouTubeFeed alloc] initWithTitle:title forUrl:url];
+  return [[UNDYouTubeFeed alloc] initWithTitle:title forUrl:url];
 }
 
 - (NSString*)providerId

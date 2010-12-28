@@ -20,19 +20,19 @@
 #import <BRTextMenuItemLayer.h>
 
 #import "UNDMenuController.h"
-#import "YouTubeAsset.h"
-#import "YouTubeFeed.h"
-#import "YouTubeController.h"
+#import "UNDYouTubeAsset.h"
+#import "UNDYouTubeFeed.h"
+#import "UNDYouTubeController.h"
 
 @class BRImage;
 
-@interface YouTubeAsset (Parsing)
+@interface UNDYouTubeAsset (Parsing)
 - (void)buildFromId:(NSXMLElement*)idtag;
 - (void)parseMediaGroup:(NSXMLElement*)media;
 @end
 
 
-@implementation YouTubeAsset
+@implementation UNDYouTubeAsset
 
 - (id)initWithXMLElement:(NSXMLElement*)dom
 {
@@ -136,11 +136,11 @@
 - (BRController*)controller
 {
   if (isVideo_)
-    return [[[YouTubeController alloc] initWithAsset:self] autorelease];
+    return [[[UNDYouTubeController alloc] initWithAsset:self] autorelease];
 
   if (!feedDelegate_)
-      feedDelegate_ = [[YouTubeFeed alloc] initWithTitle:[self title]
-                                                  forUrl:url_];
+      feedDelegate_ = [[UNDYouTubeFeed alloc] initWithTitle:[self title]
+                                                     forUrl:url_];
 
   return [feedDelegate_ controller];
 }

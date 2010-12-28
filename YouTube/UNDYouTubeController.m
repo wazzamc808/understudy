@@ -1,5 +1,5 @@
 //
-//  Copyright 2009 Kirk Kelsey.
+//  Copyright 2009,2010 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -8,9 +8,9 @@
 //  Software Foundation, either version 3 of the License, or (at your option)
 //  any later version.
 //
-//  Understudy is distributed in the hope that it will be useful, but WITHOUT 
-//  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
-//  FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
+//  Understudy is distributed in the hope that it will be useful, but WITHOUT
+//  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+//  FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License
 //  for more details.
 //
 //  You should have received a copy of the GNU Lesser General Public License
@@ -19,12 +19,12 @@
 #import <stdint.h>
 
 #import "UNDPreferenceManager.h"
-#import "YouTubeController.h"
-#import "YouTubeAsset.h"
+#import "UNDYouTubeController.h"
+#import "UNDYouTubeAsset.h"
 
-@implementation YouTubeController
+@implementation UNDYouTubeController
 
-- (id)initWithAsset:(YouTubeAsset*)asset
+- (id)initWithAsset:(UNDYouTubeAsset*)asset
 {
   [super init];
   asset_ = [asset retain];
@@ -41,9 +41,9 @@
   [[[view_ mainFrame] frameView] setAllowsScrolling:NO];
   [view_ setFrameLoadDelegate:self];
   [view_ setResourceLoadDelegate:self];
-  window_ = [[NSWindow alloc] initWithContentRect:rect 
-                                        styleMask:0 
-                                          backing:NSBackingStoreBuffered 
+  window_ = [[NSWindow alloc] initWithContentRect:rect
+                                        styleMask:0
+                                          backing:NSBackingStoreBuffered
                                             defer:YES];
   [window_ setContentView:view_];
   NSURL* url = [NSURL URLWithString:EMBED_URL];
@@ -55,7 +55,7 @@
 - (id)_playerFunction:(NSString*)func{
   NSString* call;
   WebScriptObject* script = [[[view_ windowScriptObject] retain] autorelease];
-  
+
   call = @"document.getElementsByTagName('EMBED')[0].";
   call = [call stringByAppendingString:func];
   return [script evaluateWebScript:call];
@@ -65,13 +65,13 @@
 // player has had a chance to fully load, so cannot be invoked from the webview
 // notification routines (but does work based on later user input).
 - (BOOL)enqueueVideo
-{ 
+{
   id result;
-  
+
   NSString* load = @"loadVideoById('%@',0)";
   load = [NSString stringWithFormat:load, [asset_ videoID]];
   [self _playerFunction:load];
-  
+
   // if there is a video URL, then the video is loading (or loaded)
   result = [self _playerFunction:@"getVideoUrl()"];
   loaded_ = ( result != nil );
@@ -166,7 +166,7 @@
   NSNumber* duration = [self _playerFunction:@"getDuration()"];
   int target = [time intValue] + ([duration intValue])/20;
   NSString* seek = [NSString stringWithFormat:@"seekTo(%d,true)",target];
-  [self _playerFunction:seek];  
+  [self _playerFunction:seek];
 }
 
 @end

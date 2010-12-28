@@ -16,17 +16,17 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
-#import "YouTubeFeed.h"
-#import "YouTubeAsset.h"
+#import "UNDYouTubeFeed.h"
+#import "UNDYouTubeAsset.h"
 
-@implementation YouTubeFeed
+@implementation UNDYouTubeFeed
 
 - (id)initWithTitle:(NSString*)title forUrl:(NSURL*)url
 {
   [super initWithTitle:title];
 
   NSString* temp = [url absoluteString];
-  temp = [YouTubeFeed canonicalFormOfURL:temp];
+  temp = [UNDYouTubeFeed canonicalFormOfURL:temp];
   url_ = [[NSURL URLWithString:temp] retain];
 
   return self;
@@ -50,7 +50,7 @@
   NSXMLElement* feed = [doc rootElement];
   NSArray* entries = [feed elementsForName:@"entry"];
   for (NSXMLElement* item in entries) {
-    YouTubeAsset* asset = [[YouTubeAsset alloc] initWithXMLElement:item];
+    UNDYouTubeAsset* asset = [[UNDYouTubeAsset alloc] initWithXMLElement:item];
     [assets addObject:[asset autorelease]];
   }
   return assets;

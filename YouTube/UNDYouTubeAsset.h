@@ -17,16 +17,33 @@
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
 #import <Cocoa/Cocoa.h>
+#import <BRBaseMediaAsset.h>
+#import "UnderstudyAsset.h"
+#import "BaseUnderstudyAsset.h"
 
-#import "UNDAssetCollection.h"
+@class BRTextMenuItemLayer;
+@class BRImageManager;
+@class BRMediaType;
 
-@interface YouTubeFeed : UNDAssetCollection
+@class UNDYouTubeFeed;
+
+@interface UNDYouTubeAsset : BaseUnderstudyAsset<UnderstudyAsset> 
 {
+ @private
+  NSString* description_;
+  long duration_;
+  BRImageManager* imageManager_;
+  NSString* videoID_; // the YT identifier for the video
+  NSDate* published_;
+  float starrating_;
+  NSString* thumbnailID_;
   NSURL* url_;
+  BOOL isVideo_;
+  UNDYouTubeFeed* feedDelegate_;
 }
 
-- (id)initWithTitle:(NSString*)title forUrl:(NSURL*)url;
+// the init function may return nil if parsing fails
+- (id)initWithXMLElement:(NSXMLElement*) dom;
 
-// attempts to convert a URL into one we can parse
-+ (NSString*)canonicalFormOfURL:(NSString*)url;
+- (NSString*)videoID;
 @end
