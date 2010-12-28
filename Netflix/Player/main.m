@@ -1,5 +1,5 @@
 //
-//  Copyright 2009 Kirk Kelsey.
+//  Copyright 2009,2010 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -8,9 +8,9 @@
 //  Software Foundation, either version 3 of the License, or (at your option)
 //  any later version.
 //
-//  Understudy is distributed in the hope that it will be useful, but WITHOUT 
-//  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
-//  FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
+//  Understudy is distributed in the hope that it will be useful, but WITHOUT
+//  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+//  FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License
 //  for more details.
 //
 //  You should have received a copy of the GNU Lesser General Public License
@@ -33,7 +33,7 @@ int main(int argc, char* argv[])
   RemoteControlContainer* controls;
   UNDNetflixPlayer* player;
   BOOL returnToFR = NO;
-  
+
   int i;
   for (i = 1; i < argc; i++){
     NSString* arg = [NSString stringWithCString:argv[i]
@@ -41,16 +41,12 @@ int main(int argc, char* argv[])
     if ([arg compare:@"--FR"] == NSOrderedSame) returnToFR = YES;
     else url = [NSURL URLWithString:arg];
   }
-  
-  if(!url) {
-    NSLog (@"NetflixPlayer: no valid URL given", argv[1]);
-  } else {
-    NSLog (@"NetflixPlayer: loading URL %@",[url absoluteString]);
-  }
+
+  if(!url) NSLog (@"NetflixPlayer: no valid URL given", argv[1]);
 
   player = [[[UNDNetflixPlayer alloc] init] autorelease];
   [player setShouldReturnToFR:returnToFR];
-  
+
   controls = [[[RemoteControlContainer alloc] initWithDelegate:player] autorelease];
   [controls instantiateAndAddRemoteControlDeviceWithClass:[AppleRemote class]];
   Class keyboardDevice = [FrontRowKeyboardDevice class];
