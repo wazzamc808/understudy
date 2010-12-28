@@ -50,8 +50,8 @@
 		DF50285E0F7D86A200B04C78 /* UNDYouTubeAddDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = DF50285D0F7D86A200B04C78 /* UNDYouTubeAddDialog.m */; };
 		DF54B44F1106994D006F0930 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF54B44E1106994D006F0930 /* CoreAudio.framework */; };
 		DF54B4B911095D36006F0930 /* UNDVolumeControl.m in Sources */ = {isa = PBXBuildFile; fileRef = DF54B4B811095D36006F0930 /* UNDVolumeControl.m */; };
-		DF5A22210F0FC18200F5F19F /* YouTubeAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = DF5A22200F0FC18200F5F19F /* YouTubeAsset.m */; };
-		DF5A22250F0FD6B400F5F19F /* YouTubeFeed.m in Sources */ = {isa = PBXBuildFile; fileRef = DF5A22240F0FD6B400F5F19F /* YouTubeFeed.m */; };
+		DF5A22210F0FC18200F5F19F /* UNDYouTubeAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = DF5A22200F0FC18200F5F19F /* UNDYouTubeAsset.m */; };
+		DF5A22250F0FD6B400F5F19F /* UNDYouTubeFeed.m in Sources */ = {isa = PBXBuildFile; fileRef = DF5A22240F0FD6B400F5F19F /* UNDYouTubeFeed.m */; };
 		DF5A223C0F100E4300F5F19F /* UNDMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF5A22390F100E4300F5F19F /* UNDMenuController.m */; };
 		DF5A23940F11240400F5F19F /* BaseController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF5A23930F11240400F5F19F /* BaseController.m */; };
 		DF6F9F880F9263AA00AB41CF /* UNDNetflixCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = DF6F9F860F9263AA00AB41CF /* UNDNetflixCollection.m */; };
@@ -69,7 +69,7 @@
 		DF8A37FE12BD9BC0008B8274 /* UNDYouTubeAssetProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = DF8A37FD12BD9BC0008B8274 /* UNDYouTubeAssetProvider.m */; };
 		DF906CFF127B5D3A00B95C6E /* UNDNetflixKeyboardDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = DF906CFE127B5D3A00B95C6E /* UNDNetflixKeyboardDevice.m */; };
 		DFA511990F1A8E5B00FC903B /* HuluController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA511980F1A8E5B00FC903B /* HuluController.m */; };
-		DFA512360F1A92F300FC903B /* YouTubeController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA512350F1A92F300FC903B /* YouTubeController.m */; };
+		DFA512360F1A92F300FC903B /* UNDYouTubeController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA512350F1A92F300FC903B /* UNDYouTubeController.m */; };
 		DFC24EC81068360500B4D149 /* AppleRemote.m in Sources */ = {isa = PBXBuildFile; fileRef = DF3190320FC5D34B004CE50D /* AppleRemote.m */; };
 		DFC24EC91068360500B4D149 /* RemoteControl.m in Sources */ = {isa = PBXBuildFile; fileRef = DF3190480FC5D3C9004CE50D /* RemoteControl.m */; };
 		DFC24ECA1068360500B4D149 /* HIDRemoteControlDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = DF3190570FC5D598004CE50D /* HIDRemoteControlDevice.m */; };
@@ -195,10 +195,10 @@
 		DF54B44E1106994D006F0930 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		DF54B4B711095D36006F0930 /* UNDVolumeControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UNDVolumeControl.h; sourceTree = "<group>"; };
 		DF54B4B811095D36006F0930 /* UNDVolumeControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UNDVolumeControl.m; sourceTree = "<group>"; };
-		DF5A221F0F0FC18200F5F19F /* YouTubeAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YouTubeAsset.h; sourceTree = "<group>"; };
-		DF5A22200F0FC18200F5F19F /* YouTubeAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YouTubeAsset.m; sourceTree = "<group>"; };
-		DF5A22230F0FD6B400F5F19F /* YouTubeFeed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YouTubeFeed.h; sourceTree = "<group>"; };
-		DF5A22240F0FD6B400F5F19F /* YouTubeFeed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YouTubeFeed.m; sourceTree = "<group>"; };
+		DF5A221F0F0FC18200F5F19F /* UNDYouTubeAssetProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UNDYouTubeAssetProvider.h; sourceTree = "<group>"; };
+		DF5A22200F0FC18200F5F19F /* UNDYouTubeAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UNDYouTubeAsset.m; sourceTree = "<group>"; };
+		DF5A22230F0FD6B400F5F19F /* UNDYouTubeFeed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UNDYouTubeFeed.h; sourceTree = "<group>"; };
+		DF5A22240F0FD6B400F5F19F /* UNDYouTubeFeed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UNDYouTubeFeed.m; sourceTree = "<group>"; };
 		DF5A22380F100E4300F5F19F /* UNDMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UNDMenuController.h; sourceTree = "<group>"; };
 		DF5A22390F100E4300F5F19F /* UNDMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UNDMenuController.m; sourceTree = "<group>"; };
 		DF5A23920F11240400F5F19F /* BaseController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseController.h; sourceTree = "<group>"; };
@@ -231,8 +231,8 @@
 		DF906CFE127B5D3A00B95C6E /* UNDNetflixKeyboardDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UNDNetflixKeyboardDevice.m; path = Netflix/Player/UNDNetflixKeyboardDevice.m; sourceTree = "<group>"; };
 		DFA511970F1A8E5B00FC903B /* HuluController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HuluController.h; sourceTree = "<group>"; };
 		DFA511980F1A8E5B00FC903B /* HuluController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HuluController.m; sourceTree = "<group>"; };
-		DFA512340F1A92D900FC903B /* YouTubeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YouTubeController.h; sourceTree = "<group>"; };
-		DFA512350F1A92F300FC903B /* YouTubeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YouTubeController.m; sourceTree = "<group>"; };
+		DFA512340F1A92D900FC903B /* UNDYouTubeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UNDYouTubeController.h; sourceTree = "<group>"; };
+		DFA512350F1A92F300FC903B /* UNDYouTubeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UNDYouTubeController.m; sourceTree = "<group>"; };
 		DFC24EDE1068360500B4D149 /* NetflixPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NetflixPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DFC24F3F106867E800B4D149 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		DFC24F40106867E800B4D149 /* UNDNetflixPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UNDNetflixPlayer.h; sourceTree = "<group>"; };
@@ -501,12 +501,12 @@
 			children = (
 				DF8A37FC12BD9BC0008B8274 /* UNDYouTubeAssetProvider.h */,
 				DF8A37FD12BD9BC0008B8274 /* UNDYouTubeAssetProvider.m */,
-				DF5A221F0F0FC18200F5F19F /* YouTubeAsset.h */,
-				DF5A22200F0FC18200F5F19F /* YouTubeAsset.m */,
-				DFA512340F1A92D900FC903B /* YouTubeController.h */,
-				DFA512350F1A92F300FC903B /* YouTubeController.m */,
-				DF5A22230F0FD6B400F5F19F /* YouTubeFeed.h */,
-				DF5A22240F0FD6B400F5F19F /* YouTubeFeed.m */,
+				DF5A221F0F0FC18200F5F19F /* UNDYouTubeAssetProvider.h */,
+				DF5A22200F0FC18200F5F19F /* UNDYouTubeAsset.m */,
+				DFA512340F1A92D900FC903B /* UNDYouTubeController.h */,
+				DFA512350F1A92F300FC903B /* UNDYouTubeController.m */,
+				DF5A22230F0FD6B400F5F19F /* UNDYouTubeFeed.h */,
+				DF5A22240F0FD6B400F5F19F /* UNDYouTubeFeed.m */,
 				DF50285C0F7D86A200B04C78 /* UNDYouTubeAddDialog.h */,
 				DF50285D0F7D86A200B04C78 /* UNDYouTubeAddDialog.m */,
 			);
@@ -764,12 +764,12 @@
 				DF7D970C0F08647400C9B7FB /* HuluAddDialog.m in Sources */,
 				DF7D970D0F08647400C9B7FB /* HuluAsset.m in Sources */,
 				DF7D970F0F08647400C9B7FB /* HuluFeed.m in Sources */,
-				DF5A22210F0FC18200F5F19F /* YouTubeAsset.m in Sources */,
-				DF5A22250F0FD6B400F5F19F /* YouTubeFeed.m in Sources */,
+				DF5A22210F0FC18200F5F19F /* UNDYouTubeAsset.m in Sources */,
+				DF5A22250F0FD6B400F5F19F /* UNDYouTubeFeed.m in Sources */,
 				DF5A223C0F100E4300F5F19F /* UNDMenuController.m in Sources */,
 				DF5A23940F11240400F5F19F /* BaseController.m in Sources */,
 				DFA511990F1A8E5B00FC903B /* HuluController.m in Sources */,
-				DFA512360F1A92F300FC903B /* YouTubeController.m in Sources */,
+				DFA512360F1A92F300FC903B /* UNDYouTubeController.m in Sources */,
 				DF375CC20F35300700DA7719 /* UNDNetflixAddDialog.m in Sources */,
 				DF375CC30F35300700DA7719 /* UNDNetflixAsset.m in Sources */,
 				DF375CC40F35300700DA7719 /* UNDNetflixController.m in Sources */,

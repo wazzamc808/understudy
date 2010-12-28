@@ -1,5 +1,5 @@
 //
-//  Copyright 2009 Kirk Kelsey.
+//  Copyright 2009,2010 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -19,16 +19,16 @@
 #import <Cocoa/Cocoa.h>
 #import "BaseController.h"
 
-@class YouTubeAsset;
+@class UNDYouTubeAsset;
 
-@interface YouTubeController : BaseController
+@interface UNDYouTubeController : BaseController
 {
-  YouTubeAsset* asset_;  //weak reference
+  UNDYouTubeAsset* asset_;      //< Weak reference to the related asset.
   WebView* view_;
   NSWindow* window_;
-  BOOL loaded_;          // to indicate whether the video has been loaded
+  BOOL loaded_;                 //< True once the video has been loaded.
 }
 
-- (id)initWithAsset:(YouTubeAsset*)asset;
+- (id)initWithAsset:(UNDYouTubeAsset*)asset;
 
 @end
