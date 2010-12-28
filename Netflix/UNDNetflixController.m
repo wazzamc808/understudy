@@ -1,5 +1,5 @@
 //
-//  Copyright 2008 Kirk Kelsey.
+//  Copyright 2008,2010 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -18,8 +18,8 @@
 
 #include <regex.h>
 
-#import "NetflixAsset.h"
-#import "NetflixController.h"
+#import "UNDNetflixAsset.h"
+#import "UNDNetflixController.h"
 #import "UNDPluginControl.h"
 #import "UNDPreferenceManager.h"
 #import "UNDPasswordProvider.h"
@@ -43,9 +43,9 @@
 - (void)_continueDestroyScene:id;
 @end
 
-@implementation NetflixController
+@implementation UNDNetflixController
 
-- (id)initWithAsset:(NetflixAsset*)asset
+- (id)initWithAsset:(UNDNetflixAsset*)asset
 {
   [super init];
   asset_ = [asset retain];

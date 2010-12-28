@@ -16,8 +16,8 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
-#import "NetflixAsset.h"
-#import "NetflixController.h"
+#import "UNDNetflixAsset.h"
+#import "UNDNetflixController.h"
 #import "UNDNetflixLoadingController.h"
 
 #import <BRImage.h>
@@ -27,11 +27,11 @@
 
 #include <regex.h>
 
-@interface NetflixAsset (CollectionDiscovery)
+@interface UNDNetflixAsset (CollectionDiscovery)
 - (void)buildCollectionForMedia:(NSString*)mediaID;
 @end
 
-@implementation NetflixAsset
+@implementation UNDNetflixAsset
 
 #define WATCHURL @"http://www.netflix.com/WiPlayer?movieid=%@"
 #define BOXSHOTS @"http://cdn-0.nflximg.com/us/boxshots/large/%@.jpg"
@@ -155,7 +155,7 @@
     return alert;
   }
 
-  return [[[NetflixController alloc] initWithAsset:self] autorelease];
+  return [[[UNDNetflixController alloc] initWithAsset:self] autorelease];
 }
 
 #pragma mark Episode Discovery

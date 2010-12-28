@@ -33,10 +33,10 @@
 		DF3195F70FC85C43004CE50D /* BackRow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF7F84EF0EE3354E0049E5C3 /* BackRow.framework */; };
 		DF3196B80FC8CF7F004CE50D /* UNDHuluFSSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = DF3196B70FC8CF7F004CE50D /* UNDHuluFSSelector.m */; };
 		DF3197D00FCCE3BD004CE50D /* UNDPluginControl.m in Sources */ = {isa = PBXBuildFile; fileRef = DF31936C0FC71D91004CE50D /* UNDPluginControl.m */; };
-		DF375CC20F35300700DA7719 /* NetflixAddDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = DF375CBB0F35300700DA7719 /* NetflixAddDialog.m */; };
-		DF375CC30F35300700DA7719 /* NetflixAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = DF375CBD0F35300700DA7719 /* NetflixAsset.m */; };
-		DF375CC40F35300700DA7719 /* NetflixController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF375CBF0F35300700DA7719 /* NetflixController.m */; };
-		DF375CC50F35300700DA7719 /* NetflixFeed.m in Sources */ = {isa = PBXBuildFile; fileRef = DF375CC10F35300700DA7719 /* NetflixFeed.m */; };
+		DF375CC20F35300700DA7719 /* UNDNetflixAddDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = DF375CBB0F35300700DA7719 /* UNDNetflixAddDialog.m */; };
+		DF375CC30F35300700DA7719 /* UNDNetflixAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = DF375CBD0F35300700DA7719 /* UNDNetflixAsset.m */; };
+		DF375CC40F35300700DA7719 /* UNDNetflixController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF375CBF0F35300700DA7719 /* UNDNetflixController.m */; };
+		DF375CC50F35300700DA7719 /* UNDNetflixFeed.m in Sources */ = {isa = PBXBuildFile; fileRef = DF375CC10F35300700DA7719 /* UNDNetflixFeed.m */; };
 		DF375D600F36049A00DA7719 /* HuluFeedDiscoverer.m in Sources */ = {isa = PBXBuildFile; fileRef = DF375D5F0F36049A00DA7719 /* HuluFeedDiscoverer.m */; };
 		DF37B8AD0F59ED5E0017766F /* UNDiPlayerFeed.m in Sources */ = {isa = PBXBuildFile; fileRef = DF37B8AC0F59ED5E0017766F /* UNDiPlayerFeed.m */; };
 		DF37B8B00F59EFFE0017766F /* UNDiPlayerAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = DF37B8AF0F59EFFE0017766F /* UNDiPlayerAsset.m */; };
@@ -165,14 +165,14 @@
 		DF31936C0FC71D91004CE50D /* UNDPluginControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UNDPluginControl.m; sourceTree = "<group>"; };
 		DF3196B60FC8CF7F004CE50D /* UNDHuluFSSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UNDHuluFSSelector.h; path = Player/UNDHuluFSSelector.h; sourceTree = "<group>"; };
 		DF3196B70FC8CF7F004CE50D /* UNDHuluFSSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UNDHuluFSSelector.m; path = Player/UNDHuluFSSelector.m; sourceTree = "<group>"; };
-		DF375CBA0F35300700DA7719 /* NetflixAddDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetflixAddDialog.h; path = Netflix/NetflixAddDialog.h; sourceTree = "<group>"; };
-		DF375CBB0F35300700DA7719 /* NetflixAddDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NetflixAddDialog.m; path = Netflix/NetflixAddDialog.m; sourceTree = "<group>"; };
-		DF375CBC0F35300700DA7719 /* NetflixAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetflixAsset.h; path = Netflix/NetflixAsset.h; sourceTree = "<group>"; };
-		DF375CBD0F35300700DA7719 /* NetflixAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NetflixAsset.m; path = Netflix/NetflixAsset.m; sourceTree = "<group>"; };
-		DF375CBE0F35300700DA7719 /* NetflixController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetflixController.h; path = Netflix/NetflixController.h; sourceTree = "<group>"; };
-		DF375CBF0F35300700DA7719 /* NetflixController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NetflixController.m; path = Netflix/NetflixController.m; sourceTree = "<group>"; };
-		DF375CC00F35300700DA7719 /* NetflixFeed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetflixFeed.h; path = Netflix/NetflixFeed.h; sourceTree = "<group>"; };
-		DF375CC10F35300700DA7719 /* NetflixFeed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NetflixFeed.m; path = Netflix/NetflixFeed.m; sourceTree = "<group>"; };
+		DF375CBA0F35300700DA7719 /* UNDNetflixAddDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UNDNetflixAddDialog.h; path = Netflix/UNDNetflixAddDialog.h; sourceTree = "<group>"; };
+		DF375CBB0F35300700DA7719 /* UNDNetflixAddDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UNDNetflixAddDialog.m; path = Netflix/UNDNetflixAddDialog.m; sourceTree = "<group>"; };
+		DF375CBC0F35300700DA7719 /* UNDNetflixAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UNDNetflixAsset.h; path = Netflix/UNDNetflixAsset.h; sourceTree = "<group>"; };
+		DF375CBD0F35300700DA7719 /* UNDNetflixAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UNDNetflixAsset.m; path = Netflix/UNDNetflixAsset.m; sourceTree = "<group>"; };
+		DF375CBE0F35300700DA7719 /* UNDNetflixController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UNDNetflixController.h; path = Netflix/UNDNetflixController.h; sourceTree = "<group>"; };
+		DF375CBF0F35300700DA7719 /* UNDNetflixController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UNDNetflixController.m; path = Netflix/UNDNetflixController.m; sourceTree = "<group>"; };
+		DF375CC00F35300700DA7719 /* UNDNetflixFeed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UNDNetflixFeed.h; path = Netflix/UNDNetflixFeed.h; sourceTree = "<group>"; };
+		DF375CC10F35300700DA7719 /* UNDNetflixFeed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UNDNetflixFeed.m; path = Netflix/UNDNetflixFeed.m; sourceTree = "<group>"; };
 		DF375D5E0F36049A00DA7719 /* HuluFeedDiscoverer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HuluFeedDiscoverer.h; sourceTree = "<group>"; };
 		DF375D5F0F36049A00DA7719 /* HuluFeedDiscoverer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HuluFeedDiscoverer.m; sourceTree = "<group>"; };
 		DF37B8AB0F59ED5E0017766F /* UNDiPlayerFeed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UNDiPlayerFeed.h; sourceTree = "<group>"; };
@@ -446,14 +446,14 @@
 				DF8A379212BD8143008B8274 /* UNDNetflixAssetProvider.h */,
 				DF8A379312BD8143008B8274 /* UNDNetflixAssetProvider.m */,
 				DFC24F3E106867E800B4D149 /* Player */,
-				DF375CBA0F35300700DA7719 /* NetflixAddDialog.h */,
-				DF375CBB0F35300700DA7719 /* NetflixAddDialog.m */,
-				DF375CBC0F35300700DA7719 /* NetflixAsset.h */,
-				DF375CBD0F35300700DA7719 /* NetflixAsset.m */,
-				DF375CBE0F35300700DA7719 /* NetflixController.h */,
-				DF375CBF0F35300700DA7719 /* NetflixController.m */,
-				DF375CC00F35300700DA7719 /* NetflixFeed.h */,
-				DF375CC10F35300700DA7719 /* NetflixFeed.m */,
+				DF375CBA0F35300700DA7719 /* UNDNetflixAddDialog.h */,
+				DF375CBB0F35300700DA7719 /* UNDNetflixAddDialog.m */,
+				DF375CBC0F35300700DA7719 /* UNDNetflixAsset.h */,
+				DF375CBD0F35300700DA7719 /* UNDNetflixAsset.m */,
+				DF375CBE0F35300700DA7719 /* UNDNetflixController.h */,
+				DF375CBF0F35300700DA7719 /* UNDNetflixController.m */,
+				DF375CC00F35300700DA7719 /* UNDNetflixFeed.h */,
+				DF375CC10F35300700DA7719 /* UNDNetflixFeed.m */,
 				DF6F9F870F9263AA00AB41CF /* UNDNetflixCollection.h */,
 				DF6F9F860F9263AA00AB41CF /* UNDNetflixCollection.m */,
 				DF42344F12351DBD0044317C /* UNDNetflixLoadingController.h */,
@@ -770,10 +770,10 @@
 				DF5A23940F11240400F5F19F /* BaseController.m in Sources */,
 				DFA511990F1A8E5B00FC903B /* HuluController.m in Sources */,
 				DFA512360F1A92F300FC903B /* YouTubeController.m in Sources */,
-				DF375CC20F35300700DA7719 /* NetflixAddDialog.m in Sources */,
-				DF375CC30F35300700DA7719 /* NetflixAsset.m in Sources */,
-				DF375CC40F35300700DA7719 /* NetflixController.m in Sources */,
-				DF375CC50F35300700DA7719 /* NetflixFeed.m in Sources */,
+				DF375CC20F35300700DA7719 /* UNDNetflixAddDialog.m in Sources */,
+				DF375CC30F35300700DA7719 /* UNDNetflixAsset.m in Sources */,
+				DF375CC40F35300700DA7719 /* UNDNetflixController.m in Sources */,
+				DF375CC50F35300700DA7719 /* UNDNetflixFeed.m in Sources */,
 				DF375D600F36049A00DA7719 /* HuluFeedDiscoverer.m in Sources */,
 				DFCDFB110F3E2E9300D979F0 /* UNDAddAssetDialog.m in Sources */,
 				DFCDFB120F3E2E9300D979F0 /* MainMenuController.m in Sources */,

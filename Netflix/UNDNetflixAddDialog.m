@@ -17,18 +17,18 @@
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
 #import "MainMenuController.h"
-#import "NetflixAddDialog.h"
+#import "UNDNetflixAddDialog.h"
 #import "UNDNetflixAssetProvider.h"
 
 #import <BRControllerStack.h>
 
 #import <PubSub/PubSub.h>
 
-@interface NetflixAddDialog (PrivateMethods)
+@interface UNDNetflixAddDialog (PrivateMethods)
 - (void)_startAutoDiscovery;
 @end
 
-@implementation NetflixAddDialog
+@implementation UNDNetflixAddDialog
 
 #define FEED_OPTION_COUNT 1
 
