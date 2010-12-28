@@ -16,8 +16,8 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
-#import "NetflixFeed.h"
-#import "NetflixController.h"
+#import "UNDNetflixFeed.h"
+#import "UNDNetflixController.h"
 
 #import <BRControllerStack.h>
 #import <BRComboMenuItemLayer.h>
@@ -26,12 +26,12 @@
 #import <Foundation/NSXMLDocument.h>
 #import <PubSub/PubSub.h>
 
-@interface NetflixFeed (Private)
+@interface UNDNetflixFeed (Private)
 - (void)loadAssets:(NSArray*)feedItems;
 - (void)startNextUpdate;
 @end
 
-@implementation NetflixFeed
+@implementation UNDNetflixFeed
 
 - (id)initWithTitle:(NSString*)title forUrl:(NSURL*)url
 {
@@ -67,7 +67,8 @@
   // Load the first few assets, refresh the list, then put the remaining assets
   // on a queue to be completely loaded lazily.
   for (NSXMLElement* feedItem in feedItems) {
-    NetflixAsset* asset = [[NetflixAsset alloc] initWithXMLElement:feedItem];
+    UNDNetflixAsset* asset
+      = [[UNDNetflixAsset alloc] initWithXMLElement:feedItem];
     [assets_ addObject:asset];
     [asset setDelegate:self];
   }
@@ -85,7 +86,7 @@
   return item;
 }
 
-- (void)assetUpdated:(NetflixAsset*)asset
+- (void)assetUpdated:(UNDNetflixAsset*)asset
 {
   // the asset may be nil (to simply force another update)
   @synchronized(unfinishedAssets_) {
@@ -103,7 +104,7 @@
     // need to start additional asset discovery processes.
     while (updateSlots_ && [unfinishedAssets_ count]) {
       --updateSlots_;
-      NetflixAsset* asset = [unfinishedAssets_ objectAtIndex:0];
+      UNDNetflixAsset* asset = [unfinishedAssets_ objectAtIndex:0];
       [unfinishedAssets_ removeObjectAtIndex:0];
       [asset startAutoDiscovery];
     }

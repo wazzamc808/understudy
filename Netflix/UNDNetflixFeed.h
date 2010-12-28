@@ -19,9 +19,10 @@
 #import <Cocoa/Cocoa.h>
 
 #import "UNDAssetCollection.h"
-#import "NetflixAsset.h"
+#import "UNDNetflixAsset.h"
 
-@interface NetflixFeed : UNDAssetCollection <UNDNetflixAssetUpdateDelegate>
+@interface UNDNetflixFeed
+  : UNDAssetCollection <UNDNetflixAssetUpdateDelegate>
 {
  @private
   NSMutableArray* unfinishedAssets_;

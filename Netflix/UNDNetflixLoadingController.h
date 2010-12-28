@@ -18,7 +18,7 @@
 
 #import <BRTextWithSpinnerController.h>
 
-#import "NetflixAsset.h"
+#import "UNDNetflixAsset.h"
 
 @interface UNDNetflixLoadingController : BRTextWithSpinnerController
 <UNDNetflixAssetUpdateDelegate>

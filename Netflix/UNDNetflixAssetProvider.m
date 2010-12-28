@@ -16,9 +16,9 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
-#import "NetflixAddDialog.h"
+#import "UNDNetflixAddDialog.h"
 #import "UNDNetflixAssetProvider.h"
-#import "NetflixFeed.h"
+#import "UNDNetflixFeed.h"
 
 NSString* UNDNetflixAssetProviderId = @"netflix";
 
@@ -30,7 +30,7 @@ NSString* UNDNetflixAssetProviderId = @"netflix";
   NSURL* url
     = [NSURL URLWithString:[content objectForKey:UNDAssetProviderUrlKey]];
   if (!title || !url) return nil;
-  return [[NetflixFeed alloc] initWithTitle:title forUrl:url];
+  return [[UNDNetflixFeed alloc] initWithTitle:title forUrl:url];
 }
 
 - (NSString*)providerId
@@ -45,7 +45,7 @@ NSString* UNDNetflixAssetProviderId = @"netflix";
 
 - (BRController*)assetAdditionDialog
 {
-  return [[[NetflixAddDialog alloc] init] autorelease];
+  return [[[UNDNetflixAddDialog alloc] init] autorelease];
 }
 
 

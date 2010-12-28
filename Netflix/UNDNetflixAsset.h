@@ -31,13 +31,13 @@
 //
 // Represents the attributes of a Netflix Video
 
-@class NetflixAsset;
+@class UNDNetflixAsset;
 
 @protocol UNDNetflixAssetUpdateDelegate
-- (void)assetUpdated:(NetflixAsset*)asset;
+- (void)assetUpdated:(UNDNetflixAsset*)asset;
 @end
 
-@interface NetflixAsset : BaseUnderstudyAsset <UnderstudyAsset> {
+@interface UNDNetflixAsset : BaseUnderstudyAsset <UnderstudyAsset> {
  @private
   NSString* description_;
   NSString* mediaID_;

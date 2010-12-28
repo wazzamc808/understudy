@@ -17,7 +17,7 @@
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
 #import "UNDNetflixCollection.h"
-#import "NetflixAsset.h"
+#import "UNDNetflixAsset.h"
 
 @implementation UNDNetflixCollection
 
@@ -92,10 +92,10 @@
       {
         @try
         {
-          NetflixAsset* asset = [[NetflixAsset alloc] initWithUrl:href
-                                                            title:title
-                                                          mediaID:mediaID
-                                                      description:des];
+          UNDNetflixAsset* asset = [[UNDNetflixAsset alloc] initWithUrl:href
+                                                                  title:title
+                                                                mediaID:mediaID
+                                                            description:des];
           [assets addObject:asset];
         }
         @catch (NSException *exception)
