@@ -186,19 +186,18 @@ const char* AppleRemoteDeviceName = "AppleIRController";
 		[_cookieToButtonMapping setObject:[NSNumber numberWithInt:kRemoteButtonMenu_Hold]	forKey:@"33_21_20_2_33_21_20_2_"];
 		[_cookieToButtonMapping setObject:[NSNumber numberWithInt:kRemoteButtonPlay_Hold]	forKey:@"37_33_21_20_2_37_33_21_20_2_"];
 		[_cookieToButtonMapping setObject:[NSNumber numberWithInt:kRemoteControl_Switched]	forKey:@"19_"];
-		
-		// new Aluminum model
-		// Mappings changed due to addition of a 7th center button
-		// Treat the new center button and play/pause button the same
-		[_cookieToButtonMapping setObject:[NSNumber numberWithInt:kRemoteButtonPlay]		forKey:@"33_21_20_8_2_33_21_20_8_2_"];
-		[_cookieToButtonMapping setObject:[NSNumber numberWithInt:kRemoteButtonPlay]		forKey:@"33_21_20_3_2_33_21_20_3_2_"];
-		[_cookieToButtonMapping setObject:[NSNumber numberWithInt:kRemoteButtonPlay_Hold]	forKey:@"33_21_20_11_2_33_21_20_11_2_"];
-	}
 
+        // new Aluminum model
+        [_cookieToButtonMapping setObject:[NSNumber numberWithInt:kRemoteButtonAlPlay]
+                                   forKey:@"33_21_20_8_2_33_21_20_8_2_"];
+        [_cookieToButtonMapping setObject:[NSNumber numberWithInt:kRemoteButtonAlSelect]
+                                   forKey:@"33_21_20_3_2_33_21_20_3_2_"];
+        [_cookieToButtonMapping setObject:[NSNumber numberWithInt:kRemoteButtonAlSelect_Hold]
+                                   forKey:@"33_21_20_11_2_33_21_20_11_2_"];
+    }
 }
 
-- (void) sendRemoteButtonEvent: (RemoteControlEventIdentifier) event pressedDown: (BOOL) pressedDown
-{
+- (void) sendRemoteButtonEvent: (RemoteControlEventIdentifier) event pressedDown: (BOOL) pressedDown {
 	if (pressedDown == NO && event == kRemoteButtonMenu_Hold) {
 		// There is no seperate event for pressed down on menu hold. We are simulating that event here
 		[super sendRemoteButtonEvent:event pressedDown:YES];
@@ -206,8 +205,7 @@ const char* AppleRemoteDeviceName = "AppleIRController";
 	
 	[super sendRemoteButtonEvent:event pressedDown:pressedDown];
 	
-	if (pressedDown && (event == kRemoteButtonRight || event == kRemoteButtonLeft || event == kRemoteButtonPlay || event == kRemoteButtonMenu || event == kRemoteButtonPlay_Hold))
-	{
+	if (pressedDown && (event == kRemoteButtonRight || event == kRemoteButtonLeft || event == kRemoteButtonPlay || event == kRemoteButtonMenu || event == kRemoteButtonPlay_Hold)) {
 		// There is no seperate event when the button is being released. We are simulating that event here
 		[super sendRemoteButtonEvent:event pressedDown:NO];
 	}
