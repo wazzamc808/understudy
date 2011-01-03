@@ -25,6 +25,11 @@
 
 #import "UNDNetflixPlayer.h"
 
+#import "GlobalKeyboardDevice.h"
+
+@interface UNDNetflixKeyboardDevice : GlobalKeyboardDevice
+@end
+
 int main(int argc, char* argv[])
 {
   [NSApplication sharedApplication];
@@ -49,7 +54,7 @@ int main(int argc, char* argv[])
 
   controls = [[[RemoteControlContainer alloc] initWithDelegate:player] autorelease];
   [controls instantiateAndAddRemoteControlDeviceWithClass:[AppleRemote class]];
-  Class keyboardDevice = [FrontRowKeyboardDevice class];
+  Class keyboardDevice = [UNDNetflixKeyboardDevice class];
   [controls instantiateAndAddRemoteControlDeviceWithClass:keyboardDevice];
   [controls startListening:player];
 

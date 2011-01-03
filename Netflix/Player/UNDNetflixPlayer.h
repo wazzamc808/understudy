@@ -31,6 +31,7 @@
   NSWindow*              window_;   // original window
   NSWindow*              fsWindow_; // created when player goes full screen
   BOOL                   shouldReturnToFR_;
+  CGEventSourceRef       eventSource_;
 }
 
 @property(nonatomic) BOOL shouldReturnToFR;

@@ -70,6 +70,7 @@
 		DF906CFF127B5D3A00B95C6E /* UNDNetflixKeyboardDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = DF906CFE127B5D3A00B95C6E /* UNDNetflixKeyboardDevice.m */; };
 		DFA511990F1A8E5B00FC903B /* HuluController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA511980F1A8E5B00FC903B /* HuluController.m */; };
 		DFA512360F1A92F300FC903B /* UNDYouTubeController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA512350F1A92F300FC903B /* UNDYouTubeController.m */; };
+		DFA9505012CCDDA40036838E /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFA9504F12CCDDA40036838E /* ApplicationServices.framework */; };
 		DFC24EC81068360500B4D149 /* AppleRemote.m in Sources */ = {isa = PBXBuildFile; fileRef = DF3190320FC5D34B004CE50D /* AppleRemote.m */; };
 		DFC24EC91068360500B4D149 /* RemoteControl.m in Sources */ = {isa = PBXBuildFile; fileRef = DF3190480FC5D3C9004CE50D /* RemoteControl.m */; };
 		DFC24ECA1068360500B4D149 /* HIDRemoteControlDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = DF3190570FC5D598004CE50D /* HIDRemoteControlDevice.m */; };
@@ -228,11 +229,12 @@
 		DF8A37FA12BD9B9B008B8274 /* UNDiPlayerAssetProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UNDiPlayerAssetProvider.m; sourceTree = "<group>"; };
 		DF8A37FC12BD9BC0008B8274 /* UNDYouTubeAssetProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UNDYouTubeAssetProvider.h; sourceTree = "<group>"; };
 		DF8A37FD12BD9BC0008B8274 /* UNDYouTubeAssetProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UNDYouTubeAssetProvider.m; sourceTree = "<group>"; };
-		DF906CFE127B5D3A00B95C6E /* UNDNetflixKeyboardDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UNDNetflixKeyboardDevice.m; path = Netflix/Player/UNDNetflixKeyboardDevice.m; sourceTree = "<group>"; };
+		DF906CFE127B5D3A00B95C6E /* UNDNetflixKeyboardDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UNDNetflixKeyboardDevice.m; sourceTree = "<group>"; };
 		DFA511970F1A8E5B00FC903B /* HuluController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HuluController.h; sourceTree = "<group>"; };
 		DFA511980F1A8E5B00FC903B /* HuluController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HuluController.m; sourceTree = "<group>"; };
 		DFA512340F1A92D900FC903B /* UNDYouTubeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UNDYouTubeController.h; sourceTree = "<group>"; };
 		DFA512350F1A92F300FC903B /* UNDYouTubeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UNDYouTubeController.m; sourceTree = "<group>"; };
+		DFA9504F12CCDDA40036838E /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
 		DFC24EDE1068360500B4D149 /* NetflixPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NetflixPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DFC24F3F106867E800B4D149 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		DFC24F40106867E800B4D149 /* UNDNetflixPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UNDNetflixPlayer.h; sourceTree = "<group>"; };
@@ -305,6 +307,7 @@
 				DFC24ED91068360500B4D149 /* BackRow.framework in Frameworks */,
 				DF54B44F1106994D006F0930 /* CoreAudio.framework in Frameworks */,
 				DF444F33123C2661000331B7 /* PubSub.framework in Frameworks */,
+				DFA9505012CCDDA40036838E /* ApplicationServices.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -322,7 +325,6 @@
 		089C166AFE841209C02AAC07 /* HelloWorld */ = {
 			isa = PBXGroup;
 			children = (
-				DF906CFE127B5D3A00B95C6E /* UNDNetflixKeyboardDevice.m */,
 				08FB77AFFE84173DC02AAC07 /* Classes */,
 				32C88E010371C26100C91783 /* Other Sources */,
 				089C167CFE841241C02AAC07 /* Resources */,
@@ -338,6 +340,7 @@
 		089C1671FE841209C02AAC07 /* Frameworks and Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				DFA9504F12CCDDA40036838E /* ApplicationServices.framework */,
 				DF7D07670F86A0BD0014A0FB /* Security.framework */,
 				DF00C4610F22CF8F003A5122 /* ExceptionHandling.framework */,
 				1058C7ACFEA557BF11CA2CBB /* Linked Frameworks */,
@@ -568,6 +571,7 @@
 			isa = PBXGroup;
 			children = (
 				DFC24F3F106867E800B4D149 /* main.m */,
+				DF906CFE127B5D3A00B95C6E /* UNDNetflixKeyboardDevice.m */,
 				DFC24F40106867E800B4D149 /* UNDNetflixPlayer.h */,
 				DFC24F41106867E800B4D149 /* UNDNetflixPlayer.m */,
 			);

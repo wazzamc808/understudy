@@ -25,31 +25,16 @@
  *
  *****************************************************************************/
 
+#import "GlobalKeyboardDevice.h"
 
-#import "FrontRowKeyboardDevice.h"
+@interface UNDNetflixKeyboardDevice : GlobalKeyboardDevice
+@end
 
-@implementation FrontRowKeyboardDevice
+@implementation UNDNetflixKeyboardDevice
 
 - (id) initWithDelegate:(id) _remoteControlDelegate
 {
   self = [super initWithDelegate:_remoteControlDelegate];
-
-  // arrow keys
-  [self registerHotKeyCode:123
-                 modifiers:0
-     remoteEventIdentifier:kRemoteButtonLeft];
-
-  [self registerHotKeyCode:124
-                 modifiers:0
-     remoteEventIdentifier:kRemoteButtonRight];
-
-  [self registerHotKeyCode:125
-                 modifiers:0
-     remoteEventIdentifier:kRemoteButtonMinus];
-
-  [self registerHotKeyCode:126
-                 modifiers:0
-     remoteEventIdentifier:kRemoteButtonPlus];
 
   // ESC - Netflix uses it to exit fullscreen, but we want to use it to exit
   // (maps to the Menu button).
@@ -60,9 +45,9 @@
   // Enter maps to the play/pause. We don't want to map space, since it is
   // already handled by Netflix to do play/pause. Mapping it here will prevent
   // the silverlight player from getting the key.
-  [self registerHotKeyCode:36
-                 modifiers:0
-     remoteEventIdentifier:kRemoteButtonPlay];
+  // [self registerHotKeyCode:36
+  //                modifiers:0
+  //    remoteEventIdentifier:kRemoteButtonAlPlay];
 
   return self;
 }
