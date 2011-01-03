@@ -30,13 +30,13 @@
 // notifaction names that are being used to signal that an application wants to 
 // have access to the remote control device or if the application has finished
 // using the remote control device
-extern NSString* REQUEST_FOR_REMOTE_CONTROL_NOTIFCATION;
-extern NSString* FINISHED_USING_REMOTE_CONTROL_NOTIFICATION;
+extern NSString* const REQUEST_FOR_REMOTE_CONTROL_NOTIFCATION;
+extern NSString* const FINISHED_USING_REMOTE_CONTROL_NOTIFICATION;
 
 // keys used in user objects for distributed notifications
-extern NSString* kRemoteControlDeviceName;
-extern NSString* kApplicationIdentifier;
-extern NSString* kTargetApplicationIdentifier;
+extern NSString* const kRemoteControlDeviceName;
+extern NSString* const kApplicationIdentifier;
+extern NSString* const kTargetApplicationIdentifier;
 
 // we have a 6 bit offset to make a hold event out of a normal event
 #define EVENT_TO_HOLD_EVENT_OFFSET 6 
@@ -51,16 +51,16 @@ typedef enum _RemoteControlEventIdentifier {
 	kRemoteButtonPlay				=1<<4,
 	kRemoteButtonRight				=1<<5,
 	kRemoteButtonLeft				=1<<6,
-	
-	// hold events
+
+ 	// hold events
 	kRemoteButtonPlus_Hold			=1<<7,
 	kRemoteButtonMinus_Hold			=1<<8,	
 	kRemoteButtonMenu_Hold			=1<<9,	
 	kRemoteButtonPlay_Hold			=1<<10,	
 	kRemoteButtonRight_Hold			=1<<11,
 	kRemoteButtonLeft_Hold			=1<<12,
-	
-	// special events (not supported by all devices)	
+
+ 	// special events (not supported by all devices)	
 	kRemoteControl_Switched			=1<<13,
 } RemoteControlEventIdentifier;
 
@@ -80,6 +80,9 @@ typedef enum _RemoteControlEventIdentifier {
 // returns nil if the remote control device is not available
 - (id) initWithDelegate: (id) remoteControlDelegate;
 
+- (void) setDelegate: (id) value;
+- (id) delegate;
+
 - (void) setListeningToRemote: (BOOL) value;
 - (BOOL) isListeningToRemote;
 
@@ -98,5 +101,8 @@ typedef enum _RemoteControlEventIdentifier {
 
 // name of the device
 + (const char*) remoteControlDeviceName;
+
+// Don't retain delegate
+@property (nonatomic, assign) id delegate;
 
 @end
