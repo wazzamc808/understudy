@@ -69,22 +69,17 @@ int64_t SystemIdleTime(void) {
   return idlesecs;
 }
 
-// Sets the mouse cursor visibility based on user activity. Repeatedly calls
-// itself with a delay until the player terminates.
-- (void) manageMouseVisibility
+- (id)init
 {
-  int64_t time;
-  time = SystemIdleTime();
-  if (time < 5) CGDisplayShowCursor(kCGDirectMainDisplay);
-  else CGDisplayHideCursor(kCGDirectMainDisplay);
-  [self performSelector:@selector(manageMouseVisibility)
-             withObject:nil
-             afterDelay:1];
+  [super init];
+  eventSource_ = CGEventSourceCreate(kCGEventSourceStatePrivate);
+  return self;
 }
 
 - (void)dealloc
 {
   [pluginControl_ release];
+  CFRelease(eventSource_);
   [super dealloc];
 }
 
@@ -156,9 +151,33 @@ int64_t SystemIdleTime(void) {
   return fsWindow_;
 }
 
+// Simulates the press and release of the given key with the given modifiers.
+- (void)pressKey:(CGKeyCode)key withFlags:(CGEventFlags)flags
+{
+  CGEventRef event;
+
+  event = CGEventCreateKeyboardEvent(eventSource_, key, true);
+  CGEventSetFlags(event, flags);
+  CGEventPost(kCGHIDEventTap, event);
+  CFRelease(event);
+
+  event = CGEventCreateKeyboardEvent(eventSource_, key, false);
+  CGEventSetFlags(event, flags);
+  CGEventPost(kCGHIDEventTap, event);
+  CFRelease(event);
+}
+
+// Simulates the press and release of the given key with no modifiers.
+- (void)pressKey:(CGKeyCode)key
+{
+  [self pressKey:key withFlags:0];
+}
+
 // Attempts to activate the full-screen mode.
 -(void)fullscreen
 {
+  [self pressKey:3]; // 'f'
+
   // press 'f' to activate Netflix (silverlight) player fullscreen
   [pluginControl_ sendPluginKeyCode:3 withCharCode:0];
 }
@@ -238,47 +257,17 @@ int64_t SystemIdleTime(void) {
   [self lookForFullscreen];
 }
 
-- (void)playPause
-{
-  [pluginControl_ sendPluginKeyCode:49 withCharCode:0];
-}
-
-- (void)fastForward
-{
-  if (fsWindow_) {
-    CGEventRef e1,e2,e3,e4;
-    e1 = CGEventCreateKeyboardEvent(NULL, 56, true);
-    e2 = CGEventCreateKeyboardEvent(NULL, 124, true);
-    e3 = CGEventCreateKeyboardEvent(NULL, 124, false);
-    e4 = CGEventCreateKeyboardEvent(NULL, 56, false);
-    CGEventPost(1,e1);
-    CGEventPost(1,e2);
-    CGEventPost(1,e3);
-    CGEventPost(1,e4);
-    CFRelease(e1);
-    CFRelease(e2);
-    CFRelease(e3);
-    CFRelease(e4);
-  }
-}
-
-- (void)rewind
-{
-}
-
 - (void)returnToFrontRow
 {
-  if (shouldReturnToFR_) {
-    // launch Front Row using the launcher app (not the application itself)
-    NSWorkspace* work = [NSWorkspace sharedWorkspace];
-    [work launchAppWithBundleIdentifier:@"com.apple.frontrowlauncher"
-                                options:NSWorkspaceLaunchDefault
-         additionalEventParamDescriptor:[NSAppleEventDescriptor nullDescriptor]
-                       launchIdentifier:nil];
-    [NSApp performSelector:@selector(terminate:) withObject:self afterDelay:5];
-  } else {
-    [NSApp terminate:self];
-  }
+  if (!shouldReturnToFR_) [NSApp terminate:self];
+
+  // launch Front Row using the launcher app (not the application itself)
+  NSWorkspace* work = [NSWorkspace sharedWorkspace];
+  [work launchAppWithBundleIdentifier:@"com.apple.frontrowlauncher"
+                              options:NSWorkspaceLaunchDefault
+       additionalEventParamDescriptor:[NSAppleEventDescriptor nullDescriptor]
+                     launchIdentifier:nil];
+  [NSApp performSelector:@selector(terminate:) withObject:self afterDelay:5];
 }
 
 - (void)sendRemoteButtonEvent:(RemoteControlEventIdentifier)event
@@ -286,25 +275,39 @@ int64_t SystemIdleTime(void) {
                 remoteControl:(RemoteControl*)remoteControl
 {
   // ignore button release events
+  if (!pressedDown) return;
+
   switch(event){
-    case kRemoteButtonPlus:
-      changeVolume (0.05);
-      break;
-    case kRemoteButtonMinus:
-      changeVolume (-0.05);
-      break;
-    case kRemoteButtonMenu:
-      [self returnToFrontRow];
-      break;
-    case kRemoteButtonPlay:
-      [self playPause];
-      break;
-    case kRemoteButtonRight:
-      [self fastForward];
-      break;
-    case kRemoteButtonLeft:
-      [self rewind];
-      break;
+  case kRemoteButtonPlus:
+    changeVolume (0.05);
+    break;
+  case kRemoteButtonMinus:
+    changeVolume (-0.05);
+    break;
+  case kRemoteButtonMenu:
+    [self returnToFrontRow];
+    break;
+  case kRemoteButtonPlay:
+    [self pressKey:49];         // space
+    break;
+  case kRemoteButtonRight:
+    [self pressKey:124];        // right arrow
+    break;
+  case kRemoteButtonLeft:
+    [self pressKey:123];        // left arrow
+    break;
+  case kRemoteButtonRight_Hold:
+    [self pressKey:124 withFlags:kCGEventFlagMaskShift];
+    break;
+  case kRemoteButtonLeft_Hold:
+    [self pressKey:123 withFlags:kCGEventFlagMaskShift];
+    break;
+  case kRemoteButtonAlPlay:
+    [self pressKey:49 withFlags:kCGEventFlagMaskControl];
+    break;
+  case kRemoteButtonAlSelect:
+    [self pressKey:36];         // enter
+    break;
   }
 }
 
@@ -313,7 +316,7 @@ int64_t SystemIdleTime(void) {
 // easiest way to determine if our actions succeed, and we'll know if the user
 // did something using their mouse
 
-// when the full screen window closes we bring the main window back
+// When the full screen window closes we bring the main window back.
 - (void)windowWillClose:(NSNotification *)notification
 {
   fsWindow_ = nil;
