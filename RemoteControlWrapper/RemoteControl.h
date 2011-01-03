@@ -38,8 +38,8 @@ extern NSString* const kRemoteControlDeviceName;
 extern NSString* const kApplicationIdentifier;
 extern NSString* const kTargetApplicationIdentifier;
 
-// we have a 6 bit offset to make a hold event out of a normal event
-#define EVENT_TO_HOLD_EVENT_OFFSET 6 
+// we have a 8 bit offset to make a hold event out of a normal event
+#define EVENT_TO_HOLD_EVENT_OFFSET 8 
 
 @class RemoteControl;
 
@@ -51,17 +51,21 @@ typedef enum _RemoteControlEventIdentifier {
 	kRemoteButtonPlay				=1<<4,
 	kRemoteButtonRight				=1<<5,
 	kRemoteButtonLeft				=1<<6,
+	kRemoteButtonAlPlay             =1<<7,
+	kRemoteButtonAlSelect           =1<<8,
 
- 	// hold events
-	kRemoteButtonPlus_Hold			=1<<7,
-	kRemoteButtonMinus_Hold			=1<<8,	
-	kRemoteButtonMenu_Hold			=1<<9,	
-	kRemoteButtonPlay_Hold			=1<<10,	
-	kRemoteButtonRight_Hold			=1<<11,
-	kRemoteButtonLeft_Hold			=1<<12,
-
- 	// special events (not supported by all devices)	
-	kRemoteControl_Switched			=1<<13,
+	// hold events
+	kRemoteButtonPlus_Hold			=1<<9,
+	kRemoteButtonMinus_Hold			=1<<10,	
+	kRemoteButtonMenu_Hold			=1<<11,	
+	kRemoteButtonPlay_Hold			=1<<12,	
+	kRemoteButtonRight_Hold			=1<<13,
+	kRemoteButtonLeft_Hold			=1<<14,
+	kRemoteButtonAlPlay_Hold        =1<<15,
+	kRemoteButtonAlSelect_Hold      =1<<16,
+	
+	// special events (not supported by all devices)	
+	kRemoteControl_Switched			=1<<17,
 } RemoteControlEventIdentifier;
 
 @interface NSObject(RemoteControlDelegate)
