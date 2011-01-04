@@ -1,10 +1,19 @@
+//  Copyright 2011 Jason Brown.
 //
-//  DailyShowController.m
-//  understudy
+//  This file is part of Understudy.
 //
-//  Created by jb on 11/12/10.
-//  Copyright 2010 Jason Brown. All rights reserved.
+//  Understudy is free software: you can redistribute it and/or modify it under
+//  the terms of the GNU Lesser General Public License as published by the Free
+//  Software Foundation, either version 3 of the License, or (at your option)
+//  any later version.
 //
+//  Understudy is distributed in the hope that it will be useful, but WITHOUT 
+//  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
+//  FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
+//  for more details.
+//
+//  You should have received a copy of the GNU Lesser General Public License
+//  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
 #import <stdint.h>
 
@@ -22,7 +31,7 @@
       body { margin: 0; padding: 0; } \
     </style> \
     </head> \
-    <body> \
+    <body onLoad=\"document.body.focus();\"> \
       <object \
         id=\"full_ep_video_player\" \
         type=\"application/x-shockwave-flash\" \
@@ -69,7 +78,10 @@
   [window_ display];
   [window_ orderFrontRegardless];
   [window_ setLevel:NSScreenSaverWindowLevel];
+//  [window_ setLevel:CGShieldingWindowLevel()];
+  
   [self reveal];
+  
   NSLog( @"DailyShowController:didFinishLoadForFrame done." );  
 }
 
@@ -97,7 +109,7 @@
   NSString *pageHTML = [NSString stringWithFormat:BASEHTML,
                         rect.size.width, rect.size.height,
                         [asset_ url], [asset_ url]];
-  //  NSLog( @"DailyShowController: load html: %@", pageHTML );
+  NSLog( @"DailyShowController: load html: %@", pageHTML );
   
   mainView_ = [[WebView alloc] initWithFrame:rect];
   [[[mainView_ mainFrame] frameView] setAllowsScrolling:NO];
@@ -129,6 +141,19 @@
 - (void)playPause
 {
   NSLog( @"DailyShowController:playPause called." );
+  
+  CGPoint point = CGPointMake( 500, 500 );
+  
+  CGEventRef event = CGEventCreateMouseEvent(NULL, kCGEventLeftMouseDown, point, kCGMouseButtonLeft);
+  
+  CGEventSetType(event, kCGEventLeftMouseDown);
+  CGEventPost(kCGHIDEventTap, event);
+  
+  CGEventSetType(event, kCGEventLeftMouseUp);
+  CGEventPost(kCGHIDEventTap, event);
+  
+  CFRelease(event);
+  
   [pluginControl_ sendPluginKeyCode:49 withCharCode:0];  // space-bar
 }
 
