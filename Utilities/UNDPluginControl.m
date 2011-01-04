@@ -46,6 +46,7 @@
   [views addObjectsFromArray:[mainView_ subviews]];
   while( [views count] ){
     view = [views anyObject];
+    NSLog( @"view className: %@", [view className] );
     if( [[view className] isEqual:@"WebNetscapePluginDocumentView"] )
         [plugins addObject:view];
     [views addObjectsFromArray:[view subviews]];
@@ -94,11 +95,17 @@
   }else if( [pluginView_ respondsToSelector:@selector(sendEvent:isDrawRect:)]){
     [(id) pluginView_ sendEvent:(NSEvent*) &event isDrawRect:NO];
   }
+  else {
+    NSLog( @"UNDPluginControl:sendPluginKeyCode - pluginView does not respond to selector: sendEvent" );
+  }
   event.what = keyUp;
   if( [pluginView_ respondsToSelector:@selector(sendEvent:)] ){
     [(id) pluginView_ sendEvent:(NSEvent*) &event];
   }else if( [pluginView_ respondsToSelector:@selector(sendEvent:isDrawRect:)]){
     [(id) pluginView_ sendEvent:(NSEvent*) &event isDrawRect:NO];
+  }
+  else {
+    NSLog( @"UNDPluginControl:sendPluginKeyCode - pluginView does not respond to selector: sendEvent" );
   }
 }
 
