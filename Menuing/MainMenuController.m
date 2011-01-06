@@ -1,5 +1,5 @@
 //
-//  Copyright 2008-2010 Kirk Kelsey.
+//  Copyright 2008-2011 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -19,6 +19,7 @@
 #import "UNDAssetFactory.h"
 #import "BaseUnderstudyAsset.h"
 #import "UNDExternalAppAssetProvider.h"
+#import "UNDDailyShowAssetProvider.h"
 #import "UNDHuluAssetProvider.h"
 #import "UNDNetflixAssetProvider.h"
 #import "UNDYouTubeAssetProvider.h"
@@ -71,6 +72,8 @@ static MainMenuController *sharedInstance_;
       registerProvider:[[[UNDYouTubeAssetProvider alloc] init] autorelease]];
     [factory
       registerProvider:[[[UNDiPlayerAssetProvider alloc] init] autorelease]];
+    [factory
+      registerProvider:[[[UNDDailyShowAssetProvider alloc] init] autorelease]];
     sharedInstance_ = [[MainMenuController alloc] init];
   }
   return sharedInstance_;
