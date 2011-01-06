@@ -32,8 +32,11 @@
   [self setActionSelector:@selector(itemSelected) target:self];
 
   UNDPreferenceManager* prefs = [UNDPreferenceManager sharedInstance];
-  for (NSDictionary* asset in [prefs assetDescriptions])
-    [self addOptionText:[asset objectForKey:@"title"]];
+  for (NSDictionary* asset in [prefs assetDescriptions]) {
+    NSString* title = [asset objectForKey:@"title"];
+    if (!title) title = @"<untitled>";
+    [self addOptionText:title];
+  }
 
   [self setTitle:@"Rename Asset"];
   [self setPrimaryInfoText:@"Select an asset to rename" withAttributes:nil];
