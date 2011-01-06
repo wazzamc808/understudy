@@ -51,8 +51,11 @@ typedef enum ManageOptionEnum ManageOption;
   moveDialog_ = [[BROptionDialog alloc] init];
   [moveDialog_ setTitle:@"Move Asset"];
   UNDPreferenceManager* prefs = [UNDPreferenceManager sharedInstance];
-  for (NSDictionary* asset in [prefs assetDescriptions])
-    [moveDialog_ addOptionText:[asset objectForKey:@"title"]];
+  for (NSDictionary* asset in [prefs assetDescriptions]) {
+    NSString* title = [asset objectForKey:@"title"];
+    if (!title) title = @"<untitled>";
+    [moveDialog_ addOptionText:title];
+  }
   [moveDialog_ setActionSelector:@selector(_moveFrom) target:self];
   [[self stack] pushController:moveDialog_];
 }
@@ -81,8 +84,11 @@ typedef enum ManageOptionEnum ManageOption;
   [removeDialog_ setTitle:@"Remove Asset"];
 
   UNDPreferenceManager* prefs = [UNDPreferenceManager sharedInstance];
-  for (NSDictionary* asset in [prefs assetDescriptions])
-    [removeDialog_ addOptionText:[asset objectForKey:@"title"]];
+  for (NSDictionary* asset in [prefs assetDescriptions]) {
+    NSString* title = [asset objectForKey:@"title"];
+    if (!title) title = @"<untitled>";
+    [removeDialog_ addOptionText:title];
+  }
 
   [removeDialog_ setActionSelector:@selector(_remove) target:self];
   [[self stack] pushController:removeDialog_];
