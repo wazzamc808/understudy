@@ -16,46 +16,59 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
-#import "UNDManageDialog.h"
-#import "UNDPreferenceManager.h"
-#import "UNDRenameDialog.h"
-
 #import <BRControllerStack.h>
 #import <BRMenuListItemProvider-Protocol.h>
 #import <BRListControl.h>
 #import <BRTextMenuItemLayer.h>
 
-@implementation UNDManageDialog
+#import "UNDEditDialog.h"
+
+@implementation UNDEditDialog
 
 typedef enum
 {
-  kAddOption = 0,
-  kEnableOption,
+  kSelectOption = 0,
+  kRemoveOption,
+  kRenameOption,
+  kMoveOption,
   kOptionCount // this must be immediately after the last valid option
 } ManageOption;
 
-- (id)init
+- (id)initWithCollection:(UNDMutableCollection*)collection
+                forIndex:(long)index
 {
   [super init];
   [self setTitle:[self title]];
-  addController_ = [[UNDAddAssetDialog alloc] init];
+  collection_ = [collection retain];
+  index_ = index;
   [[self list] setDatasource:self];
   return self;
+}
+
+- (void)dealloc
+{
+  [collection_ release];
+  [super dealloc];
 }
 
 #pragma mark Controller
 
 - (void)itemSelected:(long)index
 {
+  NSArray* assets;
   ManageOption option = (ManageOption)index;
-  switch( option )
-  {
-  case kAddOption:
-    [[self stack] pushController:addController_];
+  switch (option) {
+  case kSelectOption:
+    assets = [collection_ currentAssets];
+    NSObject<UnderstudyAsset>* asset = [assets objectAtIndex:index_];
+    [[self stack] swapController:[asset controller]];
     break;
-  case kEnableOption:
-    enabled_ = !enabled_;
-    [[self stack] popController];
+  case kRemoveOption:
+    [collection_ removeAssetAtIndex:index_];
+    break;
+  case kRenameOption:
+    break;
+  case kMoveOption:
     break;
   case kOptionCount:
     break;
@@ -66,27 +79,8 @@ typedef enum
 {
   [super controlWillActivate];
   [[self list] reload];
-  if( ![self rowSelectable:[self selectedItem]] )
+  if (![self rowSelectable:[self selectedItem]])
     [self setSelectedItem:0];
-}
-
--(BOOL)assetManagementEnabled
-{
-  return enabled_;
-}
-
--(void)disableAssetManagement
-{
-  enabled_ = NO;
-}
-
-static UNDManageDialog* sharedInstance_;
-+ (UNDManageDialog*)sharedInstance
-{
-  if (!sharedInstance_)
-    sharedInstance_ = [[UNDManageDialog alloc] init];
-
-  return sharedInstance_;
 }
 
 #pragma mark MenuListItemProvider
@@ -95,22 +89,18 @@ static UNDManageDialog* sharedInstance_;
 - (float)heightForRow:(long)row{ return 0; }
 - (BOOL)rowSelectable:(long)row
 {
-  int count
-    = [[[UNDPreferenceManager sharedInstance] assetDescriptions] count];
-  return (row == 0 || count > 0);
+  return (row >= 0 || row < kOptionCount);
 }
 
 - (id)titleForRow:(long)row
 {
   ManageOption option = (ManageOption)row;
   switch (option) {
-  case kAddOption:
-    return @"Add Asset";
-  case kEnableOption:
-    if (enabled_) return @"Disable";
-    return @"Enable";
-  case kOptionCount:
-    break;
+  case kSelectOption: return @"Select";
+  case kRemoveOption: return @"Remove";
+  case kRenameOption: return @"Rename";
+  case kMoveOption:   return @"Move";
+  case kOptionCount: break;
   }
   return @"";
 }
@@ -119,6 +109,7 @@ static UNDManageDialog* sharedInstance_;
 {
   BRTextMenuItemLayer* item = [BRTextMenuItemLayer menuItem];
   [item setTitle:[self titleForRow:row]];
+  if( ![self rowSelectable:row] ) [item setDimmed:YES];
   return item;
 }
 
