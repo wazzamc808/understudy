@@ -1,5 +1,5 @@
 //
-//  Copyright 2008-2010 Kirk Kelsey.
+//  Copyright 2008-2011 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -18,13 +18,13 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import "UNDAssetCollection.h"
 #import "UNDNetflixAsset.h"
+#import "UNDBaseCollection.h"
 
-@interface UNDNetflixFeed
-  : UNDAssetCollection <UNDNetflixAssetUpdateDelegate>
+@interface UNDNetflixFeed : UNDBaseCollection<UNDNetflixAssetUpdateDelegate>
 {
  @private
+  NSMutableArray* assets_;
   NSMutableArray* unfinishedAssets_;
   NSURL* url_;
   unsigned updateSlots_;

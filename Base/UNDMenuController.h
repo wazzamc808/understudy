@@ -1,5 +1,5 @@
 //                                                                -*- objc -*-
-//  Copyright 2009-2010 Kirk Kelsey.
+//  Copyright 2009-2011 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -23,10 +23,14 @@
 
 @class BRTextMenuItemLayer;
 
-@protocol UNDMenuDelegate <UnderstudyAsset>
-// return an autoreleased array of UnderstudyAsset objects. Feed delegates
+@protocol UNDMenuDelegate<UnderstudyAsset>
+// Returns an autoreleased array of UnderstudyAsset objects. Feed delegates
 // should not load their assests until specifically asked.
 - (NSArray*) currentAssets;
+@end
+
+@protocol UNDMutableMenuDelegate<UNDMenuDelegate>
+- (void)removeAssetAtIndex:(long)index;
 @end
 
 @interface UNDMenuController : BRMediaMenuController<BRMenuListItemProvider>
