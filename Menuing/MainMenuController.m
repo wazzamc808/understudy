@@ -93,7 +93,7 @@ static MainMenuController *sharedInstance_;
     if (asset) [assets_ addObject:asset];
   }
 
-  [assets_ addObject:[[[UNDManageDialog alloc] init] autorelease]];
+  [assets_ addObject:[UNDManageDialog sharedInstance]];
 
   [[self list] removeDividers];
   [[self list] addDividerAtIndex:count withLabel:nil];

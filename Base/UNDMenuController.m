@@ -56,6 +56,12 @@
   [[self list] setDatasource:self];
   lastrebuild_ = [[NSDate distantPast] retain];
   [self performSelectorInBackground:@selector(reload) withObject:nil];
+
+  if ([delegate_ isKindOfClass:[UNDMutableCollection class]]) {
+    mutable_ = YES;
+    [[self list] addDividerAtIndex:1 withLabel:nil];
+  }
+
   return self;
 }
 
@@ -69,13 +75,17 @@
 - (void)reload
 {
   NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
-  if( [lastrebuild_ timeIntervalSinceNow] > (- 60 * 5)) return;
+  if ([lastrebuild_ timeIntervalSinceNow] > (- 60 * 5)) return;
   reloadActive_ = YES;
   [lastrebuild_ autorelease];
   lastrebuild_ = [[NSDate date] retain];
   [assets_ autorelease];
   assets_ = [[delegate_ currentAssets] retain];
   [[self list] reload];
+  if (mutable) {
+    [[self list] removeDividers];
+    [[self list] addDividerAtIndex:[assets_ count] withLabel:nil];
+  }
   [self updatePreviewController];
   [pool release];
   reloadActive_ = NO;
@@ -128,8 +138,7 @@
   if (![self rowSelectable:itemIndex]) return;
   BRController* controller;
 
-  if ([[UNDManageDialog sharedInstance] assetManagementEnabled] &&
-      [delegate_ isKindOfClass:[UNDMutableCollection class]])
+  if ([[UNDManageDialog sharedInstance] assetManagementEnabled] && mutabe_)
   {
     UNDMutableCollection* collection = (UNDMutableCollection*)delegate_;
     controller = [[UNDEditDialog alloc] initWithCollection:collection
