@@ -1,5 +1,5 @@
 //                                                                -*- objc -*-
-//  Copyright 2010 Kirk Kelsey.
+//  Copyright 2010-2011 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -10,23 +10,19 @@
 //
 //  Understudy is distributed in the hope that it will be useful, but WITHOUT
 //  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-//  FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
+//  FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License
 //  for more details.
 //
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
 #import "BaseUnderstudyAsset.h"
-#import "UnderstudyAsset.h"
 #import "UNDMenuController.h"
 
-@interface UNDAssetCollection : BaseUnderstudyAsset <UNDMenuDelegate>
+/// Convenience class to provide controller and menu item for collections.
+@interface UNDBaseCollection : BaseUnderstudyAsset<UNDMenuDelegate>
 {
-  NSArray*        contents_;
-  NSMutableArray* assets_;
   BRController*   controller_;
 }
-
-- (id)initWithTitle:(NSString*)title forContents:(NSArray*)contents;
 
 @end
