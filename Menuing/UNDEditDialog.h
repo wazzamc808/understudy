@@ -8,9 +8,9 @@
 //  Software Foundation, either version 3 of the License, or (at your option)
 //  any later version.
 //
-//  Understudy is distributed in the hope that it will be useful, but WITHOUT 
-//  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
-//  FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
+//  Understudy is distributed in the hope that it will be useful, but WITHOUT
+//  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+//  FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License
 //  for more details.
 //
 //  You should have received a copy of the GNU Lesser General Public License
@@ -22,19 +22,17 @@
 #import <BRMenuListItemProvider-Protocol.h>
 #import <BRCenteredMenuController.h>
 
-#import "UNDAddAssetDialog.h"
-#import "UnderstudyAsset.h"
-  
-@interface UNDManageDialog : BRCenteredMenuController 
+#import "UNDMutableCollection.h"
+
+@interface UNDEditDialog : BRCenteredMenuController 
 <BRMenuListItemProvider,UnderstudyAsset>
 {
-  UNDAddAssetDialog* addController_;
-  BOOL enabled_;
+  UNDMutableCollection* collection_;
+  long index_;
 }
 
-+(UNDManageDialog*)sharedInstance;
-
--(BOOL)assetManagementEnabled;
--(void)disableAssetManagement;
+/// Returns a new UNDEditDialog for the asset at a given index in a collection.
+- (id)initWithCollection:(UNDMutableCollection*)collection
+                forIndex:(long)index;
 
 @end
