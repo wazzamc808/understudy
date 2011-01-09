@@ -39,6 +39,7 @@
   NSArray* assets_;
   NSObject<UNDMenuDelegate>* delegate_;  // delegate is retained by controller
   NSDate* lastrebuild_;
+  BOOL mutable_;
   BOOL reloadActive_;           // true when the asset list is being reloaded
   int  height_;                 // how high on the stack this controller is
 }
