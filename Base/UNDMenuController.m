@@ -16,6 +16,8 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
+#import "UNDEditDialog.h"
+#import "UNDManageDialog.h"
 #import "UNDMenuController.h"
 #import "BaseController.h"
 #import "UnderstudyAsset.h"
@@ -123,10 +125,19 @@
 
 - (void)itemSelected:(long)itemIndex
 {
-  if( ![self rowSelectable:itemIndex] ) return;
+  if (![self rowSelectable:itemIndex]) return;
+  BRController* controller;
 
-  id<UnderstudyAsset> asset = [assets_ objectAtIndex:itemIndex];
-  BRController* controller = [asset controller];
+  if ([[UNDManageDialog sharedInstance] assetManagementEnabled] &&
+      [delegate_ isKindOfClass:[UNDMutableCollection class]])
+  {
+    UNDMutableCollection* collection = (UNDMutableCollection*)delegate_;
+    controller = [[UNDEditDialog alloc] initWithCollection:collection
+                                                  forIndex:itemIndex];
+  } else {
+    id<UnderstudyAsset> asset = [assets_ objectAtIndex:itemIndex];
+    controller = [asset controller];
+  }
 
   if (controller)
     [[self stack] pushController:controller];
