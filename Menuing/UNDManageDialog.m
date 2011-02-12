@@ -105,10 +105,10 @@ static UNDManageDialog* sharedInstance_;
   ManageOption option = (ManageOption)row;
   switch (option) {
   case kAddOption:
-    return @"Add Asset";
+    return @"Add asset to the main menu";
   case kEnableOption:
-    if (enabled_) return @"Disable";
-    return @"Enable";
+    if (enabled_) return @"Disable management dialogs";
+    return @"Enable management dialogs";
   case kOptionCount:
     break;
   }
