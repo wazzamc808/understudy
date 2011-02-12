@@ -29,6 +29,7 @@
 {
   UNDMutableCollection* collection_;
   long index_;
+  NSString* title_;
 }
 
 /// Returns a new UNDEditDialog for the asset at a given index in a collection.

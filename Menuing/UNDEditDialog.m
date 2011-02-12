@@ -22,6 +22,7 @@
 #import <BRTextMenuItemLayer.h>
 
 #import "UNDEditDialog.h"
+#import "UnderstudyAsset.h"
 
 @implementation UNDEditDialog
 
@@ -38,8 +39,8 @@ typedef enum
                 forIndex:(long)index
 {
   [super init];
-  [self setTitle:[self title]];
   collection_ = [collection retain];
+  [self setTitle:[self title]];
   index_ = index;
   [[self list] setDatasource:self];
   return self;
@@ -48,6 +49,7 @@ typedef enum
 - (void)dealloc
 {
   [collection_ release];
+  [title_ release];
   [super dealloc];
 }
 
@@ -109,7 +111,7 @@ typedef enum
 {
   BRTextMenuItemLayer* item = [BRTextMenuItemLayer menuItem];
   [item setTitle:[self titleForRow:row]];
-  if( ![self rowSelectable:row] ) [item setDimmed:YES];
+  if (![self rowSelectable:row]) [item setDimmed:YES];
   return item;
 }
 
@@ -125,7 +127,13 @@ typedef enum
 
 - (NSString*)title
 {
-  return @"Manage Assets";
+  if (title_) return title_;
+  title_ = [[NSString stringWithString:@"Manage Asset"] retain];
+  if (!collection_) return title_;
+  NSArray* assets = [[[collection_ currentAssets] retain] autorelease];
+  if (index_ >= [assets count]) return title_;
+  title_ = [[(id<UnderstudyAsset>)[assets objectAtIndex:index_] title] copy];
+  return title_;
 }
 
 - (NSArray*)containedAssets
