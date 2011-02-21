@@ -1,5 +1,5 @@
 //
-//  Copyright 2009 Kirk Kelsey.
+//  Copyright 2009-2011 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -19,6 +19,7 @@
 #import "BaseUnderstudyAsset.h"
 #import "UnderstudyAsset.h"
 
+@class BRImage;
 @class BRTextMenuItemLayer;
 @class UNDExternalLaunchController;
 
@@ -26,6 +27,7 @@
 {
   UNDExternalLaunchController* controller_;
   NSString* appName_;
+  BRImage*  image_;
 }
 
 - (id) initWithAppName:(NSString*)appName;
