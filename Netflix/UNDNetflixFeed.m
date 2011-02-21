@@ -54,7 +54,11 @@
   doc = [[[NSXMLDocument alloc] initWithContentsOfURL:url_
                                               options:0
                                                 error:&err] autorelease];
-  if( !doc ) return nil;
+  if (!doc) {
+    NSLog(@"error retrieving Netflix feed: %@", err);
+    return nil;
+  }
+
   NSXMLElement* root = [doc rootElement];
   NSXMLElement* channel = [[root elementsForName:@"channel"] objectAtIndex:0];
   NSArray* feeditems = [channel elementsForName:@"item"];
