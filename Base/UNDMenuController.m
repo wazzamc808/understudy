@@ -52,7 +52,7 @@
   delegate_ = [delegate retain];
   [self setListTitle:[delegate_ title]];
   UNDLoadingAsset* loading = [[[UNDLoadingAsset alloc] init] autorelease];
-  assets_ = [[NSArray arrayWithObject:loading] retain];
+  assets_ = [[NSMutableArray arrayWithObject:loading] retain];
   [[self list] setDatasource:self];
   lastrebuild_ = [[NSDate distantPast] retain];
   [self performSelectorInBackground:@selector(reload) withObject:nil];
