@@ -31,6 +31,8 @@
 
 @protocol UNDMutableMenuDelegate<UNDMenuDelegate>
 - (void)removeAssetAtIndex:(long)index;
+- (void)addAssetWithDescription:(NSDictionary*)description atIndex:(long)index;
+- (void)renameAssetAtIndex:(long)index toTitle:(NSString*)title;
 @end
 
 @interface UNDMenuController : BRMediaMenuController<BRMenuListItemProvider>
