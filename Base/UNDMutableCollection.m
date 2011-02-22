@@ -62,6 +62,20 @@
   return assets_;
 }
 
+- (void)addAssetWithDescription:(NSDictionary*)description atIndex:(long)index
+{
+  if (index < 0) return;
+  if (!assets_) [self currentAssets];
+
+  UNDAssetFactory* factory = [UNDAssetFactory sharedInstance];
+  NSMutableDictionary* content = [[description mutableCopy] autorelease];
+  NSObject* asset = [[factory newAssetForContent:content] autorelease];
+
+  [assets_ insertObject:asset atIndex:index];
+  [contents_ insertObject:content atIndex:index];
+  [[UNDPreferenceManager sharedInstance] save];
+}
+
 - (void)removeAssetAtIndex:(long)index
 {
   if (index < 0) return;
@@ -75,5 +89,22 @@
   [contents_ removeObjectAtIndex:index];
   [[UNDPreferenceManager sharedInstance] save];
 }
+
+/// Changes the name of the entry at @param index to @param title.
+- (void)renameAssetAtIndex:(long)index toTitle:(NSString*)title
+{
+  if (index < 0) return;
+  if (!assets_) [self currentAssets];
+
+  UNDAssetFactory* factory = [UNDAssetFactory sharedInstance];
+  NSMutableDictionary* content = [contents_ objectAtIndex:index];
+  [content setObject:[[title copy] autorelease]
+              forKey:UNDAssetProviderTitleKey];
+  NSObject* asset = [[factory newAssetForContent:content] autorelease];
+
+  [assets_ replaceObjectAtIndex:index withObject:asset];
+  [[UNDPreferenceManager sharedInstance] save];
+}
+
 
 @end
