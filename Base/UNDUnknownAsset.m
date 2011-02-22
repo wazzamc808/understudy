@@ -23,16 +23,16 @@
 
 @implementation UNDUnknownAsset
 
-- (id)initWithContents:(NSDictionary*)contents
+- (id)initWithObject:(NSObject*)object
 {
   [super init];
-  contents_ = [contents retain];
+  object_ = [object retain];
   return self;
 }
 
 - (void)dealloc
 {
-  [contents_ release];
+  [object_ release];
   [super dealloc];
 }
 
@@ -50,15 +50,17 @@
     [BRAlertController alertOfType:0 // Informational alert.
                             titled:@"Unknown Media Type"
                        primaryText:@"Understudy Doesn't know how to handle:"
-                     secondaryText:[contents_ description]];
+                     secondaryText:[object_ description]];
   return controller;
 }
 
 - (NSString*)title
 {
-  if ([contents_ objectForKey:@"title"])
-    return [contents_ objectForKey:@"title"];
-  else return @"unknown title";
+  if ([object_ isKindOfClass:[NSDictionary class]] &&
+      [(NSDictionary*)object_ objectForKey:@"title"])
+    return [(NSDictionary*)object_ objectForKey:@"title"];
+  else
+    return @"unknown title";
 }
 
 

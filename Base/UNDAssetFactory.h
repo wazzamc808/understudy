@@ -1,5 +1,5 @@
 //
-//  Copyright 2010 Kirk Kelsey.
+//  Copyright 2010,2011 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -37,20 +37,18 @@
 @end
 
 // Standard keys used in asset content descriptions.
-extern NSString* UNDAssetProviderNameKey;  // @"provider"
-extern NSString* UNDAssetProviderTitleKey; // @"title"
-extern NSString* UNDAssetProviderUrlKey;   // @"URL"
+extern NSString* UNDAssetProviderNameKey;   // @"provider"
+extern NSString* UNDAssetProviderTitleKey;  // @"title"
+extern NSString* UNDAssetProviderUrlKey;    // @"URL"
+extern NSString* UNDAssetProviderAssetsKey; // @"assets"
 
 @class UNDAddAssetDialog;
 
-@interface UNDAssetFactory : BRSingleton <UNDAssetProvider>
+@interface UNDAssetFactory : BRSingleton<UNDAssetProvider>
 {
   NSMutableDictionary* providers_;
   UNDAddAssetDialog*   addDialog_;
 }
-
-/// Returns an asset based on the \param content.
-- (NSObject<UnderstudyAsset>*)newAssetForContent:(NSDictionary*)content;
 
 - (void)registerProvider:(NSObject<UNDAssetProvider>*)provider;
 
