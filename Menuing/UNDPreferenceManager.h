@@ -1,5 +1,5 @@
 //                                                                -*- objc -*-
-//  Copyright 2009-2010 Kirk Kelsey.
+//  Copyright 2009-2011 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -19,10 +19,6 @@
 #import <Cocoa/Cocoa.h>
 
 #import <BRSingleton.h>
-
-@protocol UNDPreferenceSubscriber
-- (void)preferencesDidChange;
-@end
 
 @interface UNDPreferenceManager : NSObject
 {
@@ -64,6 +60,4 @@
 
 - (void)load;
 - (void)save;
-
-- (void)addSubscriber:(id<UNDPreferenceSubscriber>)subscriber;
 @end
