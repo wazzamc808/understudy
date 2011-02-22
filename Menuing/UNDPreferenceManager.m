@@ -63,7 +63,7 @@ static UNDPreferenceManager *sharedInstance_;
   return sharedInstance_;
 }
 
-- (NSArray*)assetDescriptions
+- (NSMutableArray*)assetDescriptions
 {
   return assets_;
 }
@@ -201,7 +201,7 @@ static UNDPreferenceManager *sharedInstance_;
   NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
   NSDictionary* prefDict = [defaults persistentDomainForName:DEFAULTS_DOMAIN];
   NSMutableDictionary* prefs;
-  if( prefDict )
+  if (prefDict)
     prefs = [[prefDict mutableCopy] autorelease];
   else
     prefs = [NSMutableDictionary dictionary];

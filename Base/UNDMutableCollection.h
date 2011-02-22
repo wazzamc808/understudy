@@ -23,10 +23,10 @@
 
 @interface UNDMutableCollection : UNDBaseCollection<UNDMutableMenuDelegate>
 {
-  NSArray*        contents_;
+  NSMutableArray* contents_;
   NSMutableArray* assets_;
 }
 
-- (id)initWithTitle:(NSString*)title forContents:(NSArray*)contents;
+- (id)initWithTitle:(NSString*)title forContents:(NSMutableArray*)contents;
 
 @end

@@ -56,7 +56,7 @@
                                 autorelease]];
     [factory registerProvider:[[[UNDiPlayerAssetProvider alloc] init]
                                 autorelease]];
-    NSArray* descriptions
+    NSMutableArray* descriptions
       = [[UNDPreferenceManager sharedInstance] assetDescriptions];
 
     UNDMutableCollection *collection

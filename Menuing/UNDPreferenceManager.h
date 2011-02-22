@@ -43,7 +43,7 @@
 + (NSString*)accountForService:(NSString*)service;
 + (BOOL)alertsAreDisabled;
 
-- (NSArray*)assetDescriptions;
+- (NSMutableArray*)assetDescriptions;
 
 - (void)addAssetWithDescription:(NSDictionary*)description;
 - (void)moveAssetFromIndex:(long)from toIndex:(long)to;

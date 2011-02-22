@@ -20,10 +20,11 @@
 
 #import "UNDAssetFactory.h"
 #import "UNDMutableCollection.h"
+#import "UNDPreferenceManager.h"
 
 @implementation UNDMutableCollection
 
-- (id)initWithTitle:(NSString*)title forContents:(NSArray*)contents
+- (id)initWithTitle:(NSString*)title forContents:(NSMutableArray*)contents
 {
   [super initWithTitle:title];
   contents_ = [contents retain];
@@ -32,6 +33,7 @@
 
 - (void)dealloc
 {
+  [assets_ release];
   [contents_ release];
   [controller_ release];
   [super dealloc];
@@ -39,12 +41,23 @@
 
 - (NSArray*)currentAssets
 {
+  // Builds an array of assets based on the dictionaries contained in the
+  // original contents array. Mutable copies of the dictionaries are made to
+  // allow for later editing.
   if (!assets_) {
-    assets_ = [[NSMutableArray arrayWithCapacity:[contents_ count]] retain];
+    int capacity = [contents_ count];
+    assets_ = [[NSMutableArray arrayWithCapacity:capacity] retain];
+    NSMutableArray* mutableContents
+      = [[[NSMutableArray arrayWithCapacity:capacity] retain] autorelease];
     UNDAssetFactory* assetFactory = [UNDAssetFactory sharedInstance];
-    for (NSDictionary* content in contents_)
+    for (NSDictionary* content in contents_) {
+      NSMutableDictionary* newContent = [[content mutableCopy] autorelease];
       [assets_
-        addObject:[[assetFactory newAssetForContent:content] autorelease]];
+        addObject:[[assetFactory newAssetForContent:newContent] autorelease]];
+      [mutableContents addObject:newContent];
+    }
+    // Replace the contents with the mutable copies.
+    [contents_ setArray:mutableContents];
   }
   return assets_;
 }
@@ -53,7 +66,14 @@
 {
   if (index < 0) return;
   if (!assets_) [self currentAssets];
-  if (index >= [assets_ count]) [assets_ removeObjectAtIndex:index];
+
+  int assetCount = [assets_ count], contentCount = [contents_ count];
+  if (assetCount != contentCount) return;
+  if (index >= assetCount) return;
+
+  [assets_ removeObjectAtIndex:index];
+  [contents_ removeObjectAtIndex:index];
+  [[UNDPreferenceManager sharedInstance] save];
 }
 
 @end
