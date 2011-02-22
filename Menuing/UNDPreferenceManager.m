@@ -212,21 +212,6 @@ static UNDPreferenceManager *sharedInstance_;
   if (menuState_) [prefs setObject:menuState_ forKey:@"menustate"];
   else [prefs removeObjectForKey:@"menustate"];
   [defaults setPersistentDomain:prefs forName:DEFAULTS_DOMAIN];
-  // We do not automatically notify subscribers because some internal state
-  // (e.g. the menu stack) may update and be saved but not affect subscribers.
-}
-
-#pragma mark Subscription
-- (void)addSubscriber:(id<UNDPreferenceSubscriber>)subscriber
-{
-  [subscribers_ addObject:subscriber];
-}
-
-- (void)notifySubscribers
-{
-  id<UNDPreferenceSubscriber>subscriber;
-  for( subscriber in subscribers_ )
-    [subscriber preferencesDidChange];
 }
 
 #pragma mark Feed Arrangement
@@ -234,7 +219,6 @@ static UNDPreferenceManager *sharedInstance_;
 {
   [assets_ addObject:description];
   [self save];
-  [self notifySubscribers];
 }
 
 - (void)moveAssetFromIndex:(long)from toIndex:(long)to
@@ -254,14 +238,12 @@ static UNDPreferenceManager *sharedInstance_;
   [assets_ insertObject:item atIndex:to];
 
   [self save];
-  [self notifySubscribers];
 }
 
 - (void)removeAssetAtIndex:(long)index
 {
   [assets_ removeObjectAtIndex:index];
   [self save];
-  [self notifySubscribers];
 }
 
 - (void)replaceAssetDescriptionAtIndex:(long)index
@@ -269,7 +251,6 @@ static UNDPreferenceManager *sharedInstance_;
 {
   [assets_ replaceObjectAtIndex:index withObject:description];
   [self save];
-  [self notifySubscribers];
 }
 
 @end
