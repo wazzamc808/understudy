@@ -26,6 +26,7 @@
 		DF0EDFCD0EE5E187008FA08A /* English.lproj in Resources */ = {isa = PBXBuildFile; fileRef = DF0EDFCA0EE5E187008FA08A /* English.lproj */; };
 		DF0F917B12D94F790000C613 /* UNDMutableCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = DF0F917A12D94F790000C613 /* UNDMutableCollection.m */; };
 		DF0F919212D96A470000C613 /* UNDEditDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = DF0F919112D96A470000C613 /* UNDEditDialog.m */; };
+		DF184B50133683510087602F /* UNDCollectionAddDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = DF184B4F133683510087602F /* UNDCollectionAddDialog.m */; };
 		DF2EB1960F574D5200D650B7 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF2EB1950F574D5200D650B7 /* IOKit.framework */; };
 		DF2EB2110F577F0C00D650B7 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF2EB2100F577F0C00D650B7 /* Carbon.framework */; };
 		DF318FF60FC5B6C1004CE50D /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFE014940EDF681D00AFD18F /* WebKit.framework */; };
@@ -173,6 +174,8 @@
 		DF0F917A12D94F790000C613 /* UNDMutableCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UNDMutableCollection.m; sourceTree = "<group>"; };
 		DF0F919012D96A470000C613 /* UNDEditDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UNDEditDialog.h; sourceTree = "<group>"; };
 		DF0F919112D96A470000C613 /* UNDEditDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UNDEditDialog.m; sourceTree = "<group>"; };
+		DF184B4E133683510087602F /* UNDCollectionAddDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UNDCollectionAddDialog.h; sourceTree = "<group>"; };
+		DF184B4F133683510087602F /* UNDCollectionAddDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UNDCollectionAddDialog.m; sourceTree = "<group>"; };
 		DF2EB1950F574D5200D650B7 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		DF2EB2100F577F0C00D650B7 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
 		DF318F2E0FC4B418004CE50D /* HuluPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HuluPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -597,6 +600,8 @@
 				DFC876EE12AB454000CB8E88 /* UNDAssetFactory.m */,
 				DFC876B112AB33FC00CB8E88 /* UNDBaseCollection.h */,
 				DFC876B212AB33FC00CB8E88 /* UNDBaseCollection.m */,
+				DF184B4E133683510087602F /* UNDCollectionAddDialog.h */,
+				DF184B4F133683510087602F /* UNDCollectionAddDialog.m */,
 				DF382DFB12DA86CE001DBCB6 /* UNDCollectionProvider.h */,
 				DF382DFC12DA86CE001DBCB6 /* UNDCollectionProvider.m */,
 				DFDF5BCE129F154C00B1941C /* UNDExternalAppAsset.h */,
@@ -893,6 +898,7 @@
 				DF0F917B12D94F790000C613 /* UNDMutableCollection.m in Sources */,
 				DF0F919212D96A470000C613 /* UNDEditDialog.m in Sources */,
 				DF382DFD12DA86CE001DBCB6 /* UNDCollectionProvider.m in Sources */,
+				DF184B50133683510087602F /* UNDCollectionAddDialog.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
