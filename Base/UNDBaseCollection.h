@@ -22,7 +22,7 @@
 /// Convenience class to provide controller and menu item for collections.
 @interface UNDBaseCollection : BaseUnderstudyAsset<UNDMenuDelegate>
 {
-  BRController*   controller_;
+  UNDMenuController*   controller_;
 }
 
 @end

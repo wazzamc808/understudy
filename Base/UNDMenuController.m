@@ -55,7 +55,7 @@
   assets_ = [[NSMutableArray arrayWithObject:loading] retain];
   [[self list] setDatasource:self];
   lastrebuild_ = [[NSDate distantPast] retain];
-  [self performSelectorInBackground:@selector(reload) withObject:nil];
+  [self performSelectorInBackground:@selector(maybeReload) withObject:nil];
 
   if ([delegate_ isKindOfClass:[UNDMutableCollection class]])
     mutable_ = YES;
@@ -70,10 +70,16 @@
   [super dealloc];
 }
 
+- (void)maybeReload
+{
+  if (reloadActive_) return;
+  NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
+  if ([lastrebuild_ timeIntervalSinceNow] < (- 60 * 5)) [self reload];
+  [pool release];
+}
+
 - (void)reload
 {
-  NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
-  if ([lastrebuild_ timeIntervalSinceNow] > (- 60 * 5)) return;
   reloadActive_ = YES;
   [lastrebuild_ autorelease];
   lastrebuild_ = [[NSDate date] retain];
@@ -85,7 +91,6 @@
     [[self list] addDividerAtIndex:[assets_ count] withLabel:nil];
   }
   [self updatePreviewController];
-  [pool release];
   reloadActive_ = NO;
 }
 
@@ -93,7 +98,7 @@
 
 - (void)controlWasActivated
 {
-  [self reload];
+  [self maybeReload];
   [super controlWasActivated];
   if (!reloadActive_) [self attemptMenuRestore];
   height_ = [[self stack] count];
