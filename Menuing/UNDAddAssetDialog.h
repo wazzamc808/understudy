@@ -1,5 +1,5 @@
 //                                                                -*- objc -*-
-//  Copyright 2008-2010 Kirk Kelsey.
+//  Copyright 2008-2011 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -20,9 +20,12 @@
 
 #import <BROptionDialog.h>
 
-@interface UNDAddAssetDialog : BROptionDialog
+#import "UNDMutableCollection.h"
+
+@interface UNDAddAssetDialog : BROptionDialog<UNDCollectionMutator>
 {
-  NSMutableArray* dialogs_;
+  NSMutableArray*       dialogs_;
+  UNDMutableCollection* collection_;  //< weak reference
 }
 
 @end

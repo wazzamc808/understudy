@@ -1,5 +1,5 @@
 //
-//  Copyright 2009,2010 Kirk Kelsey.
+//  Copyright 2009-2011 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -18,7 +18,7 @@
 
 #import "UNDiPlayerAddDialog.h"
 #import "UNDiPlayerAssetProvider.h"
-#import "UNDPreferenceManager.h"
+#import "UNDMutableCollection.h"
 
 #import <BRControllerStack.h>
 #import <BRListControl.h>
@@ -66,17 +66,22 @@ News, Religion & Ethics, Sport, Sign Zone, Northern Ireland, Scotland, Wales */
   [super dealloc];
 }
 
+- (void)setCollection:(UNDMutableCollection*)collection
+{
+  collection_ = collection;
+}
+
 // call-back for an item having been selected
 - (void)itemSelected:(long)index
 {
   if (index < [feeds_ count]) {
-    UNDPreferenceManager* pref = [UNDPreferenceManager sharedInstance];
     NSString* feed = [feeds_ objectAtIndex:index];
     NSString* title = [titles_ objectAtIndex:index];
     NSDictionary* asset =
       [NSDictionary dictionaryWithObjectsAndKeys:feed, @"URL", title, @"title",
                     UNDiPlayerAssetProviderId, @"provider", nil];
-    [pref addAssetWithDescription:asset];
+    [collection_ addAssetWithDescription:asset
+                                 atIndex:LONG_MAX];
     [[PSClient applicationClient] addFeedWithURL:[NSURL URLWithString:feed]];
   }
   [[self stack] popController];

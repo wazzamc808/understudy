@@ -1,5 +1,5 @@
 //
-//  Copyright 2008-2009 Kirk Kelsey.
+//  Copyright 2008-2009,2011 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -62,17 +62,22 @@
   [super dealloc];
 }
 
+- (void)setCollection:(UNDMutableCollection*)collection
+{
+  collection_ = collection;
+}
+
 // call-back for an item having been selected
 - (void)itemSelected:(long)index
 {
   if (index < [feeds_ count]) {
-    UNDPreferenceManager* pref = [UNDPreferenceManager sharedInstance];
     NSString* feed = [feeds_ objectAtIndex:index];
     NSString* title = [titles_ objectAtIndex:index];
     NSDictionary* asset =
       [NSDictionary dictionaryWithObjectsAndKeys:feed, @"URL", title, @"title",
                     UNDHuluAssetProviderId, @"provider", nil];
-    [pref addAssetWithDescription:asset];
+    [collection_ addAssetWithDescription:asset
+                                 atIndex:LONG_MAX];
     [[PSClient applicationClient] addFeedWithURL:[NSURL URLWithString:feed]];
   }
   [[self stack] popController];

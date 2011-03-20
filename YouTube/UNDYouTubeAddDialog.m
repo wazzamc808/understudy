@@ -1,5 +1,5 @@
 //
-//  Copyright 2009 Kirk Kelsey.
+//  Copyright 2009,2011 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -16,7 +16,7 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
-#import "UNDPreferenceManager.h"
+#import "UNDMutableCollection.h"
 #import "UNDYouTubeAddDialog.h"
 #import "UNDYouTubeAssetProvider.h"
 
@@ -64,17 +64,21 @@
   [super dealloc];
 }
 
+- (void)setCollection:(UNDMutableCollection*)collection
+{
+  collection_ = collection;
+}
+
 // call-back for an item having been selected
 - (void)itemSelected:(long)index
 {
   if (index < [feeds_ count]) {
-    UNDPreferenceManager* pref = [UNDPreferenceManager sharedInstance];
     NSString* feed = [feeds_ objectAtIndex:index];
     NSString* title = [titles_ objectAtIndex:index];
     NSDictionary* asset =
       [NSDictionary dictionaryWithObjectsAndKeys:feed, @"URL", title, @"title",
                     UNDYouTubeAssetProviderId, @"provider", nil];
-    [pref addAssetWithDescription:asset];
+    [collection_ addAssetWithDescription:asset atIndex:LONG_MAX];
     [[PSClient applicationClient] addFeedWithURL:[NSURL URLWithString:feed]];
   }
   [[self stack] popController];

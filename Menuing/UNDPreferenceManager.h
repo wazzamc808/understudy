@@ -45,12 +45,6 @@
 
 - (NSMutableArray*)assetDescriptions;
 
-- (void)addAssetWithDescription:(NSDictionary*)description;
-- (void)moveAssetFromIndex:(long)from toIndex:(long)to;
-- (void)removeAssetAtIndex:(long)index;
-- (void)replaceAssetDescriptionAtIndex:(long)index
-                       withDescription:(NSDictionary*)description;
-
 // The menu state should be saved as it should later be used (e.g. before
 // pushing the final controller). The menu state may be nil if nothing should
 // be restored.

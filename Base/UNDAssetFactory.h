@@ -21,6 +21,7 @@
 #import "BRSingleton.h"
 
 #import "UnderstudyAsset.h"
+#import "UNDMutableCollection.h"
 
 @class BRController;
 
@@ -31,9 +32,8 @@
 /// Returns a descriptive name for the provider.
 - (NSString*)providerName;
 
-
 /// Returns a (possibly nil) BRController allowing the user to add new assets.
-- (BRController*)assetAdditionDialog;
+- (BRController<UNDCollectionMutator>*)assetAdditionDialog;
 @end
 
 // Standard keys used in asset content descriptions.

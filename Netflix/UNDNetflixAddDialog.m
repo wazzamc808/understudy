@@ -22,8 +22,8 @@
 
 #import <PubSub/PubSub.h>
 
+#import "UNDMutableCollection.h"
 #import "UNDNetflixAssetProvider.h"
-#import "UNDPreferenceManager.h"
 
 @interface UNDNetflixAddDialog (PrivateMethods)
 - (void)_startAutoDiscovery;
@@ -61,6 +61,11 @@ NSString* NETFLIXTITLES[] = {
   [queue_ release];
 }
 
+- (void)setCollection:(UNDMutableCollection*)collection
+{
+  collection_ = collection;
+}
+
 // call-back for an item having been selected
 - (void)itemSelected
 {
@@ -79,11 +84,11 @@ NSString* NETFLIXTITLES[] = {
   }
 
   if (url && title) {
-    UNDPreferenceManager* pref = [UNDPreferenceManager sharedInstance];
     NSDictionary* asset =
       [NSDictionary dictionaryWithObjectsAndKeys:url, @"URL", title, @"title",
                     UNDNetflixAssetProviderId, @"provider", nil];
-    [pref addAssetWithDescription:asset];
+    [collection_ addAssetWithDescription:asset
+                                 atIndex:LONG_MAX];
     [[PSClient applicationClient] addFeedWithURL:[NSURL URLWithString:url]];
   }
 

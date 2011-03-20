@@ -152,8 +152,9 @@
 
   // The manage dialog hangs off the end of the asset array.
   if (itemIndex == [assets_ count]) {
+    if (mutable_)
+      [manager setCollection:(UNDMutableCollection*)delegate_];
     controller = manager;
-
   } else if ([manager assetManagementEnabled] && mutable_) {
     UNDMutableCollection* collection = (UNDMutableCollection*)delegate_;
     controller = [[[UNDEditDialog alloc]

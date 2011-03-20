@@ -62,6 +62,8 @@
   return assets_;
 }
 
+/// If the index if beyond the end of the current list, the asset will
+/// simply be added in the final position.
 - (void)addAssetWithDescription:(NSDictionary*)description atIndex:(long)index
 {
   if (index < 0) return;
@@ -70,6 +72,8 @@
   UNDAssetFactory* factory = [UNDAssetFactory sharedInstance];
   NSMutableDictionary* content = [[description mutableCopy] autorelease];
   NSObject* asset = [[factory newAssetForContent:content] autorelease];
+
+  if (index > [assets_ count]) index = [assets_ count];
 
   [assets_ insertObject:asset atIndex:index];
   [contents_ insertObject:content atIndex:index];
