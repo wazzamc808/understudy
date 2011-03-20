@@ -65,6 +65,30 @@ typedef enum
   [[self stack] popController];
 }
 
+#pragma mark Move Asset
+- (void)_presentMoveDialog
+{
+  [moveDialog_ release];
+  moveDialog_ = [[BROptionDialog alloc] init];
+  [moveDialog_ setTitle:@"Insert In Position:"];
+  for (id<UnderstudyAsset> asset in [collection_ currentAssets]) {
+    NSString* title = [asset title];
+    if (!title) title = @"<untitled>";
+    [moveDialog_ addOptionText:title];
+  }
+  [moveDialog_ setActionSelector:@selector(_moveTo) target:self];
+  [[self stack] swapController:moveDialog_];
+}
+
+- (void)_moveTo
+{
+  [collection_ moveAssetFromIndex:index_
+                          toIndex:[moveDialog_ selectedIndex]];
+  [moveDialog_ release];
+  moveDialog_ = nil;
+  [[self stack] popController];
+}
+
 #pragma mark Controller
 - (void)itemSelected:(long)index
 {
@@ -88,6 +112,7 @@ typedef enum
     break;
   }
   case kMoveOption:
+    [self _presentMoveDialog];
     break;
   case kOptionCount:
     break;

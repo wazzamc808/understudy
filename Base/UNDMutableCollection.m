@@ -77,6 +77,26 @@
   [controller_ reload];
 }
 
+- (void)moveAssetFromIndex:(long)from toIndex:(long)to
+{
+  if (from < 0 || to < 0) return;
+  if (from == to) return;
+  if (!assets_) [self currentAssets];
+
+  int assetCount = [assets_ count], contentCount = [contents_ count];
+  if (assetCount != contentCount) return;
+  if (from >= assetCount || to >= assetCount) return;
+
+  NSObject* asset = [assets_ objectAtIndex:from];
+  NSObject* content = [contents_ objectAtIndex:from];
+
+  [assets_ removeObjectAtIndex:from];
+  [contents_ removeObjectAtIndex:from];
+
+  [assets_ insertObject:asset atIndex:to];
+  [contents_ insertObject:content atIndex:to];
+}
+
 - (void)removeAssetAtIndex:(long)index
 {
   if (index < 0) return;

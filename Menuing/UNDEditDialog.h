@@ -30,6 +30,7 @@
   UNDMutableCollection* collection_;
   long index_;                  //< Selected index in the collection.
   NSString* title_;
+  BROptionDialog* moveDialog_;
 }
 
 /// Returns a new UNDEditDialog for the asset at a given index in a collection.
