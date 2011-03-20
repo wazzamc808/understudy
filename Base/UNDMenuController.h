@@ -30,8 +30,9 @@
 @end
 
 @protocol UNDMutableMenuDelegate<UNDMenuDelegate>
-- (void)removeAssetAtIndex:(long)index;
 - (void)addAssetWithDescription:(NSDictionary*)description atIndex:(long)index;
+- (void)moveAssetFromIndex:(long)from toIndex:(long)to;
+- (void)removeAssetAtIndex:(long)index;
 - (void)renameAssetAtIndex:(long)index toTitle:(NSString*)title;
 @end
 
