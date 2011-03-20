@@ -20,6 +20,8 @@
 #import <BRMenuListItemProvider-Protocol.h>
 #import <BRListControl.h>
 #import <BRTextMenuItemLayer.h>
+#import <BRTextContainer-Protocol.h>
+#import <BRTextEntryController.h>
 
 #import "UNDEditDialog.h"
 #import "UnderstudyAsset.h"
@@ -53,8 +55,17 @@ typedef enum
   [super dealloc];
 }
 
-#pragma mark Controller
+#pragma mark protocol BRTextEntryDelegate
+- (void)textDidChange:(id<BRTextContainer>)container { }
 
+- (void)textDidEndEditing:(id<BRTextContainer>)container
+{
+  [collection_ renameAssetAtIndex:index_
+                          toTitle:[container stringValue]];
+  [[self stack] popController];
+}
+
+#pragma mark Controller
 - (void)itemSelected:(long)index
 {
   NSArray* assets;
@@ -69,7 +80,13 @@ typedef enum
     [collection_ removeAssetAtIndex:index_];
     break;
   case kRenameOption:
+  {
+    BRTextEntryController* entry
+      = [[BRTextEntryController alloc]
+             initWithTextEntryStyle:kFullKeyboardTextEntryStyle];
+    [[self stack] pushController:entry];
     break;
+  }
   case kMoveOption:
     break;
   case kOptionCount:
