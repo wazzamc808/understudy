@@ -99,6 +99,8 @@
 
   [assets_ insertObject:asset atIndex:to];
   [contents_ insertObject:content atIndex:to];
+
+  [controller_ reload];
 }
 
 - (void)removeAssetAtIndex:(long)index
