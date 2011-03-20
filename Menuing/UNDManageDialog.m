@@ -51,7 +51,7 @@ typedef enum
   {
   case kAddOption:
     [addController_ setCollection:collection_];
-    [[self stack] pushController:addController_];
+    [[self stack] swapController:addController_];
     break;
   case kEnableOption:
     enabled_ = !enabled_;
@@ -108,7 +108,8 @@ static UNDManageDialog* sharedInstance_;
 {
   switch (row) {
   case kAddOption:
-    return (collection_ == nil);
+    if (collection_) return YES;
+    return NO;
   case kEnableOption:
     return YES;
   case kOptionCount:
