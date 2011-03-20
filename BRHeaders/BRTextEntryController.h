@@ -10,6 +10,12 @@
 
 /// \addtogroup BackRow
 
+typedef enum {
+    kFullKeyboardTextEntryStyle,
+    kHexadecimalTextEntryStyle,
+    kAlphaNumericTextEntryStyle,
+} BRTextEntryStyle;
+
 /// \ingroup BackRow
 @interface BRTextEntryController : BRController
 {
@@ -19,7 +25,7 @@
 }
 
 - (id)init;
-- (id)initWithTextEntryStyle:(int)fp8;
+- (id)initWithTextEntryStyle:(BRTextEntryStyle)style;
 - (void)dealloc;
 - (void)setTitle:(id)fp8;
 - (void)setIcon:(id)fp8 horizontalOffset:(float)fp12 kerningFactor:(float)fp16;

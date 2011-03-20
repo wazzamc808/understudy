@@ -24,11 +24,11 @@
 
 #import "UNDMutableCollection.h"
 
-@interface UNDEditDialog : BRCenteredMenuController 
+@interface UNDEditDialog : BRCenteredMenuController
 <BRMenuListItemProvider,UnderstudyAsset>
 {
   UNDMutableCollection* collection_;
-  long index_;
+  long index_;                  //< Selected index in the collection.
   NSString* title_;
 }
 
