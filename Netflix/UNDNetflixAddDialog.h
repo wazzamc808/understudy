@@ -20,6 +20,8 @@
 
 #import <BROptionDialog.h>
 
+@class UNDMutableCollection;
+
 @interface UNDNetflixAddDialog : BROptionDialog {
   // the contents of Netflix's RSS feed listing
   NSMutableData* pageData_;
@@ -27,6 +29,8 @@
   NSString* queue_;
   // the connection used during auto-discovery
   NSURLConnection* connection_;
+  /// Weak reference to the collection to be modified.
+  UNDMutableCollection* collection_;
 }
 
 @end

@@ -8,8 +8,8 @@
 //  Software Foundation, either version 3 of the License, or (at your option)
 //  any later version.
 //
-//  Understudy is distributed in the hope that it will be useful, but WITHOUT 
-//  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
+//  Understudy is distributed in the hope that it will be useful, but WITHOUT
+//  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
 //  FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
 //  for more details.
 //
@@ -24,12 +24,13 @@
 
 #import "UNDAddAssetDialog.h"
 #import "UnderstudyAsset.h"
-  
-@interface UNDManageDialog : BRCenteredMenuController 
-<BRMenuListItemProvider,UnderstudyAsset>
+
+@interface UNDManageDialog : BRCenteredMenuController
+<BRMenuListItemProvider,UnderstudyAsset, UNDCollectionMutator>
 {
   UNDAddAssetDialog* addController_;
   BOOL enabled_;
+  UNDMutableCollection* collection_;  //< weak reference
 }
 
 +(UNDManageDialog*)sharedInstance;

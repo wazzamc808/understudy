@@ -18,7 +18,6 @@
 
 #import "UNDManageDialog.h"
 #import "UNDPreferenceManager.h"
-#import "UNDRenameDialog.h"
 
 #import <BRControllerStack.h>
 #import <BRMenuListItemProvider-Protocol.h>
@@ -51,6 +50,7 @@ typedef enum
   switch( option )
   {
   case kAddOption:
+    [addController_ setCollection:collection_];
     [[self stack] pushController:addController_];
     break;
   case kEnableOption:
@@ -68,6 +68,12 @@ typedef enum
   [[self list] reload];
   if( ![self rowSelectable:[self selectedItem]] )
     [self setSelectedItem:0];
+}
+
+- (void)controlWasDeactivated
+{
+  [super controlWasDeactivated];
+  collection_ = nil;
 }
 
 -(BOOL)assetManagementEnabled
@@ -89,15 +95,26 @@ static UNDManageDialog* sharedInstance_;
   return sharedInstance_;
 }
 
+-(void)setCollection:(UNDMutableCollection*)collection
+{
+  collection_ = collection;
+}
+
 #pragma mark MenuListItemProvider
 
 - (long)itemCount{ return kOptionCount; }
 - (float)heightForRow:(long)row{ return 0; }
 - (BOOL)rowSelectable:(long)row
 {
-  int count
-    = [[[UNDPreferenceManager sharedInstance] assetDescriptions] count];
-  return (row == 0 || count > 0);
+  switch (row) {
+  case kAddOption:
+    return (collection_ == nil);
+  case kEnableOption:
+    return YES;
+  case kOptionCount:
+    return NO;
+  }
+  return NO;
 }
 
 - (id)titleForRow:(long)row
@@ -105,7 +122,7 @@ static UNDManageDialog* sharedInstance_;
   ManageOption option = (ManageOption)row;
   switch (option) {
   case kAddOption:
-    return @"Add asset to the main menu";
+    return @"Add entry to this collection";
   case kEnableOption:
     if (enabled_) return @"Disable management dialogs";
     return @"Enable management dialogs";

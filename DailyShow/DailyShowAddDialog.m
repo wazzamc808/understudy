@@ -22,7 +22,6 @@
 #import <BRTextMenuItemLayer.h>
 
 #import "UNDDailyShowAssetProvider.h"
-#import "UNDPreferenceManager.h"
 
 @implementation DailyShowAddDialog
 
@@ -43,6 +42,11 @@
   [super dealloc];
 }
 
+- (void)setCollection:(UNDMutableCollection*)collection
+{
+  collection_ = collection;
+}
+
 // call-back for an item having been selected
 - (void)itemSelected:(long)index
 {
@@ -53,7 +57,8 @@
       [NSDictionary dictionaryWithObjectsAndKeys:url, UNDAssetProviderUrlKey,
                     title, UNDAssetProviderTitleKey,
                     UNDDailyShowAssetProviderId, UNDAssetProviderNameKey, nil];
-    [[UNDPreferenceManager sharedInstance] addAssetWithDescription:asset];
+    [collection_ addAssetWithDescription:asset
+                                 atIndex:LONG_MAX];
   }
   [[self stack] popController];
 }

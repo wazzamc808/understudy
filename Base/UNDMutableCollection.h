@@ -30,3 +30,8 @@
 - (id)initWithTitle:(NSString*)title forContents:(NSMutableArray*)contents;
 
 @end
+
+@protocol UNDCollectionMutator
+/// Implementing classes should keep a weak reference to the collection.
+- (void)setCollection:(UNDMutableCollection*)collection;
+@end
