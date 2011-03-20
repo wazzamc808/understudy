@@ -41,9 +41,9 @@ typedef enum
                 forIndex:(long)index
 {
   [super init];
+  index_ = index;
   collection_ = [collection retain];
   [self setTitle:[self title]];
-  index_ = index;
   [[self list] setDatasource:self];
   return self;
 }
