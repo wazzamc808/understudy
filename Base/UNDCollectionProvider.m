@@ -17,6 +17,8 @@
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
 #import "UNDCollectionProvider.h"
+
+#import "UNDCollectionAddDialog.h"
 #import "UNDMutableCollection.h"
 
 NSString* UNDCollectionProviderId = @"collection";
@@ -55,7 +57,7 @@ static void __attribute__((constructor)) UNDCollectionProvider_init(void)
 
 - (BRController*)assetAdditionDialog
 {
-  return nil;
+  return [[[UNDCollectionAddDialog alloc] init] autorelease];
 }
 
 @end
