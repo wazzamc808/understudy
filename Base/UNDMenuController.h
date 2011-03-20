@@ -47,5 +47,7 @@
 }
 
 - (id)initWithDelegate:(NSObject<UNDMenuDelegate>*)delegate;
+/// Reloads the controller's asset collection and view.
+- (void)reload;
 
 @end

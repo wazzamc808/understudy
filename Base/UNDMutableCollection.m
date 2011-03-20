@@ -74,6 +74,7 @@
   [assets_ insertObject:asset atIndex:index];
   [contents_ insertObject:content atIndex:index];
   [[UNDPreferenceManager sharedInstance] save];
+  [controller_ reload];
 }
 
 - (void)removeAssetAtIndex:(long)index
@@ -88,6 +89,7 @@
   [assets_ removeObjectAtIndex:index];
   [contents_ removeObjectAtIndex:index];
   [[UNDPreferenceManager sharedInstance] save];
+  [controller_ reload];
 }
 
 /// Changes the name of the entry at @param index to @param title.
@@ -104,7 +106,7 @@
 
   [assets_ replaceObjectAtIndex:index withObject:asset];
   [[UNDPreferenceManager sharedInstance] save];
+  [controller_ reload];
 }
-
 
 @end
