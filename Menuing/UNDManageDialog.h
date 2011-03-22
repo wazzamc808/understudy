@@ -1,5 +1,5 @@
 //
-//  Copyright 2008 Kirk Kelsey.
+//  Copyright 2008, 2011 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -24,13 +24,14 @@
 
 #import "UNDAddAssetDialog.h"
 #import "UnderstudyAsset.h"
-  
-@interface UNDManageDialog : BRCenteredMenuController 
+
+@interface UNDManageDialog : BRCenteredMenuController
 <BRMenuListItemProvider,UnderstudyAsset>
 {
   UNDAddAssetDialog* addController_;
   BROptionDialog*    moveDialog_;
   BROptionDialog*    removeDialog_;
+  BRControl*         preview_;
 }
 
 @end

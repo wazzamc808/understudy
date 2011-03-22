@@ -52,6 +52,7 @@
 		DF37B8B00F59EFFE0017766F /* UNDiPlayerAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = DF37B8AF0F59EFFE0017766F /* UNDiPlayerAsset.m */; };
 		DF37B8CF0F5AE0940017766F /* UNDNSXMLElement+Parsing.m in Sources */ = {isa = PBXBuildFile; fileRef = DF37B8CE0F5AE0940017766F /* UNDNSXMLElement+Parsing.m */; };
 		DF37B9120F5AF1F70017766F /* UNDiPlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF37B9110F5AF1F70017766F /* UNDiPlayerController.m */; };
+		DF382E3A12DAB7EB001DBCB6 /* UNDIconProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = DF382E3912DAB7EB001DBCB6 /* UNDIconProvider.m */; };
 		DF3D0F640F54CA3E0089CF2B /* UNDLoadingAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = DF3D0F630F54CA3E0089CF2B /* UNDLoadingAsset.m */; };
 		DF42345112351DBD0044317C /* UNDNetflixLoadingController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF42345012351DBD0044317C /* UNDNetflixLoadingController.m */; };
 		DF444EF5123B25F9000331B7 /* PubSub.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF444EF4123B25F9000331B7 /* PubSub.framework */; };
@@ -211,6 +212,8 @@
 		DF37B9110F5AF1F70017766F /* UNDiPlayerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UNDiPlayerController.m; sourceTree = "<group>"; };
 		DF37BA330F5B5DA70017766F /* UNDHuluSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UNDHuluSelector.h; sourceTree = "<group>"; };
 		DF37BA340F5B5DA70017766F /* UNDHuluSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UNDHuluSelector.m; sourceTree = "<group>"; };
+		DF382E3812DAB7EB001DBCB6 /* UNDIconProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UNDIconProvider.h; sourceTree = "<group>"; };
+		DF382E3912DAB7EB001DBCB6 /* UNDIconProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UNDIconProvider.m; sourceTree = "<group>"; };
 		DF3D0F620F54CA3E0089CF2B /* UNDLoadingAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UNDLoadingAsset.h; sourceTree = "<group>"; };
 		DF3D0F630F54CA3E0089CF2B /* UNDLoadingAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UNDLoadingAsset.m; sourceTree = "<group>"; };
 		DF42344F12351DBD0044317C /* UNDNetflixLoadingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UNDNetflixLoadingController.h; path = Netflix/UNDNetflixLoadingController.h; sourceTree = "<group>"; };
@@ -552,6 +555,8 @@
 		DF37B8E40F5AE9400017766F /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				DF382E3812DAB7EB001DBCB6 /* UNDIconProvider.h */,
+				DF382E3912DAB7EB001DBCB6 /* UNDIconProvider.m */,
 				DF54B4B711095D36006F0930 /* UNDVolumeControl.h */,
 				DF54B4B811095D36006F0930 /* UNDVolumeControl.m */,
 				DFE8E7B40F52130200A5E120 /* UNDPreferenceManager.h */,
@@ -887,6 +892,7 @@
 				298ACFCE12A70A360084E8B0 /* DailyShowController.m in Sources */,
 				298ACFCF12A70A360084E8B0 /* DailyShowFullEpisodesFeed.m in Sources */,
 				DF93080612D548CF004EA8F3 /* UNDDailyShowAssetProvider.m in Sources */,
+				DF382E3A12DAB7EB001DBCB6 /* UNDIconProvider.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

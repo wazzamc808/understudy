@@ -8,20 +8,22 @@
 //  Software Foundation, either version 3 of the License, or (at your option)
 //  any later version.
 //
-//  Understudy is distributed in the hope that it will be useful, but WITHOUT 
-//  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
+//  Understudy is distributed in the hope that it will be useful, but WITHOUT
+//  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
 //  FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
 //  for more details.
 //
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
+#import "UNDIconProvider.h"
 #import "UNDManageDialog.h"
 #import "UNDPreferenceManager.h"
 #import "UNDRenameDialog.h"
 
 #import <BRControllerStack.h>
 #import <BRListControl.h>
+#import <BRMediaPreviewControllerFactory.h>
 #import <BRTextMenuItemLayer.h>
 
 @implementation UNDManageDialog
@@ -40,6 +42,7 @@ typedef enum ManageOptionEnum ManageOption;
 {
   [super init];
   [self setTitle:[self title]];
+  [self setIcon:UNDIcon() horizontalOffset:0.0 kerningFactor:0.0];
   addController_ = [[UNDAddAssetDialog alloc] init];
   [[self list] setDatasource:self];
   return self;
@@ -195,7 +198,20 @@ typedef enum ManageOptionEnum ManageOption;
 
 - (BRControl*)preview
 {
-  return nil;
+  if (!preview_) {
+    preview_ = [BRMediaPreviewControllerFactory
+                 previewControlForAsset:self withDelegate:self];
+    [preview_ retain];
+  }
+  return preview_;
 }
+
+- (BOOL)hasCoverArt { return YES; }
+- (BRImage*)coverArt { return UNDIcon(); }
+- (NSString*)coverArtID { return UNDIconID(); }
+
+- (id)mediaPreviewMissingMediaType{ return nil; }
+- (BOOL)mediaPreviewShouldShowMetadata{ return YES; }
+- (BOOL)mediaPreviewShouldShowMetadataImmediately{ return YES; }
 
 @end
