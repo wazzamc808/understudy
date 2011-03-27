@@ -1,5 +1,5 @@
 //
-//  Copyright 2010, 2011 Kirk Kelsey.
+//  Copyright 2011 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -10,19 +10,21 @@
 //
 //  Understudy is distributed in the hope that it will be useful, but WITHOUT
 //  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-//  FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
+//  FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License
 //  for more details.
 //
 //  You should have received a copy of the GNU Lesser General Public License
-//  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
+//  along with Understudy. If not, see <http://www.gnu.org/licenses/>.
 
-#import "UNDAssetFactory.h"
+#import <BROptionDialog.h>
 
-/// Dictionary key to identify an external application's name.
-extern NSString* UNDExternalAppAssetKey;
-extern NSString* UNDExternalAppAssetProviderId;
+#import "UNDFileBrowser.h"
 
-/// Provides a UNDExternalAppAsset using UNDExternalAppAddDialog.
-@interface UNDExternalAppAssetProvider : NSObject<UNDAssetProvider>{ }
+@class UNDMutableCollection;
+
+@interface UNDExternalAppAddDialog : BROptionDialog<UNDFileBrowserDelegate>
+{
+  UNDMutableCollection* collection_;  // weak reference
+}
 
 @end
