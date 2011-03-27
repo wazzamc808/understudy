@@ -26,6 +26,7 @@
 		DF0EDFCD0EE5E187008FA08A /* English.lproj in Resources */ = {isa = PBXBuildFile; fileRef = DF0EDFCA0EE5E187008FA08A /* English.lproj */; };
 		DF2EB1960F574D5200D650B7 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF2EB1950F574D5200D650B7 /* IOKit.framework */; };
 		DF2EB2110F577F0C00D650B7 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF2EB2100F577F0C00D650B7 /* Carbon.framework */; };
+		DF310526133FE9B200BFC09F /* UNDExternalAppAddDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = DF310525133FE9B200BFC09F /* UNDExternalAppAddDialog.m */; };
 		DF318FF60FC5B6C1004CE50D /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFE014940EDF681D00AFD18F /* WebKit.framework */; };
 		DF3190330FC5D34B004CE50D /* AppleRemote.m in Sources */ = {isa = PBXBuildFile; fileRef = DF3190320FC5D34B004CE50D /* AppleRemote.m */; };
 		DF3190490FC5D3C9004CE50D /* RemoteControl.m in Sources */ = {isa = PBXBuildFile; fileRef = DF3190480FC5D3C9004CE50D /* RemoteControl.m */; };
@@ -82,6 +83,8 @@
 		DFA511990F1A8E5B00FC903B /* HuluController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA511980F1A8E5B00FC903B /* HuluController.m */; };
 		DFA512360F1A92F300FC903B /* UNDYouTubeController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA512350F1A92F300FC903B /* UNDYouTubeController.m */; };
 		DFA9505012CCDDA40036838E /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFA9504F12CCDDA40036838E /* ApplicationServices.framework */; };
+		DFC1C360133C127500E8FF62 /* UNDFileBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = DFC1C35D133C127500E8FF62 /* UNDFileBrowser.m */; };
+		DFC1C361133C127500E8FF62 /* UNDFileCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = DFC1C35F133C127500E8FF62 /* UNDFileCollection.m */; };
 		DFC24EC81068360500B4D149 /* AppleRemote.m in Sources */ = {isa = PBXBuildFile; fileRef = DF3190320FC5D34B004CE50D /* AppleRemote.m */; };
 		DFC24EC91068360500B4D149 /* RemoteControl.m in Sources */ = {isa = PBXBuildFile; fileRef = DF3190480FC5D3C9004CE50D /* RemoteControl.m */; };
 		DFC24ECA1068360500B4D149 /* HIDRemoteControlDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = DF3190570FC5D598004CE50D /* HIDRemoteControlDevice.m */; };
@@ -105,6 +108,7 @@
 		DFCDFB140F3E2E9300D979F0 /* UNDRenameDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = DFCDFB100F3E2E9300D979F0 /* UNDRenameDialog.m */; };
 		DFCDFB1B0F3E2F7800D979F0 /* ApplianceIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = DFCDFB1A0F3E2F7800D979F0 /* ApplianceIcon.png */; };
 		DFCDFC530F3E72A400D979F0 /* BaseUnderstudyAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = DFCDFC520F3E72A400D979F0 /* BaseUnderstudyAsset.m */; };
+		DFCEADBA13383777005E302E /* UNDFileAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = DFCEADB913383777005E302E /* UNDFileAsset.m */; };
 		DFDF5AC5129D8EC400B1941C /* UNDExternalLaunchController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFDF5AC4129D8EC400B1941C /* UNDExternalLaunchController.m */; };
 		DFDF5ACD129D907000B1941C /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFC9BEB21273DE4D006B91FA /* AppKit.framework */; };
 		DFDF5AEA129D90FA00B1941C /* UNDExternalLauncher.m in Sources */ = {isa = PBXBuildFile; fileRef = DFDF5AE9129D90FA00B1941C /* UNDExternalLauncher.m */; };
@@ -171,6 +175,8 @@
 		DF0EDFCA0EE5E187008FA08A /* English.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = English.lproj; sourceTree = "<group>"; };
 		DF2EB1950F574D5200D650B7 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		DF2EB2100F577F0C00D650B7 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
+		DF310524133FE9B200BFC09F /* UNDExternalAppAddDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UNDExternalAppAddDialog.h; sourceTree = "<group>"; };
+		DF310525133FE9B200BFC09F /* UNDExternalAppAddDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UNDExternalAppAddDialog.m; sourceTree = "<group>"; };
 		DF318F2E0FC4B418004CE50D /* HuluPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HuluPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF318F300FC4B418004CE50D /* HuluPlayer-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "HuluPlayer-Info.plist"; sourceTree = "<group>"; };
 		DF318FFE0FC5B916004CE50D /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Player/main.m; sourceTree = "<group>"; };
@@ -263,6 +269,10 @@
 		DFA512340F1A92D900FC903B /* UNDYouTubeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UNDYouTubeController.h; sourceTree = "<group>"; };
 		DFA512350F1A92F300FC903B /* UNDYouTubeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UNDYouTubeController.m; sourceTree = "<group>"; };
 		DFA9504F12CCDDA40036838E /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
+		DFC1C35C133C127500E8FF62 /* UNDFileBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UNDFileBrowser.h; sourceTree = "<group>"; };
+		DFC1C35D133C127500E8FF62 /* UNDFileBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UNDFileBrowser.m; sourceTree = "<group>"; };
+		DFC1C35E133C127500E8FF62 /* UNDFileCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UNDFileCollection.h; sourceTree = "<group>"; };
+		DFC1C35F133C127500E8FF62 /* UNDFileCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UNDFileCollection.m; sourceTree = "<group>"; };
 		DFC24EDE1068360500B4D149 /* NetflixPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NetflixPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DFC24F3F106867E800B4D149 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		DFC24F40106867E800B4D149 /* UNDNetflixPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UNDNetflixPlayer.h; sourceTree = "<group>"; };
@@ -283,6 +293,8 @@
 		DFCDFB1A0F3E2F7800D979F0 /* ApplianceIcon.png */ = {isa = PBXFileReference; explicitFileType = image.png; name = ApplianceIcon.png; path = Resources/ApplianceIcon.png; sourceTree = "<group>"; };
 		DFCDFC510F3E72A400D979F0 /* BaseUnderstudyAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseUnderstudyAsset.h; sourceTree = "<group>"; };
 		DFCDFC520F3E72A400D979F0 /* BaseUnderstudyAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseUnderstudyAsset.m; sourceTree = "<group>"; };
+		DFCEADB813383777005E302E /* UNDFileAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UNDFileAsset.h; sourceTree = "<group>"; };
+		DFCEADB913383777005E302E /* UNDFileAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UNDFileAsset.m; sourceTree = "<group>"; };
 		DFDF5AC3129D8EC400B1941C /* UNDExternalLaunchController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UNDExternalLaunchController.h; sourceTree = "<group>"; };
 		DFDF5AC4129D8EC400B1941C /* UNDExternalLaunchController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UNDExternalLaunchController.m; sourceTree = "<group>"; };
 		DFDF5AD1129D907000B1941C /* UNDExternalLauncher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UNDExternalLauncher.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -555,6 +567,12 @@
 		DF37B8E40F5AE9400017766F /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				DFCEADB813383777005E302E /* UNDFileAsset.h */,
+				DFCEADB913383777005E302E /* UNDFileAsset.m */,
+				DFC1C35C133C127500E8FF62 /* UNDFileBrowser.h */,
+				DFC1C35D133C127500E8FF62 /* UNDFileBrowser.m */,
+				DFC1C35E133C127500E8FF62 /* UNDFileCollection.h */,
+				DFC1C35F133C127500E8FF62 /* UNDFileCollection.m */,
 				DF382E3812DAB7EB001DBCB6 /* UNDIconProvider.h */,
 				DF382E3912DAB7EB001DBCB6 /* UNDIconProvider.m */,
 				DF54B4B711095D36006F0930 /* UNDVolumeControl.h */,
@@ -591,16 +609,18 @@
 		DF5A22370F100E4300F5F19F /* Base */ = {
 			isa = PBXGroup;
 			children = (
-				DF8A378612BD810A008B8274 /* UNDExternalAppAssetProvider.h */,
-				DF8A378712BD810A008B8274 /* UNDExternalAppAssetProvider.m */,
 				DF8A378812BD810A008B8274 /* UNDUnknownAsset.h */,
 				DF8A378912BD810A008B8274 /* UNDUnknownAsset.m */,
 				DFC876ED12AB454000CB8E88 /* UNDAssetFactory.h */,
 				DFC876EE12AB454000CB8E88 /* UNDAssetFactory.m */,
 				DFC876B112AB33FC00CB8E88 /* UNDAssetCollection.h */,
 				DFC876B212AB33FC00CB8E88 /* UNDAssetCollection.m */,
+				DF310524133FE9B200BFC09F /* UNDExternalAppAddDialog.h */,
+				DF310525133FE9B200BFC09F /* UNDExternalAppAddDialog.m */,
 				DFDF5BCE129F154C00B1941C /* UNDExternalAppAsset.h */,
 				DFDF5BCF129F154C00B1941C /* UNDExternalAppAsset.m */,
+				DF8A378612BD810A008B8274 /* UNDExternalAppAssetProvider.h */,
+				DF8A378712BD810A008B8274 /* UNDExternalAppAssetProvider.m */,
 				DFDF5AC3129D8EC400B1941C /* UNDExternalLaunchController.h */,
 				DFDF5AC4129D8EC400B1941C /* UNDExternalLaunchController.m */,
 				DFDF5AE9129D90FA00B1941C /* UNDExternalLauncher.m */,
@@ -893,6 +913,10 @@
 				298ACFCF12A70A360084E8B0 /* DailyShowFullEpisodesFeed.m in Sources */,
 				DF93080612D548CF004EA8F3 /* UNDDailyShowAssetProvider.m in Sources */,
 				DF382E3A12DAB7EB001DBCB6 /* UNDIconProvider.m in Sources */,
+				DFCEADBA13383777005E302E /* UNDFileAsset.m in Sources */,
+				DFC1C360133C127500E8FF62 /* UNDFileBrowser.m in Sources */,
+				DFC1C361133C127500E8FF62 /* UNDFileCollection.m in Sources */,
+				DF310526133FE9B200BFC09F /* UNDExternalAppAddDialog.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
