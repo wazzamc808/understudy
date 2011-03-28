@@ -1,5 +1,5 @@
 //
-//  Copyright 2008-2010 Kirk Kelsey.
+//  Copyright 2008-2011 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -16,13 +16,14 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
-#import "MainMenuController.h"
 #import "UNDNetflixAddDialog.h"
-#import "UNDNetflixAssetProvider.h"
 
 #import <BRControllerStack.h>
 
 #import <PubSub/PubSub.h>
+
+#import "UNDNetflixAssetProvider.h"
+#import "UNDPreferenceManager.h"
 
 @interface UNDNetflixAddDialog (PrivateMethods)
 - (void)_startAutoDiscovery;
@@ -86,7 +87,6 @@ NSString* NETFLIXTITLES[] = {
     [[PSClient applicationClient] addFeedWithURL:[NSURL URLWithString:url]];
   }
 
-  // we might want to pop back to the main menu
   [[self stack] popController];
 }
 
