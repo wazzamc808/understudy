@@ -101,7 +101,6 @@
 		DFC876B312AB33FC00CB8E88 /* UNDBaseCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = DFC876B212AB33FC00CB8E88 /* UNDBaseCollection.m */; };
 		DFC876EF12AB454000CB8E88 /* UNDAssetFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = DFC876EE12AB454000CB8E88 /* UNDAssetFactory.m */; };
 		DFCDFB110F3E2E9300D979F0 /* UNDAddAssetDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = DFCDFB0A0F3E2E9300D979F0 /* UNDAddAssetDialog.m */; };
-		DFCDFB120F3E2E9300D979F0 /* MainMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFCDFB0C0F3E2E9300D979F0 /* MainMenuController.m */; };
 		DFCDFB130F3E2E9300D979F0 /* UNDManageDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = DFCDFB0E0F3E2E9300D979F0 /* UNDManageDialog.m */; };
 		DFCDFB140F3E2E9300D979F0 /* UNDRenameDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = DFCDFB100F3E2E9300D979F0 /* UNDRenameDialog.m */; };
 		DFCDFB1B0F3E2F7800D979F0 /* ApplianceIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = DFCDFB1A0F3E2F7800D979F0 /* ApplianceIcon.png */; };
@@ -277,8 +276,6 @@
 		DFC9BEB21273DE4D006B91FA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		DFCDFB090F3E2E9300D979F0 /* UNDAddAssetDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UNDAddAssetDialog.h; sourceTree = "<group>"; };
 		DFCDFB0A0F3E2E9300D979F0 /* UNDAddAssetDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UNDAddAssetDialog.m; sourceTree = "<group>"; };
-		DFCDFB0B0F3E2E9300D979F0 /* MainMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainMenuController.h; sourceTree = "<group>"; };
-		DFCDFB0C0F3E2E9300D979F0 /* MainMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainMenuController.m; sourceTree = "<group>"; };
 		DFCDFB0D0F3E2E9300D979F0 /* UNDManageDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UNDManageDialog.h; sourceTree = "<group>"; };
 		DFCDFB0E0F3E2E9300D979F0 /* UNDManageDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UNDManageDialog.m; sourceTree = "<group>"; };
 		DFCDFB0F0F3E2E9300D979F0 /* UNDRenameDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UNDRenameDialog.h; sourceTree = "<group>"; };
@@ -661,8 +658,6 @@
 				DFCDFB0A0F3E2E9300D979F0 /* UNDAddAssetDialog.m */,
 				DF0F919012D96A470000C613 /* UNDEditDialog.h */,
 				DF0F919112D96A470000C613 /* UNDEditDialog.m */,
-				DFCDFB0B0F3E2E9300D979F0 /* MainMenuController.h */,
-				DFCDFB0C0F3E2E9300D979F0 /* MainMenuController.m */,
 				DFCDFB0D0F3E2E9300D979F0 /* UNDManageDialog.h */,
 				DFCDFB0E0F3E2E9300D979F0 /* UNDManageDialog.m */,
 				DFCDFB0F0F3E2E9300D979F0 /* UNDRenameDialog.h */,
@@ -863,7 +858,6 @@
 				DF375CC50F35300700DA7719 /* UNDNetflixFeed.m in Sources */,
 				DF375D600F36049A00DA7719 /* HuluFeedDiscoverer.m in Sources */,
 				DFCDFB110F3E2E9300D979F0 /* UNDAddAssetDialog.m in Sources */,
-				DFCDFB120F3E2E9300D979F0 /* MainMenuController.m in Sources */,
 				DFCDFB130F3E2E9300D979F0 /* UNDManageDialog.m in Sources */,
 				DFCDFB140F3E2E9300D979F0 /* UNDRenameDialog.m in Sources */,
 				DFCDFC530F3E72A400D979F0 /* BaseUnderstudyAsset.m in Sources */,

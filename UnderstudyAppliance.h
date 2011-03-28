@@ -1,5 +1,5 @@
 //
-//  Copyright 2008 Kirk Kelsey.
+//  Copyright 2008,2011 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -18,8 +18,6 @@
 
 #import <Cocoa/Cocoa.h>
 #import <BRAppliance.h>
-
-#import "MainMenuController.h"
 
 @interface UnderstudyAppliance : BRAppliance {
 }

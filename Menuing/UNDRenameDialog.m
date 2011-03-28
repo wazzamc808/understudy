@@ -1,5 +1,5 @@
 //
-//  Copyright 2009,2010 Kirk Kelsey.
+//  Copyright 2009-2011 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -16,11 +16,11 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
+#import "UNDRenameDialog.h"
+
 #import "BRControllerStack.h"
 #import "BRTextContainer-Protocol.h"
 
-#import "MainMenuController.h"
-#import "UNDRenameDialog.h"
 #import "UNDPreferenceManager.h"
 
 
@@ -63,7 +63,7 @@
   [asset setObject:[container stringValue] forKey:@"title"];
   [pref replaceAssetDescriptionAtIndex:[self selectedIndex]
                        withDescription:[asset autorelease]];
-  [[self stack] popToController:[MainMenuController sharedInstance]];
+  [[self stack] popController];
 }
 
 @end

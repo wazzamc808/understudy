@@ -16,12 +16,13 @@
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
 #import "DailyShowAddDialog.h"
-#import "MainMenuController.h"
-#import "UNDDailyShowAssetProvider.h"
 
 #import <BRControllerStack.h>
 #import <BRListControl.h>
 #import <BRTextMenuItemLayer.h>
+
+#import "UNDDailyShowAssetProvider.h"
+#import "UNDPreferenceManager.h"
 
 @implementation DailyShowAddDialog
 
