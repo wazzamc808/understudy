@@ -43,8 +43,8 @@
 
 - (BRController*)applianceController
 {
-  static BRController* controller = nil;
-  if (!controller) {
+  static UNDMutableCollection* collection = nil;
+  if (!collection) {
     UNDAssetFactory* factory = [UNDAssetFactory sharedInstance];
     [factory registerProvider:[[[UNDExternalAppAssetProvider alloc] init]
                                 autorelease]];
@@ -59,14 +59,12 @@
     NSMutableArray* descriptions
       = [[UNDPreferenceManager sharedInstance] assetDescriptions];
 
-    UNDMutableCollection *collection
+    collection
       = [[[UNDMutableCollection alloc]
            initWithTitle:@"Understudy" forContents:descriptions] autorelease];
-
-    controller = [collection controller];
   }
 
-  return controller;
+  return [collection controller];
 }
 
 + (NSString *)className
