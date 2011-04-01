@@ -41,7 +41,9 @@
 @end
 
 @interface UNDMenuController (Private)
-- (void)attemptMenuRestore;
+-(void)attemptMenuRestore;
+-(void)maybeReloadAssets;
+-(void)reloadView;
 @end
 
 @implementation UNDMenuController
@@ -54,8 +56,10 @@
   UNDLoadingAsset* loading = [[[UNDLoadingAsset alloc] init] autorelease];
   assets_ = [[NSMutableArray arrayWithObject:loading] retain];
   [[self list] setDatasource:self];
+
   lastrebuild_ = [[NSDate distantPast] retain];
-  [self performSelectorInBackground:@selector(maybeReload) withObject:nil];
+  [self performSelectorInBackground:@selector(maybeReloadAssets)
+                         withObject:nil];
 
   if ([delegate_ isKindOfClass:[UNDMutableCollection class]])
     mutable_ = YES;
@@ -70,35 +74,49 @@
   [super dealloc];
 }
 
-- (void)maybeReload
+/// Calls reloadAssets if enough time has passed.
+- (void)maybeReloadAssets
 {
   if (reloadActive_) return;
   NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
-  if ([lastrebuild_ timeIntervalSinceNow] < (- 60 * 5)) [self reload];
+  if ([lastrebuild_ timeIntervalSinceNow] < (- 60 * 5))
+    [self reloadAssets];
   [pool release];
 }
 
-- (void)reload
+// Updates the asset list and indicates that view refresh is necessary.
+- (void)reloadAssets
 {
   reloadActive_ = YES;
   [lastrebuild_ autorelease];
   lastrebuild_ = [[NSDate date] retain];
   [assets_ autorelease];
   assets_ = [[delegate_ currentAssets] retain];
-  [[self list] reload];
-  if (mutable_) {
-    [[self list] removeDividers];
-    [[self list] addDividerAtIndex:[assets_ count] withLabel:nil];
-  }
-  [self updatePreviewController];
+  assetsUpdated_ = YES;
   reloadActive_ = NO;
+  if ([self active]) [self reloadView];
+}
+
+/// Updates the view if the assets have changed.
+- (void)reloadView
+{
+  if (assetsUpdated_) {
+    assetsUpdated_ = NO;
+    [[self list] reload];
+    if (mutable_) {
+      [[self list] removeDividers];
+      [[self list] addDividerAtIndex:[assets_ count] withLabel:nil];
+    }
+    [self updatePreviewController];
+  }
 }
 
 #pragma mark Controller
 
 - (void)controlWasActivated
 {
-  [self maybeReload];
+  [self maybeReloadAssets];
+  [self reloadView];
   [super controlWasActivated];
   if (!reloadActive_) [self attemptMenuRestore];
   height_ = [[self stack] count];
