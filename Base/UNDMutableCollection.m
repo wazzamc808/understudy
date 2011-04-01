@@ -78,7 +78,7 @@
   [assets_ insertObject:asset atIndex:index];
   [contents_ insertObject:content atIndex:index];
   [[UNDPreferenceManager sharedInstance] save];
-  [controller_ reload];
+  [controller_ reloadAssets];
 }
 
 - (void)moveAssetFromIndex:(long)from toIndex:(long)to
@@ -100,7 +100,7 @@
   [assets_ insertObject:asset atIndex:to];
   [contents_ insertObject:content atIndex:to];
 
-  [controller_ reload];
+  [controller_ reloadAssets];
 }
 
 - (void)removeAssetAtIndex:(long)index
@@ -115,7 +115,7 @@
   [assets_ removeObjectAtIndex:index];
   [contents_ removeObjectAtIndex:index];
   [[UNDPreferenceManager sharedInstance] save];
-  [controller_ reload];
+  [controller_ reloadAssets];
 }
 
 /// Changes the name of the entry at @param index to @param title.
@@ -132,7 +132,7 @@
 
   [assets_ replaceObjectAtIndex:index withObject:asset];
   [[UNDPreferenceManager sharedInstance] save];
-  [controller_ reload];
+  [controller_ reloadAssets];
 }
 
 @end

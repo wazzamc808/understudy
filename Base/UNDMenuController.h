@@ -42,13 +42,13 @@
   NSArray* assets_;
   NSObject<UNDMenuDelegate>* delegate_;  // delegate is retained by controller
   NSDate* lastrebuild_;
+  BOOL assetsUpdated_;          // True when view needs to be refreshed.
   BOOL mutable_;
   BOOL reloadActive_;           // true when the asset list is being reloaded
   int  height_;                 // how high on the stack this controller is
 }
 
-- (id)initWithDelegate:(NSObject<UNDMenuDelegate>*)delegate;
-/// Reloads the controller's asset collection and view.
-- (void)reload;
+-(id)initWithDelegate:(NSObject<UNDMenuDelegate>*)delegate;
+-(void)reloadAssets;
 
 @end
