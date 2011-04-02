@@ -1,5 +1,5 @@
 //                                                                -*- objc -*-
-//  Copyright 2009-2010 Kirk Kelsey.
+//  Copyright 2009-2011 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -19,10 +19,6 @@
 #import <Cocoa/Cocoa.h>
 
 #import <BRSingleton.h>
-
-@protocol UNDPreferenceSubscriber
-- (void)preferencesDidChange;
-@end
 
 @interface UNDPreferenceManager : NSObject
 {
@@ -47,13 +43,7 @@
 + (NSString*)accountForService:(NSString*)service;
 + (BOOL)alertsAreDisabled;
 
-- (NSArray*)assetDescriptions;
-
-- (void)addAssetWithDescription:(NSDictionary*)description;
-- (void)moveAssetFromIndex:(long)from toIndex:(long)to;
-- (void)removeAssetAtIndex:(long)index;
-- (void)replaceAssetDescriptionAtIndex:(long)index
-                       withDescription:(NSDictionary*)description;
+- (NSMutableArray*)assetDescriptions;
 
 // The menu state should be saved as it should later be used (e.g. before
 // pushing the final controller). The menu state may be nil if nothing should
@@ -64,6 +54,4 @@
 
 - (void)load;
 - (void)save;
-
-- (void)addSubscriber:(id<UNDPreferenceSubscriber>)subscriber;
 @end

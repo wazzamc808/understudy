@@ -22,12 +22,7 @@
 
 #import "UNDAssetFactory.h"
 #import "UNDExternalAppAssetProvider.h"
-// #import "UNDMutableCollection.h"
-
-@interface UNDMutableCollection
--(void)addAssetWithDescription:(NSDictionary*)description
-                       atIndex:(long)index;
-@end
+#import "UNDMutableCollection.h"
 
 @implementation UNDExternalAppAddDialog
 

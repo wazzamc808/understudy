@@ -16,12 +16,12 @@
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
 #import "DailyShowAddDialog.h"
-#import "MainMenuController.h"
-#import "UNDDailyShowAssetProvider.h"
 
 #import <BRControllerStack.h>
 #import <BRListControl.h>
 #import <BRTextMenuItemLayer.h>
+
+#import "UNDDailyShowAssetProvider.h"
 
 @implementation DailyShowAddDialog
 
@@ -42,6 +42,11 @@
   [super dealloc];
 }
 
+- (void)setCollection:(UNDMutableCollection*)collection
+{
+  collection_ = collection;
+}
+
 // call-back for an item having been selected
 - (void)itemSelected:(long)index
 {
@@ -52,7 +57,8 @@
       [NSDictionary dictionaryWithObjectsAndKeys:url, UNDAssetProviderUrlKey,
                     title, UNDAssetProviderTitleKey,
                     UNDDailyShowAssetProviderId, UNDAssetProviderNameKey, nil];
-    [[UNDPreferenceManager sharedInstance] addAssetWithDescription:asset];
+    [collection_ addAssetWithDescription:asset
+                                 atIndex:LONG_MAX];
   }
   [[self stack] popController];
 }

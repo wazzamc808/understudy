@@ -1,5 +1,5 @@
 //
-//  Copyright 2009-2010 Kirk Kelsey.
+//  Copyright 2009-2011 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -63,7 +63,7 @@ static UNDPreferenceManager *sharedInstance_;
   return sharedInstance_;
 }
 
-- (NSArray*)assetDescriptions
+- (NSMutableArray*)assetDescriptions
 {
   return assets_;
 }
@@ -201,7 +201,7 @@ static UNDPreferenceManager *sharedInstance_;
   NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
   NSDictionary* prefDict = [defaults persistentDomainForName:DEFAULTS_DOMAIN];
   NSMutableDictionary* prefs;
-  if( prefDict )
+  if (prefDict)
     prefs = [[prefDict mutableCopy] autorelease];
   else
     prefs = [NSMutableDictionary dictionary];
@@ -212,64 +212,6 @@ static UNDPreferenceManager *sharedInstance_;
   if (menuState_) [prefs setObject:menuState_ forKey:@"menustate"];
   else [prefs removeObjectForKey:@"menustate"];
   [defaults setPersistentDomain:prefs forName:DEFAULTS_DOMAIN];
-  // We do not automatically notify subscribers because some internal state
-  // (e.g. the menu stack) may update and be saved but not affect subscribers.
-}
-
-#pragma mark Subscription
-- (void)addSubscriber:(id<UNDPreferenceSubscriber>)subscriber
-{
-  [subscribers_ addObject:subscriber];
-}
-
-- (void)notifySubscribers
-{
-  id<UNDPreferenceSubscriber>subscriber;
-  for( subscriber in subscribers_ )
-    [subscriber preferencesDidChange];
-}
-
-#pragma mark Feed Arrangement
-- (void)addAssetWithDescription:(NSDictionary*)description
-{
-  [assets_ addObject:description];
-  [self save];
-  [self notifySubscribers];
-}
-
-- (void)moveAssetFromIndex:(long)from toIndex:(long)to
-{
-  NSObject* item;
-  // ensure the values are valid
-  if( from < 0 || ([assets_ count]-1) < from
-     || to < 0 || ([assets_ count]-1) < to
-     || to == from ) return;
-
-  // if the |to| position is after the |from|, the new index must be decremented
-  // to acount for the item no longer being in the array by the time is't added
-  if( from < to ) --to;
-
-  item = [[[assets_ objectAtIndex:from] retain] autorelease];
-  [assets_ removeObjectAtIndex:from];
-  [assets_ insertObject:item atIndex:to];
-
-  [self save];
-  [self notifySubscribers];
-}
-
-- (void)removeAssetAtIndex:(long)index
-{
-  [assets_ removeObjectAtIndex:index];
-  [self save];
-  [self notifySubscribers];
-}
-
-- (void)replaceAssetDescriptionAtIndex:(long)index
-                       withDescription:(NSDictionary*)description
-{
-  [assets_ replaceObjectAtIndex:index withObject:description];
-  [self save];
-  [self notifySubscribers];
 }
 
 @end

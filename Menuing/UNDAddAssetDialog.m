@@ -48,10 +48,24 @@
   [super dealloc];
 }
 
+- (void)setCollection:(UNDMutableCollection*)collection
+{
+  collection_ = collection;
+}
+
+- (void)controlWasDeactivated
+{
+  [super controlWasDeactivated];
+  collection_ = nil;
+}
+
 // call-back for an item having been selected
 - (void)itemSelected
 {
-  [[self stack] pushController:[dialogs_ objectAtIndex:[self selectedIndex]]];
+  id<UNDCollectionMutator> dialog
+    = [dialogs_ objectAtIndex:[self selectedIndex]];
+  [dialog setCollection:collection_];
+  [[self stack] pushController:dialog];
 }
 
 @end

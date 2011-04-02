@@ -18,10 +18,11 @@
 
 #import <Foundation/Foundation.h>
 
-#import "UNDAssetCollection.h"
+#import "UNDBaseCollection.h"
 
-@interface UNDFileCollection : UNDAssetCollection
+@interface UNDFileCollection : UNDBaseCollection
 {
+  NSArray*  assets_;
   NSString* path_;
 }
 

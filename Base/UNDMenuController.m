@@ -1,5 +1,5 @@
 //
-//  Copyright 2009-2010 Kirk Kelsey.
+//  Copyright 2009-2011 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -16,6 +16,8 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
+#import "UNDEditDialog.h"
+#import "UNDManageDialog.h"
 #import "UNDMenuController.h"
 #import "BaseController.h"
 #import "UnderstudyAsset.h"
@@ -39,7 +41,9 @@
 @end
 
 @interface UNDMenuController (Private)
-- (void)attemptMenuRestore;
+-(void)attemptMenuRestore;
+-(void)maybeReloadAssets;
+-(void)reloadView;
 @end
 
 @implementation UNDMenuController
@@ -50,10 +54,16 @@
   delegate_ = [delegate retain];
   [self setListTitle:[delegate_ title]];
   UNDLoadingAsset* loading = [[[UNDLoadingAsset alloc] init] autorelease];
-  assets_ = [[NSArray arrayWithObject:loading] retain];
+  assets_ = [[NSMutableArray arrayWithObject:loading] retain];
   [[self list] setDatasource:self];
+
   lastrebuild_ = [[NSDate distantPast] retain];
-  [self performSelectorInBackground:@selector(reload) withObject:nil];
+  [self performSelectorInBackground:@selector(maybeReloadAssets)
+                         withObject:nil];
+
+  if ([delegate_ isKindOfClass:[UNDMutableCollection class]])
+    mutable_ = YES;
+
   return self;
 }
 
@@ -64,26 +74,49 @@
   [super dealloc];
 }
 
-- (void)reload
+/// Calls reloadAssets if enough time has passed.
+- (void)maybeReloadAssets
 {
+  if (reloadActive_) return;
   NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
-  if( [lastrebuild_ timeIntervalSinceNow] > (- 60 * 5)) return;
+  if ([lastrebuild_ timeIntervalSinceNow] < (- 60 * 5))
+    [self reloadAssets];
+  [pool release];
+}
+
+// Updates the asset list and indicates that view refresh is necessary.
+- (void)reloadAssets
+{
   reloadActive_ = YES;
   [lastrebuild_ autorelease];
   lastrebuild_ = [[NSDate date] retain];
   [assets_ autorelease];
   assets_ = [[delegate_ currentAssets] retain];
-  [[self list] reload];
-  [self updatePreviewController];
-  [pool release];
+  assetsUpdated_ = YES;
   reloadActive_ = NO;
+  if ([self active]) [self reloadView];
+}
+
+/// Updates the view if the assets have changed.
+- (void)reloadView
+{
+  if (assetsUpdated_) {
+    assetsUpdated_ = NO;
+    [[self list] reload];
+    if (mutable_) {
+      [[self list] removeDividers];
+      [[self list] addDividerAtIndex:[assets_ count] withLabel:nil];
+    }
+    [self updatePreviewController];
+  }
 }
 
 #pragma mark Controller
 
 - (void)controlWasActivated
 {
-  [self reload];
+  [self maybeReloadAssets];
+  [self reloadView];
   [super controlWasActivated];
   if (!reloadActive_) [self attemptMenuRestore];
   height_ = [[self stack] count];
@@ -93,7 +126,7 @@
 {
   UNDPreferenceManager* preferences = [UNDPreferenceManager sharedInstance];
   BRControllerStack* stack = [self stack];
-  if (!stack || ([stack count] < height_))  [preferences clearMenuState];
+  if (!stack || ([stack count] < height_)) [preferences clearMenuState];
   [super controlWasDeactivated];
 }
 
@@ -113,7 +146,8 @@
   NSString* selectionTitle = [selection objectAtIndex:0];
   NSNumber* selectionIndex = [selection objectAtIndex:1];
   int index = [selectionIndex integerValue];
-  if (index >= [assets_ count]) return;
+  if (![self rowSelectable:index]) return;
+
   NSObject<UnderstudyAsset>* asset = [assets_ objectAtIndex:index];
   if ([selectionTitle compare:[asset title]] == NSOrderedSame) {
     [[self list] setSelection:index];
@@ -121,12 +155,33 @@
   }
 }
 
+- (NSObject<UnderstudyAsset>*)assetForIndex:(long)index
+{
+  if (![self rowSelectable:index]) return nil;
+  if (index == [assets_ count]) return [UNDManageDialog sharedInstance];
+  return [assets_ objectAtIndex:index];
+}
+
 - (void)itemSelected:(long)itemIndex
 {
-  if( ![self rowSelectable:itemIndex] ) return;
+  if (![self rowSelectable:itemIndex]) return;
+  BRController* controller;
+  UNDManageDialog* manager = [UNDManageDialog sharedInstance];
 
-  id<UnderstudyAsset> asset = [assets_ objectAtIndex:itemIndex];
-  BRController* controller = [asset controller];
+  // The manage dialog hangs off the end of the asset array.
+  if (itemIndex == [assets_ count]) {
+    if (mutable_)
+      [manager setCollection:(UNDMutableCollection*)delegate_];
+    controller = manager;
+  } else if ([manager assetManagementEnabled] && mutable_) {
+    UNDMutableCollection* collection = (UNDMutableCollection*)delegate_;
+    controller = [[[UNDEditDialog alloc]
+                    initWithCollection:collection forIndex:itemIndex]
+                   autorelease];
+  } else {
+    id<UnderstudyAsset> asset = [assets_ objectAtIndex:itemIndex];
+    controller = [asset controller];
+  }
 
   if (controller)
     [[self stack] pushController:controller];
@@ -134,36 +189,32 @@
 
 - (BRControl*)previewControlForItem:(long)itemIndex
 {
-  if( ![self rowSelectable:itemIndex] ) return nil;
-  BaseUnderstudyAsset* asset = [assets_ objectAtIndex:itemIndex];
-  return [asset preview];
+  return [[self assetForIndex:itemIndex] preview];
 }
 
 #pragma mark BRMenuListItemProvider
 - (long)itemCount
 {
-  if( assets_ )
-    return [assets_ count];
-  else // if the assets haven't been loaded yet, we'll have a spinner
-    return 1;
+  if (assets_) {
+    int count = [assets_ count];
+    if (mutable_) ++count;      // Mutable collections get an edit dialog
+    return count;
+  }
+  return 0;
 }
 
 - (id)titleForRow:(long)row
 {
-  if( [self rowSelectable:row] )
-    return [[assets_ objectAtIndex:row] title];
-  else return @"Loading";//nil;
+  return [[self assetForIndex:row] title];
 }
 
 - (id)itemForRow:(long)row
 {
-  if ([assets_ count] == 0) return nil;
-  if ([assets_ count] <= row) return nil;
-  NSObject<UnderstudyAsset>* asset = [assets_ objectAtIndex:row];
-  if( [asset respondsToSelector:@selector(menuItemForMenu:)] )
+  NSObject<UnderstudyAsset>* asset = [self assetForIndex:row];
+  if ([asset respondsToSelector:@selector(menuItemForMenu:)])
     return [asset menuItemForMenu:[delegate_ title]];
-  else
-    return [asset menuItem];
+
+  return [asset menuItem];
 }
 
 -(float)heightForRow:(long)row
@@ -173,7 +224,7 @@
 
 -(BOOL)rowSelectable:(long)row
 {
-  return (row >= 0 && row < [assets_ count]);
+  return (row >= 0 && row < [self itemCount]);
 }
 
 - (BRMediaType*)mediaPreviewMissingMediaType{ return nil; }

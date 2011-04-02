@@ -1,5 +1,5 @@
 //
-//  Copyright 2009 Kirk Kelsey.
+//  Copyright 2009,2011 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -20,11 +20,15 @@
 #import <BRMenuListItemProvider-Protocol.h>
 #import <BRCenteredMenuController.h>
 
-@interface UNDiPlayerAddDialog : BRCenteredMenuController 
-<BRMenuListItemProvider> 
+@class UNDMutableCollection;
+
+@interface UNDiPlayerAddDialog : BRCenteredMenuController
+<BRMenuListItemProvider>
 {
   NSMutableArray* titles_;
   NSMutableArray* feeds_;
+  /// Weak reference to the collection to be modified.
+  UNDMutableCollection* collection_;
 }
 
 @end

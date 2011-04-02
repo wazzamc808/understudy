@@ -1,5 +1,5 @@
 //
-//  Copyright 2008, 2011 Kirk Kelsey.
+//  Copyright 2008,2010-2011 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -8,8 +8,8 @@
 //  Software Foundation, either version 3 of the License, or (at your option)
 //  any later version.
 //
-//  Understudy is distributed in the hope that it will be useful, but WITHOUT 
-//  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
+//  Understudy is distributed in the hope that it will be useful, but WITHOUT
+//  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
 //  FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
 //  for more details.
 //
@@ -26,12 +26,17 @@
 #import "UnderstudyAsset.h"
 
 @interface UNDManageDialog : BRCenteredMenuController
-<BRMenuListItemProvider,UnderstudyAsset>
+<BRMenuListItemProvider,UnderstudyAsset, UNDCollectionMutator>
 {
   UNDAddAssetDialog* addController_;
-  BROptionDialog*    moveDialog_;
-  BROptionDialog*    removeDialog_;
+  BOOL enabled_;
+  UNDMutableCollection* collection_;  //< weak reference
   BRControl*         preview_;
 }
+
++(UNDManageDialog*)sharedInstance;
+
+-(BOOL)assetManagementEnabled;
+-(void)disableAssetManagement;
 
 @end
