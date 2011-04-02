@@ -19,10 +19,15 @@
 #import <BRMenuListItemProvider-Protocol.h>
 #import <BRCenteredMenuController.h>
 
-@interface DailyShowAddDialog : BRCenteredMenuController 
-<BRMenuListItemProvider> {
+@class UNDMutableCollection;
+
+@interface DailyShowAddDialog : BRCenteredMenuController
+<BRMenuListItemProvider>
+{
   NSMutableArray* titles_;
   NSMutableArray* feeds_;
+  /// Weak reference to the collection to be modified.
+  UNDMutableCollection* collection_;
 }
 
 @end

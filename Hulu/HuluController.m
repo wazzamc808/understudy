@@ -1,5 +1,5 @@
 //
-//  Copyright 2008-2009 Kirk Kelsey.
+//  Copyright 2008-2009,2011 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -19,7 +19,6 @@
 #include <regex.h>
 
 #import "HuluController.h"
-#import "MainMenuController.h"
 #import "UnderstudyAppliance.h"
 #import "UNDPreferenceManager.h"
 #import "UNDPasswordProvider.h"

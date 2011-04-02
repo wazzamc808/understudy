@@ -1,5 +1,5 @@
 //
-//  Copyright 2009 Kirk Kelsey.
+//  Copyright 2009-2011 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -18,6 +18,8 @@
 
 #import "UNDExternalAppAsset.h"
 #import "UNDExternalLaunchController.h"
+
+#import "BRImage.h"
 #import "BRTextMenuItemLayer.h"
 
 @implementation UNDExternalAppAsset
@@ -26,6 +28,15 @@
 {
   [super initWithTitle:appName];
   appName_ = [appName copy];
+  NSWorkspace* workspace = [NSWorkspace sharedWorkspace];
+  NSString* path = [workspace fullPathForApplication:appName_];
+  NSBundle* bundle = [NSBundle bundleWithPath:path];
+  NSDictionary* info = [bundle infoDictionary];
+  NSString* iconFile = [info objectForKey:@"CFBundleIconFile"];
+  NSString* iconPath = [bundle pathForResource:iconFile ofType:nil];
+
+  image_ = [[BRImage imageWithPath:iconPath] retain];
+
   return self;
 }
 
@@ -33,6 +44,7 @@
 {
   [appName_ release];
   [controller_ release];
+  [image_ release];
   [super dealloc];
 }
 
@@ -44,5 +56,7 @@
   }
   return controller_;
 }
+
+- (BRImage*)coverArt{ return image_; }
 
 @end

@@ -1,5 +1,5 @@
 //
-//  Copyright 2009,2010 Kirk Kelsey.
+//  Copyright 2009-2011 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -18,11 +18,12 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import "UNDAssetCollection.h"
+#import "UNDBaseCollection.h"
 
-@interface UNDYouTubeFeed : UNDAssetCollection
+@interface UNDYouTubeFeed : UNDBaseCollection
 {
-  NSURL* url_;
+  NSArray* array_;
+  NSURL*   url_;
 }
 
 - (id)initWithTitle:(NSString*)title forUrl:(NSURL*)url;

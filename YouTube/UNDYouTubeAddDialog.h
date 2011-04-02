@@ -20,10 +20,14 @@
 #import <BRMenuListItemProvider-Protocol.h>
 #import <BRCenteredMenuController.h>
 
-@interface UNDYouTubeAddDialog : BRCenteredMenuController 
+@class UNDMutableCollection;
+
+@interface UNDYouTubeAddDialog : BRCenteredMenuController
 <BRMenuListItemProvider> {
   NSMutableArray* titles_;
   NSMutableArray* feeds_;
+  /// Weak reference to the collection to be modified.
+  UNDMutableCollection* collection_;
 }
 
 @end

@@ -1,5 +1,5 @@
 //
-//  Copyright 2008-2010 Kirk Kelsey.
+//  Copyright 2008-2011 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -18,12 +18,13 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import "UNDAssetCollection.h"
+#import "UNDBaseCollection.h"
 #import "UNDMenuController.h"
 
-@interface HuluFeed : UNDAssetCollection <UNDMenuDelegate>
+@interface HuluFeed : UNDBaseCollection<UNDMenuDelegate>
 {
-  NSURL* url_;
+  NSArray* assets_;
+  NSURL*   url_;
 }
 
 - (id)initWithTitle:(NSString*)title forUrl:(NSURL*)url;

@@ -1,5 +1,5 @@
 //                                                                -*- objc -*-
-//  Copyright 2008-2010 Kirk Kelsey.
+//  Copyright 2010-2011 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -16,32 +16,22 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
-#import <Cocoa/Cocoa.h>
+#import "BaseUnderstudyAsset.h"
+#import "UnderstudyAsset.h"
+#import "UNDMenuController.h"
+#import "UNDBaseCollection.h"
 
-#import <BRMenuListItemProvider-Protocol.h>
-#import <BRMediaMenuController.h>
-#import <BRMenuController-HeaderConvienceMethods.h>
-#import <BROptionDialog.h>
-
-#import "UNDAddAssetDialog.h"
-#import "UNDPreferenceManager.h"
-
-// class MainMenuController
-//
-// The primary window returned by the appliance controller. Use the
-// sharedInstance method to access the menu singleton rather than init (which
-// is the designated initializer).
-
-@interface MainMenuController : BRMediaMenuController
-<BRMenuListItemProvider,UNDPreferenceSubscriber>
+@interface UNDMutableCollection : UNDBaseCollection<UNDMutableMenuDelegate>
 {
- @private
-  // menu item -> controller (or nil if the controller hasn't been used)
+  NSMutableArray* contents_;
   NSMutableArray* assets_;
-  UNDPreferenceManager* preferences_;
 }
 
-// Singleton access
-+ (MainMenuController*)sharedInstance;
+- (id)initWithTitle:(NSString*)title forContents:(NSMutableArray*)contents;
 
+@end
+
+@protocol UNDCollectionMutator
+/// Implementing classes should keep a weak reference to the collection.
+- (void)setCollection:(UNDMutableCollection*)collection;
 @end
