@@ -1,0 +1,4 @@
+build
+doxygen/BR/
+doxygen/UND/
+doxygen/.*\.doxytag
