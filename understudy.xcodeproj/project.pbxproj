@@ -26,6 +26,8 @@
 		DF0EDFCD0EE5E187008FA08A /* English.lproj in Resources */ = {isa = PBXBuildFile; fileRef = DF0EDFCA0EE5E187008FA08A /* English.lproj */; };
 		DF2EB1960F574D5200D650B7 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF2EB1950F574D5200D650B7 /* IOKit.framework */; };
 		DF2EB2110F577F0C00D650B7 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF2EB2100F577F0C00D650B7 /* Carbon.framework */; };
+		DF31068513457E7200BFC09F /* UNDPlayerWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = DF31068413457E7200BFC09F /* UNDPlayerWindow.m */; };
+		DF31068613457E7200BFC09F /* UNDPlayerWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = DF31068413457E7200BFC09F /* UNDPlayerWindow.m */; };
 		DF318FF60FC5B6C1004CE50D /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFE014940EDF681D00AFD18F /* WebKit.framework */; };
 		DF3190330FC5D34B004CE50D /* AppleRemote.m in Sources */ = {isa = PBXBuildFile; fileRef = DF3190320FC5D34B004CE50D /* AppleRemote.m */; };
 		DF3190490FC5D3C9004CE50D /* RemoteControl.m in Sources */ = {isa = PBXBuildFile; fileRef = DF3190480FC5D3C9004CE50D /* RemoteControl.m */; };
@@ -170,6 +172,8 @@
 		DF0EDFCA0EE5E187008FA08A /* English.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = English.lproj; sourceTree = "<group>"; };
 		DF2EB1950F574D5200D650B7 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		DF2EB2100F577F0C00D650B7 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
+		DF31068313457E7200BFC09F /* UNDPlayerWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UNDPlayerWindow.h; sourceTree = "<group>"; };
+		DF31068413457E7200BFC09F /* UNDPlayerWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UNDPlayerWindow.m; sourceTree = "<group>"; };
 		DF318F2E0FC4B418004CE50D /* HuluPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HuluPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF318F300FC4B418004CE50D /* HuluPlayer-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "HuluPlayer-Info.plist"; sourceTree = "<group>"; };
 		DF318FFE0FC5B916004CE50D /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Player/main.m; sourceTree = "<group>"; };
@@ -552,6 +556,8 @@
 		DF37B8E40F5AE9400017766F /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				DF31068313457E7200BFC09F /* UNDPlayerWindow.h */,
+				DF31068413457E7200BFC09F /* UNDPlayerWindow.m */,
 				DF54B4B711095D36006F0930 /* UNDVolumeControl.h */,
 				DF54B4B811095D36006F0930 /* UNDVolumeControl.m */,
 				DFE8E7B40F52130200A5E120 /* UNDPreferenceManager.h */,
@@ -887,6 +893,7 @@
 				298ACFCE12A70A360084E8B0 /* DailyShowController.m in Sources */,
 				298ACFCF12A70A360084E8B0 /* DailyShowFullEpisodesFeed.m in Sources */,
 				DF93080612D548CF004EA8F3 /* UNDDailyShowAssetProvider.m in Sources */,
+				DF31068513457E7200BFC09F /* UNDPlayerWindow.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -926,6 +933,7 @@
 				DFC24F43106867E800B4D149 /* UNDNetflixPlayer.m in Sources */,
 				DF54B4B911095D36006F0930 /* UNDVolumeControl.m in Sources */,
 				DF906CFF127B5D3A00B95C6E /* UNDNetflixKeyboardDevice.m in Sources */,
+				DF31068613457E7200BFC09F /* UNDPlayerWindow.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
