@@ -22,6 +22,6 @@ extern NSString* UNDDailyShowAssetProviderId;
 
 @interface UNDDailyShowAssetProvider : NSObject <UNDAssetProvider>
 
-- (NSObject<UnderstudyAsset>*)newAssetForContent:(NSDictionary*)content;
+- (NSObject<UNDAsset>*)newAssetForContent:(NSDictionary*)content;
 
 @end

@@ -16,11 +16,11 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
-#import "BaseUnderstudyAsset.h"
+#import "UNDBaseAsset.h"
 #import "UNDMenuController.h"
 
 /// Convenience class to provide controller and menu item for collections.
-@interface UNDBaseCollection : BaseUnderstudyAsset<UNDMenuDelegate>
+@interface UNDBaseCollection : UNDBaseAsset<UNDMenuDelegate>
 {
   UNDMenuController*   controller_;
 }

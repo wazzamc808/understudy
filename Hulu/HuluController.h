@@ -1,5 +1,5 @@
 //
-//  Copyright 2008-2009 Kirk Kelsey.
+//  Copyright 2008-2009, 2011 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -23,7 +23,7 @@
 
 #import "HuluAsset.h"
 
-@interface HuluController : BaseController {
+@interface HuluController : UNDBaseController {
  @private
   HuluAsset* asset_;
   NSTask* player_;

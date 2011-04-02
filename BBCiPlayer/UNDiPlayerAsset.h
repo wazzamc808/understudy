@@ -1,5 +1,5 @@
 //
-//  Copyright 2009 Kirk Kelsey.
+//  Copyright 2009, 2011 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -19,13 +19,13 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import "BaseUnderstudyAsset.h"
-#import "UnderstudyAsset.h"
+#import "UNDAsset.h"
+#import "UNDBaseAsset.h"
 
 @class BRTextMenuItemLayer;
 @class BRImageManager;
 
-@interface UNDiPlayerAsset : BaseUnderstudyAsset <UnderstudyAsset> {
+@interface UNDiPlayerAsset : UNDBaseAsset <UNDAsset> {
  @private
   BRImageManager* imageManager_;
   NSURL* url_;

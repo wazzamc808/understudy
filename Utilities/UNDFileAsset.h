@@ -18,11 +18,11 @@
 
 #import <Foundation/Foundation.h>
 
-#import "BaseUnderstudyAsset.h"
+#import "UNDBaseAsset.h"
 
 @class BRImage;
 
-@interface UNDFileAsset : BaseUnderstudyAsset
+@interface UNDFileAsset : UNDBaseAsset
 {
   BRImage*  image_;
   NSString* path_;

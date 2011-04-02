@@ -1,5 +1,5 @@
 //
-//  Copyright 2008-2009 Kirk Kelsey.
+//  Copyright 2008-2009, 2011 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -24,8 +24,8 @@
 #import <BRTextMenuItemLayer.h>
 #import <BRMediaPreviewControllerFactory.h>
 
-#import "BaseUnderstudyAsset.h"
-#import "UnderstudyAsset.h"
+#import "UNDAsset.h"
+#import "UNDBaseAsset.h"
 
 @class HuluFeed;
 @class HuluFeedDiscoverer;
@@ -34,7 +34,7 @@
 //
 // Represents the attributes of a Hulu Video
 
-@interface HuluAsset : BaseUnderstudyAsset<UnderstudyAsset> 
+@interface HuluAsset : UNDBaseAsset<UNDAsset>
 {
  @private
   NSString* series_;

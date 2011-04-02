@@ -31,7 +31,7 @@ static void __attribute__((constructor)) UNDYouTubeAssetProvider_init(void)
 
 @implementation UNDYouTubeAssetProvider
 
-- (NSObject<UnderstudyAsset>*)newAssetForContent:(NSDictionary*)content
+- (NSObject<UNDAsset>*)newAssetForContent:(NSDictionary*)content
 {
   NSString* title = [content objectForKey:UNDAssetProviderTitleKey];
   NSURL* url

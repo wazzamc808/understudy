@@ -31,7 +31,7 @@ static void __attribute__((constructor)) UNDNetflixAssetProvider_init(void)
 
 @implementation UNDNetflixAssetProvider
 
-- (NSObject<UnderstudyAsset>*)newAssetForContent:(NSDictionary*)content
+- (NSObject<UNDAsset>*)newAssetForContent:(NSDictionary*)content
 {
   NSString* title = [content objectForKey:UNDAssetProviderTitleKey];
   NSURL* url

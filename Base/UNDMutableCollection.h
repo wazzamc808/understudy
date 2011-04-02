@@ -16,8 +16,8 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
-#import "BaseUnderstudyAsset.h"
-#import "UnderstudyAsset.h"
+#import "UNDAsset.h"
+#import "UNDBaseAsset.h"
 #import "UNDMenuController.h"
 #import "UNDBaseCollection.h"
 

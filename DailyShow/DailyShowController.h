@@ -18,12 +18,12 @@
 #import <Cocoa/Cocoa.h>
 #import <WebKit/WebKit.h>
 
-#import "BaseController.h"
+#import "UNDBaseController.h"
 
 @class DailyShowAsset;
 @class UNDPluginControl;
 
-@interface DailyShowController : BaseController
+@interface DailyShowController : UNDBaseController
 {
   DailyShowAsset *asset_; //weak reference
   NSWindow *window_;      //original window

@@ -1,5 +1,5 @@
 //                                                                -*- objc -*-
-//  Copyright 2008-2010 Kirk Kelsey.
+//  Copyright 2008-2011 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -23,8 +23,8 @@
 #import <BRMediaAsset-Protocol.h>
 #import <BRTextMenuItemLayer.h>
 
-#import "BaseUnderstudyAsset.h"
-#import "UnderstudyAsset.h"
+#import "UNDAsset.h"
+#import "UNDBaseAsset.h"
 #import "UNDNetflixCollection.h"
 
 // class NetflixAsset
@@ -37,7 +37,7 @@
 - (void)assetUpdated:(UNDNetflixAsset*)asset;
 @end
 
-@interface UNDNetflixAsset : BaseUnderstudyAsset <UnderstudyAsset> {
+@interface UNDNetflixAsset : UNDBaseAsset <UNDAsset> {
  @private
   NSString* description_;
   NSString* mediaID_;

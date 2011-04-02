@@ -21,6 +21,7 @@
 
 #import <BRControllerStack.h>
 #import <BRListControl.h>
+#import <BRMediaMenuController.h>
 #import <BRTextMenuItemLayer.h>
 
 @implementation DailyShowFullEpisodesFeed

@@ -16,14 +16,7 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
-#import "UNDEditDialog.h"
-#import "UNDManageDialog.h"
 #import "UNDMenuController.h"
-#import "BaseController.h"
-#import "UnderstudyAsset.h"
-#import "BaseUnderstudyAsset.h"
-#import "UNDLoadingAsset.h"
-#import "UNDPreferenceManager.h"
 
 #import <BRControllerStack.h>
 #import <BRComboMenuItemLayer.h>
@@ -31,6 +24,14 @@
 #import <BRMenuController-HeaderConvienceMethods.h>
 #import <BRMenuSavedState-Private.h>
 #import <BRTextMenuItemLayer.h>
+
+#import "UNDAsset.h"
+#import "UNDBaseAsset.h"
+#import "UNDBaseController.h"
+#import "UNDEditDialog.h"
+#import "UNDManageDialog.h"
+#import "UNDLoadingAsset.h"
+#import "UNDPreferenceManager.h"
 
 @implementation BRMenuSavedState (PrivateExpose)
 - (NSMutableDictionary*) cachedMenuState
@@ -148,14 +149,14 @@
   int index = [selectionIndex integerValue];
   if (![self rowSelectable:index]) return;
 
-  NSObject<UnderstudyAsset>* asset = [assets_ objectAtIndex:index];
+  NSObject<UNDAsset>* asset = [assets_ objectAtIndex:index];
   if ([selectionTitle compare:[asset title]] == NSOrderedSame) {
     [[self list] setSelection:index];
     [[self stack] pushController:[asset controller]];
   }
 }
 
-- (NSObject<UnderstudyAsset>*)assetForIndex:(long)index
+- (NSObject<UNDAsset>*)assetForIndex:(long)index
 {
   if (![self rowSelectable:index]) return nil;
   if (index == [assets_ count]) return [UNDManageDialog sharedInstance];
@@ -179,7 +180,7 @@
                     initWithCollection:collection forIndex:itemIndex]
                    autorelease];
   } else {
-    id<UnderstudyAsset> asset = [assets_ objectAtIndex:itemIndex];
+    id<UNDAsset> asset = [assets_ objectAtIndex:itemIndex];
     controller = [asset controller];
   }
 
@@ -210,7 +211,7 @@
 
 - (id)itemForRow:(long)row
 {
-  NSObject<UnderstudyAsset>* asset = [self assetForIndex:row];
+  NSObject<UNDAsset>* asset = [self assetForIndex:row];
   if ([asset respondsToSelector:@selector(menuItemForMenu:)])
     return [asset menuItemForMenu:[delegate_ title]];
 

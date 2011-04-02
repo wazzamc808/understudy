@@ -1,5 +1,5 @@
 //
-//  Copyright 2010 Kirk Kelsey.
+//  Copyright 2010, 2011 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -24,7 +24,7 @@ NSString* UNDHuluAssetProviderId = @"hulu";
 
 @implementation UNDHuluAssetProvider
 
-- (NSObject<UnderstudyAsset>*)newAssetForContent:(NSDictionary*)content
+- (NSObject<UNDAsset>*)newAssetForContent:(NSDictionary*)content
 {
   NSString* title = [content objectForKey:UNDAssetProviderTitleKey];
   NSURL* url

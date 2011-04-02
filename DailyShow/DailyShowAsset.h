@@ -22,8 +22,8 @@
 #import <BRMediaAsset-Protocol.h>
 #import <BRTextMenuItemLayer.h>
 
-#import "BaseUnderstudyAsset.h"
-#import "UnderstudyAsset.h"
+#import "UNDAsset.h"
+#import "UNDBaseAsset.h"
 
 // class DailyShowAsset
 //
@@ -31,7 +31,7 @@
 
 @class DailyShowAsset;
 
-@interface DailyShowAsset : BaseUnderstudyAsset <UnderstudyAsset> {
+@interface DailyShowAsset : UNDBaseAsset <UNDAsset> {
 @private
   NSString* description_;
   NSURL* url_;
