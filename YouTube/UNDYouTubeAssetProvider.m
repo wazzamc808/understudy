@@ -1,5 +1,5 @@
 //
-//  Copyright 2010 Kirk Kelsey.
+//  Copyright 2010-2011 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -21,6 +21,13 @@
 #import "UNDYouTubeFeed.h"
 
 NSString* UNDYouTubeAssetProviderId = @"youtube";
+
+static void __attribute__((constructor)) UNDYouTubeAssetProvider_init(void)
+{
+  UNDAssetFactory* factory = [UNDAssetFactory sharedInstance];
+  id provider = [[[UNDYouTubeAssetProvider alloc] init] autorelease];
+  [factory registerProvider:provider];
+}
 
 @implementation UNDYouTubeAssetProvider
 
