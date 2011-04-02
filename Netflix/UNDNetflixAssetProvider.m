@@ -1,5 +1,5 @@
 //
-//  Copyright 2010 Kirk Kelsey.
+//  Copyright 2010-2011 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -21,6 +21,13 @@
 #import "UNDNetflixFeed.h"
 
 NSString* UNDNetflixAssetProviderId = @"netflix";
+
+static void __attribute__((constructor)) UNDNetflixAssetProvider_init(void)
+{
+  UNDAssetFactory* factory = [UNDAssetFactory sharedInstance];
+  id provider = [[[UNDNetflixAssetProvider alloc] init] autorelease];
+  [factory registerProvider:provider];
+}
 
 @implementation UNDNetflixAssetProvider
 

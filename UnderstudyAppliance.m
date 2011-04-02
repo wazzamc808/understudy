@@ -25,13 +25,6 @@
 #import "UNDMutableCollection.h"
 #import "UNDPreferenceManager.h"
 
-/// The providers won't be needed explicitly later.
-#import "UNDExternalAppAssetProvider.h"
-#import "UNDHuluAssetProvider.h"
-#import "UNDNetflixAssetProvider.h"
-#import "UNDYouTubeAssetProvider.h"
-#import "UNDiPlayerAssetProvider.h"
-
 @implementation BRSentinel (UNDExposeStack)
 - (BRControllerStack*)stack
 {
@@ -45,17 +38,6 @@
 {
   static UNDMutableCollection* collection = nil;
   if (!collection) {
-    UNDAssetFactory* factory = [UNDAssetFactory sharedInstance];
-    [factory registerProvider:[[[UNDExternalAppAssetProvider alloc] init]
-                                autorelease]];
-    [factory registerProvider:[[[UNDHuluAssetProvider alloc] init]
-                                autorelease]];
-    [factory registerProvider:[[[UNDNetflixAssetProvider alloc] init]
-                                autorelease]];
-    [factory registerProvider:[[[UNDYouTubeAssetProvider alloc] init]
-                                autorelease]];
-    [factory registerProvider:[[[UNDiPlayerAssetProvider alloc] init]
-                                autorelease]];
     NSMutableArray* descriptions
       = [[UNDPreferenceManager sharedInstance] assetDescriptions];
 
