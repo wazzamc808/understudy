@@ -1,5 +1,5 @@
 //
-//  Copyright 2008-2010 Kirk Kelsey.
+//  Copyright 2008-2011 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -23,6 +23,12 @@
 @interface WebNetscapePluginView
 -(BOOL)sendEvent:(void*)event isDrawRect:(BOOL)eventIsDrawRect;
 @end
+
+#ifdef UND_DEBUG
+#define UNDLog(...) NSLog(__VA_ARGS__)
+#else
+#define UNDDLog(...) /* */
+#endif
 
 @implementation UNDPluginControl
 
@@ -50,15 +56,16 @@
   [views addObjectsFromArray:[mainView_ subviews]];
   while( [views count] ){
     view = [views anyObject];
-    NSLog( @"view className: %@", [view className] );
-    if( [[view className] isEqual:@"WebNetscapePluginDocumentView"] )
+    UNDLog(@"view className: %@", [view className]);
+    if ([[view className] isEqual:@"WebNetscapePluginDocumentView"])
         [plugins addObject:view];
     [views addObjectsFromArray:[view subviews]];
     [views removeObject:view];
   }
-  if( [plugins count] < 1 ){
-    NSLog(@"could not a find a plugin");
-  }else if( [plugins count] > 1 ){
+  if ([plugins count] < 1) {
+    UNDLog(@"could not a find a plugin");
+  } else if ([plugins count] > 1) {
+    UNDLog(@"multiple plugins available");
     pluginView_ = [[plugins anyObject] retain];
     float pluginsize = ([pluginView_ frame].size.height * [pluginView_ frame].size.width);
     // pick the largest plugin view available
