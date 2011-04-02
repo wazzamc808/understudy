@@ -1,5 +1,5 @@
 //                                                                -*- objc -*-
-//  Copyright 2008-2009 Kirk Kelsey.
+//  Copyright 2008-2009,2011 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -20,12 +20,16 @@
 #import <BRMenuListItemProvider-Protocol.h>
 #import <BRCenteredMenuController.h>
 
+@class UNDMutableCollection;
+
 @interface HuluAddDialog : BRCenteredMenuController <BRMenuListItemProvider> {
   NSString* profile_;
   NSMutableArray* titles_;
   NSMutableArray* feeds_;
   NSURLConnection* connection_;
   BOOL searching_;
+  /// Weak reference to the collection to be modified.
+  UNDMutableCollection* collection_;
 }
 
 - (void)startAutoDiscovery;

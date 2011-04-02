@@ -1,5 +1,5 @@
 //
-//  Copyright 2008-2010 Kirk Kelsey.
+//  Copyright 2008-2011 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -16,13 +16,14 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
-#import "MainMenuController.h"
 #import "UNDNetflixAddDialog.h"
-#import "UNDNetflixAssetProvider.h"
 
 #import <BRControllerStack.h>
 
 #import <PubSub/PubSub.h>
+
+#import "UNDMutableCollection.h"
+#import "UNDNetflixAssetProvider.h"
 
 @interface UNDNetflixAddDialog (PrivateMethods)
 - (void)_startAutoDiscovery;
@@ -60,6 +61,11 @@ NSString* NETFLIXTITLES[] = {
   [queue_ release];
 }
 
+- (void)setCollection:(UNDMutableCollection*)collection
+{
+  collection_ = collection;
+}
+
 // call-back for an item having been selected
 - (void)itemSelected
 {
@@ -78,15 +84,14 @@ NSString* NETFLIXTITLES[] = {
   }
 
   if (url && title) {
-    UNDPreferenceManager* pref = [UNDPreferenceManager sharedInstance];
     NSDictionary* asset =
       [NSDictionary dictionaryWithObjectsAndKeys:url, @"URL", title, @"title",
                     UNDNetflixAssetProviderId, @"provider", nil];
-    [pref addAssetWithDescription:asset];
+    [collection_ addAssetWithDescription:asset
+                                 atIndex:LONG_MAX];
     [[PSClient applicationClient] addFeedWithURL:[NSURL URLWithString:url]];
   }
 
-  // we might want to pop back to the main menu
   [[self stack] popController];
 }
 

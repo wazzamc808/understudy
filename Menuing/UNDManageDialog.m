@@ -1,5 +1,5 @@
 //
-//  Copyright 2008-2010 Kirk Kelsey.
+//  Copyright 2008-2011 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -10,33 +10,30 @@
 //
 //  Understudy is distributed in the hope that it will be useful, but WITHOUT
 //  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-//  FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
+//  FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License
 //  for more details.
 //
 //  You should have received a copy of the GNU Lesser General Public License
-//  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
+//  along with Understudy. If not, see <http://www.gnu.org/licenses/>.
 
 #import "UNDIconProvider.h"
 #import "UNDManageDialog.h"
 #import "UNDPreferenceManager.h"
-#import "UNDRenameDialog.h"
 
 #import <BRControllerStack.h>
+#import <BRMenuListItemProvider-Protocol.h>
 #import <BRListControl.h>
 #import <BRMediaPreviewControllerFactory.h>
 #import <BRTextMenuItemLayer.h>
 
 @implementation UNDManageDialog
 
-enum ManageOptionEnum
+typedef enum
 {
-  AddOption = 0,
-  RemoveOption,
-  RenameOption,
-  MoveOption,
-  OptionCount // this must be immediately after the last valid option
-};
-typedef enum ManageOptionEnum ManageOption;
+  kAddOption = 0,
+  kEnableOption,
+  kOptionCount // this must be immediately after the last valid option
+} ManageOption;
 
 - (id)init
 {
@@ -48,70 +45,6 @@ typedef enum ManageOptionEnum ManageOption;
   return self;
 }
 
-- (void)_presentMoveDialog
-{
-  [moveDialog_ release];
-  moveDialog_ = [[BROptionDialog alloc] init];
-  [moveDialog_ setTitle:@"Move Asset"];
-  UNDPreferenceManager* prefs = [UNDPreferenceManager sharedInstance];
-  for (NSDictionary* asset in [prefs assetDescriptions]) {
-    NSString* title = [asset objectForKey:@"title"];
-    if (!title) title = @"<untitled>";
-    [moveDialog_ addOptionText:title];
-  }
-  [moveDialog_ setActionSelector:@selector(_moveFrom) target:self];
-  [[self stack] pushController:moveDialog_];
-}
-
-- (void)_moveFrom
-{
-  [moveDialog_ setPrimaryInfoText:@"Select new position."
-                   withAttributes:nil];
-  [moveDialog_ setActionSelector:@selector(_moveTo) target:self];
-  // misusing the |tag|, rather than using the user info
-  [moveDialog_ setTag:[moveDialog_ selectedIndex]];
-}
-
-- (void)_moveTo
-{
-  long from = [moveDialog_ tag];
-  long to = [moveDialog_ selectedIndex];
-  [[UNDPreferenceManager sharedInstance] moveAssetFromIndex:from toIndex:to];
-  [[self stack] popController];
-}
-
-- (void)_presentRemoveDialog
-{
-  [removeDialog_ release];
-  removeDialog_ = [[BROptionDialog alloc] init];
-  [removeDialog_ setTitle:@"Remove Asset"];
-
-  UNDPreferenceManager* prefs = [UNDPreferenceManager sharedInstance];
-  for (NSDictionary* asset in [prefs assetDescriptions]) {
-    NSString* title = [asset objectForKey:@"title"];
-    if (!title) title = @"<untitled>";
-    [removeDialog_ addOptionText:title];
-  }
-
-  [removeDialog_ setActionSelector:@selector(_remove) target:self];
-  [[self stack] pushController:removeDialog_];
-}
-
-// call back for the remove dialog
-- (void)_remove
-{
-  long index = [removeDialog_ selectedIndex];
-  [[UNDPreferenceManager sharedInstance] removeAssetAtIndex:index];
-  [[self stack] popController];
-}
-
-- (void)_presentRenameDialog
-{
-  UNDRenameDialog* rename = [[UNDRenameDialog alloc] init];
-  [[self stack] pushController:rename];
-  [rename autorelease];
-}
-
 #pragma mark Controller
 
 - (void)itemSelected:(long)index
@@ -119,20 +52,16 @@ typedef enum ManageOptionEnum ManageOption;
   ManageOption option = (ManageOption)index;
   switch( option )
   {
-    case AddOption:
-      [[self stack] pushController:addController_];
-      break;
-    case RemoveOption:
-      [self _presentRemoveDialog];
-      break;
-    case RenameOption:
-      [self _presentRenameDialog];
-      break;
-    case MoveOption:
-      [self _presentMoveDialog];
-      break;
-    case OptionCount:
-      break;
+  case kAddOption:
+    [addController_ setCollection:collection_];
+    [[self stack] swapController:addController_];
+    break;
+  case kEnableOption:
+    enabled_ = !enabled_;
+    [[self stack] popController];
+    break;
+  case kOptionCount:
+    break;
   }
 }
 
@@ -144,26 +73,65 @@ typedef enum ManageOptionEnum ManageOption;
     [self setSelectedItem:0];
 }
 
+- (void)controlWasDeactivated
+{
+  [super controlWasDeactivated];
+  collection_ = nil;
+}
+
+-(BOOL)assetManagementEnabled
+{
+  return enabled_;
+}
+
+-(void)disableAssetManagement
+{
+  enabled_ = NO;
+}
+
+static UNDManageDialog* sharedInstance_;
++ (UNDManageDialog*)sharedInstance
+{
+  if (!sharedInstance_)
+    sharedInstance_ = [[UNDManageDialog alloc] init];
+
+  return sharedInstance_;
+}
+
+-(void)setCollection:(UNDMutableCollection*)collection
+{
+  collection_ = collection;
+}
+
 #pragma mark MenuListItemProvider
 
-- (long)itemCount{ return OptionCount; }
+- (long)itemCount{ return kOptionCount; }
 - (float)heightForRow:(long)row{ return 0; }
 - (BOOL)rowSelectable:(long)row
 {
-  int count
-    = [[[UNDPreferenceManager sharedInstance] assetDescriptions] count];
-  return (row == 0 || count > 0);
+  switch (row) {
+  case kAddOption:
+    if (collection_) return YES;
+    return NO;
+  case kEnableOption:
+    return YES;
+  case kOptionCount:
+    return NO;
+  }
+  return NO;
 }
 
 - (id)titleForRow:(long)row
 {
   ManageOption option = (ManageOption)row;
   switch (option) {
-    case AddOption: return @"Add";
-    case RemoveOption: return @"Remove";
-    case RenameOption: return @"Rename";
-    case MoveOption: return @"Move";
-    case OptionCount: break;
+  case kAddOption:
+    return @"Add entry to this collection";
+  case kEnableOption:
+    if (enabled_) return @"Disable management dialogs";
+    return @"Enable management dialogs";
+  case kOptionCount:
+    break;
   }
   return @"";
 }
@@ -172,7 +140,6 @@ typedef enum ManageOptionEnum ManageOption;
 {
   BRTextMenuItemLayer* item = [BRTextMenuItemLayer menuItem];
   [item setTitle:[self titleForRow:row]];
-  if( ![self rowSelectable:row] ) [item setDimmed:YES];
   return item;
 }
 

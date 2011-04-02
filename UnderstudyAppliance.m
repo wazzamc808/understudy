@@ -1,5 +1,5 @@
 //
-//  Copyright 2008-2010 Kirk Kelsey.
+//  Copyright 2008-2011 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -8,8 +8,8 @@
 //  Software Foundation, either version 3 of the License, or (at your option)
 //  any later version.
 //
-//  Understudy is distributed in the hope that it will be useful, but WITHOUT 
-//  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
+//  Understudy is distributed in the hope that it will be useful, but WITHOUT
+//  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
 //  FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
 //  for more details.
 //
@@ -20,6 +20,17 @@
 
 #import "BRControllerStack.h"
 #import "BRSentinel.h"
+
+#import "UNDMenuController.h"
+#import "UNDMutableCollection.h"
+#import "UNDPreferenceManager.h"
+
+/// The providers won't be needed explicitly later.
+#import "UNDExternalAppAssetProvider.h"
+#import "UNDHuluAssetProvider.h"
+#import "UNDNetflixAssetProvider.h"
+#import "UNDYouTubeAssetProvider.h"
+#import "UNDiPlayerAssetProvider.h"
 
 @implementation BRSentinel (UNDExposeStack)
 - (BRControllerStack*)stack
@@ -32,10 +43,31 @@
 
 - (BRController*)applianceController
 {
-  return [MainMenuController sharedInstance];
+  static UNDMutableCollection* collection = nil;
+  if (!collection) {
+    UNDAssetFactory* factory = [UNDAssetFactory sharedInstance];
+    [factory registerProvider:[[[UNDExternalAppAssetProvider alloc] init]
+                                autorelease]];
+    [factory registerProvider:[[[UNDHuluAssetProvider alloc] init]
+                                autorelease]];
+    [factory registerProvider:[[[UNDNetflixAssetProvider alloc] init]
+                                autorelease]];
+    [factory registerProvider:[[[UNDYouTubeAssetProvider alloc] init]
+                                autorelease]];
+    [factory registerProvider:[[[UNDiPlayerAssetProvider alloc] init]
+                                autorelease]];
+    NSMutableArray* descriptions
+      = [[UNDPreferenceManager sharedInstance] assetDescriptions];
+
+    collection
+      = [[[UNDMutableCollection alloc]
+           initWithTitle:@"Understudy" forContents:descriptions] autorelease];
+  }
+
+  return [collection controller];
 }
 
-+ (NSString *)className 
++ (NSString *)className
 {
   return [NSString stringWithString:@"RUIDVDAppliance"];
 }

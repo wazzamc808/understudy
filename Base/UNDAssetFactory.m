@@ -1,5 +1,5 @@
 //
-//  Copyright 2010 Kirk Kelsey.
+//  Copyright 2010,2011 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -19,6 +19,7 @@
 #import "UNDAddAssetDialog.h"
 #import "UNDAssetFactory.h"
 #import "UNDUnknownAsset.h"
+#import "UNDMutableCollection.h"
 
 @implementation UNDAssetFactory
 
@@ -27,6 +28,7 @@ static NSString* kAssetFactoryId = @"factory";
 NSString* UNDAssetProviderNameKey  = @"provider";
 NSString* UNDAssetProviderTitleKey = @"title";
 NSString* UNDAssetProviderUrlKey   = @"URL";
+NSString* UNDAssetProviderAssetsKey= @"assets";
 
 - (id)init
 {
@@ -68,13 +70,18 @@ UNDAssetFactory* singleton_;
 }
 
 /// An asset is always provided, though it may be a simple placeholder if the
-/// content does not indicate a known provider.
+/// content does not indicate a known provider. The content should be an array
+/// or dictionary.
 - (NSObject<UnderstudyAsset>*)newAssetForContent:(NSDictionary*)content
 {
+  NSObject<UnderstudyAsset>* asset = nil;
+
+  NSDictionary* desc = (NSDictionary*)content;
   NSObject<UNDAssetProvider>* provider
-    = [self providerWithId:[content objectForKey:UNDAssetProviderNameKey]];
-  NSObject<UnderstudyAsset>* asset = [provider newAssetForContent:content];
-  if (!asset) asset = [[UNDUnknownAsset alloc] initWithContents:content];
+    = [self providerWithId:[desc objectForKey:UNDAssetProviderNameKey]];
+  asset = [provider newAssetForContent:desc];
+
+  if (!asset) asset = [[UNDUnknownAsset alloc] initWithObject:content];
   return asset;
 }
 

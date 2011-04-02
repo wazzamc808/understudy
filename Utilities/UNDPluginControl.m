@@ -50,7 +50,6 @@
   [views addObjectsFromArray:[mainView_ subviews]];
   while( [views count] ){
     view = [views anyObject];
-    NSLog( @"view className: %@", [view className] );
     if( [[view className] isEqual:@"WebNetscapePluginDocumentView"] )
         [plugins addObject:view];
     [views addObjectsFromArray:[view subviews]];

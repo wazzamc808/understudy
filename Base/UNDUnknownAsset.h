@@ -23,9 +23,9 @@
 /// to a provider.
 @interface UNDUnknownAsset : BaseUnderstudyAsset <UnderstudyAsset>
 {
-  NSDictionary* contents_;
+  NSObject* object_;
 }
 
-- (id)initWithContents:(NSDictionary*)contents;
+- (id)initWithObject:(NSObject*)object;
 
 @end

@@ -1,5 +1,5 @@
 //                                                                -*- objc -*-
-//  Copyright 2009-2010 Kirk Kelsey.
+//  Copyright 2009-2011 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -23,10 +23,17 @@
 
 @class BRTextMenuItemLayer;
 
-@protocol UNDMenuDelegate <UnderstudyAsset>
-// return an autoreleased array of UnderstudyAsset objects. Feed delegates
+@protocol UNDMenuDelegate<UnderstudyAsset>
+// Returns an autoreleased array of UnderstudyAsset objects. Feed delegates
 // should not load their assests until specifically asked.
 - (NSArray*) currentAssets;
+@end
+
+@protocol UNDMutableMenuDelegate<UNDMenuDelegate>
+- (void)addAssetWithDescription:(NSDictionary*)description atIndex:(long)index;
+- (void)moveAssetFromIndex:(long)from toIndex:(long)to;
+- (void)removeAssetAtIndex:(long)index;
+- (void)renameAssetAtIndex:(long)index toTitle:(NSString*)title;
 @end
 
 @interface UNDMenuController : BRMediaMenuController<BRMenuListItemProvider>
@@ -35,10 +42,13 @@
   NSArray* assets_;
   NSObject<UNDMenuDelegate>* delegate_;  // delegate is retained by controller
   NSDate* lastrebuild_;
+  BOOL assetsUpdated_;          // True when view needs to be refreshed.
+  BOOL mutable_;
   BOOL reloadActive_;           // true when the asset list is being reloaded
   int  height_;                 // how high on the stack this controller is
 }
 
-- (id)initWithDelegate:(NSObject<UNDMenuDelegate>*)delegate;
+-(id)initWithDelegate:(NSObject<UNDMenuDelegate>*)delegate;
+-(void)reloadAssets;
 
 @end
