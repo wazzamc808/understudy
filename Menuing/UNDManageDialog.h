@@ -23,10 +23,10 @@
 #import <BRCenteredMenuController.h>
 
 #import "UNDAddAssetDialog.h"
-#import "UnderstudyAsset.h"
+#import "UNDAsset.h"
 
 @interface UNDManageDialog : BRCenteredMenuController
-<BRMenuListItemProvider,UnderstudyAsset, UNDCollectionMutator>
+<BRMenuListItemProvider, UNDAsset, UNDCollectionMutator>
 {
   UNDAddAssetDialog* addController_;
   BOOL enabled_;

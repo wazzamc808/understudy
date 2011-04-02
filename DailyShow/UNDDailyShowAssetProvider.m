@@ -24,7 +24,7 @@ NSString* UNDDailyShowAssetProviderId = @"dailyshow";
 
 @implementation UNDDailyShowAssetProvider
 
-- (NSObject<UnderstudyAsset>*)newAssetForContent:(NSDictionary*)content
+- (NSObject<UNDAsset>*)newAssetForContent:(NSDictionary*)content
 {
   NSString* title = [content objectForKey:UNDAssetProviderTitleKey];
   NSURL* url

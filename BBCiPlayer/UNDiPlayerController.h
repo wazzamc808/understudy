@@ -1,5 +1,5 @@
 //                                                                -*- objc -*-
-//  Copyright 2009 Kirk Kelsey.
+//  Copyright 2009, 2011 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -21,7 +21,7 @@
 @class UNDiPlayerAsset;
 @class UNDPluginControl;
 
-@interface UNDiPlayerController : BaseController{
+@interface UNDiPlayerController : UNDBaseController{
   UNDiPlayerAsset* asset_;
   UNDPluginControl* pluginControl_;
   NSWindow* window_;

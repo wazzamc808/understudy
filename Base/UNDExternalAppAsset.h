@@ -16,14 +16,14 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
-#import "BaseUnderstudyAsset.h"
-#import "UnderstudyAsset.h"
+#import "UNDBaseAsset.h"
+#import "UNDAsset.h"
 
 @class BRImage;
 @class BRTextMenuItemLayer;
 @class UNDExternalLaunchController;
 
-@interface UNDExternalAppAsset : BaseUnderstudyAsset<UnderstudyAsset>
+@interface UNDExternalAppAsset : UNDBaseAsset<UNDAsset>
 {
   UNDExternalLaunchController* controller_;
   NSString* appName_;

@@ -25,7 +25,7 @@
 #import "UNDMutableCollection.h"
 
 @interface UNDEditDialog : BRCenteredMenuController
-<BRMenuListItemProvider, UnderstudyAsset>
+<BRMenuListItemProvider, UNDAsset>
 {
   UNDMutableCollection* collection_;
   long index_;                  //< Selected index in the collection.

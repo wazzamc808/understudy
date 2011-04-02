@@ -26,7 +26,7 @@
 #import <BRTextContainer-Protocol.h>
 #import <BRTextEntryController.h>
 
-#import "UnderstudyAsset.h"
+#import "UNDAsset.h"
 #import "UNDIconProvider.h"
 
 @implementation UNDEditDialog
@@ -74,7 +74,7 @@ typedef enum
   [moveDialog_ release];
   moveDialog_ = [[BROptionDialog alloc] init];
   [moveDialog_ setTitle:@"Insert In Position:"];
-  for (id<UnderstudyAsset> asset in [collection_ currentAssets]) {
+  for (id<UNDAsset> asset in [collection_ currentAssets]) {
     NSString* title = [asset title];
     if (!title) title = @"<untitled>";
     [moveDialog_ addOptionText:title];
@@ -100,7 +100,7 @@ typedef enum
   switch (option) {
   case kSelectOption:
     assets = [collection_ currentAssets];
-    NSObject<UnderstudyAsset>* asset = [assets objectAtIndex:index_];
+    NSObject<UNDAsset>* asset = [assets objectAtIndex:index_];
     [[self stack] swapController:[asset controller]];
     break;
   case kRemoveOption:
@@ -178,7 +178,7 @@ typedef enum
   if (!collection_) return title_;
   NSArray* assets = [[[collection_ currentAssets] retain] autorelease];
   if (index_ >= [assets count]) return title_;
-  title_ = [[(id<UnderstudyAsset>)[assets objectAtIndex:index_] title] copy];
+  title_ = [[(id<UNDAsset>)[assets objectAtIndex:index_] title] copy];
   return title_;
 }
 

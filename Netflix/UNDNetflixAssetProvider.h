@@ -1,5 +1,5 @@
 //
-//  Copyright 2010 Kirk Kelsey.
+//  Copyright 2010, 2011 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -27,6 +27,6 @@ extern NSString* UNDNetflixAssetProviderId;
 /// The content should contain keys @"URL" and @"Title". If the expected keys
 /// are not found, or the asset cannot be constructed for any other reason, nil
 /// will be returned.
-- (NSObject<UnderstudyAsset>*)newAssetForContent:(NSDictionary*)content;
+- (NSObject<UNDAsset>*)newAssetForContent:(NSDictionary*)content;
 
 @end

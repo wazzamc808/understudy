@@ -1,5 +1,5 @@
 //
-//  Copyright 2009 Kirk Kelsey.
+//  Copyright 2009, 2011 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -20,9 +20,9 @@
 
 #import <BRTextMenuItemLayer.h>
 
-#import "UnderstudyAsset.h"
+#import "UNDAsset.h"
 
-@interface UNDLoadingAsset : NSObject <UnderstudyAsset> {
+@interface UNDLoadingAsset : NSObject <UNDAsset> {
  @private
   BRTextMenuItemLayer* menuItem_;
 }

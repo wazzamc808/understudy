@@ -1,5 +1,5 @@
 //
-//  Copyright 2008,2010 Kirk Kelsey.
+//  Copyright 2008,2010,2011 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -24,7 +24,7 @@
 @class UNDNetflixAsset;
 @class UNDPluginControl;
 
-@interface UNDNetflixController : BaseController {
+@interface UNDNetflixController : UNDBaseController {
  @private
   UNDNetflixAsset* asset_;
   UNDPluginControl* pluginControl_;

@@ -23,7 +23,7 @@
 @interface UNDPreferenceManager : NSObject
 {
 @private
-  /// Array of dictionaries representing <UnderstudyAsset> assets.
+  /// Array of dictionaries representing <UNDAsset> assets.
   NSMutableArray* assets_;
   // menu state used to restore selections after external player
   NSDictionary* menuState_;

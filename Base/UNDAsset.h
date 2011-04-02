@@ -1,5 +1,5 @@
 //
-//  Copyright 2009,2010 Kirk Kelsey.
+//  Copyright 2009, 2011 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -18,26 +18,20 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import "BRBaseMediaAsset.h"
-#import "BRMediaPreviewFactoryDelegate-Protocol.h"
-#import "BRMediaType.h"
+#import "BRController.h"
+#import "BRMenuItemLayer-Protocol.h"
 
-@class BRControl;
-@class BRLayer;
+#import "UNDBaseController.h"
 
-@protocol BRMenuItemLayer;
-
-@interface BaseUnderstudyAsset : BRBaseMediaAsset<BRMediaPreviewFactoryDelegate> 
-{
-  BRLayer<BRMenuItemLayer>* menuItem_;
-  BRControl* preview_;
-  NSString*  title_;
-}
-
-- (id)initWithTitle:(NSString*)title;
-
+@protocol UNDAsset
 - (BRLayer<BRMenuItemLayer>*)menuItem;
+- (BRController*)controller;
 - (BRControl*)preview;
 - (NSString*)title;
+
+@optional
+// In some cases it may be benefitial to customize the menu item to the menu.
+// For example, the feed to a show shouldn't have items with the same name
+- (BRLayer<BRMenuItemLayer>*)menuItemForMenu:(NSString*)menu;
 
 @end

@@ -19,12 +19,12 @@
 
 #import <BRMediaMenuController.h>
 
-#import "BaseUnderstudyAsset.h"
+#import "UNDBaseAsset.h"
 #import "UNDMenuController.h"
 
 @class BRTextMenuItemLayer;
 
-@interface DailyShowFullEpisodesFeed : BaseUnderstudyAsset <UNDMenuDelegate>
+@interface DailyShowFullEpisodesFeed : UNDBaseAsset <UNDMenuDelegate>
 {
 @private
   NSURL* url_;

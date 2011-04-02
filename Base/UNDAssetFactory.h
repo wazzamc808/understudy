@@ -20,13 +20,13 @@
 
 #import "BRSingleton.h"
 
-#import "UnderstudyAsset.h"
+#import "UNDAsset.h"
 #import "UNDMutableCollection.h"
 
 @class BRController;
 
 @protocol UNDAssetProvider
-- (NSObject<UnderstudyAsset>*)newAssetForContent:(NSDictionary*)content;
+- (NSObject<UNDAsset>*)newAssetForContent:(NSDictionary*)content;
 /// Returns a unique identifier for this type of provider.
 - (NSString*)providerId;
 /// Returns a descriptive name for the provider.

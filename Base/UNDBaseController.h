@@ -1,5 +1,5 @@
 //                                                                -*- objc -*-
-//  Copyright 2008-2009 Kirk Kelsey.
+//  Copyright 2008-2009, 2011 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -22,7 +22,7 @@
 
 #import "BRTextWithSpinnerController.h"
 
-@interface BaseController : BRTextWithSpinnerController { }
+@interface UNDBaseController : BRTextWithSpinnerController { }
 
 // orders out the FR interface to reveal an understudy player
 - (void)reveal;

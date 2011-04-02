@@ -31,7 +31,7 @@ static void __attribute__((constructor)) UNDiPlayerAssetProvider_init(void)
 
 @implementation UNDiPlayerAssetProvider
 
-- (NSObject<UnderstudyAsset>*)newAssetForContent:(NSDictionary*)content
+- (NSObject<UNDAsset>*)newAssetForContent:(NSDictionary*)content
 {
   NSString* title = [content objectForKey:UNDAssetProviderTitleKey];
   NSURL* url

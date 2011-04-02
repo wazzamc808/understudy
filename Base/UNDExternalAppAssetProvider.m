@@ -34,7 +34,7 @@ static void __attribute__((constructor)) UNDExternalAppProvider_init(void)
 
 @implementation UNDExternalAppAssetProvider
 
-- (NSObject<UnderstudyAsset>*)newAssetForContent:(NSDictionary*)content
+- (NSObject<UNDAsset>*)newAssetForContent:(NSDictionary*)content
 {
   NSString* appname = [content objectForKey:UNDExternalAppAssetKey];
   if (!appname) return nil;

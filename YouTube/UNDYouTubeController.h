@@ -1,5 +1,5 @@
 //
-//  Copyright 2009,2010 Kirk Kelsey.
+//  Copyright 2009,2010,2011 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -17,11 +17,12 @@
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
 #import <Cocoa/Cocoa.h>
-#import "BaseController.h"
+
+#import "UNDBaseController.h"
 
 @class UNDYouTubeAsset;
 
-@interface UNDYouTubeController : BaseController
+@interface UNDYouTubeController : UNDBaseController
 {
   UNDYouTubeAsset* asset_;      //< Weak reference to the related asset.
   WebView* view_;

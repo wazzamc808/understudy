@@ -72,9 +72,9 @@ UNDAssetFactory* singleton_;
 /// An asset is always provided, though it may be a simple placeholder if the
 /// content does not indicate a known provider. The content should be an array
 /// or dictionary.
-- (NSObject<UnderstudyAsset>*)newAssetForContent:(NSDictionary*)content
+- (NSObject<UNDAsset>*)newAssetForContent:(NSDictionary*)content
 {
-  NSObject<UnderstudyAsset>* asset = nil;
+  NSObject<UNDAsset>* asset = nil;
 
   NSDictionary* desc = (NSDictionary*)content;
   NSObject<UNDAssetProvider>* provider

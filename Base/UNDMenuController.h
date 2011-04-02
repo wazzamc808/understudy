@@ -19,12 +19,12 @@
 #import <Cocoa/Cocoa.h>
 #import "BRMediaMenuController.h"
 #import "BRMenuListItemProvider-Protocol.h"
-#import "UnderstudyAsset.h"
+#import "UNDAsset.h"
 
 @class BRTextMenuItemLayer;
 
-@protocol UNDMenuDelegate<UnderstudyAsset>
-// Returns an autoreleased array of UnderstudyAsset objects. Feed delegates
+@protocol UNDMenuDelegate<UNDAsset>
+// Returns an autoreleased array of UNDAsset objects. Feed delegates
 // should not load their assests until specifically asked.
 - (NSArray*) currentAssets;
 @end

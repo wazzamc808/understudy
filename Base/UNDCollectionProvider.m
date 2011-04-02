@@ -31,7 +31,7 @@ static void __attribute__((constructor)) UNDCollectionProvider_init(void)
 
 @implementation UNDCollectionProvider
 
-- (NSObject<UnderstudyAsset>*)newAssetForContent:(NSDictionary*)content
+- (NSObject<UNDAsset>*)newAssetForContent:(NSDictionary*)content
 {
   NSString* title = [content objectForKey:UNDAssetProviderTitleKey];
   if (!title) return nil;
