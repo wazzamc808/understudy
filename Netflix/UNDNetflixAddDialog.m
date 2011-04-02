@@ -1,5 +1,5 @@
 //
-//  Copyright 2008-2010 Kirk Kelsey.
+//  Copyright 2008-2011 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -20,8 +20,8 @@
 #import "UNDNetflixAddDialog.h"
 #import "UNDNetflixAssetProvider.h"
 
+#import <AppKit/NSPasteboard.h>
 #import <BRControllerStack.h>
-
 #import <PubSub/PubSub.h>
 
 @interface UNDNetflixAddDialog (PrivateMethods)
@@ -30,14 +30,19 @@
 
 @implementation UNDNetflixAddDialog
 
-#define FEED_OPTION_COUNT 1
+typedef enum {
+  kNewWatchInstantly,
+  kPasteboardUrl,
+  kMyQueue                      // (Keep this last)
+} NetflixAssetOption;
 
-NSString* NETFLIXURLS[] = {
-@"http://netflix.com/NewWatchInstantlyRSS",
-};
+static const NSString* kNewWatchInstantlyUrl
+= @"http://netflix.com/NewWatchInstantlyRSS";
 
 NSString* NETFLIXTITLES[] = {
-@"New Choices to Watch Instantly",
+  @"New Choices to Watch Instantly",
+  @"Queue URL from clipboard",
+  @"My Netflix Queue"
 };
 
 - (id)init
@@ -45,7 +50,8 @@ NSString* NETFLIXTITLES[] = {
   [super init];
   [self setTitle:@"Netflix Feeds"];
   int i = 0;
-  for( i=0; i<FEED_OPTION_COUNT; i++) [self addOptionText:NETFLIXTITLES[i]];
+  for (i=0; i < kMyQueue; i++)
+    [self addOptionText:NETFLIXTITLES[i]];
   [self setActionSelector:@selector(itemSelected) target:self];
   // start the autodiscovery process
   [self _startAutoDiscovery];
@@ -65,16 +71,19 @@ NSString* NETFLIXTITLES[] = {
 {
   int index = [self selectedIndex];
 
-  NSString *url = nil, *title = nil;
+  NSString *url = nil, *title = NETFLIXTITLES[index];
 
-  if (index < FEED_OPTION_COUNT) {
-    url = NETFLIXURLS[index];
-    title = NETFLIXTITLES[index];
-  } else if (index == FEED_OPTION_COUNT) {
+  switch (index) {
+  case kNewWatchInstantly:
+    url = [[kNewWatchInstantlyUrl copy] autorelease];
+    break;
+  case kPasteboardUrl:
+    url = [[NSPasteboard generalPasteboard]
+                        stringForType:@"NSStringPboardType"];
+    break;
+  case kMyQueue:
     url = queue_;
-    title = @"Netflix Queue";
-  } else {
-    NSLog(@"unexpected option selected for Netflix");
+    break;
   }
 
   if (url && title) {
@@ -86,7 +95,6 @@ NSString* NETFLIXTITLES[] = {
     [[PSClient applicationClient] addFeedWithURL:[NSURL URLWithString:url]];
   }
 
-  // we might want to pop back to the main menu
   [[self stack] popController];
 }
 
