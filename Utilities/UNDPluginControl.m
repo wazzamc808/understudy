@@ -27,7 +27,7 @@
 #ifdef UND_DEBUG
 #define UNDLog(...) NSLog(__VA_ARGS__)
 #else
-#define UNDDLog(...) /* */
+#define UNDLog(...) /* */
 #endif
 
 @implementation UNDPluginControl

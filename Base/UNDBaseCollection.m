@@ -1,5 +1,5 @@
 //                                                                -*- obj -*-
-//  Copyright 2010 Kirk Kelsey.
+//  Copyright 2010-2011 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -18,21 +18,13 @@
 
 #import <BRTextMenuItemLayer.h>
 
-#import "UNDAssetCollection.h"
 #import "UNDAssetFactory.h"
+#import "UNDBaseCollection.h"
 
-@implementation UNDAssetCollection
-
-- (id)initWithTitle:(NSString*)title forContents:(NSArray*)contents
-{
-  [super initWithTitle:title];
-  contents_ = [contents retain];
-  return self;
-}
+@implementation UNDBaseCollection
 
 - (void)dealloc
 {
-  [contents_ release];
   [controller_ release];
   [super dealloc];
 }
@@ -44,16 +36,10 @@
   return controller_;
 }
 
+/// Returns nil.
 - (NSArray*)currentAssets
 {
-  if (!assets_) {
-    assets_ = [[NSMutableArray arrayWithCapacity:[contents_ count]] retain];
-    UNDAssetFactory* assetFactory = [UNDAssetFactory sharedInstance];
-    for (NSDictionary* content in contents_)
-      [assets_
-        addObject:[[assetFactory newAssetForContent:content] autorelease]];
-  }
-  return assets_;
+  return nil;
 }
 
 - (BRLayer<BRMenuItemLayer>*)menuItem

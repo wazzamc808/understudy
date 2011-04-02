@@ -1,5 +1,5 @@
 //
-//  Copyright 2008-2010 Kirk Kelsey.
+//  Copyright 2008-2011 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -67,9 +67,6 @@
 
 - (BRControl*)preview
 {
-//  if( assets_ )
-//    return [BRMediaPreviewControllerFactory previewControlForAssets:assets_
-//                                                       withDelegate:self];
   return nil;
 }
 

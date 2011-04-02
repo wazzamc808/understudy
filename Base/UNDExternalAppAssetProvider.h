@@ -1,5 +1,5 @@
 //
-//  Copyright 2010 Kirk Kelsey.
+//  Copyright 2010, 2011 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -18,8 +18,11 @@
 
 #import "UNDAssetFactory.h"
 
+/// Dictionary key to identify an external application's name.
+extern NSString* UNDExternalAppAssetKey;
 extern NSString* UNDExternalAppAssetProviderId;
 
-@interface UNDExternalAppAssetProvider : NSObject<UNDAssetProvider> { }
+/// Provides a UNDExternalAppAsset using UNDExternalAppAddDialog.
+@interface UNDExternalAppAssetProvider : NSObject<UNDAssetProvider>{ }
 
 @end

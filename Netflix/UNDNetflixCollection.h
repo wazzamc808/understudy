@@ -1,5 +1,5 @@
 //
-//  Copyright 2009,2010 Kirk Kelsey.
+//  Copyright 2009-2011 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -17,13 +17,14 @@
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
 #import <Cocoa/Cocoa.h>
-#import "UNDAssetCollection.h"
+#import "UNDBaseCollection.h"
 
 // Represents a collection of Netflix videos found by loading the web page
 // for some content (typically a season of a television show).
-@interface UNDNetflixCollection : UNDAssetCollection {
- @private 
-  NSURL* url_;
+@interface UNDNetflixCollection : UNDBaseCollection {
+ @private
+  NSArray* assets_;
+  NSURL*   url_;
 }
 
 - (id)initWithTitle:(NSString*)title forUrl:(NSURL*)url;

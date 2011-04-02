@@ -1,5 +1,5 @@
 //
-//  Copyright 2010 Kirk Kelsey.
+//  Copyright 2010-2011 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -17,11 +17,20 @@
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
 #import "UNDExternalAppAssetProvider.h"
+
+#import "UNDExternalAppAddDialog.h"
 #import "UNDExternalAppAsset.h"
 
 NSString* UNDExternalAppAssetProviderId = @"externalapp";
 
 NSString* UNDExternalAppAssetKey = @"appname";
+
+static void __attribute__((constructor)) UNDExternalAppProvider_init(void)
+{
+  UNDAssetFactory* factory = [UNDAssetFactory sharedInstance];
+  id provider = [[[UNDExternalAppAssetProvider alloc] init] autorelease];
+  [factory registerProvider:provider];
+}
 
 @implementation UNDExternalAppAssetProvider
 
@@ -40,13 +49,13 @@ NSString* UNDExternalAppAssetKey = @"appname";
 /// Returns nil (this provider shouldn't appear in the menu).
 - (NSString*)providerName
 {
-  return nil;
+  return @"External Application";
 }
 
 /// Returns nil. An add dialog needs to be implemented for external apps.
 - (BRController*)assetAdditionDialog
 {
-  return nil;
+  return [[[UNDExternalAppAddDialog alloc] init] autorelease];
 }
 
 @end

@@ -1,5 +1,5 @@
-//                                                                -*- objc -*-
-//  Copyright 2008,2010 Kirk Kelsey.
+//
+//  Copyright 2008,2010-2011 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -10,7 +10,7 @@
 //
 //  Understudy is distributed in the hope that it will be useful, but WITHOUT
 //  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-//  FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
+//  FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License
 //  for more details.
 //
 //  You should have received a copy of the GNU Lesser General Public License
@@ -19,18 +19,22 @@
 #import <Cocoa/Cocoa.h>
 
 #import <BROptionDialog.h>
+#import <BRMenuListItemProvider-Protocol.h>
+#import <BRCenteredMenuController.h>
 
-@class UNDMutableCollection;
+#import "UNDMutableCollection.h"
 
-@interface UNDNetflixAddDialog : BROptionDialog {
-  // the contents of Netflix's RSS feed listing
-  NSMutableData* pageData_;
-  // the url of the users Netflix Queue (auto-discovered)
-  NSString* queue_;
-  // the connection used during auto-discovery
-  NSURLConnection* connection_;
-  /// Weak reference to the collection to be modified.
+@interface UNDEditDialog : BRCenteredMenuController
+<BRMenuListItemProvider, UnderstudyAsset>
+{
   UNDMutableCollection* collection_;
+  long index_;                  //< Selected index in the collection.
+  NSString* title_;
+  BROptionDialog* moveDialog_;
 }
+
+/// Returns a new UNDEditDialog for the asset at a given index in a collection.
+- (id)initWithCollection:(UNDMutableCollection*)collection
+                forIndex:(long)index;
 
 @end
