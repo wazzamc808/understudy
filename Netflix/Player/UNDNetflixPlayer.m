@@ -1,5 +1,5 @@
 //
-//  Copyright 2008-2010 Kirk Kelsey.
+//  Copyright 2008-2011 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -20,6 +20,7 @@
 
 #import "UNDNetflixPlayer.h"
 #import "UNDPasswordProvider.h"
+#import "UNDPlayerWindow.h"
 #import "UNDPluginControl.h"
 #import "UNDPreferenceManager.h"
 #import "UNDVolumeControl.h"
@@ -92,18 +93,39 @@ int64_t SystemIdleTime(void) {
   [mainView_ setCustomUserAgent:AGENTSTRING];
   [[[mainView_ mainFrame] frameView] setAllowsScrolling:NO];
   [mainView_ setFrameLoadDelegate:self];
-  window_ = [[NSWindow alloc] initWithContentRect:rect
-                                        styleMask:NSBorderlessWindowMask
-                                          backing:NSBackingStoreBuffered
-                                            defer:YES
-                                           screen:screen];
+  window_ = [[UNDPlayerWindow alloc] initWithContentRect:rect screen:screen];
+
   [window_ display];
   [window_ orderFrontRegardless];
   [window_ setLevel:NSScreenSaverWindowLevel];
   [window_ setContentView:mainView_];
+  [window_ setInitialFirstResponder:mainView_];
   NSURLRequest* pageRequest = [NSURLRequest requestWithURL:url];
   [[mainView_ mainFrame] loadRequest:pageRequest];
   pluginControl_ = [[UNDPluginControl alloc] initWithView:mainView_];
+}
+
+void clickOnWindow(NSWindow* window)
+{
+  // Once the full-screen window is found, we need to click on it to ensure
+  // that it will receive later input we simulate (e.g. to play/pause).
+  NSSize size = [window frame].size;
+
+  CGPoint point;
+  point.x = size.height/2;
+  point.y = size.width/2;
+
+  CGMouseButton button = kCGMouseButtonLeft;
+  CGEventType type = kCGEventLeftMouseDown;
+  CGEventRef event = CGEventCreateMouseEvent(NULL, type, point, button);
+  CGEventSetType(event, type);
+  CGEventPost(kCGHIDEventTap, event);
+
+  type = kCGEventLeftMouseUp;
+  CGEventSetType(event, type);
+  CGEventPost(kCGHIDEventTap, event);
+
+  CFRelease(event);
 }
 
 // Looks for a new window containing the full-screen version of the player.
@@ -120,6 +142,7 @@ int64_t SystemIdleTime(void) {
 
   for (NSWindow* window in windows){
     if (window != window_) {
+      [window makeKeyWindow];
       fsWindow_ = [window retain];
       [fsWindow_ setDelegate:self];
       [fsWindow_ setLevel:NSScreenSaverWindowLevel];
@@ -128,23 +151,7 @@ int64_t SystemIdleTime(void) {
 
       // Once the full-screen window is found, we need to click on it to ensure
       // that it will receive later input we simulate (e.g. to play/pause).
-      NSSize size = [fsWindow_ frame].size;
-
-      CGPoint point;
-      point.x = size.height/2;
-      point.y = size.width/2;
-
-      CGMouseButton button = kCGMouseButtonLeft;
-      CGEventType type = kCGEventLeftMouseDown;
-      CGEventRef event = CGEventCreateMouseEvent(NULL, type, point, button);
-      CGEventSetType(event, type);
-      CGEventPost(kCGHIDEventTap, event);
-
-      type = kCGEventLeftMouseUp;
-      CGEventSetType(event, type);
-      CGEventPost(kCGHIDEventTap, event);
-
-      CFRelease(event);
+      clickOnWindow(fsWindow_);
     }
   }
 
@@ -186,10 +193,15 @@ int64_t SystemIdleTime(void) {
 // button explicitly it doesn't suffice to check when it's done programatically.
 - (void)lookForFullscreen
 {
-  if (!fsWindow_) [self findFullscreenWindow];
-  [self performSelector:@selector(lookForFullscreen)
-             withObject:nil
-             afterDelay:1];
+  if (!fsWindow_) {
+    NSView* plugin = [pluginControl_ plugin];
+    if ([window_ firstResponder] != plugin)
+      [window_ makeFirstResponder:plugin];
+    [self findFullscreenWindow];
+    [self performSelector:@selector(lookForFullscreen)
+               withObject:nil
+               afterDelay:1];
+  }
 }
 
 // Repeatedly tries to enter full-screen mode by calling the `fullscreen'
@@ -250,8 +262,9 @@ int64_t SystemIdleTime(void) {
 // <WebFrameLoadDelegate> callback once the video loads
 - (void)webView:(WebView*)view didFinishLoadForFrame:(WebFrame*)frame
 {
-  if( frame != [view mainFrame] ) return;
+  if (frame != [view mainFrame]) return;
   [self activate];
+  [mainView_ lockFocus];
   [self ensureLogin];
   [self attemptFullscreen];
   [self lookForFullscreen];
@@ -323,6 +336,7 @@ int64_t SystemIdleTime(void) {
   [window_ setLevel:NSScreenSaverWindowLevel];
   [window_ display];
   [window_ orderFrontRegardless];
+  [self lookForFullscreen];
 }
 
 @end
