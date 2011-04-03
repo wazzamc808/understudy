@@ -106,7 +106,12 @@ static UNDManageDialog* sharedInstance_;
 #pragma mark MenuListItemProvider
 
 - (long)itemCount{ return kOptionCount; }
-- (float)heightForRow:(long)row{ return 0; }
+- (float)heightForRow:(long)row
+{
+  (void)row;
+  return 0; 
+}
+
 - (BOOL)rowSelectable:(long)row
 {
   switch (row) {

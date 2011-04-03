@@ -46,13 +46,13 @@ News, Religion & Ethics, Sport, Sign Zone, Northern Ireland, Scotland, Wales */
              @"http://feeds.bbc.co.uk/iplayer/bbc_parliament/list",
              @"http://feeds.bbc.co.uk/iplayer/bbc_alba/list",
              nil] retain];
-  titles_ = [[NSMutableArray arrayWithObjects: @"BBC 1", 
-              @"BBC 2", 
-              @"BBC 3", 
-              @"BBC 4", 
-              @"CBBC", 
-              @"CBeebies", 
-              @"BBC News", 
+  titles_ = [[NSMutableArray arrayWithObjects: @"BBC 1",
+              @"BBC 2",
+              @"BBC 3",
+              @"BBC 4",
+              @"CBBC",
+              @"CBeebies",
+              @"BBC News",
               @"Parliament",
               @"BBC Alba", nil] retain];
   [[self list] setDatasource:self];
@@ -90,8 +90,18 @@ News, Religion & Ethics, Sport, Sign Zone, Northern Ireland, Scotland, Wales */
 # pragma mark BRMenuListItemProvider
 
 - (long)itemCount{ return [feeds_ count]; }
-- (float)heightForRow:(long)row{ return 0; }
-- (BOOL)rowSelectable:(long)row{ return YES; }
+- (float)heightForRow:(long)row
+{
+  (void)row;
+  return 0;
+}
+
+- (BOOL)rowSelectable:(long)row
+{
+  (void)row;
+  return YES;
+}
+
 - (id)titleForRow:(long)row{ return [titles_ objectAtIndex:row]; }
 
 - (id)itemForRow:(long)row

@@ -136,7 +136,7 @@ void clickOnWindow(NSWindow* window)
   // check the set of windows belonging to the application. we created one
   // explicitly so any other large window is the flash player creating it's own
   NSArray* windows = [[NSApplication sharedApplication] windows];
-  int expectedWindows = 1;
+  unsigned expectedWindows = 1;
   [[windows retain] autorelease];
   if ([windows count] <= expectedWindows) return nil;
 
@@ -287,6 +287,8 @@ void clickOnWindow(NSWindow* window)
                   pressedDown:(BOOL)pressedDown
                 remoteControl:(RemoteControl*)remoteControl
 {
+  (void)remoteControl;
+
   // ignore button release events
   if (!pressedDown) return;
 
@@ -321,6 +323,15 @@ void clickOnWindow(NSWindow* window)
   case kRemoteButtonAlSelect:
     [self pressKey:36];         // enter
     break;
+
+  case kRemoteButtonPlus_Hold:
+  case kRemoteButtonMinus_Hold:
+  case kRemoteButtonMenu_Hold:
+  case kRemoteButtonPlay_Hold:
+  case kRemoteButtonAlPlay_Hold:
+  case kRemoteButtonAlSelect_Hold:
+  case kRemoteControl_Switched:
+    break;
   }
 }
 
@@ -332,6 +343,8 @@ void clickOnWindow(NSWindow* window)
 // When the full screen window closes we bring the main window back.
 - (void)windowWillClose:(NSNotification *)notification
 {
+  (void)notification;
+
   fsWindow_ = nil;
   [window_ setLevel:NSScreenSaverWindowLevel];
   [window_ display];

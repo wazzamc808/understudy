@@ -59,7 +59,10 @@ typedef enum
 }
 
 #pragma mark protocol BRTextEntryDelegate
-- (void)textDidChange:(NSNotification<BRTextContainer>*)container { }
+- (void)textDidChange:(NSNotification<BRTextContainer>*)container
+{
+  (void)container;
+}
 
 - (void)textDidEndEditing:(NSNotification<BRTextContainer>*)container
 {
@@ -134,7 +137,11 @@ typedef enum
 #pragma mark MenuListItemProvider
 
 - (long)itemCount{ return kOptionCount; }
-- (float)heightForRow:(long)row{ return 0; }
+- (float)heightForRow:(long)row
+{
+  (void)row;
+  return 0; 
+}
 - (BOOL)rowSelectable:(long)row
 {
   return (row >= 0 || row < kOptionCount);
