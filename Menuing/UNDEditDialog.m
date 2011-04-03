@@ -59,9 +59,9 @@ typedef enum
 }
 
 #pragma mark protocol BRTextEntryDelegate
-- (void)textDidChange:(id<BRTextContainer>)container { }
+- (void)textDidChange:(NSNotification<BRTextContainer>*)container { }
 
-- (void)textDidEndEditing:(id<BRTextContainer>)container
+- (void)textDidEndEditing:(NSNotification<BRTextContainer>*)container
 {
   [collection_ renameAssetAtIndex:index_
                           toTitle:[container stringValue]];
