@@ -19,7 +19,7 @@
 		298AD29F12A70F140084E8B0 /* BackRow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 298AD1E512A70ED20084E8B0 /* BackRow.framework */; };
 		298AD2A212A70F440084E8B0 /* BackRow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 298AD1E512A70ED20084E8B0 /* BackRow.framework */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
-		918B27B10D7CFB2100D87AC2 /* UnderstudyAppliance.m in Sources */ = {isa = PBXBuildFile; fileRef = 918B27B00D7CFB2100D87AC2 /* UnderstudyAppliance.m */; };
+		918B27B10D7CFB2100D87AC2 /* UNDAppliance.m in Sources */ = {isa = PBXBuildFile; fileRef = 918B27B00D7CFB2100D87AC2 /* UNDAppliance.m */; };
 		DF00C4620F22CF8F003A5122 /* ExceptionHandling.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF00C4610F22CF8F003A5122 /* ExceptionHandling.framework */; };
 		DF0C59430EA9030E00E0D882 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF0C59420EA9030E00E0D882 /* QuartzCore.framework */; };
 		DF0DA2000F817BCE004AF3C3 /* UNDiPlayerAddDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = DF0DA1FF0F817BCE004AF3C3 /* UNDiPlayerAddDialog.m */; };
@@ -168,8 +168,8 @@
 		34E1C7EC119B2587001ED87C /* NetflixPlayer-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "NetflixPlayer-Info.plist"; sourceTree = "<group>"; };
 		8D5B49B6048680CD000E48DA /* frUnderstudy.frappliance */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = frUnderstudy.frappliance; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		918B27AF0D7CFB2100D87AC2 /* UnderstudyAppliance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnderstudyAppliance.h; sourceTree = "<group>"; };
-		918B27B00D7CFB2100D87AC2 /* UnderstudyAppliance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UnderstudyAppliance.m; sourceTree = "<group>"; };
+		918B27AF0D7CFB2100D87AC2 /* UNDAppliance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UNDAppliance.h; sourceTree = "<group>"; };
+		918B27B00D7CFB2100D87AC2 /* UNDAppliance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UNDAppliance.m; sourceTree = "<group>"; };
 		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		DF00C4610F22CF8F003A5122 /* ExceptionHandling.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExceptionHandling.framework; path = System/Library/Frameworks/ExceptionHandling.framework; sourceTree = SDKROOT; };
 		DF0C59420EA9030E00E0D882 /* QuartzCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = QuartzCore.framework; path = /System/Library/Frameworks/QuartzCore.framework; sourceTree = "<absolute>"; };
@@ -425,8 +425,8 @@
 				DF375CC60F35302600DA7719 /* Netflix */,
 				DF5A221E0F0FC14B00F5F19F /* YouTube */,
 				298ACF8B12A709100084E8B0 /* DailyShow */,
-				918B27AF0D7CFB2100D87AC2 /* UnderstudyAppliance.h */,
-				918B27B00D7CFB2100D87AC2 /* UnderstudyAppliance.m */,
+				918B27AF0D7CFB2100D87AC2 /* UNDAppliance.h */,
+				918B27B00D7CFB2100D87AC2 /* UNDAppliance.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -878,7 +878,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				918B27B10D7CFB2100D87AC2 /* UnderstudyAppliance.m in Sources */,
+				918B27B10D7CFB2100D87AC2 /* UNDAppliance.m in Sources */,
 				DF7D970C0F08647400C9B7FB /* HuluAddDialog.m in Sources */,
 				DF7D970D0F08647400C9B7FB /* HuluAsset.m in Sources */,
 				DF7D970F0F08647400C9B7FB /* HuluFeed.m in Sources */,

@@ -19,7 +19,6 @@
 #include <regex.h>
 
 #import "HuluController.h"
-#import "UnderstudyAppliance.h"
 #import "UNDPreferenceManager.h"
 #import "UNDPasswordProvider.h"
 

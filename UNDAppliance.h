@@ -19,7 +19,7 @@
 #import <Cocoa/Cocoa.h>
 #import <BRAppliance.h>
 
-@interface UnderstudyAppliance : BRAppliance {
-}
+/// The principal class of the plugin bundle loaded by Front Row.
+@interface UNDAppliance : BRAppliance { }
 
 @end

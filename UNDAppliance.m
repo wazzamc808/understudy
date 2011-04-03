@@ -16,7 +16,7 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
-#import "UnderstudyAppliance.h"
+#import "UNDAppliance.h"
 
 #import "BRControllerStack.h"
 #import "BRSentinel.h"
@@ -32,7 +32,7 @@
 }
 @end
 
-@implementation UnderstudyAppliance
+@implementation UNDAppliance
 
 - (BRController*)applianceController
 {

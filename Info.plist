@@ -17,7 +17,7 @@
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
 	<key>NSPrincipalClass</key>
-	<string>UnderstudyAppliance</string>
+	<string>UNDAppliance</string>
 	<key>FRAppliancePreferedOrderValue</key>
 	<real>1</real>
 </dict>
