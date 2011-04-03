@@ -63,9 +63,8 @@
 - (void)_loadVideo
 {
   // load the NetflixPlayer to actually play the video
-  NSString* path = @"/System/Library/CoreServices/Front Row.app/Contents/Plug"\
-  "Ins/Understudy.frappliance/Contents/SharedSupport/NetflixPlayer.app/Conte"\
-  "nts/MacOS/NetflixPlayer";
+  NSString* path = @"/System/Library/CoreServices/Front Row.app/Contents/"\
+    "PlugIns/Understudy.frappliance/Contents/SharedSupport/NetflixPlayer";
 
   if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
     NSString* url = [[asset_ url] absoluteString];

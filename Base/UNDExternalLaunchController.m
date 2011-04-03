@@ -45,9 +45,9 @@
 - (void)controlWillActivate
 {
   // Launch the internal program launcher and leave Front Row.
-  NSString* path = @"/System/Library/CoreServices/Front Row.app/Contents" \
-    "/PlugIns/Understudy.frappliance/Contents/SharedSupport"            \
-    "/UNDExternalLauncher.app/Contents/MacOS/UNDExternalLauncher";
+  NSString* path = @"/System/Library/CoreServices/Front Row.app/"
+    "Contents/PlugIns/Understudy.frappliance/Contents/"
+    "SharedSupport/UNDExternalLauncher";
 
   NSArray* arguments;
   if (url_) arguments = [NSArray arrayWithObjects:appName_, url_, nil];

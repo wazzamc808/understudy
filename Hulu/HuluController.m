@@ -47,8 +47,7 @@
 {
   // load the HuluPlayer to actually play the video
   NSString* path = @"/System/Library/CoreServices/Front Row.app/Contents/Plug"\
-    "Ins/Understudy.frappliance/Contents/SharedSupport/HuluPlayer.app/Conte"\
-    "nts/MacOS/HuluPlayer";
+    "Ins/Understudy.frappliance/Contents/SharedSupport/HuluPlayer";
   NSString* url = [[asset_ url] absoluteString];
   NSArray* args = [[[NSArray alloc] initWithObjects:url,nil] autorelease];
   player_ = [[NSTask launchedTaskWithLaunchPath:path arguments:args] retain];
