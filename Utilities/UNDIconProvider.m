@@ -21,7 +21,7 @@
 #import <Foundation/NSObject.h>
 
 static NSString* path=@"/System/Library/CoreServices/Front Row.app/"
-  "Contents/PlugIns/frUnderstudy.frappliance/";
+  "Contents/PlugIns/Understudy.frappliance/";
 
 NSString* UNDIconID(void) {
   return [[path copy] autorelease];

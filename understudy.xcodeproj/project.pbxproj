@@ -166,7 +166,7 @@
 		298ACFEA12A70B270084E8B0 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = /usr/lib/libxml2.dylib; sourceTree = "<absolute>"; };
 		298AD1E512A70ED20084E8B0 /* BackRow.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BackRow.framework; path = /System/Library/PrivateFrameworks/BackRow.framework; sourceTree = "<absolute>"; };
 		34E1C7EC119B2587001ED87C /* NetflixPlayer-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "NetflixPlayer-Info.plist"; sourceTree = "<group>"; };
-		8D5B49B6048680CD000E48DA /* frUnderstudy.frappliance */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = frUnderstudy.frappliance; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D5B49B6048680CD000E48DA /* Understudy.frappliance */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Understudy.frappliance; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		918B27AF0D7CFB2100D87AC2 /* UNDAppliance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UNDAppliance.h; sourceTree = "<group>"; };
 		918B27B00D7CFB2100D87AC2 /* UNDAppliance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UNDAppliance.m; sourceTree = "<group>"; };
@@ -450,7 +450,7 @@
 		19C28FB8FE9D52D311CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8D5B49B6048680CD000E48DA /* frUnderstudy.frappliance */,
+				8D5B49B6048680CD000E48DA /* Understudy.frappliance */,
 				DF318F2E0FC4B418004CE50D /* HuluPlayer.app */,
 				DFC24EDE1068360500B4D149 /* NetflixPlayer.app */,
 				DFDF5AD1129D907000B1941C /* UNDExternalLauncher.app */,
@@ -741,7 +741,7 @@
 			name = Understudy;
 			productInstallPath = "$(HOME)/Library/Bundles";
 			productName = HelloWorld;
-			productReference = 8D5B49B6048680CD000E48DA /* frUnderstudy.frappliance */;
+			productReference = 8D5B49B6048680CD000E48DA /* Understudy.frappliance */;
 			productType = "com.apple.product-type.bundle";
 		};
 		DF318F2D0FC4B418004CE50D /* HuluPlayer */ = {
@@ -1014,7 +1014,7 @@
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks\"",
+					"\"$(SRCROOT)/\"",
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
@@ -1028,7 +1028,7 @@
 				INSTALL_PATH = "/System/Library/CoreServices/Front Row.app/Contents/PlugIns/";
 				LD_OPENMP_FLAGS = "";
 				OTHER_CFLAGS = "-Wall";
-				PRODUCT_NAME = frUnderstudy;
+				PRODUCT_NAME = Understudy;
 				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.5.sdk";
 				VALID_ARCHS = "i386 x86_64";
 				WRAPPER_EXTENSION = frappliance;
@@ -1059,7 +1059,7 @@
 				INSTALL_PATH = "/System/Library/CoreServices/Front Row.app/Contents/PlugIns/";
 				LD_OPENMP_FLAGS = "";
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
-				PRODUCT_NAME = frUnderstudy;
+				PRODUCT_NAME = Understudy;
 				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.5.sdk";
 				VALID_ARCHS = "ppc970 ppc7400 ppc64 ppc i386 x86_64";
 				WRAPPER_EXTENSION = frappliance;

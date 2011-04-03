@@ -1,5 +1,5 @@
 //
-//  Copyright 2008,2010 Kirk Kelsey.
+//  Copyright 2008,2010-2011 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -64,7 +64,7 @@
 {
   // load the NetflixPlayer to actually play the video
   NSString* path = @"/System/Library/CoreServices/Front Row.app/Contents/Plug"\
-  "Ins/frUnderstudy.frappliance/Contents/SharedSupport/NetflixPlayer.app/Conte"\
+  "Ins/Understudy.frappliance/Contents/SharedSupport/NetflixPlayer.app/Conte"\
   "nts/MacOS/NetflixPlayer";
 
   if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {

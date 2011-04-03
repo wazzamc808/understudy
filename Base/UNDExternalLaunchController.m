@@ -1,5 +1,5 @@
 //
-//  Copyright 2010 Kirk Kelsey.
+//  Copyright 2010, 2011 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -46,7 +46,7 @@
 {
   // Launch the internal program launcher and leave Front Row.
   NSString* path = @"/System/Library/CoreServices/Front Row.app/Contents" \
-    "/PlugIns/frUnderstudy.frappliance/Contents/SharedSupport"            \
+    "/PlugIns/Understudy.frappliance/Contents/SharedSupport"            \
     "/UNDExternalLauncher.app/Contents/MacOS/UNDExternalLauncher";
 
   NSArray* arguments;
