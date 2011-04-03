@@ -16,9 +16,9 @@
 	<string>BNDL</string>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
-	<key>NSPrincipalClass</key>
-	<string>UNDAppliance</string>
 	<key>FRAppliancePreferedOrderValue</key>
 	<real>1</real>
+	<key>NSPrincipalClass</key>
+	<string>UNDAppliance</string>
 </dict>
 </plist>
