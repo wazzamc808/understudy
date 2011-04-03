@@ -87,8 +87,18 @@
 # pragma mark BRMenuListItemProvider
 
 - (long)itemCount{ return [feeds_ count]; }
-- (float)heightForRow:(long)row{ return 0; }
-- (BOOL)rowSelectable:(long)row{ return YES; }
+- (float)heightForRow:(long)row
+{
+  (void)row;
+  return 0;
+}
+
+- (BOOL)rowSelectable:(long)row
+{
+  (void)row;
+  return YES;
+}
+
 - (id)titleForRow:(long)row{ return [titles_ objectAtIndex:row]; }
 
 - (id)itemForRow:(long)row

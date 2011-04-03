@@ -158,6 +158,8 @@ NSString* NETFLIXTITLES[] = {
 - (void)connection:(NSURLConnection*)connection
 didReceiveResponse:(NSURLResponse*)response
 {
+  (void)connection;
+  (void)response;
   [pageData_ setLength:0];
 }
 
@@ -170,8 +172,9 @@ didReceiveResponse:(NSURLResponse*)response
   pageData_ = nil;
 }
 
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
+- (void)connection:(NSURLConnection*)connection didReceiveData:(NSData *)data
 {
+  (void)connection;
   [pageData_ appendData:data];
 }
 

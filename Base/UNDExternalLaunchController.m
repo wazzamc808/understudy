@@ -39,7 +39,7 @@
 
 - (void)setURL:(NSString*)url
 {
-  url_ = [url_ copy];
+  url_ = [url copy];
 }
 
 - (void)controlWillActivate

@@ -1,5 +1,5 @@
 //
-//  Copyright 2010 Kirk Kelsey.
+//  Copyright 2010-2011 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -16,20 +16,21 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
-#import <CoreAudio/CoreAudio.h>
-
 #import "UNDVolumeControl.h"
+
+#import <CoreAudio/CoreAudio.h>
+#import <Foundation/Foundation.h>
 
 void
 changeVolume (float delta)
 {
-  
+
   OSStatus           err;
   AudioDeviceID      device;
   UInt32             size;
   UInt32             channels[2];
   float              involume;
-  
+
   size = sizeof (device);
   err = AudioHardwareGetProperty(kAudioHardwarePropertyDefaultOutputDevice,
                                  &size,
@@ -38,7 +39,7 @@ changeVolume (float delta)
     NSLog (@"error getting audio device reference");
     return;
   }
-  
+
   if (err==noErr) {
     size = sizeof involume;
     err = AudioDeviceGetProperty(device,
@@ -46,7 +47,7 @@ changeVolume (float delta)
                                  false,
                                  kAudioDevicePropertyVolumeScalar,
                                  &size,
-                                 &involume);  
+                                 &involume);
   }
   if (err==noErr) {
     involume += delta;
@@ -58,11 +59,10 @@ changeVolume (float delta)
                                   kAudioDevicePropertyVolumeScalar,
                                   size,
                                   &involume);
-	if (err != noErr) NSLog (@"error getting audio device value scalar");
-	  
+    if(err != noErr) NSLog (@"error getting audio device value scalar");
     return;
   }
-  
+
   // get channels
   size = sizeof(channels);
   err = AudioDeviceGetProperty(device,
@@ -75,7 +75,7 @@ changeVolume (float delta)
     NSLog(@"error getting channel-numbers");
     return;
   }
-  
+
   // get volume
   size = sizeof (involume);
   AudioDeviceGetProperty(device,
@@ -94,7 +94,7 @@ changeVolume (float delta)
                                size,
                                &involume);
   if(noErr!=err) NSLog(@"error setting volume of channel %d",channels[0]);
-  
+
   AudioDeviceGetProperty(device,
                                channels[1],
                                false,

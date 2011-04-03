@@ -124,11 +124,11 @@ static UNDPreferenceManager *sharedInstance_;
 {
   NSMutableArray* assets = [[NSMutableArray alloc] init];
 
-  int i, count = [feeds count];
+  unsigned count = [feeds count];
   if (count > [titles count]) count = [titles count];
 
   PSClient* psClient = [PSClient applicationClient];
-  for (i = 0; i < count; ++i) {
+  for (unsigned i = 0; i < count; ++i) {
     NSURL* url = [NSURL URLWithString:[feeds objectAtIndex:i]];
 
     [psClient addFeedWithURL:url];

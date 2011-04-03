@@ -1,5 +1,5 @@
 //
-//  Copyright 2008-2010 Kirk Kelsey.
+//  Copyright 2008-2011 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -92,6 +92,7 @@
 
 - (void)assetUpdated:(UNDNetflixAsset*)asset
 {
+  (void)asset;
   // the asset may be nil (to simply force another update)
   @synchronized(unfinishedAssets_) {
     ++updateSlots_;

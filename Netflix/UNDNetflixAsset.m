@@ -1,5 +1,5 @@
 //
-//  Copyright 2008-2010 Kirk Kelsey.
+//  Copyright 2008-2011 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -118,7 +118,11 @@
 {
   return [imageManager_ imageNamed:thumbnailID_];
 }
-- (BRImage*)coverArtForBookmarkTimeInMS:(unsigned)ms{ return [self coverArt]; }
+- (BRImage*)coverArtForBookmarkTimeInMS:(unsigned)ms
+{
+  (void)ms;
+  return [self coverArt]; 
+}
 - (BRMediaType*)mediaType{ return [BRMediaType ytVideo]; }
 - (BOOL)hasVideoContent{ return YES; }
 

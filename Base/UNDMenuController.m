@@ -220,6 +220,7 @@
 
 -(float)heightForRow:(long)row
 {
+  (void)row;
   return 0;
 }
 
