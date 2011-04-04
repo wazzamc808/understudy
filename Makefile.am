@@ -1,7 +1,7 @@
 ACLOCAL_AMFLAGS	= -I config
 
 SUBDIRS=src
-
+include doc/doxygen.am
 
 CONTENTS=Understudy.frappliance/Contents
 INST_BINARY=config/install-sh

@@ -5,9 +5,9 @@ autom4te.cache
 build
 config
 configure
-doxygen/BR/
-doxygen/UND/
-doxygen/.*\.doxytag
+^doc/.*\.doxytag
+^doc/html
+^doc/doxygen.cfg
 
 [.*/]?.deps
 
