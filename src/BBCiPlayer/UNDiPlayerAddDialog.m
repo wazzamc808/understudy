@@ -74,7 +74,7 @@ News, Religion & Ethics, Sport, Sign Zone, Northern Ireland, Scotland, Wales */
 // call-back for an item having been selected
 - (void)itemSelected:(long)index
 {
-  if (index < [feeds_ count]) {
+  if (index < (long)[feeds_ count]) {
     NSString* feed = [feeds_ objectAtIndex:index];
     NSString* title = [titles_ objectAtIndex:index];
     NSDictionary* asset =

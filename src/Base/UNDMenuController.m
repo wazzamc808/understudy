@@ -159,7 +159,8 @@
 - (NSObject<UNDAsset>*)assetForIndex:(long)index
 {
   if (![self rowSelectable:index]) return nil;
-  if (index == [assets_ count]) return [UNDManageDialog sharedInstance];
+  if ((unsigned)index == [assets_ count])
+    return [UNDManageDialog sharedInstance];
   return [assets_ objectAtIndex:index];
 }
 
@@ -170,7 +171,7 @@
   UNDManageDialog* manager = [UNDManageDialog sharedInstance];
 
   // The manage dialog hangs off the end of the asset array.
-  if (itemIndex == [assets_ count]) {
+  if ((unsigned)itemIndex == [assets_ count]) {
     if (mutable_)
       [manager setCollection:(UNDMutableCollection*)delegate_];
     controller = manager;
