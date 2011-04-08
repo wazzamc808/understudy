@@ -31,7 +31,7 @@
 @implementation RemoteControlContainer
 
 - (id) initWithDelegate: (id) _remoteControlDelegate {
-	if (self = [super initWithDelegate:_remoteControlDelegate]) {
+	if ((self = [super initWithDelegate:_remoteControlDelegate])) {
 		remoteControls = [[NSMutableArray alloc] init];
 	}
 	return self;

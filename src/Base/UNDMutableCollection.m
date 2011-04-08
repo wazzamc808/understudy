@@ -73,7 +73,7 @@
   NSMutableDictionary* content = [[description mutableCopy] autorelease];
   NSObject* asset = [[factory newAssetForContent:content] autorelease];
 
-  if (index > [assets_ count]) index = [assets_ count];
+  if (index > (long)[assets_ count]) index = [assets_ count];
 
   [assets_ insertObject:asset atIndex:index];
   [contents_ insertObject:content atIndex:index];

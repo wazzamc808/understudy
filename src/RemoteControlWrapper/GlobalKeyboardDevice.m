@@ -62,19 +62,19 @@ static OSStatus hotKeyEventHandler(EventHandlerCallRef inHandlerRef,
 
 @implementation GlobalKeyboardDevice
 
-- (id) initWithDelegate: (id) _remoteControlDelegate {	
-  if (self = [super initWithDelegate: _remoteControlDelegate]) {
+- (id) initWithDelegate: (id) _remoteControlDelegate {
+  if ((self = [super initWithDelegate: _remoteControlDelegate])) {
     hotKeyRemoteEventMapping = [[NSMutableDictionary alloc] init];
-		
+
     unsigned int modifiers = cmdKey + shiftKey /*+ optionKey*/ + controlKey;
-				
+
     [self mapRemoteButton:kRemoteButtonPlus			defaultKeycode:F1 defaultModifiers:modifiers];
     [self mapRemoteButton:kRemoteButtonMinus		defaultKeycode:F2 defaultModifiers:modifiers];
     [self mapRemoteButton:kRemoteButtonPlay			defaultKeycode:F3 defaultModifiers:modifiers];
     [self mapRemoteButton:kRemoteButtonLeft			defaultKeycode:F4 defaultModifiers:modifiers];
     [self mapRemoteButton:kRemoteButtonRight		defaultKeycode:F5 defaultModifiers:modifiers];
     [self mapRemoteButton:kRemoteButtonMenu			defaultKeycode:F6 defaultModifiers:modifiers];
-    [self mapRemoteButton:kRemoteButtonPlay_Hold	defaultKeycode:F7 defaultModifiers:modifiers];		
+    [self mapRemoteButton:kRemoteButtonPlay_Hold	defaultKeycode:F7 defaultModifiers:modifiers];
   }
   return self;
 }
@@ -141,19 +141,20 @@ static OSStatus hotKeyEventHandler(EventHandlerCallRef inHandlerRef,
 }
 
 - (IBAction) startListening: (id) sender {
-	
+  (void)sender;
   if (eventHandlerRef) return;
-		
+
   EventTypeSpec eventSpec[2] = {
     { kEventClassKeyboard, kEventHotKeyPressed },
     { kEventClassKeyboard, kEventHotKeyReleased }
-  };    
-	
-  InstallEventHandler( GetEventDispatcherTarget(),
-                       (EventHandlerProcPtr)hotKeyEventHandler, 
-                       2, eventSpec, self, &eventHandlerRef);	
+  };
+
+  InstallEventHandler(GetEventDispatcherTarget(),
+                      (EventHandlerProcPtr)hotKeyEventHandler,
+                      2, eventSpec, self, &eventHandlerRef);
 }
 - (IBAction) stopListening: (id) sender {
+  (void)sender;
   RemoveEventHandler(eventHandlerRef);
   eventHandlerRef = NULL;
 }
@@ -233,10 +234,11 @@ static OSStatus hotKeyEventHandler(EventHandlerCallRef inHandlerRef,
 
 static RemoteControlEventIdentifier lastEvent;
 
-static OSStatus hotKeyEventHandler(EventHandlerCallRef inHandlerRef, 
-                                   EventRef inEvent, 
-                                   void* userData )
+static OSStatus hotKeyEventHandler(EventHandlerCallRef inHandlerRef,
+                                   EventRef inEvent,
+                                   void* userData)
 {
+  (void)inHandlerRef;
   GlobalKeyboardDevice* keyboardDevice = (GlobalKeyboardDevice*) userData;
   EventHotKeyID hkCom;
   GetEventParameter(inEvent,

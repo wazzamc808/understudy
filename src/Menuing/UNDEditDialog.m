@@ -185,7 +185,7 @@ typedef enum
   title_ = [[NSString stringWithString:@"Manage Asset"] retain];
   if (!collection_) return title_;
   NSArray* assets = [[[collection_ currentAssets] retain] autorelease];
-  if (index_ >= [assets count]) return title_;
+  if (index_ >= (long)[assets count]) return title_;
   title_ = [[(id<UNDAsset>)[assets objectAtIndex:index_] title] copy];
   return title_;
 }
