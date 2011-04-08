@@ -115,6 +115,7 @@ typedef enum
     BRTextEntryController* entry
       = [[BRTextEntryController alloc]
              initWithTextEntryStyle:kFullKeyboardTextEntryStyle];
+    [entry setTextEntryCompleteDelegate:self];
     [[self stack] pushController:entry];
     break;
   }
