@@ -9,13 +9,12 @@ OBJCFLAGS = -arch i386 -Wall -Wextra -fmessage-length=0 -pipe -std=c99  \
 -isysroot /Developer/SDKs/MacOSX10.5.sdk -mmacosx-version-min=10.5      \
 -gdwarf-2
 
-LDFLAGS = -F/Users/kelsey/Documents/understudy/build/Debug                      \
--F/System/Library/PrivateFrameworks                                             \
--F/Developer/SDKs/MacOSX10.5.sdk/System/Library/PrivateFrameworks -framework    \
-AppKit -framework ApplicationServices -framework BackRow -framework Carbon      \
--framework CoreAudio -framework Foundation -framework IOKit -framework PubSub   \
--framework Security -framework WebKit -framework Cocoa -framework QuartzCore    \
--framework ExceptionHandling -lxml2 
+LDFLAGS = -F/System/Library/PrivateFrameworks                               \
+-F/Developer/SDKs/MacOSX10.5.sdk/System/Library/PrivateFrameworks           \
+-framework AppKit -framework ApplicationServices -framework BackRow         \
+-framework Carbon -framework CoreAudio -framework Foundation -framework     \
+IOKit -framework PubSub -framework Security -framework WebKit -framework    \
+Cocoa -framework QuartzCore -framework ExceptionHandling -lxml2
 
 RemoteControlWrapper_SOURCES=                   \
 RemoteControlWrapper/AppleRemote.m              \
