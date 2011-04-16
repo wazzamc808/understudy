@@ -24,34 +24,42 @@
 #import <BRListControl.h>
 #import <BRTextMenuItemLayer.h>
 
+#import "BRHeaders/RUISoundHandler.h"
+
 #import <PubSub/PubSub.h>
 
 @implementation UNDYouTubeAddDialog
+
+typedef enum {
+  kPasteboardUrl,
+} YoutubeAssetOption;
 
 - (id)init
 {
   [super init];
   [self setTitle:@"YouTube Feeds"];
-  feeds_ = [[NSMutableArray arrayWithObjects:@"http://gdata.youtube.com/feeds/base/standardfeeds/most_recent?client=ytapi-youtube-browse&alt=rss",
-             @"http://gdata.youtube.com/feeds/base/standardfeeds/recently_featured?client=ytapi-youtube-browse&alt=rss", 
-             @"http://gdata.youtube.com/feeds/base/standardfeeds/top_favorites?client=ytapi-youtube-browse&alt=rss", 
-             @"http://gdata.youtube.com/feeds/base/standardfeeds/top_favorites?client=ytapi-youtube-browse&alt=rss&time=today", 
-             @"http://gdata.youtube.com/feeds/base/standardfeeds/top_rated?client=ytapi-youtube-browse&alt=rss", 
-             @"http://gdata.youtube.com/feeds/base/standardfeeds/top_rated?client=ytapi-youtube-browse&alt=rss&time=today", 
-             @"http://gdata.youtube.com/feeds/base/standardfeeds/most_viewed?client=ytapi-youtube-browse&alt=rss&time=today", 
+  feeds_ = [[NSMutableArray arrayWithObjects:@"", // Pasteboard Option.
+             @"http://gdata.youtube.com/feeds/base/standardfeeds/most_recent?client=ytapi-youtube-browse&alt=rss",
+             @"http://gdata.youtube.com/feeds/base/standardfeeds/recently_featured?client=ytapi-youtube-browse&alt=rss",
+             @"http://gdata.youtube.com/feeds/base/standardfeeds/top_favorites?client=ytapi-youtube-browse&alt=rss",
+             @"http://gdata.youtube.com/feeds/base/standardfeeds/top_favorites?client=ytapi-youtube-browse&alt=rss&time=today",
+             @"http://gdata.youtube.com/feeds/base/standardfeeds/top_rated?client=ytapi-youtube-browse&alt=rss",
+             @"http://gdata.youtube.com/feeds/base/standardfeeds/top_rated?client=ytapi-youtube-browse&alt=rss&time=today",
+             @"http://gdata.youtube.com/feeds/base/standardfeeds/most_viewed?client=ytapi-youtube-browse&alt=rss&time=today",
              @"http://gdata.youtube.com/feeds/base/standardfeeds/most_viewed?client=ytapi-youtube-browse&alt=rss&time=this_week",
              @"http://gdata.youtube.com/feeds/base/standardfeeds/most_viewed?client=ytapi-youtube-browse&alt=rss&time=this_month",
              @"http://gdata.youtube.com/feeds/base/standardfeeds/most_viewed?client=ytapi-youtube-browse&alt=rss&time=all_time",
              nil] retain];
-  titles_ = [[NSMutableArray arrayWithObjects: @"Recently Added", 
-              @"Recently Featured", 
-              @"Top Favorites", 
-              @"Top Favorites Today", 
-              @"Top Rated", 
-              @"Top Rated Today", 
-              @"Most Popular: This Today", 
-              @"Most Popular: This Week",               
-              @"Most Popular: This Month", 
+  titles_ = [[NSMutableArray arrayWithObjects:@"URL From Clipboard",
+              @"Recently Added",
+              @"Recently Featured",
+              @"Top Favorites",
+              @"Top Favorites Today",
+              @"Top Rated",
+              @"Top Rated Today",
+              @"Most Popular: This Today",
+              @"Most Popular: This Week",
+              @"Most Popular: This Month",
               @"Most Popular: All Time", nil] retain];
   [[self list] setDatasource:self];
   return self;
@@ -72,15 +80,32 @@
 // call-back for an item having been selected
 - (void)itemSelected:(long)index
 {
-  if (index < (long)[feeds_ count]) {
-    NSString* feed = [feeds_ objectAtIndex:index];
-    NSString* title = [titles_ objectAtIndex:index];
-    NSDictionary* asset =
-      [NSDictionary dictionaryWithObjectsAndKeys:feed, @"URL", title, @"title",
-                    UNDYouTubeAssetProviderId, @"provider", nil];
-    [collection_ addAssetWithDescription:asset atIndex:LONG_MAX];
-    [[PSClient applicationClient] addFeedWithURL:[NSURL URLWithString:feed]];
+  if (![self rowSelectable:index]) return;
+
+  NSString *feed, *title;
+
+  switch (index) {
+  case kPasteboardUrl:
+    title = @"YouTube Feed";
+    feed = [[NSPasteboard generalPasteboard]
+                        stringForType:@"NSStringPboardType"];
+    break;
+  default:
+    feed = [feeds_ objectAtIndex:index];
+    title = [titles_ objectAtIndex:index];
+    break;
   }
+
+  if (![NSURL URLWithString:feed]) {
+    [RUISoundHandler playSound:kRUISoundError];
+    return;
+  }
+  NSDictionary* asset =
+    [NSDictionary dictionaryWithObjectsAndKeys:feed, @"URL", title, @"title",
+                  UNDYouTubeAssetProviderId, @"provider", nil];
+  [collection_ addAssetWithDescription:asset atIndex:LONG_MAX];
+  [[PSClient applicationClient] addFeedWithURL:[NSURL URLWithString:feed]];
+
   [[self stack] popController];
 }
 

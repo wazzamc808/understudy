@@ -8,6 +8,13 @@
 
 /// \addtogroup BackRow
 
+typedef enum RUIAlertSound
+{
+    kRUIUninitialized,
+    kRUISoundError = 9
+} RUIAlertSound;
+
+
 /// \ingroup BackRow
 @interface RUISoundHandler : BRSingleton
 {
@@ -23,4 +30,3 @@
 - (void)dealloc;
 
 @end
-
