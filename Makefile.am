@@ -24,3 +24,9 @@ ${CONTENTS}/SharedSupport/NetflixPlayer: src/NetflixPlayer
 ${CONTENTS}/SharedSupport/UNDExternalLauncher: src/UNDExternalLauncher
 	${INSTALL} src/UNDExternalLauncher $@
 
+
+if HAVE_SCAN_BUILD
+.PHONY: scan-build
+scan-build:
+	scan-build -o scan-build --status-bugs 'make OBJC=$${CC}'
+endif
