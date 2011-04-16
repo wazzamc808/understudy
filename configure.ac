@@ -20,5 +20,8 @@ DX_INIT_DOXYGEN([Understudy], [doc/doxygen.cfg])
 AC_PROG_OBJC
 AC_PROG_RANLIB
 
+AC_CHECK_PROG([HAVE_SCAN_BUILD], [scan-build], [yes])
+AM_CONDITIONAL([HAVE_SCAN_BUILD], [test x$HAVE_SCAN_BUILD == xyes])
+
 AC_CONFIG_FILES([Makefile src/Makefile doc/doxygen.cfg])
 AC_OUTPUT
