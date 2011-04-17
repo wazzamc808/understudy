@@ -1,5 +1,5 @@
 //
-//  Copyright 2009,2010 Kirk Kelsey.
+//  Copyright 2009-2011 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -29,45 +29,60 @@
 @interface UNDYouTubeAsset (Parsing)
 - (void)buildFromId:(NSXMLElement*)idtag;
 - (void)parseMediaGroup:(NSXMLElement*)media;
+- (void)setThumbnailFromUrl:(NSString*)url;
 @end
 
+static NSString* elementForString(NSXMLElement* xml, NSString* string)
+{
+  NSArray* elements = [xml elementsForName:string];
+  if (![elements count]) return nil;
+  return [elements objectAtIndex:0];
+}
 
 @implementation UNDYouTubeAsset
 
 - (id)initWithXMLElement:(NSXMLElement*)dom
 {
-  imageManager_ = [BRImageManager sharedInstance];
-  NSXMLElement* titleXML = [[dom elementsForName:@"title"] objectAtIndex:0];
+  NSArray* titles = [dom elementsForName:@"title"];
+  if (![titles count]) return nil;
+
+  NSXMLElement* titleXML = [titles objectAtIndex:0];
   NSString* title = [[titleXML childAtIndex:0] stringValue];
   title = [title stringByReplacingOccurrencesOfString:@"Videos published by :"
                                            withString:@""];
-  [super initWithTitle:title];
 
-  NSXMLElement* content = [[dom elementsForName:@"content"] objectAtIndex:0];
-  // some YouTube feeds contain other feeds, some contain videos. we make the
-  // distinction here at the asset level
-  NSXMLElement* category = [[dom elementsForName:@"category"] objectAtIndex:0];
+  self = [super initWithTitle:title];
+
+  // Some YouTube feeds contain other feeds, some contain videos. We make the
+  // distinction here, at the asset level.
+  NSArray* categories = [dom elementsForName:@"category"];
+  if (![categories count]) return nil;
+
+  NSXMLElement* category = [categories objectAtIndex:0];
   NSString* term = [[category attributeForName:@"term"] stringValue];
-  if( [term hasSuffix:@"video"] ){
+
+  if ([term hasSuffix:@"video"] || [term hasSuffix:@"favorite"]) {
     isVideo_ = TRUE;
     // depending on the feed, the video |entry| will be structured differently
     // those with a media:group are easier to work with
     NSArray* mediagroups = [dom elementsForName:@"media:group"];
-    if( [mediagroups count] )
+    if ([mediagroups count])
       [self parseMediaGroup:[mediagroups objectAtIndex:0]];
     else
       [self buildFromId:[[dom elementsForName:@"id"] lastObject]];
-  }else{
+  } else {
+    NSArray* contents = [dom elementsForName:@"content"];
+    if (![contents count]) return nil;
+    NSXMLElement* content = [contents objectAtIndex:0];
     isVideo_ = FALSE;
     NSString* src = [[content attributeForName:@"src"] stringValue];
     url_ = [[NSURL URLWithString:src] retain];
     // feeds may have a thumbnail
     NSXMLElement* thumbnail;
     thumbnail = [[dom elementsForName:@"media:thumbnail"] lastObject];
-    if( thumbnail ){
-      thumbnailID_ = [[thumbnail attributeForName:@"url"] stringValue];
-      NSURL* thumburl = [NSURL URLWithString:thumbnailID_];
-      thumbnailID_ = [[imageManager_ writeImageFromURL:thumburl] retain];
+    if (thumbnail) {
+      [self setThumbnailFromUrl:[[thumbnail attributeForName:@"url"]
+                                  stringValue]];
     }
   }
   return self;
@@ -87,23 +102,20 @@
 // the content element of each feed entry. much less information is provided
 - (void)buildFromId:(NSXMLElement*)idtag;
 {
-  if( !idtag ) return;
-  NSURL* url;
-  NSString *player,*thumbnail;
+  if (!idtag) return;
   NSString* mediaid = [idtag stringValue];
   NSRange range = [mediaid rangeOfString:@"video:"];
-  if( range.location == NSNotFound ) return;
+  if (range.location == NSNotFound) return;
+
   mediaid = [mediaid substringFromIndex:NSMaxRange(range)];
   range = [mediaid rangeOfString:@":"];
-  if( range.location != NSNotFound )
+  if (range.location != NSNotFound)
     mediaid = [mediaid substringToIndex:range.location];
-  player = [@"http://www.youtube.com/watch?v=" stringByAppendingString:mediaid];
-  url_ = [[NSURL URLWithString:player] retain];
-
-  thumbnail = [@"http://i.ytimg.com/vi/" stringByAppendingString:mediaid];
-  thumbnail = [thumbnail stringByAppendingString:@"/1.jpg"];
-  url = [NSURL URLWithString:thumbnail];
-  thumbnailID_ = [[imageManager_ writeImageFromURL:url] retain];
+  url_ = [[NSURL URLWithString:[@"http://www.youtube.com/watch?v="
+                                   stringByAppendingString:mediaid]] retain];
+  NSString* thumbnail
+    = [NSString stringWithFormat:@"http://i.ytimg.com/vi/%@/1.jpg", mediaid];
+  [self setThumbnailFromUrl:thumbnail];
 
   videoID_ = [mediaid retain];
 }
@@ -113,24 +125,20 @@
   NSLog(@"parseMediaGroup");
   NSXMLElement* xml;
   NSXMLNode* attribute;
-  xml = [[media elementsForName:@"media:title"] objectAtIndex:0];
-  title_ = [[xml stringValue] retain];
-  xml = [[media elementsForName:@"yt:description"] objectAtIndex:0];
-  description_ = [[xml stringValue] retain];
-  xml = [[media elementsForName:@"media:player"] objectAtIndex:0];
-  url_ = [[xml stringValue] retain];
+
+  title_ = [elementForString(media, @"media:title") retain];
+  description_ = [elementForString(media, @"yt:description") retain];
+  url_ = [elementForString(media, @"media:player") retain];
+
   // YT often has multiple thumbnails. we could provide them as a parade, or
   // make them available for
   xml = [[media elementsForName:@"media:thumbnail"] objectAtIndex:0];
   attribute = [xml attributeForName:@"url"];
-  NSURL* thumburl = [NSURL URLWithString:[attribute stringValue]];
-  thumbnailID_ = [[imageManager_ writeImageFromURL:thumburl] retain];
+  [self setThumbnailFromUrl:[attribute stringValue]];
   xml = [[media elementsForName:@"yt:duration"] objectAtIndex:0];
   duration_ = [[[xml attributeForName:@"seconds"] stringValue] intValue];
   xml = [[media elementsForName:@"gd:rating"] objectAtIndex:0];
   starrating_ = [[[xml attributeForName:@"average"] stringValue] floatValue];
-  [[media elementsForName:@"published"] objectAtIndex:0];
-  return;
 }
 
 - (BRController*)controller
@@ -145,6 +153,12 @@
   return [feedDelegate_ controller];
 }
 
+- (void)setThumbnailFromUrl:(NSString*)urlString
+{
+  NSURL* url = [NSURL URLWithString:urlString];
+  BRImageManager* manager = [BRImageManager sharedInstance];
+  thumbnailID_ = [[manager writeImageFromURL:url] retain];
+}
 
 - (NSString*)assetID{ return [url_ description]; }
 - (NSString*)titleForSorting{ return [self title]; }
@@ -159,7 +173,7 @@
 - (BRImage*)coverArt{ return [self thumbnailArt]; }
 - (BRImage*)thumbnailArt
 {
-  return [imageManager_ imageNamed:thumbnailID_];
+  return [[BRImageManager sharedInstance] imageNamed:thumbnailID_];
 }
 - (BRMediaType*)mediaType{ return [BRMediaType ytVideo]; }
 - (NSDate*)datePublished{ return published_; }
