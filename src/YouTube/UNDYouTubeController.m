@@ -16,19 +16,20 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
+#import "UNDYouTubeController.h"
+
 #import <stdint.h>
 
 #import "UNDPreferenceManager.h"
-#import "UNDYouTubeController.h"
 #import "UNDYouTubeAsset.h"
+#import "UNDYouTubeAssetProvider.h"
 
 @implementation UNDYouTubeController
 
 - (id)initWithAsset:(UNDYouTubeAsset*)asset
 {
-  [super init];
   asset_ = [asset retain];
-  return self;
+  return [super init];
 }
 
 #define EMBED_URL @"http://youtube.com/apiplayer?enablejsapi=1&fs=1"
@@ -61,13 +62,26 @@
   return [script evaluateWebScript:call];
 }
 
+/// Returns the desired video quality specified in user preferences.
+- (NSString*)videoQuality
+{
+  UNDYouTubeAssetProvider* provider = [[UNDYouTubeAssetProvider alloc] init];
+  NSDictionary* prefs
+    = [[UNDPreferenceManager sharedInstance]
+        prefsForProvider:[provider providerId]];
+  NSString* quality = [prefs objectForKey:@"quality"];
+  if (!quality) quality = @"default";
+  return [[quality retain] autorelease];
+}
+
 // Instruct the page to actually load the video. This will fail if the flash
 // player has had a chance to fully load, so cannot be invoked from the webview
 // notification routines (but does work based on later user input).
 - (BOOL)enqueueVideo
 {
-  NSString* load = @"loadVideoById('%@',0)";
-  load = [NSString stringWithFormat:load, [asset_ videoID]];
+  NSString* load = @"loadVideoById('%@',0,'%@')";
+  load = [NSString stringWithFormat:load,
+                   [asset_ videoID], [self videoQuality]];
   [self _playerFunction:load];
 
   // if there is a video URL, then the video is loading (or loaded)
