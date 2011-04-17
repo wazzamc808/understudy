@@ -54,4 +54,7 @@
 
 - (void)load;
 - (void)save;
+
+/// Returns a dictionary of preferences specific to \param provider.
+- (NSDictionary*)prefsForProvider:(NSString*)provider;
 @end
