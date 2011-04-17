@@ -16,11 +16,12 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
+#import "UNDYouTubeAsset.h"
+
 #import <BRImageManager.h>
 #import <BRTextMenuItemLayer.h>
 
 #import "UNDMenuController.h"
-#import "UNDYouTubeAsset.h"
 #import "UNDYouTubeFeed.h"
 #import "UNDYouTubeController.h"
 
@@ -61,8 +62,37 @@ static NSString* elementForString(NSXMLElement* xml, NSString* string)
   NSXMLElement* category = [categories objectAtIndex:0];
   NSString* term = [[category attributeForName:@"term"] stringValue];
 
+  NSArray* links = [dom elementsForName:@"link"];
+  for (NSXMLElement* link in links) {
+    url_ = nil;
+    if ([[[link attributeForName:@"rel"] stringValue]
+          isEqualToString:@"alternate"])
+    {
+      NSString* href = [[link attributeForName:@"href"] stringValue];
+      url_ = [NSURL URLWithString:href];
+      if (!url_) continue;
+      NSRange range = [href rangeOfString:@"v="];
+      if (range.location == NSNotFound) continue;
+
+      NSString* uid = [href substringFromIndex:NSMaxRange(range)];
+      range = [uid rangeOfString:@"&"];
+      if (range.location != NSNotFound)
+        uid = [uid substringToIndex:range.location];
+      NSString* thumbnail
+        = [NSString stringWithFormat:@"http://i.ytimg.com/vi/%@/1.jpg", uid];
+      [self setThumbnailFromUrl:thumbnail];
+      videoID_ = [uid retain];
+      break;
+    }
+  }
+
+  if (url_ && thumbnailID_) {
+    isVideo_ = YES;
+    return self;
+  }
+
   if ([term hasSuffix:@"video"] || [term hasSuffix:@"favorite"]) {
-    isVideo_ = TRUE;
+    isVideo_ = YES;
     // depending on the feed, the video |entry| will be structured differently
     // those with a media:group are easier to work with
     NSArray* mediagroups = [dom elementsForName:@"media:group"];
@@ -74,7 +104,7 @@ static NSString* elementForString(NSXMLElement* xml, NSString* string)
     NSArray* contents = [dom elementsForName:@"content"];
     if (![contents count]) return nil;
     NSXMLElement* content = [contents objectAtIndex:0];
-    isVideo_ = FALSE;
+    isVideo_ = NO;
     NSString* src = [[content attributeForName:@"src"] stringValue];
     url_ = [[NSURL URLWithString:src] retain];
     // feeds may have a thumbnail
@@ -103,6 +133,7 @@ static NSString* elementForString(NSXMLElement* xml, NSString* string)
 - (void)buildFromId:(NSXMLElement*)idtag;
 {
   if (!idtag) return;
+
   NSString* mediaid = [idtag stringValue];
   NSRange range = [mediaid rangeOfString:@"video:"];
   if (range.location == NSNotFound) return;
@@ -147,8 +178,8 @@ static NSString* elementForString(NSXMLElement* xml, NSString* string)
     return [[[UNDYouTubeController alloc] initWithAsset:self] autorelease];
 
   if (!feedDelegate_)
-      feedDelegate_ = [[UNDYouTubeFeed alloc] initWithTitle:[self title]
-                                                     forUrl:url_];
+    feedDelegate_ = [[UNDYouTubeFeed alloc] initWithTitle:[self title]
+                                                   forUrl:url_];
 
   return [feedDelegate_ controller];
 }
