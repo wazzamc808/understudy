@@ -214,4 +214,12 @@ static UNDPreferenceManager *sharedInstance_;
   [defaults setPersistentDomain:prefs forName:DEFAULTS_DOMAIN];
 }
 
+/// The value of provider should be the [id<UNDAssetProvider> providerId].
+- (NSDictionary*)prefsForProvider:(NSString*)provider
+{
+  return [[[NSUserDefaults standardUserDefaults]
+            persistentDomainForName:DEFAULTS_DOMAIN]
+           objectForKey:provider];
+}
+
 @end
