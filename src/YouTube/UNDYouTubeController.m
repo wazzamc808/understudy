@@ -1,5 +1,5 @@
 //
-//  Copyright 2009,2010 Kirk Kelsey.
+//  Copyright 2009-2011 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -66,21 +66,18 @@
 // notification routines (but does work based on later user input).
 - (BOOL)enqueueVideo
 {
-  id result;
-
   NSString* load = @"loadVideoById('%@',0)";
   load = [NSString stringWithFormat:load, [asset_ videoID]];
   [self _playerFunction:load];
 
   // if there is a video URL, then the video is loading (or loaded)
-  result = [self _playerFunction:@"getVideoUrl()"];
-  loaded_ = ( result != nil );
+  loaded_ = ([self _playerFunction:@"getVideoUrl()"] != nil);
   return loaded_;
 }
 
 - (void)attemptEnqueue
 {
-  while( !loaded_ ){
+  while (!loaded_) {
     sleep(1);
     [self performSelectorOnMainThread:@selector(enqueueVideo)
                            withObject:nil
@@ -91,7 +88,7 @@
 // <WebFrameLoadDelegate> callback once the video loads
 - (void)webView:(WebView*)view didFinishLoadForFrame:(WebFrame*)frame
 {
-  if( frame != [view mainFrame] ) return;
+  if (frame != [view mainFrame]) return;
   [window_ display];
   [window_ orderFrontRegardless];
   [window_ setLevel:CGShieldingWindowLevel()];
