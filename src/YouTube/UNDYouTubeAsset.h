@@ -33,7 +33,6 @@
  @private
   NSString* description_;
   long duration_;
-  BRImageManager* imageManager_;
   NSString* videoID_; // the YT identifier for the video
   NSDate* published_;
   float starrating_;

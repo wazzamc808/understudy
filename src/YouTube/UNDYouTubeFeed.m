@@ -1,5 +1,5 @@
 //
-//  Copyright 2009,2010 Kirk Kelsey.
+//  Copyright 2009-2011 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -51,7 +51,7 @@
   NSArray* entries = [feed elementsForName:@"entry"];
   for (NSXMLElement* item in entries) {
     UNDYouTubeAsset* asset = [[UNDYouTubeAsset alloc] initWithXMLElement:item];
-    [assets addObject:[asset autorelease]];
+    if (asset) [assets addObject:[asset autorelease]];
   }
   return assets;
 }
