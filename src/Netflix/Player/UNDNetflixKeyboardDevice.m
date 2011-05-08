@@ -3,7 +3,7 @@
  * Understudy
  *
  * Created by Kirk Kelsey under a MIT-style license.
- * Copyright (c) 2010 0x4b.net All rights reserved.
+ * Copyright (c) 2010-2011 0x4b.net All rights reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -25,7 +25,7 @@
  *
  *****************************************************************************/
 
-#import "GlobalKeyboardDevice.h"
+#import <RemoteControlWrapper/GlobalKeyboardDevice.h>
 
 @interface UNDNetflixKeyboardDevice : GlobalKeyboardDevice
 @end

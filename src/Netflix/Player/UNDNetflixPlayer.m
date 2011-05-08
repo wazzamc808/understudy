@@ -16,20 +16,21 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
+#import "Netflix/Player/UNDNetflixPlayer.h"
+
 #include <regex.h>
-
-#import "UNDNetflixPlayer.h"
-#import "UNDPasswordProvider.h"
-#import "UNDPlayerWindow.h"
-#import "UNDPluginControl.h"
-#import "UNDPreferenceManager.h"
-#import "UNDVolumeControl.h"
-
-#import "BRSettingsFacade.h"
 
 #import <ApplicationServices/ApplicationServices.h>
 #import <Carbon/Carbon.h>
 #import <IOKit/IOKitLib.h>
+
+#import <BRHeaders/BRSettingsFacade.h>
+
+#import "Utilities/UNDPasswordProvider.h"
+#import "Utilities/UNDPlayerWindow.h"
+#import "Utilities/UNDPluginControl.h"
+#import "Utilities/UNDPreferenceManager.h"
+#import "Utilities/UNDVolumeControl.h"
 
 #define AGENTSTRING @"Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_1; en-us)"\
 " AppleWebKit/531.9 (KHTML, like Gecko) Version/4.0.3 Safari/531.9"

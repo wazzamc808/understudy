@@ -10,7 +10,7 @@
 //
 //  Understudy is distributed in the hope that it will be useful, but WITHOUT
 //  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-//  FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
+//  FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License
 //  for more details.
 //
 //  You should have received a copy of the GNU Lesser General Public License
@@ -18,25 +18,23 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import <BROptionDialog.h>
-#import <BRMenuListItemProvider-Protocol.h>
-#import <BRCenteredMenuController.h>
+#import <BRHeaders/BROptionDialog.h>
+#import <BRHeaders/BRMenuListItemProvider-Protocol.h>
+#import <BRHeaders/BRCenteredMenuController.h>
 
-#import "UNDAddAssetDialog.h"
-#import "UNDAsset.h"
+#import "Base/UNDMutableCollection.h"
 
-@interface UNDManageDialog : BRCenteredMenuController
-<BRMenuListItemProvider, UNDAsset, UNDCollectionMutator>
+@interface UNDEditDialog : BRCenteredMenuController
+<BRMenuListItemProvider, UNDAsset>
 {
-  UNDAddAssetDialog* addController_;
-  BOOL enabled_;
-  UNDMutableCollection* collection_;  //< weak reference
-  BRControl*         preview_;
+  UNDMutableCollection* collection_;
+  long index_;                  //< Selected index in the collection.
+  NSString* title_;
+  BROptionDialog* moveDialog_;
 }
 
-+(UNDManageDialog*)sharedInstance;
-
--(BOOL)assetManagementEnabled;
--(void)disableAssetManagement;
+/// Returns a new UNDEditDialog for the asset at a given index in a collection.
+- (id)initWithCollection:(UNDMutableCollection*)collection
+                forIndex:(long)index;
 
 @end

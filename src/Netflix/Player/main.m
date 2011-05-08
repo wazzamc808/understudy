@@ -1,5 +1,5 @@
 //
-//  Copyright 2009,2010 Kirk Kelsey.
+//  Copyright 2009-2011 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -18,14 +18,13 @@
 
 #import <WebKit/WebKit.h>
 
-#import "AppleRemote.h"
-#import "FrontRowKeyboardDevice.h"
-#import "RemoteControl.h"
-#import "RemoteControlContainer.h"
+#import <RemoteControlWrapper/AppleRemote.h>
+#import <RemoteControlWrapper/FrontRowKeyboardDevice.h>
+#import <RemoteControlWrapper/RemoteControl.h>
+#import <RemoteControlWrapper/GlobalKeyboardDevice.h>
+#import <RemoteControlWrapper/RemoteControlContainer.h>
 
-#import "UNDNetflixPlayer.h"
-
-#import "GlobalKeyboardDevice.h"
+#import "Netflix/Player/UNDNetflixPlayer.h"
 
 @interface UNDNetflixKeyboardDevice : GlobalKeyboardDevice
 @end

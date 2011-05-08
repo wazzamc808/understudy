@@ -18,7 +18,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import "UNDBaseCollection.h"
+#import "Base/UNDBaseCollection.h"
 
 @interface UNDYouTubeFeed : UNDBaseCollection
 {

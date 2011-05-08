@@ -1,5 +1,5 @@
 //
-//  Copyright 2009 Kirk Kelsey.
+//  Copyright 2009, 2011 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -17,11 +17,12 @@
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
 
-#import "UNDPasswordProvider.h"
-#import "UNDPreferenceManager.h"
+#import "Utilities/UNDPasswordProvider.h"
 
-#import <BRSentinel.h>
-#import <BRRenderer.h>
+#import <BRHeaders/BRSentinel.h>
+#import <BRHeaders/BRRenderer.h>
+
+#import "Utilities/UNDPreferenceManager.h"
 
 @protocol BRRendererProvider
 - (BRRenderer*)renderer;

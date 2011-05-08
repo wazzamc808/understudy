@@ -20,7 +20,7 @@
 #import <WebKit/WebKit.h>
 #import <IOKit/pwr_mgt/IOPMLib.h>
 
-#import "BRTextWithSpinnerController.h"
+#import "BRHeaders/BRTextWithSpinnerController.h"
 
 @interface UNDBaseController : BRTextWithSpinnerController { }
 

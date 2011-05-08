@@ -2,8 +2,6 @@ AUTOMAKE_OPTIONS = subdir-objects
 
 bin_PROGRAMS=UNDExternalLauncher Understudy
 
-CPPFLAGS = -IBBCiPlayer -IBase -IBRHeaders -INetflix -IMenuing  \
--IRemoteControlWrapper -IUtilities -IYouTube
 
 OBJCFLAGS =                                     \
 -arch i386                                      \
@@ -42,25 +40,24 @@ UNDExternalLauncher_SOURCES= Base/UNDExternalLauncher.m
 
 Understudy_SOURCES =                            \
 UNDAppliance.m                                  \
+Base/UNDAddAssetDialog.m                        \
 Base/UNDAssetFactory.m                          \
 Base/UNDBaseAsset.m                             \
 Base/UNDBaseCollection.m                        \
 Base/UNDBaseController.m                        \
 Base/UNDCollectionAddDialog.m                   \
 Base/UNDCollectionProvider.m                    \
+Base/UNDEditDialog.m                            \
 Base/UNDExternalAppAddDialog.m                  \
 Base/UNDExternalAppAsset.m                      \
 Base/UNDExternalAppAssetProvider.m              \
 Base/UNDExternalLaunchController.m              \
 Base/UNDExternalLauncher.m                      \
 Base/UNDLoadingAsset.m                          \
+Base/UNDManageDialog.m                          \
 Base/UNDMenuController.m                        \
 Base/UNDMutableCollection.m                     \
 Base/UNDUnknownAsset.m                          \
-Menuing/UNDAddAssetDialog.m                     \
-Menuing/UNDEditDialog.m                         \
-Menuing/UNDManageDialog.m                       \
-Menuing/UNDPreferenceManager.m                  \
 BBCiPlayer/UNDNSXMLElement+Parsing.m            \
 BBCiPlayer/UNDiPlayerAddDialog.m                \
 BBCiPlayer/UNDiPlayerAsset.m                    \
@@ -83,6 +80,7 @@ Utilities/UNDIconProvider.m                     \
 Utilities/UNDPasswordProvider.m                 \
 Utilities/UNDPlayerWindow.m                     \
 Utilities/UNDPluginControl.m                    \
+Utilities/UNDPreferenceManager.m                \
 Utilities/UNDVolumeControl.m                    \
 YouTube/UNDYouTubeAddDialog.m                   \
 YouTube/UNDYouTubeAsset.m                       \

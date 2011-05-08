@@ -16,15 +16,16 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Understudy. If not, see <http://www.gnu.org/licenses/>.
 
-#import "UNDIconProvider.h"
-#import "UNDManageDialog.h"
-#import "UNDPreferenceManager.h"
+#import "Base/UNDManageDialog.h"
 
-#import <BRControllerStack.h>
-#import <BRMenuListItemProvider-Protocol.h>
-#import <BRListControl.h>
-#import <BRMediaPreviewControllerFactory.h>
-#import <BRTextMenuItemLayer.h>
+#import <BRHeaders/BRControllerStack.h>
+#import <BRHeaders/BRMenuListItemProvider-Protocol.h>
+#import <BRHeaders/BRListControl.h>
+#import <BRHeaders/BRMediaPreviewControllerFactory.h>
+#import <BRHeaders/BRTextMenuItemLayer.h>
+
+#import "Utilities/UNDIconProvider.h"
+#import "Utilities/UNDPreferenceManager.h"
 
 @implementation UNDManageDialog
 

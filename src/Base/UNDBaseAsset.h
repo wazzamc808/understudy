@@ -18,9 +18,9 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import "BRBaseMediaAsset.h"
-#import "BRMediaPreviewFactoryDelegate-Protocol.h"
-#import "BRMediaType.h"
+#import "BRHeaders/BRBaseMediaAsset.h"
+#import "BRHeaders/BRMediaPreviewFactoryDelegate-Protocol.h"
+#import "BRHeaders/BRMediaType.h"
 
 @class BRControl;
 @class BRLayer;

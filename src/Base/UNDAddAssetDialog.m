@@ -1,5 +1,5 @@
 //
-//  Copyright 2008-2010 Kirk Kelsey.
+//  Copyright 2008-2011 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -17,11 +17,12 @@
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
 #import "UNDAddAssetDialog.h"
-#import "UNDAssetFactory.h"
-
-#import <BRControllerStack.h>
 
 #import <AppKit/NSPasteboard.h>
+
+#import <BRHeaders/BRControllerStack.h>
+
+#import "Base/UNDAssetFactory.h"
 
 @implementation UNDAddAssetDialog
 

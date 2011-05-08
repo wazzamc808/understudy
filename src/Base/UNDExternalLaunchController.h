@@ -1,5 +1,5 @@
 //                                                                -*- objc -*-
-//  Copyright 2010 Kirk Kelsey.
+//  Copyright 2010, 2011 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -18,7 +18,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import "BRTextWithSpinnerController.h"
+#import "BRHeaders/BRTextWithSpinnerController.h"
 
 /// Uses the UNDExternalLauncher to start and monitor an external application.
 /// This is useful for starting existing media apps from Front Row, but is not

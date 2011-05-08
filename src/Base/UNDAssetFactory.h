@@ -18,10 +18,10 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import "BRSingleton.h"
+#import "BRHeaders/BRSingleton.h"
 
-#import "UNDAsset.h"
-#import "UNDMutableCollection.h"
+#import "Base/UNDAsset.h"
+#import "Base/UNDMutableCollection.h"
 
 @class BRController;
 

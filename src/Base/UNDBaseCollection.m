@@ -16,10 +16,10 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
-#import <BRTextMenuItemLayer.h>
+#import <BRHeaders/BRTextMenuItemLayer.h>
 
-#import "UNDAssetFactory.h"
-#import "UNDBaseCollection.h"
+#import "Base/UNDAssetFactory.h"
+#import "Base/UNDBaseCollection.h"
 
 @implementation UNDBaseCollection
 

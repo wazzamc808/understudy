@@ -16,10 +16,10 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
-#import "UNDAddAssetDialog.h"
-#import "UNDAssetFactory.h"
-#import "UNDUnknownAsset.h"
-#import "UNDMutableCollection.h"
+#import "Base/UNDAddAssetDialog.h"
+#import "Base/UNDAssetFactory.h"
+#import "Base/UNDUnknownAsset.h"
+#import "Base/UNDMutableCollection.h"
 
 @implementation UNDAssetFactory
 

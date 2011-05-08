@@ -1,5 +1,5 @@
 //
-//  Copyright 2010 Kirk Kelsey.
+//  Copyright 2010-2011 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -18,7 +18,7 @@
 
 #import "UNDNetflixLoadingController.h"
 
-#import "BRControllerStack.h"
+#import <BRHeaders/BRControllerStack.h>
 
 @implementation UNDNetflixLoadingController
 

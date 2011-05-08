@@ -16,14 +16,14 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
-#import "UNDYouTubeAsset.h"
+#import "YouTube/UNDYouTubeAsset.h"
 
-#import <BRImageManager.h>
-#import <BRTextMenuItemLayer.h>
+#import <BRHeaders/BRImageManager.h>
+#import <BRHeaders/BRTextMenuItemLayer.h>
 
-#import "UNDMenuController.h"
-#import "UNDYouTubeFeed.h"
-#import "UNDYouTubeController.h"
+#import "Base/UNDMenuController.h"
+#import "YouTube/UNDYouTubeFeed.h"
+#import "YouTube/UNDYouTubeController.h"
 
 @class BRImage;
 

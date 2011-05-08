@@ -18,8 +18,8 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import "UNDBaseCollection.h"
-#import "UNDMenuController.h"
+#import "Base/UNDBaseCollection.h"
+#import "Base/UNDMenuController.h"
 
 @interface UNDiPlayerFeed : UNDBaseCollection<UNDMenuDelegate>
 {
