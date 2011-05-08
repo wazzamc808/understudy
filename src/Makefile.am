@@ -67,6 +67,7 @@ BBCiPlayer/UNDiPlayerAsset.m                    \
 BBCiPlayer/UNDiPlayerAssetProvider.m            \
 BBCiPlayer/UNDiPlayerController.m               \
 BBCiPlayer/UNDiPlayerFeed.m                     \
+Netflix/BRImageManager+Netflix.m                \
 Netflix/UNDNetflixAddDialog.m                   \
 Netflix/UNDNetflixAsset.m                       \
 Netflix/UNDNetflixAssetProvider.m               \
