@@ -37,7 +37,6 @@
 @implementation UNDNetflixAsset
 
 #define WATCHURL @"http://www.netflix.com/WiPlayer?movieid="
-#define BOXSHOTS @"http://cdn-0.nflximg.com/us/boxshots/large/%@.jpg"
 
 // TODO(kelsey): remove the url parameter, using the mediaID instead
 - (id)initWithUrl:(NSString*)url

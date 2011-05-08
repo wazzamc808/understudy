@@ -23,8 +23,9 @@
   NSArray*  assets_;            ///< Individual video assets in the season.
   NSString* show_;              ///< Show title.
   NSString* season_;            ///< Season title.
+  NSString* image_;             ///< BRImage identifier for cover art.
 }
 
-- (id)initWithUrl:(NSURL*)url;
+- (id)initWithMediaId:(NSString*)mediaId;
 
 @end
