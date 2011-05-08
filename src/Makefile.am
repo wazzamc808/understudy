@@ -70,10 +70,11 @@ BBCiPlayer/UNDiPlayerFeed.m                     \
 Netflix/UNDNetflixAddDialog.m                   \
 Netflix/UNDNetflixAsset.m                       \
 Netflix/UNDNetflixAssetProvider.m               \
-Netflix/UNDNetflixCollection.m                  \
 Netflix/UNDNetflixController.m                  \
 Netflix/UNDNetflixFeed.m                        \
 Netflix/UNDNetflixLoadingController.m           \
+Netflix/UNDNetflixSeason.m                      \
+Netflix/UNDNetflixSeasonCollection.m            \
 Utilities/UNDFileAsset.m                        \
 Utilities/UNDFileBrowser.m                      \
 Utilities/UNDFileCollection.m                   \

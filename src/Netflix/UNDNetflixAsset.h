@@ -23,28 +23,26 @@
 #import <BRMediaAsset-Protocol.h>
 #import <BRTextMenuItemLayer.h>
 
-#import "UNDAsset.h"
-#import "UNDBaseAsset.h"
-#import "UNDNetflixCollection.h"
-
-// class NetflixAsset
-//
-// Represents the attributes of a Netflix Video
+#import "Base/UNDAsset.h"
+#import "Base/UNDBaseAsset.h"
 
 @class UNDNetflixAsset;
+@class UNDAssetCollection;
 
 @protocol UNDNetflixAssetUpdateDelegate
 - (void)assetUpdated:(UNDNetflixAsset*)asset;
 @end
 
+/// class NetflixAsset
+///
+/// Represents the attributes of a Netflix Video.
 @interface UNDNetflixAsset : UNDBaseAsset <UNDAsset> {
  @private
   NSString* description_;
   NSString* mediaID_;
   NSURL* url_;
   NSString* thumbnailID_;
-  BRImageManager* imageManager_;
-  UNDNetflixCollection* collection_;
+  UNDAssetCollection* collection_;
   id<UNDNetflixAssetUpdateDelegate> delegate_;
   BOOL collectionSearchNeeded_;
   BOOL collectionSearchIncomplete_;
@@ -57,6 +55,8 @@
       description:(NSString*)description;
 
 - (id)initWithXMLElement:(NSXMLElement*)dom;
+
+- (id)initWithEpisodeXMLNode:(NSXMLNode*)node;
 
 // Provides the primary url of the media.
 - (NSURL*)url;
