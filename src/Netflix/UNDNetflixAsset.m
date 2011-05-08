@@ -16,17 +16,18 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
-#import "UNDNetflixAsset.h"
+#import "Netflix/UNDNetflixAsset.h"
 
-#import <BRImage.h>
-#import <BRAlertController.h>
+#import <BRHeaders/BRImage.h>
+#import <BRHeaders/BRAlertController.h>
 
 #import <CoreFoundation/CFXMLNode.h>
 
 #include <regex.h>
 
-#import "UNDNetflixController.h"
-#import "UNDNetflixLoadingController.h"
+#import "Netflix/BRImageManager+Netflix.h"
+#import "Netflix/UNDNetflixController.h"
+#import "Netflix/UNDNetflixLoadingController.h"
 #import "Netflix/UNDNetflixSeasonCollection.h"
 
 @interface UNDNetflixAsset (CollectionDiscovery)
@@ -59,10 +60,8 @@
                                                                    NULL);
   [description_ retain];
   mediaID_ = [mediaID copy];
-  NSURL* thumburl;
-  thumburl = [NSURL URLWithString:[NSString stringWithFormat:BOXSHOTS,mediaID]];
   thumbnailID_ = [[[BRImageManager sharedInstance]
-                    writeImageFromURL:thumburl] retain];
+                    imageNameFromNetflixMediaId:mediaID] retain];
   return self;
 }
 
