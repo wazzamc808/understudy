@@ -1,4 +1,4 @@
-AC_INIT([Understudy], [0.10+], [kirk.kelsey@0x4b.net], [],
+AC_INIT([Understudy], [0.10.1], [kirk.kelsey@0x4b.net], [],
   [http://code.google.com/p/understudy/])
 AC_CONFIG_AUX_DIR([config])
 AC_CONFIG_SRCDIR([src/UNDAppliance.h])
