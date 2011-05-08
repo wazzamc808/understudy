@@ -16,14 +16,15 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
-#import "UNDPreferenceManager.h"
+#import "Utilities/UNDPreferenceManager.h"
 
-#import "UNDExternalAppAssetProvider.h"
-
-#import <BRMenuSavedState-Private.h>
-#import <RUIPreferences.h>
+#import <BRHeaders/BRMenuSavedState-Private.h>
+#import <BRHeaders/RUIPreferences.h>
 
 #import <PubSub/PubSub.h>
+
+#import "Base/UNDExternalAppAssetProvider.h"
+
 
 #define DEFAULTS_DOMAIN @"com.apple.frontrow.appliance.understudy"
 

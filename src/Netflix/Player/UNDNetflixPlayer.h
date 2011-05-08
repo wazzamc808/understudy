@@ -1,5 +1,5 @@
 //
-//  Copyright 2008-2010 Kirk Kelsey.
+//  Copyright 2008-2011 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -19,10 +19,10 @@
 #import <AppKit/AppKit.h>
 #import <Cocoa/Cocoa.h>
 #import <WebKit/WebKit.h>
+#import <RemoteControlWrapper/RemoteControl.h>
 
-#import "UNDSelector.h"
-#import "UNDPluginControl.h"
-#import "RemoteControl.h"
+#import "Utilities/UNDSelector.h"
+#import "Utilities/UNDPluginControl.h"
 
 @interface UNDNetflixPlayer : NSObject {
   WebView*               mainView_;

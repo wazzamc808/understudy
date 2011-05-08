@@ -18,10 +18,10 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import "BRController.h"
-#import "BRMenuItemLayer-Protocol.h"
+#import "BRHeaders/BRController.h"
+#import "BRHeaders/BRMenuItemLayer-Protocol.h"
 
-#import "UNDBaseController.h"
+#import "Base/UNDBaseController.h"
 
 @protocol UNDAsset
 - (BRLayer<BRMenuItemLayer>*)menuItem;

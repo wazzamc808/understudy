@@ -19,8 +19,8 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import "UNDAsset.h"
-#import "UNDBaseAsset.h"
+#import "Base/UNDAsset.h"
+#import "Base/UNDBaseAsset.h"
 
 @class BRTextMenuItemLayer;
 @class BRImageManager;

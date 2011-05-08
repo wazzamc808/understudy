@@ -16,14 +16,15 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
-#import "UNDNetflixAddDialog.h"
+#import "Netflix/UNDNetflixAddDialog.h"
 
 #import <AppKit/NSPasteboard.h>
-#import <BRControllerStack.h>
 #import <PubSub/PubSub.h>
 
-#import "UNDMutableCollection.h"
-#import "UNDNetflixAssetProvider.h"
+#import <BRHeaders/BRControllerStack.h>
+
+#import "Base/UNDMutableCollection.h"
+#import "Netflix/UNDNetflixAssetProvider.h"
 
 @interface UNDNetflixAddDialog (PrivateMethods)
 - (void)_startAutoDiscovery;

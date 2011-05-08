@@ -18,8 +18,8 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import "UNDNetflixAsset.h"
-#import "UNDBaseCollection.h"
+#import "Base/UNDBaseCollection.h"
+#import "Netflix/UNDNetflixAsset.h"
 
 @interface UNDNetflixFeed : UNDBaseCollection<UNDNetflixAssetUpdateDelegate>
 {

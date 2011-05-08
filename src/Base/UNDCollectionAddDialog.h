@@ -19,7 +19,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import <BROptionDialog.h>
+#import <BRHeaders/BROptionDialog.h>
 
 @class UNDMutableCollection;
 

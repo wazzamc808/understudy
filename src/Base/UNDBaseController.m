@@ -16,17 +16,19 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
-#import "UNDBaseController.h"
-#import "UNDPreferenceManager.h"
-
-#import <BRControllerStack.h>
-#import <BRDisplayManager.h>
-#import <BREvent.h>
-#import <BRRenderer.h>
-#import <BRSentinel.h>
-#import <BRSettingsFacade.h>
+#import "Base/UNDBaseController.h"
 
 #import <Carbon/Carbon.h>
+
+#import <BRHeaders/BRControllerStack.h>
+#import <BRHeaders/BRDisplayManager.h>
+#import <BRHeaders/BREvent.h>
+#import <BRHeaders/BRRenderer.h>
+#import <BRHeaders/BRSentinel.h>
+#import <BRHeaders/BRSettingsFacade.h>
+
+#import "Utilities/UNDPreferenceManager.h"
+
 typedef enum
   {
     MenuButton = 1,

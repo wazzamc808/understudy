@@ -18,10 +18,10 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import <BRBaseMediaAsset.h>
-#import <BRImageManager.h>
-#import <BRMediaAsset-Protocol.h>
-#import <BRTextMenuItemLayer.h>
+#import <BRHeaders/BRBaseMediaAsset.h>
+#import <BRHeaders/BRImageManager.h>
+#import <BRHeaders/BRMediaAsset-Protocol.h>
+#import <BRHeaders/BRTextMenuItemLayer.h>
 
 #import "Base/UNDAsset.h"
 #import "Base/UNDBaseAsset.h"

@@ -1,5 +1,5 @@
-//                                                                -*- objc -*-
-//  Copyright 2008-2011 Kirk Kelsey.
+//
+//  Copyright 2008,2010-2011 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -18,14 +18,25 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import <BROptionDialog.h>
+#import <BRHeaders/BROptionDialog.h>
+#import <BRHeaders/BRMenuListItemProvider-Protocol.h>
+#import <BRHeaders/BRCenteredMenuController.h>
 
-#import "UNDMutableCollection.h"
+#import "Base/UNDAddAssetDialog.h"
+#import "Base/UNDAsset.h"
 
-@interface UNDAddAssetDialog : BROptionDialog<UNDCollectionMutator>
+@interface UNDManageDialog : BRCenteredMenuController
+<BRMenuListItemProvider, UNDAsset, UNDCollectionMutator>
 {
-  NSMutableArray*       dialogs_;
+  UNDAddAssetDialog* addController_;
+  BOOL enabled_;
   UNDMutableCollection* collection_;  //< weak reference
+  BRControl*         preview_;
 }
+
++(UNDManageDialog*)sharedInstance;
+
+-(BOOL)assetManagementEnabled;
+-(void)disableAssetManagement;
 
 @end

@@ -17,11 +17,11 @@
 //  License along with Understudy. If not, see
 //  <http://www.gnu.org/licenses/>.
 
-#import "UNDCollectionAddDialog.h"
+#import "Base/UNDCollectionAddDialog.h"
 
-#import "BRControllerStack.h"
+#import <BRHeaders/BRControllerStack.h>
 
-#import "UNDCollectionProvider.h"
+#import "Base/UNDCollectionProvider.h"
 
 @implementation UNDCollectionAddDialog
 

@@ -18,7 +18,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import "UNDBaseCollection.h"
+#import "Base/UNDBaseCollection.h"
 
 @interface UNDFileCollection : UNDBaseCollection
 {

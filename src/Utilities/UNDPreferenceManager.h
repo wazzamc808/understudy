@@ -18,7 +18,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import <BRSingleton.h>
+#import <BRHeaders/BRSingleton.h>
 
 @interface UNDPreferenceManager : NSObject
 {

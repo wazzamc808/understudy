@@ -1,5 +1,5 @@
 //
-//  Copyright 2010, 2011 Kirk Kelsey.
+//  Copyright 2010-2011 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -17,8 +17,9 @@
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
 #import "UNDExternalLaunchController.h"
-#import "BREvent.h"
-#import "BREventManager.h"
+
+#import <BRHeaders/BREvent.h>
+#import <BRHeaders/BREventManager.h>
 
 @implementation UNDExternalLaunchController
 

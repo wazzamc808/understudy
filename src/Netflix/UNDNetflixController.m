@@ -16,25 +16,26 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <regex.h>
-
-#import "UNDNetflixAsset.h"
 #import "UNDNetflixController.h"
-#import "UNDPluginControl.h"
-#import "UNDPreferenceManager.h"
-#import "UNDPasswordProvider.h"
-
-#import <BRAlertController.h>
-#import <BRControllerStack.h>
-#import <BRDisplayManager.h>
-#import <BREvent.h>
-#import <BREventManager.h>
-#import <BRMenuSavedState-Private.h>
-#import <BRRenderScene.h>
-#import <BRSentinel.h>
-#import <BRSettingsFacade.h>
 
 #import <Carbon/Carbon.h>
+
+#include <regex.h>
+
+#import <BRHeaders/BRAlertController.h>
+#import <BRHeaders/BRControllerStack.h>
+#import <BRHeaders/BRDisplayManager.h>
+#import <BRHeaders/BREvent.h>
+#import <BRHeaders/BREventManager.h>
+#import <BRHeaders/BRMenuSavedState-Private.h>
+#import <BRHeaders/BRRenderScene.h>
+#import <BRHeaders/BRSentinel.h>
+#import <BRHeaders/BRSettingsFacade.h>
+
+#import "Netflix/UNDNetflixAsset.h"
+#import "Utilities/UNDPluginControl.h"
+#import "Utilities/UNDPreferenceManager.h"
+#import "Utilities/UNDPasswordProvider.h"
 
 #define AGENTSTRING @"Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_5_6; en-us)"\
 " AppleWebKit/525.27.1 (KHTML, like Gecko) Version/3.2.1 Safari/525.27.1"

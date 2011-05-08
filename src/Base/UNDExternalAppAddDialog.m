@@ -16,13 +16,13 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Understudy. If not, see <http://www.gnu.org/licenses/>.
 
-#import "UNDExternalAppAddDialog.h"
+#import "Base/UNDExternalAppAddDialog.h"
 
-#import <BRControllerStack.h>
+#import <BRHeaders/BRControllerStack.h>
 
-#import "UNDAssetFactory.h"
-#import "UNDExternalAppAssetProvider.h"
-#import "UNDMutableCollection.h"
+#import "Base/UNDAssetFactory.h"
+#import "Base/UNDExternalAppAssetProvider.h"
+#import "Base/UNDMutableCollection.h"
 
 @implementation UNDExternalAppAddDialog
 

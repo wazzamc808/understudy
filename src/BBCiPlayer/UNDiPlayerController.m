@@ -1,5 +1,5 @@
 //
-//  Copyright 2009 Kirk Kelsey.
+//  Copyright 2009, 2011 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -16,10 +16,11 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
-#import "UNDiPlayerAsset.h"
-#import "UNDiPlayerController.h"
-#import "UNDPluginControl.h"
-#import "UNDPreferenceManager.h"
+#import "BBCiPlayer/UNDiPlayerController.h"
+
+#import "BBCiPlayer/UNDiPlayerAsset.h"
+#import "Utilities/UNDPluginControl.h"
+#import "Utilities/UNDPreferenceManager.h"
 
 @implementation UNDiPlayerController
 

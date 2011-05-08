@@ -1,5 +1,5 @@
 //                                                                -*- objc -*-
-//  Copyright 2008,2010 Kirk Kelsey.
+//  Copyright 2008,2010,2011 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -18,7 +18,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import <BROptionDialog.h>
+#import <BRHeaders/BROptionDialog.h>
 
 @class UNDMutableCollection;
 

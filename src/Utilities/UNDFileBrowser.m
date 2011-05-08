@@ -18,10 +18,10 @@
 
 #import "UNDFileBrowser.h"
 
-#import <BRControllerStack.h>
+#import <BRHeaders/BRControllerStack.h>
 
-#import "UNDFileAsset.h"
-#import "UNDFileCollection.h"
+#import "Utilities/UNDFileAsset.h"
+#import "Utilities/UNDFileCollection.h"
 
 @implementation UNDFileBrowser
 

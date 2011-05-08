@@ -1,5 +1,5 @@
 //
-//  Copyright 2009 Kirk Kelsey.
+//  Copyright 2009, 2011 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -17,12 +17,13 @@
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
 #import "UNDiPlayerAsset.h"
-#import "UNDiPlayerController.h"
-#import "UNDNSXMLElement+Parsing.h"
 
-#import <BRImage.h>
-#import <BRImageManager.h>
-#import <BRTextMenuItemLayer.h>
+#import <BRHeaders/BRImage.h>
+#import <BRHeaders/BRImageManager.h>
+#import <BRHeaders/BRTextMenuItemLayer.h>
+
+#import "BBCiPlayer/UNDiPlayerController.h"
+#import "BBCiPlayer/UNDNSXMLElement+Parsing.h"
 
 @implementation UNDiPlayerAsset
 

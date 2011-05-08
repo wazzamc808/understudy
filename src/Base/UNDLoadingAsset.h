@@ -18,9 +18,9 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import <BRTextMenuItemLayer.h>
+#import <BRHeaders/BRTextMenuItemLayer.h>
 
-#import "UNDAsset.h"
+#import "Base/UNDAsset.h"
 
 @interface UNDLoadingAsset : NSObject <UNDAsset> {
  @private

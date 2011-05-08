@@ -1,5 +1,5 @@
 //                                                                  -*- objc -*-
-//  Copyright 2010 Kirk Kelsey.
+//  Copyright 2010, 2011 Kirk Kelsey.
 //
 //  This file is part of Understudy.
 //
@@ -16,9 +16,9 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
-#import <BRTextWithSpinnerController.h>
+#import <BRHeaders/BRTextWithSpinnerController.h>
 
-#import "UNDNetflixAsset.h"
+#import "Netflix/UNDNetflixAsset.h"
 
 @interface UNDNetflixLoadingController : BRTextWithSpinnerController
 <UNDNetflixAssetUpdateDelegate>

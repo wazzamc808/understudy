@@ -17,7 +17,8 @@
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
 #import <Cocoa/Cocoa.h>
-#import <BRAppliance.h>
+#import <BRHeaders/BRAppliance.h>
+
 
 /// The principal class of the plugin bundle loaded by Front Row.
 @interface UNDAppliance : BRAppliance { }

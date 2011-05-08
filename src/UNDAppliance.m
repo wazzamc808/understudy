@@ -18,12 +18,12 @@
 
 #import "UNDAppliance.h"
 
-#import "BRControllerStack.h"
-#import "BRSentinel.h"
+#import "BRHeaders/BRControllerStack.h"
+#import "BRHeaders/BRSentinel.h"
 
-#import "UNDMenuController.h"
-#import "UNDMutableCollection.h"
-#import "UNDPreferenceManager.h"
+#import "Base/UNDMenuController.h"
+#import "Base/UNDMutableCollection.h"
+#import "Utilities/UNDPreferenceManager.h"
 
 @implementation BRSentinel (UNDExposeStack)
 - (BRControllerStack*)stack

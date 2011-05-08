@@ -16,17 +16,17 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Understudy.  If not, see <http://www.gnu.org/licenses/>.
 
-#import "UNDMutableCollection.h"
 #import "UNDYouTubeAddDialog.h"
-#import "UNDYouTubeAssetProvider.h"
-
-#import <BRControllerStack.h>
-#import <BRListControl.h>
-#import <BRTextMenuItemLayer.h>
-
-#import "BRHeaders/RUISoundHandler.h"
 
 #import <PubSub/PubSub.h>
+
+#import <BRHeaders/BRControllerStack.h>
+#import <BRHeaders/BRListControl.h>
+#import <BRHeaders/BRTextMenuItemLayer.h>
+#import <BRHeaders/RUISoundHandler.h>
+
+#import "Base/UNDMutableCollection.h"
+#import "YouTube/UNDYouTubeAssetProvider.h"
 
 @implementation UNDYouTubeAddDialog
 
