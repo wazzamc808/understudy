@@ -1,0 +1,27 @@
+Understudy NEWS -- History of user-visible changes.
+
+Copyright (C) 2011
+See the end of the file for license conditions.
+
+
+* Changes in Release 0.10.1 (2011-05-08)
+
+** Improved Netflix TV season
+
+   The handling of Netflix TV series is updated for their new site
+   layout, and broken down by season.
+
+
+
+
+
+
+You should have received a copy of the GNU Lesser General Public
+License along with GNU Emacs. If not, see
+<http://www.gnu.org/licenses/>.
+
+
+Local variables:
+mode: outline
+paragraph-separate: "[ 	]*$"
+end:
