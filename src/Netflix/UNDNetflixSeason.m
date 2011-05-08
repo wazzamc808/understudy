@@ -20,13 +20,19 @@
 #import "Netflix/UNDNetflixSeason.h"
 
 #import <Foundation/NSCharacterSet.h>
+#import <BRHeaders/BRImage.h>
 
+#import "Netflix/BRImageManager+Netflix.h"
 #import "Netflix/UNDNetflixAsset.h"
 
 @implementation UNDNetflixSeason
 
-- (id)initWithUrl:(NSURL*)url
+- (id)initWithMediaId:(NSString*)mediaId
 {
+  NSString* urlString = [@"http://movies.netflix.com/WiMovie/"
+                            stringByAppendingString:mediaId];
+  NSURL* url = [NSURL URLWithString:urlString];
+
   NSMutableArray* assets = [[[NSMutableArray alloc] init] autorelease];
   NSError *err;
   NSString *show = @"", *season = @"Season ?";;
@@ -35,7 +41,6 @@
   doc = [[[NSXMLDocument alloc] initWithContentsOfURL:url
                                               options:NSXMLDocumentTidyHTML
                                                 error:&err] autorelease];
-
   NSXMLElement* root = [doc rootElement];
 
   // Find the H2 element with 'title' class.
@@ -47,6 +52,7 @@
     show = [[node stringValue] stringByTrimmingCharactersInSet:charSet];
   }
 
+  // Find <li class="seasonItem selected">
   NSArray* selectedSeason
     = [[[root nodesForXPath:@"//li[@class='seasonItem selected']/a"
                       error:nil] retain] autorelease];
@@ -57,7 +63,6 @@
 
   NSArray* episodeNodes = [[[root nodesForXPath:@"//ul[@class='episodeList']/li"
                                           error:nil] retain] autorelease];
-  NSLog(@"%@ %@ found %d episodes", show, season, [episodeNodes count]);
   for (NSXMLNode* episode in episodeNodes) {
     UNDNetflixAsset* asset
       = [[[UNDNetflixAsset alloc] initWithEpisodeXMLNode:episode]
@@ -74,6 +79,8 @@
   }
 
   assets_ = [assets retain];
+  image_  = [[[BRImageManager sharedInstance]
+               imageNameFromNetflixMediaId:mediaId] retain];
   season_ = [season copy];
   show_ = [show copy];
 
@@ -83,6 +90,7 @@
 - (void)dealloc
 {
   [assets_ release];
+  [image_ release];
   [season_ release];
   [show_ release];
   [super dealloc];
@@ -91,6 +99,11 @@
 - (NSArray*)currentAssets
 {
   return assets_;
+}
+
+- (BRImage*)coverArt
+{
+  return [[BRImageManager sharedInstance] imageNamed:image_];
 }
 
 @end

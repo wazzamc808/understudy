@@ -42,7 +42,6 @@
   [super dealloc];
 }
 
-#define WIMOVIE @"http://movies.netflix.com/WiMovie/%@"
 - (NSArray*)currentAssets
 {
   if (assets_) return assets_;
@@ -60,9 +59,8 @@
   NSArray *dataVids = [[[root nodesForXPath:@"//@data-vid"
                                       error:nil] retain] autorelease];
   for (NSXMLElement* element in dataVids) {
-    NSString* urlString = [NSString stringWithFormat:WIMOVIE, [element stringValue]];
-    NSURL* url = [NSURL URLWithString:urlString];
-    UNDNetflixSeason* season = [[UNDNetflixSeason alloc] initWithUrl:url];
+    UNDNetflixSeason* season
+      = [[UNDNetflixSeason alloc] initWithMediaId:[element stringValue]];
     if (season) [assets addObject:[season autorelease]];
   }
 
